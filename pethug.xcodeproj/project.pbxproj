@@ -30,6 +30,16 @@
 		C4CF74E82AB22FD100D69185 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74E72AB22FD100D69185 /* UIView.swift */; };
 		C4CF74EA2AB2325400D69185 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4CF74E92AB2325400D69185 /* GoogleService-Info.plist */; };
 		C4CF74EC2AB23A1A00D69185 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74EB2AB23A1A00D69185 /* Colors.swift */; };
+		C4CF74EE2AB24A6500D69185 /* LoginCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74ED2AB24A6500D69185 /* LoginCoordinator.swift */; };
+		C4CF74F12AB2505800D69185 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74F02AB2505800D69185 /* LoginViewController.swift */; };
+		C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74F22AB2506F00D69185 /* LoginViewModel.swift */; };
+		C4CF74F62AB259A800D69185 /* AuthTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74F52AB259A800D69185 /* AuthTextField.swift */; };
+		C4CF74F82AB25A9500D69185 /* AuthTextField+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74F72AB25A9500D69185 /* AuthTextField+Types.swift */; };
+		C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74F92AB25ADD00D69185 /* AuthTextField+ViewModel.swift */; };
+		C4CF74FC2AB25AF300D69185 /* AuthTextField+States.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74FB2AB25AF300D69185 /* AuthTextField+States.swift */; };
+		C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */; };
+		C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75022AB25C5B00D69185 /* Constants.swift */; };
+		C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75052AB25CE100D69185 /* ValidationState.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +83,16 @@
 		C4CF74E72AB22FD100D69185 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		C4CF74E92AB2325400D69185 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C4CF74EB2AB23A1A00D69185 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		C4CF74ED2AB24A6500D69185 /* LoginCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginCoordinator.swift; sourceTree = "<group>"; };
+		C4CF74F02AB2505800D69185 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		C4CF74F22AB2506F00D69185 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		C4CF74F52AB259A800D69185 /* AuthTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTextField.swift; sourceTree = "<group>"; };
+		C4CF74F72AB25A9500D69185 /* AuthTextField+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthTextField+Types.swift"; sourceTree = "<group>"; };
+		C4CF74F92AB25ADD00D69185 /* AuthTextField+ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthTextField+ViewModel.swift"; sourceTree = "<group>"; };
+		C4CF74FB2AB25AF300D69185 /* AuthTextField+States.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthTextField+States.swift"; sourceTree = "<group>"; };
+		C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTextField.swift; sourceTree = "<group>"; };
+		C4CF75022AB25C5B00D69185 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C4CF75052AB25CE100D69185 /* ValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationState.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +180,7 @@
 		C445F1492AB13B2C00053BE7 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				C4CF75002AB25C1900D69185 /* Utilities */,
 				C445F1682AB1581300053BE7 /* Extensions */,
 			);
 			path = Core;
@@ -188,6 +209,8 @@
 		C445F14C2AB13B5900053BE7 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				C4CF74FD2AB25B7700D69185 /* BaseComponents */,
+				C4CF74F42AB2599B00D69185 /* Components */,
 				C4CF74D02AB225E700D69185 /* Coordinators */,
 				C4CF74DF2AB22A8C00D69185 /* Screens */,
 			);
@@ -273,6 +296,7 @@
 			isa = PBXGroup;
 			children = (
 				C4CF74DD2AB2291600D69185 /* StateCoordinatorProtocol.swift */,
+				C4CF74ED2AB24A6500D69185 /* LoginCoordinator.swift */,
 			);
 			path = StateCoordinators;
 			sourceTree = "<group>";
@@ -295,6 +319,7 @@
 		C4CF74DF2AB22A8C00D69185 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C4CF74EF2AB2504300D69185 /* Login */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
 			);
 			path = Screens;
@@ -307,6 +332,59 @@
 				C4CF74E32AB22B7D00D69185 /* LaunchView.swift */,
 			);
 			path = Launch;
+			sourceTree = "<group>";
+		};
+		C4CF74EF2AB2504300D69185 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF74F22AB2506F00D69185 /* LoginViewModel.swift */,
+				C4CF74F02AB2505800D69185 /* LoginViewController.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		C4CF74F42AB2599B00D69185 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF74F52AB259A800D69185 /* AuthTextField.swift */,
+				C4CF74F72AB25A9500D69185 /* AuthTextField+Types.swift */,
+				C4CF74F92AB25ADD00D69185 /* AuthTextField+ViewModel.swift */,
+				C4CF74FB2AB25AF300D69185 /* AuthTextField+States.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		C4CF74FD2AB25B7700D69185 /* BaseComponents */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */,
+			);
+			path = BaseComponents;
+			sourceTree = "<group>";
+		};
+		C4CF75002AB25C1900D69185 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF75042AB25CBD00D69185 /* Validation */,
+				C4CF75012AB25C4800D69185 /* Helpers */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		C4CF75012AB25C4800D69185 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF75022AB25C5B00D69185 /* Constants.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C4CF75042AB25CBD00D69185 /* Validation */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF75052AB25CE100D69185 /* ValidationState.swift */,
+			);
+			path = Validation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -452,14 +530,24 @@
 				C4CF74DC2AB227C200D69185 /* NavCoordinatorProtocol.swift in Sources */,
 				C4CF74E42AB22B7D00D69185 /* LaunchView.swift in Sources */,
 				C4CF74EC2AB23A1A00D69185 /* Colors.swift in Sources */,
+				C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */,
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
+				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
+				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
 				C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */,
+				C4CF74F62AB259A800D69185 /* AuthTextField.swift in Sources */,
+				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
 				C445F16A2AB1581F00053BE7 /* Publishers.swift in Sources */,
+				C4CF74FC2AB25AF300D69185 /* AuthTextField+States.swift in Sources */,
 				C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */,
 				C4CF74DE2AB2291600D69185 /* StateCoordinatorProtocol.swift in Sources */,
+				C4CF74F82AB25A9500D69185 /* AuthTextField+Types.swift in Sources */,
+				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,
 				C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */,
 				C4CF74E22AB22B0200D69185 /* LaunchViewController.swift in Sources */,
+				C4CF74F12AB2505800D69185 /* LoginViewController.swift in Sources */,
+				C4CF74EE2AB24A6500D69185 /* LoginCoordinator.swift in Sources */,
 				C445F1602AB1435300053BE7 /* User.swift in Sources */,
 				C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */,
 			);

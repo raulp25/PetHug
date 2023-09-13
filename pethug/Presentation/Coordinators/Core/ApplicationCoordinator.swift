@@ -31,7 +31,58 @@ final class ApplicationCoordinator: Coordinator {
     //MARK: - Setup / listen
     func start() {
         window.rootViewController = LaunchViewController()
+        bindAuthChangesToSession()
+        
+        $session
+            .handleThreadsOperator()
+            .map({ [weak self] state -> AnyPublisher<SessionState, Never> in
+                if let splash = self?.window.rootViewController as? LaunchViewController {
+                    return Just(state)
+                        .delay(
+                            for: .seconds(splash.countDown),
+                            scheduler: RunLoop.main
+                        )
+                        .eraseToAnyPublisher()
+                } else {
+                    return Just(state)
+                        .eraseToAnyPublisher()
+                }
+            })
+            .switchToLatest()
+            .sink { [weak self] state in
+                self?.setUpCoordinator(with: state)
+            }.store(in: &cancellables)
     }
     
+    //MARK: - Private methods
+    
+    private func setUpCoordinator(with state: SessionState) {
+        var childCoordinator: StateCoordinator?
+        
+        switch state {
+        case .signedOut:
+            print("state signedOut setUpCoordinator(): => \(state)")
+        case .signedInButNotVerified:
+            print("state signedInButNotVerified setUpCoordinator(): => \(state)")
+        case .signedIn:
+            print("state signedIn setUpCoordinator(): => \(state)")
+        }
+        
+        guard let childCoordinator else { return }
+        childCoordinator.parentCoordinator = self
+        childCoordinator.start()
+        childCoordinators.removeAll()
+        childCoordinators.append(childCoordinator)
+    }
+    
+    
+    
+    //MARK: - bind
+    
+    private func bindAuthChangesToSession() {
+        authService
+            .observeAuthChanges()
+            .assign(to: &$session)
+    }
     
 }

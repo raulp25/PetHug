@@ -12,7 +12,7 @@ final class LaunchViewController: UIViewController {
     
     //MARK: - Properties
     
-    
+    var countDown: Double = 3.0
     
     //MARK: - Lifecycle
     
@@ -21,15 +21,11 @@ final class LaunchViewController: UIViewController {
         setup()
     }
     
-    
     //MARK: - Setup
-    
     func setup() {
         let launchView = LaunchView()
         view.addSubview(launchView)
         launchView.fillSuperview()
     }
-    
-    
     
 }

@@ -51,3 +51,13 @@ extension Publishers {
         }
     }
 }
+
+// MARK: - handleThreads (subscibe to background and receive on main)
+extension Publisher {
+    func handleThreadsOperator() -> AnyPublisher<Self.Output, Self.Failure> {
+        self
+            .subscribe(on: DispatchQueue.global())
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+}

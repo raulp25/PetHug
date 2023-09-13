@@ -1,8 +1,8 @@
 //
 //  AuthService.swift
-//  Messenger
+//  pethug
 //
-//  Created by Vebjørn Daniloff on 3/1/23.
+//  Created by Raul Pena on 13/09/23.
 //
 
 import Combine
