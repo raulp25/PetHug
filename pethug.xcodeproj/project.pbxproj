@@ -35,6 +35,8 @@
 		C445F16A2AB1581F00053BE7 /* Publishers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1692AB1581F00053BE7 /* Publishers+Extensions.swift */; };
 		C46338252AB2CE54000AF2F6 /* MessengerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* MessengerError.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
+		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
+		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
 		C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */; };
 		C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */; };
@@ -88,6 +90,8 @@
 		C445F1692AB1581F00053BE7 /* Publishers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Extensions.swift"; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* MessengerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerError.swift; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
+		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
+		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
@@ -322,6 +326,15 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		C482908B2AB391AE00DE6227 /* CreateAccount */ = {
+			isa = PBXGroup;
+			children = (
+				C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */,
+				C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */,
+			);
+			path = CreateAccount;
+			sourceTree = "<group>";
+		};
 		C4CF74CD2AB21D5300D69185 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -379,6 +392,7 @@
 		C4CF74DF2AB22A8C00D69185 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C482908B2AB391AE00DE6227 /* CreateAccount */,
 				C4CF74EF2AB2504300D69185 /* Login */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
 			);
@@ -549,6 +563,7 @@
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
 				C42616DD2AB277C4006925DB /* ValidatorType.swift in Sources */,
+				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
 				C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */,
 				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
 				C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */,
@@ -569,6 +584,7 @@
 				C4CF74E22AB22B0200D69185 /* LaunchViewController.swift in Sources */,
 				C42616DB2AB27774006925DB /* Miscellaneous.swift in Sources */,
 				C42616F72AB2A09F006925DB /* UIButton+Extensions.swift in Sources */,
+				C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */,
 				C4CF74F12AB2505800D69185 /* LoginViewController.swift in Sources */,
 				C4CF74EE2AB24A6500D69185 /* LoginCoordinator.swift in Sources */,
 				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
@@ -706,6 +722,8 @@
 				DEVELOPMENT_TEAM = 75SHBQ42MK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pethug/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a profile picture";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your gallery to post a picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
@@ -737,6 +755,8 @@
 				DEVELOPMENT_TEAM = 75SHBQ42MK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pethug/Info.plist;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a profile picture";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your gallery to post a picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";

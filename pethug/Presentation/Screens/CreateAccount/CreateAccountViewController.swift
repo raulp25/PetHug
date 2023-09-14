@@ -1,14 +1,14 @@
 //
-//  LoginViewController.swift
+//  CreateAccountViewController.swift
 //  pethug
 //
-//  Created by Raul Pena on 13/09/23.
+//  Created by Raul Pena on 14/09/23.
 //
 
 import Combine
 import UIKit
 
-class LoginViewController: UIViewController {
+class CreateAccountViewController: UIViewController {
     
     //MARK: - Private components
     
@@ -17,30 +17,55 @@ class LoginViewController: UIViewController {
     private let containerView = UIView(withAutolayout: true)
     private let childContainerView = UIView()
     
-    private let iconImageView: UIImageView = {
-       let iv = UIImageView(image: UIImage(named: "bull"))
-        iv.contentMode = .scaleAspectFit
+    private let backgroundImageView: UIImageView = {
+       let iv = UIImageView(image: UIImage(named: "orange"))
+        iv.contentMode = .scaleAspectFill
         return iv
     }()
     
-    
+    private lazy var plusPhotoImageView: UIImageView = {
+       let iv = UIImageView(image: UIImage(systemName: "plus.circle"))
+        iv.tintColor = .white.withAlphaComponent(0.73)
+        iv.contentMode = .scaleAspectFill
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfilePhotoSelect))
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(tapGesture)
+        return iv
+    }()
+
+
     private let titleLabel: UILabel = {
        let label = UILabel(withAutolayout: true)
-        label.text = "Welcome Back!"
+        label.text = "Create account"
         label.textColor = .black.withAlphaComponent(0.8)
         label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
         return label
     }()
     
+    private let iconImageView: UIImageView = {
+       let iv = UIImageView(image: UIImage(systemName: "pentagon"))
+        iv.contentMode = .scaleAspectFit
+        iv.tintColor = .orange.withAlphaComponent(0.6)
+        return iv
+    }()
     
     private lazy var vStack: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [emailTextField, passwordTextField, forgotPasswordContainerView, loginBtn, createAccountBtn])
+        let stack: UIStackView = .init(arrangedSubviews: [usernameTextField, emailTextField, passwordTextField])
         stack.axis = .vertical
         stack.alignment = .fill
         stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
+    
+    
+    private let usernameTextField = AuthTextField(
+        viewModel: .init(
+            type: .name,
+            placeholderOption: .custom("Enter your name"),
+            returnKey: .continue
+        )
+    )
     
     private let emailTextField = AuthTextField(
         viewModel: .init(
@@ -49,6 +74,7 @@ class LoginViewController: UIViewController {
             returnKey: .continue
         )
     )
+    
     
     private let passwordTextField = AuthTextField(
         viewModel: .init(
@@ -98,14 +124,14 @@ class LoginViewController: UIViewController {
     
     
     //MARK: - Private properties
-    private let viewModel = LoginViewModel(authService: AuthService())
+    private var viewModel = CreateAcoountViewModel(authService: AuthService())
     private var subscriptions = Set<AnyCancellable>()
     private var keyboardPublisher: AnyCancellable?
     //check if i delete this
     private var flowLayoutConstraint: NSLayoutConstraint!
     
     //MARK: - Internal properties
-    weak var coordinator: LoginCoordinator?
+    weak var coordinator: CreateAccountCoordinator?
     
     //MARK: - Lifecycle
     override func viewDidLoad() {
@@ -147,11 +173,24 @@ class LoginViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        print(":view will disapea CREATE ACC '''' =>")
+        backgroundImageView.removeFromSuperview()
         keyboardPublisher = nil
         keyboardPublisher?.cancel()
     }
     
     //MARK: - Actions
+    
+    @objc func handleProfilePhotoSelect() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        view.endEditing(true)
+        
+        present(picker, animated: true, completion: nil)
+    }
+    
+    
     @objc func login() {
         print(": => login clicked")
         guard
@@ -170,8 +209,7 @@ class LoginViewController: UIViewController {
     }
     
     @objc func goToCreateNewAccount() {
-        view.endEditing(true)
-        coordinator?.startCreateAccountCoordinator()
+//        coordinator?.startCreateAccountCoordinator()
     }
     
     //MARK: - Private Methods
@@ -189,6 +227,7 @@ class LoginViewController: UIViewController {
         })
     }
     
+    let paddintTop = UIScreen.main.bounds.height * 0.05
     //MARK: - setup
     func setup() {
         emailTextField.delegate = self
@@ -197,8 +236,11 @@ class LoginViewController: UIViewController {
 //        emailTextField.setHeight(55)
 //        passwordTextField.setHeight(55)
         
+        view.addSubview(backgroundImageView)
+        backgroundImageView.fillSuperview()
+        
         view.addSubview(containerView)
-        containerView.addSubview(iconImageView)
+        containerView.addSubview(plusPhotoImageView)
         containerView.addSubview(childContainerView)
         containerView.addSubview(googleSignInBtn)
         
@@ -213,23 +255,26 @@ class LoginViewController: UIViewController {
             right: view.rightAnchor
         )
         
-        iconImageView.centerX(
+        plusPhotoImageView.centerX(
             inView: containerView,
             topAnchor: containerView.topAnchor,
             paddingTop: 50
         )
         
-        iconImageView.setDimensions(height: 230, width: 230)
+        plusPhotoImageView.setDimensions(height: 180, width: 180)
         
         childContainerView.addSubview(titleLabel)
+        childContainerView.addSubview(iconImageView)
         childContainerView.addSubview(vStack)
         
         childContainerView.anchor(
-            top: iconImageView.bottomAnchor,
+            top: plusPhotoImageView.bottomAnchor,
             left: containerView.leftAnchor,
             bottom: view.bottomAnchor,
-            right: containerView.rightAnchor
+            right: containerView.rightAnchor,
+            paddingTop: CGFloat(Int(paddintTop))
         )
+        print("paddingTop ls: => \(paddintTop)")
         
         childContainerView.layer.cornerRadius = 30
         childContainerView.backgroundColor = .white
@@ -241,6 +286,14 @@ class LoginViewController: UIViewController {
             paddingLeft: padding
         )
         
+        iconImageView.centerY(
+            inView: titleLabel,
+            leftAnchor: titleLabel.rightAnchor,
+            paddingLeft: 10
+        )
+        
+        iconImageView.setDimensions(height: 20, width: 20)
+        
         vStack.anchor(
             top: titleLabel.bottomAnchor,
             left: childContainerView.leftAnchor,
@@ -250,28 +303,55 @@ class LoginViewController: UIViewController {
             paddingRight: padding
         )
         
-        forgotPasswordContainerView.addSubview(forgotPasswordBtn)
-        forgotPasswordBtn.anchor(
-            top: forgotPasswordContainerView.topAnchor,
-            bottom: forgotPasswordContainerView.bottomAnchor,
-            right: forgotPasswordContainerView.rightAnchor
-        )
-        
+//        forgotPasswordContainerView.addSubview(forgotPasswordBtn)
+//        forgotPasswordBtn.anchor(
+//            top: forgotPasswordContainerView.topAnchor,
+//            bottom: forgotPasswordContainerView.bottomAnchor,
+//            right: forgotPasswordContainerView.rightAnchor
+//        )
+//
        
         googleSignInBtn.anchor(
+            top: vStack.bottomAnchor,
             left: containerView.leftAnchor,
-            bottom: view.safeAreaLayoutGuide.bottomAnchor,
             right: containerView.rightAnchor,
+            paddingTop: 50,
             paddingLeft: padding,
             paddingRight: padding
         )
         
     }
-
+   
 }
 
-extension LoginViewController: AuthTextFieldDelegate {
+// MARK: - UIImagePickerControllerDelegate
+extension CreateAccountViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        
+        guard let selectedImage = info[.editedImage] as? UIImage else { return }
+        viewModel.profileImage = selectedImage
+        
+        plusPhotoImageView.layer.cornerRadius = plusPhotoImageView.frame.width / 2
+        plusPhotoImageView.layer.masksToBounds = true
+        plusPhotoImageView.layer.borderColor = UIColor.white.cgColor
+        plusPhotoImageView.layer.borderWidth = 0.5
+        plusPhotoImageView.image = selectedImage.withRenderingMode(.alwaysOriginal)
+//        plusPhotoImageView.setImage(selectedImage.withRenderingMode(.alwaysOriginal), for: .normal)
+        
+        self.dismiss(animated: true)
+    }
+    
+}
+
+
+extension CreateAccountViewController: AuthTextFieldDelegate {
     func textFieldShouldReturn(_ textField: AuthTextField) -> Bool {
+//        if textField == usernameTextField {
+//            textField.textField.resignFirstResponder()
+//            emailTextField.becomeFirstResponder()
+//        }
+        
         if textField == emailTextField {
             //check if we leave this behavior or we directly assign
 //            the password as first responder
@@ -287,3 +367,5 @@ extension LoginViewController: AuthTextFieldDelegate {
         return true
     }
 }
+
+

@@ -10,7 +10,6 @@ import Foundation
 
 struct User: Identifiable {
     let id: Int
-    let fullname: String
     let username: String
     let email: String
     let bio: String?

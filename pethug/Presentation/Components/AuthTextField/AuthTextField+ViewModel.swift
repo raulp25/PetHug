@@ -14,8 +14,8 @@ extension AuthTextField {
         let eyeIcon = "eye"
 //        let eyeSlashIcon = "custom-eye.slash"
         let eyeSlashIcon = "eye.slash"
-        let xmarkIcon = "custom-xmark"
-        let warningIcon = "custom-exclamationmark.circle"
+        let xmarkIcon = "xmark"
+        let warningIcon = "exclamationmark.circle"
 
         // MARK: - Properties
         var type: TextFieldType
@@ -91,7 +91,7 @@ extension AuthTextField {
             case .email, .name:
                 return xmarkIcon
             case .password:
-                return "eye.slash"
+                return eyeSlashIcon
             case .date:
                 return nil
             }
@@ -124,7 +124,7 @@ extension AuthTextField {
                 switch (textState, validationState) {
                 case (.empty, .error):
                     return UIImage(systemName: warningIcon)?.withTintColor(.red)
-
+                //Show xmark after user enters text
                 case (.text, _):
                     return UIImage(systemName: xmarkIcon)?.withTintColor(.green)
 

@@ -20,9 +20,13 @@ final class CreateAccountCoordinator: NavCoordinator {
     }
     
     func start() {
-        
+        let vc = CreateAccountViewController()
+        vc.coordinator = self
+        rootViewController.pushViewController(vc, animated: true)
     }
     
-    
+    deinit {
+        print("✅ Deinit CreateAccountCoordinator")
+    }
 }
 
