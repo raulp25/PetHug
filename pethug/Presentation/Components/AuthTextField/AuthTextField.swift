@@ -67,11 +67,11 @@ final class AuthTextField: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
         view.backgroundColor = .clear
-        view.layer.borderWidth = 1
+//        view.layer.borderWidth = 1
         view.layer.masksToBounds = true
-        view.layer.cornerRadius = 3
+        view.layer.cornerRadius = 0
 //        view.layer.borderColor = UIColor.theme.border?.cgColor
-        view.layer.borderColor = UIColor.red.cgColor
+//        view.layer.borderColor = UIColor.red.cgColor
         return view
     }()
 
@@ -164,6 +164,8 @@ final class AuthTextField: UIView {
 //        textField.tintColor = viewModel.tintColor
         textField.tintColor = .black.withAlphaComponent(0.7)
         textField.isSecureTextEntry = viewModel.isSecure
+        
+        print(" textfield auth is secure \(viewModel.isSecure)")
 
         floatingLabel.text = viewModel.placeholder
 //        floatingLabel.textColor = viewModel.floatingLabelColor
@@ -189,6 +191,14 @@ final class AuthTextField: UIView {
 
         hStack.addArrangedSubview(textField)
 
+        let composeFirstStackBorderBottom = UIView()
+        textFieldbackgroundView.addSubview(composeFirstStackBorderBottom)
+        
+        composeFirstStackBorderBottom.anchor(bottom: textFieldbackgroundView.bottomAnchor)
+        composeFirstStackBorderBottom.setWidthConstraint(equalTo: textFieldbackgroundView.widthAnchor)
+        composeFirstStackBorderBottom.setHeight(0.3)
+        composeFirstStackBorderBottom.backgroundColor = .black
+        
         textFieldbackgroundView.addSubview(hStack)
         textField.addSubview(floatingLabel)
 //        textField.layer.borderColor = UIColor.yellow.cgColor
@@ -198,6 +208,8 @@ final class AuthTextField: UIView {
         
 //        textFieldbackgroundView.layer.borderColor = UIColor.yellow.cgColor
 //        textFieldbackgroundView.layer.borderWidth = 2
+        
+        
 
         hStack.anchor(
             top: textFieldbackgroundView.topAnchor,
@@ -347,10 +359,11 @@ final class AuthTextField: UIView {
     private func toggleShowHidePasswordBtnTapped() {
         guard let rightViewButton = iconButton else { return }
         textField.togglePasswordVisibility()
-        let prefix = "custom-"
+//      let prefix = "custom-"
+        let prefix = ""
         let end = textField.isSecureTextEntry ? "eye.slash" : "eye"
 
-        if let image = UIImage(named: prefix + end) {
+        if let image = UIImage(systemName: end) {
             rightViewButton.setImage(image, for: .normal)
         }
     }

@@ -95,10 +95,12 @@ public extension UIButton {
 }
 
 public extension UIButton {
-    static func createCustomIconImage(customIcon: String, size: CGFloat) -> UIButton {
+    //Todo Add color prop to theme enum
+    static func createCustomIconImage(customIcon: String, size: CGFloat, color: UIColor = UIColor.gray.withAlphaComponent(0.8)) -> UIButton {
         let button = UIButton()
-        if let image = UIImage(named: customIcon)?.withRenderingMode(.alwaysTemplate) {
+        if let image = UIImage(systemName: customIcon)?.withRenderingMode(.alwaysTemplate) {
             button.setImage(image, for: .normal)
+            button.setImageTintColor(color)
         }
 
         button.heightAnchor.constraint(equalToConstant: size).isActive = true

@@ -30,6 +30,11 @@ final class LoginCoordinator: NSObject, StateCoordinator {
         print(": => start create acc coordinator")
     }
     
+    deinit {
+        print("✅ Deinit LogInCoordinator")
+        
+    }
+    
 }
 
 

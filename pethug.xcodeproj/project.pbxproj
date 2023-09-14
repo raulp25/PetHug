@@ -27,9 +27,6 @@
 		C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1192AB1391A00053BE7 /* AppDelegate.swift */; };
 		C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */; };
 		C445F1232AB1391B00053BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C445F1222AB1391B00053BE7 /* Assets.xcassets */; };
-		C445F1312AB1391B00053BE7 /* pethugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1302AB1391B00053BE7 /* pethugTests.swift */; };
-		C445F13B2AB1391B00053BE7 /* pethugUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F13A2AB1391B00053BE7 /* pethugUITests.swift */; };
-		C445F13D2AB1391B00053BE7 /* pethugUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F13C2AB1391B00053BE7 /* pethugUITestsLaunchTests.swift */; };
 		C445F1542AB141D000053BE7 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = C445F1532AB141D000053BE7 /* FirebaseAnalytics */; };
 		C445F1562AB141D000053BE7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C445F1552AB141D000053BE7 /* FirebaseAuth */; };
 		C445F1582AB141D000053BE7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C445F1572AB141D000053BE7 /* FirebaseFirestore */; };
@@ -37,6 +34,7 @@
 		C445F1602AB1435300053BE7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F15F2AB1435200053BE7 /* User.swift */; };
 		C445F16A2AB1581F00053BE7 /* Publishers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1692AB1581F00053BE7 /* Publishers+Extensions.swift */; };
 		C46338252AB2CE54000AF2F6 /* MessengerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* MessengerError.swift */; };
+		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
 		C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */; };
 		C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */; };
@@ -59,23 +57,6 @@
 		C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75022AB25C5B00D69185 /* Constants.swift */; };
 		C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75052AB25CE100D69185 /* ValidationState.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C445F12D2AB1391B00053BE7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C445F10E2AB1391A00053BE7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C445F1152AB1391A00053BE7;
-			remoteInfo = pethug;
-		};
-		C445F1372AB1391B00053BE7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C445F10E2AB1391A00053BE7 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = C445F1152AB1391A00053BE7;
-			remoteInfo = pethug;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		C42616D42AB274B4006925DB /* UIButton+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Factory.swift"; sourceTree = "<group>"; };
@@ -100,14 +81,13 @@
 		C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		C445F1222AB1391B00053BE7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C445F1272AB1391B00053BE7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C445F12C2AB1391B00053BE7 /* pethugTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pethugTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F1302AB1391B00053BE7 /* pethugTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pethugTests.swift; sourceTree = "<group>"; };
-		C445F1362AB1391B00053BE7 /* pethugUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = pethugUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F13A2AB1391B00053BE7 /* pethugUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pethugUITests.swift; sourceTree = "<group>"; };
 		C445F13C2AB1391B00053BE7 /* pethugUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pethugUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C445F15F2AB1435200053BE7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C445F1692AB1581F00053BE7 /* Publishers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Extensions.swift"; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* MessengerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerError.swift; sourceTree = "<group>"; };
+		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
@@ -140,20 +120,6 @@
 				C445F15A2AB141D000053BE7 /* FirebaseStorage in Frameworks */,
 				C445F1562AB141D000053BE7 /* FirebaseAuth in Frameworks */,
 				C445F1582AB141D000053BE7 /* FirebaseFirestore in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C445F1292AB1391B00053BE7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C445F1332AB1391B00053BE7 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,8 +184,6 @@
 			isa = PBXGroup;
 			children = (
 				C445F1162AB1391A00053BE7 /* pethug.app */,
-				C445F12C2AB1391B00053BE7 /* pethugTests.xctest */,
-				C445F1362AB1391B00053BE7 /* pethugUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -407,6 +371,7 @@
 			isa = PBXGroup;
 			children = (
 				C4CF74DB2AB227C200D69185 /* NavCoordinatorProtocol.swift */,
+				C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */,
 			);
 			path = NavCoordinators;
 			sourceTree = "<group>";
@@ -515,42 +480,6 @@
 			productReference = C445F1162AB1391A00053BE7 /* pethug.app */;
 			productType = "com.apple.product-type.application";
 		};
-		C445F12B2AB1391B00053BE7 /* pethugTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C445F1432AB1391B00053BE7 /* Build configuration list for PBXNativeTarget "pethugTests" */;
-			buildPhases = (
-				C445F1282AB1391B00053BE7 /* Sources */,
-				C445F1292AB1391B00053BE7 /* Frameworks */,
-				C445F12A2AB1391B00053BE7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C445F12E2AB1391B00053BE7 /* PBXTargetDependency */,
-			);
-			name = pethugTests;
-			productName = pethugTests;
-			productReference = C445F12C2AB1391B00053BE7 /* pethugTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		C445F1352AB1391B00053BE7 /* pethugUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = C445F1462AB1391B00053BE7 /* Build configuration list for PBXNativeTarget "pethugUITests" */;
-			buildPhases = (
-				C445F1322AB1391B00053BE7 /* Sources */,
-				C445F1332AB1391B00053BE7 /* Frameworks */,
-				C445F1342AB1391B00053BE7 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				C445F1382AB1391B00053BE7 /* PBXTargetDependency */,
-			);
-			name = pethugUITests;
-			productName = pethugUITests;
-			productReference = C445F1362AB1391B00053BE7 /* pethugUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -563,14 +492,6 @@
 				TargetAttributes = {
 					C445F1152AB1391A00053BE7 = {
 						CreatedOnToolsVersion = 14.3;
-					};
-					C445F12B2AB1391B00053BE7 = {
-						CreatedOnToolsVersion = 14.3;
-						TestTargetID = C445F1152AB1391A00053BE7;
-					};
-					C445F1352AB1391B00053BE7 = {
-						CreatedOnToolsVersion = 14.3;
-						TestTargetID = C445F1152AB1391A00053BE7;
 					};
 				};
 			};
@@ -591,8 +512,6 @@
 			projectRoot = "";
 			targets = (
 				C445F1152AB1391A00053BE7 /* pethug */,
-				C445F12B2AB1391B00053BE7 /* pethugTests */,
-				C445F1352AB1391B00053BE7 /* pethugUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -604,20 +523,6 @@
 			files = (
 				C445F1232AB1391B00053BE7 /* Assets.xcassets in Resources */,
 				C4CF74EA2AB2325400D69185 /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C445F12A2AB1391B00053BE7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C445F1342AB1391B00053BE7 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -666,6 +571,7 @@
 				C42616F72AB2A09F006925DB /* UIButton+Extensions.swift in Sources */,
 				C4CF74F12AB2505800D69185 /* LoginViewController.swift in Sources */,
 				C4CF74EE2AB24A6500D69185 /* LoginCoordinator.swift in Sources */,
+				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,
 				C445F1602AB1435300053BE7 /* User.swift in Sources */,
 				C42616EF2AB28285006925DB /* AuthButton+ViewModel.swift in Sources */,
@@ -673,37 +579,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C445F1282AB1391B00053BE7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C445F1312AB1391B00053BE7 /* pethugTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C445F1322AB1391B00053BE7 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C445F13B2AB1391B00053BE7 /* pethugUITests.swift in Sources */,
-				C445F13D2AB1391B00053BE7 /* pethugUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		C445F12E2AB1391B00053BE7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C445F1152AB1391A00053BE7 /* pethug */;
-			targetProxy = C445F12D2AB1391B00053BE7 /* PBXContainerItemProxy */;
-		};
-		C445F1382AB1391B00053BE7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = C445F1152AB1391A00053BE7 /* pethug */;
-			targetProxy = C445F1372AB1391B00053BE7 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C445F13E2AB1391B00053BE7 /* Debug */ = {
@@ -840,7 +716,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethug;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -871,7 +747,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethug;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugin;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -879,82 +755,6 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		C445F1442AB1391B00053BE7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 75SHBQ42MK;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pethug.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/pethug";
-			};
-			name = Debug;
-		};
-		C445F1452AB1391B00053BE7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 75SHBQ42MK;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/pethug.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/pethug";
-			};
-			name = Release;
-		};
-		C445F1472AB1391B00053BE7 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 75SHBQ42MK;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = pethug;
-			};
-			name = Debug;
-		};
-		C445F1482AB1391B00053BE7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 75SHBQ42MK;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = pethug;
 			};
 			name = Release;
 		};
@@ -975,24 +775,6 @@
 			buildConfigurations = (
 				C445F1412AB1391B00053BE7 /* Debug */,
 				C445F1422AB1391B00053BE7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C445F1432AB1391B00053BE7 /* Build configuration list for PBXNativeTarget "pethugTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C445F1442AB1391B00053BE7 /* Debug */,
-				C445F1452AB1391B00053BE7 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		C445F1462AB1391B00053BE7 /* Build configuration list for PBXNativeTarget "pethugUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				C445F1472AB1391B00053BE7 /* Debug */,
-				C445F1482AB1391B00053BE7 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

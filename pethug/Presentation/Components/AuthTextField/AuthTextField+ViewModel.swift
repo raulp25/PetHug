@@ -10,8 +10,10 @@ import UIKit
 extension AuthTextField {
     struct ViewModel {
         // MARK: - Constants
-        let eyeIcon = "custom-eye"
-        let eyeSlashIcon = "custom-eye.slash"
+//        let eyeIcon = "custom-eye"
+        let eyeIcon = "eye"
+//        let eyeSlashIcon = "custom-eye.slash"
+        let eyeSlashIcon = "eye.slash"
         let xmarkIcon = "custom-xmark"
         let warningIcon = "custom-exclamationmark.circle"
 
@@ -36,7 +38,7 @@ extension AuthTextField {
 
         var tintColor: UIColor {
 //            type != .date ? .theme.tintColor! : .clear
-            type != .date ? .orange : .clear
+            type != .date ? .orange : .red
         }
 
         var floatingLabelColor: UIColor {
@@ -89,7 +91,7 @@ extension AuthTextField {
             case .email, .name:
                 return xmarkIcon
             case .password:
-                return eyeSlashIcon
+                return "eye.slash"
             case .date:
                 return nil
             }
@@ -108,10 +110,10 @@ extension AuthTextField {
                 switch (focusState, textState, validationState) {
                 case (.focused, _, _):
                     let name = isPasswordShown! ? eyeSlashIcon : eyeIcon
-                    return UIImage(named: name)?.withTintColor(.label)
+                    return UIImage(systemName: name)?.withTintColor(.red)
 
                 case (.inActive, _, .error):
-                    return UIImage(named: warningIcon)?.withTintColor(.red)
+                    return UIImage(systemName: warningIcon)?.withTintColor(.red)
 
                 default:
                     return nil
@@ -121,10 +123,10 @@ extension AuthTextField {
                 // all other cases
                 switch (textState, validationState) {
                 case (.empty, .error):
-                    return UIImage(named: warningIcon)?.withTintColor(.red)
+                    return UIImage(systemName: warningIcon)?.withTintColor(.red)
 
                 case (.text, _):
-                    return UIImage(named: xmarkIcon)?.withTintColor(.label)
+                    return UIImage(systemName: xmarkIcon)?.withTintColor(.green)
 
                 case (.empty, _):
                     return nil

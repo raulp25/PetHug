@@ -64,7 +64,8 @@ class LoginViewController: UIViewController {
     }()
 
     private lazy var forgotPasswordBtn: UIButton = {
-        let btn: UIButton = .createTextButton(with: "Forgotten Password?")
+        let btn: UIButton = .createTextButton(with: "Forgot Password?")
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         btn.addTarget(self, action: #selector(forgotPassword), for: .touchUpInside)
         return btn
     }()
@@ -192,6 +193,9 @@ class LoginViewController: UIViewController {
         emailTextField.delegate = self
         passwordTextField.delegate = self
         
+//        emailTextField.setHeight(55)
+//        passwordTextField.setHeight(55)
+        
         view.addSubview(containerView)
         containerView.addSubview(iconImageView)
         containerView.addSubview(childContainerView)
@@ -277,7 +281,7 @@ extension LoginViewController: AuthTextFieldDelegate {
             // login
             login()
             textField.textField.resignFirstResponder()
-            print(": => login clicked textfieldShouldReturn")
+            print(": => keyboard continue button login clicked textfieldShouldReturn")
         }
         return true
     }
