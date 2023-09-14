@@ -35,11 +35,13 @@ extension AuthTextField {
         // Colors
 
         var tintColor: UIColor {
-            type != .date ? .theme.tintColor! : .clear
+//            type != .date ? .theme.tintColor! : .clear
+            type != .date ? .orange : .clear
         }
 
         var floatingLabelColor: UIColor {
-            type == .date ? .theme.floatingLabel! : .theme.placeholder!
+//            type == .date ? .theme.floatingLabel! : .theme.placeholder!
+            type == .date ? .orange : .lightGray
         }
 
         // Password
@@ -138,7 +140,8 @@ extension AuthTextField {
             if case .error = validationState {
                 return UIColor.red.cgColor
             } else {
-                let color: UIColor? = focusState == .focused ? .theme.activeBorder : .theme.border
+//                let color: UIColor? = focusState == .focused ? .theme.activeBorder : .theme.border
+                let color: UIColor? = focusState == .focused ? .systemPink : .lightGray
                 return color!.cgColor
             }
         }
@@ -157,9 +160,10 @@ extension AuthTextField {
                 }
             } else {
                 if textState == .text || focusState == .focused {
-                    return .theme.floatingLabel!
+//                    return .theme.floatingLabel!
+                    return .systemOrange
                 } else {
-                    return .theme.placeholder!
+                    return .lightGray
                 }
             }
         }

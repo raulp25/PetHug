@@ -47,8 +47,8 @@ extension AuthTextFieldDelegate {
 final class AuthTextField: UIView {
     // MARK: - Components
     lazy var textField: UITextField = {
-        let textField = viewModel.type == .date ? DisabledTextField() : UITextField()
-        textField.textColor = .label
+        let textField = viewModel.type == .date ? DisabledTextField(withAutolayout: true) : UITextField(withAutolayout: true)
+        textField.textColor = .black.withAlphaComponent(0.7)
         textField.delegate = self
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         textField.font = .systemFont(ofSize: 17, weight: .regular)
@@ -57,16 +57,16 @@ final class AuthTextField: UIView {
     }()
 
     private lazy var floatingLabel: UILabel = {
-        let label = UILabel()
+        let label = UILabel(withAutolayout: true)
         label.font = .systemFont(ofSize: 17, weight: .regular)
         return label
     }()
 
     private lazy var textFieldbackgroundView: UIView = {
-        let view = UIView()
+        let view = UIView(withAutolayout: true)
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         view.layer.borderWidth = 1
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 3
@@ -76,7 +76,7 @@ final class AuthTextField: UIView {
     }()
 
     private lazy var hStack: UIStackView = {
-        let stack = UIStackView()
+        let stack = UIStackView(withAutolayout: true)
         stack.axis = .horizontal
         stack.distribution = .fillProportionally
         stack.alignment = .center
@@ -97,18 +97,20 @@ final class AuthTextField: UIView {
     private lazy var iconButton: UIButton? = nil
 
     private lazy var errorLabel: UILabel = {
-        let label = UILabel()
+        let label = UILabel(withAutolayout: true)
         label.numberOfLines = 0
         label.textAlignment = .left
         label.textColor = .red
+        label.text = "errorsito parce"
         //        label.alpha = 1
-        label.font = .preferredFont(forTextStyle: .footnote)
+//        label.font = .preferredFont(forTextStyle: .footnote)
+        label.font = UIFont.systemFont(ofSize: 13)
         label.isHidden = true
         return label
     }()
 
     private lazy var expandingVstack: UIStackView = {
-        let stack = UIStackView()
+        let stack = UIStackView(withAutolayout: true)
         stack.axis = .vertical
         stack.distribution = .fill
         stack.spacing = 10
@@ -159,11 +161,13 @@ final class AuthTextField: UIView {
         textField.returnKeyType = viewModel.returnKey
         textField.textContentType = viewModel.textContentTypes
         textField.autocapitalizationType = viewModel.autocapitalization
-        textField.tintColor = viewModel.tintColor
+//        textField.tintColor = viewModel.tintColor
+        textField.tintColor = .black.withAlphaComponent(0.7)
         textField.isSecureTextEntry = viewModel.isSecure
 
         floatingLabel.text = viewModel.placeholder
-        floatingLabel.textColor = viewModel.floatingLabelColor
+//        floatingLabel.textColor = viewModel.floatingLabelColor
+        floatingLabel.textColor = .lightGray
 
         if viewModel.type == .date {
             textField.inputView = datePicker
@@ -171,9 +175,14 @@ final class AuthTextField: UIView {
             textState = .text
         }
 
-        textField.anchor(heightConstant: textFieldHeight)
+        textField.anchor(height: textFieldHeight)
+        
+        
 
         addSubview(expandingVstack)
+        
+//        expandingVstack.layer.borderColor = UIColor.yellow.cgColor
+//        expandingVstack.layer.borderWidth = 2
 
         expandingVstack.addArrangedSubview(textFieldbackgroundView)
         expandingVstack.addArrangedSubview(errorLabel)
@@ -182,21 +191,35 @@ final class AuthTextField: UIView {
 
         textFieldbackgroundView.addSubview(hStack)
         textField.addSubview(floatingLabel)
-
+//        textField.layer.borderColor = UIColor.yellow.cgColor
+//        textField.layer.borderWidth = 2
+        
         textFieldbackgroundView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        
+//        textFieldbackgroundView.layer.borderColor = UIColor.yellow.cgColor
+//        textFieldbackgroundView.layer.borderWidth = 2
 
         hStack.anchor(
-            top: textFieldbackgroundView.topAnchor, paddingTop: 20,
-            bottom: textFieldbackgroundView.bottomAnchor, paddingBottom: 20,
-            left: textFieldbackgroundView.leftAnchor, paddingLeft: 20,
-            right: textFieldbackgroundView.rightAnchor, paddingRight: 20
+            top: textFieldbackgroundView.topAnchor,
+            left: textFieldbackgroundView.leftAnchor,
+            bottom: textFieldbackgroundView.bottomAnchor,
+            right: textFieldbackgroundView.rightAnchor,
+            paddingTop: 20,
+            paddingLeft: 20,
+            paddingBottom: 20,
+            paddingRight: 20
+            
         )
+        
+//        hStack.layer.borderColor = UIColor.yellow.cgColor
+//        hStack.layer.borderWidth = 2
 
-        floatingLabel.anchor(centerY: textField.centerYAnchor)
-        errorLabel.anchor(width: widthAnchor)
+        floatingLabel.centerY(inView: textField)
+        errorLabel.setWidthConstraint(equalTo: widthAnchor)
 
         translatesAutoresizingMaskIntoConstraints = false
-        anchor(height: expandingVstack.heightAnchor)
+//        anchor(height: expandingVstack.heightAnchor)
+        setHeightConstraint(equalTo: expandingVstack.heightAnchor)
 
         // Add rightView if rightView is not nil
         if let rightViewBtnName = viewModel.rightViewButtonName {
@@ -223,6 +246,7 @@ final class AuthTextField: UIView {
 
     // MARK: - Observe
     private func observeStates() {
+        print("observeStates =>~")
         statePublisher
             .sink { [weak self] focus, text, validation in
                 guard let self else { return }
@@ -232,6 +256,9 @@ final class AuthTextField: UIView {
     }
 
     private func observeValidationState() {
+        
+        print("observeValidationState =>~")
+        
         guard validationState == .idle, let validationType = ValidatorType(rawValue: viewModel.type.rawValue) else { return }
 
         textField.textPublisher()
@@ -380,11 +407,13 @@ final class AuthTextField: UIView {
     private func animateErrorLabel(validationState: ValidationState) {
         UIView.animate(withDuration: 0.25) {
             if case let .error(errorState) = validationState {
+                print("animate error label executes =>~")
                 self.errorLabel.text = errorState.description
                 guard self.errorLabel.isHidden == true else { return } // stack acts wierd if you set the same hide/show state
                 self.errorLabel.isHidden = false
 
             } else if case .valid = validationState {
+                print("animate error label executes second condition=>~")
                 self.errorLabel.text = nil
                 guard self.errorLabel.isHidden == false else { return }
                 self.errorLabel.isHidden = true
@@ -438,7 +467,9 @@ final class TextfieldVC2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
-        view.backgroundColor = .theme.background
+//        view.backgroundColor = .theme.background
+        view.backgroundColor = .red.withAlphaComponent(0.2)
+        
 
         view.addSubview(txtField)
         view.addSubview(txtField2)

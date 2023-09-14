@@ -71,6 +71,11 @@ extension UIView {
         }
     }
     
+    func pinSides(to superView: UIView, padding: CGFloat = 0) {
+        leftAnchor.constraint(equalTo: superView.leftAnchor, constant: padding).isActive = true
+        rightAnchor.constraint(equalTo: superView.rightAnchor, constant: -padding).isActive = true
+    }
+    
     func setDimensions(height: CGFloat, width: CGFloat) {
         translatesAutoresizingMaskIntoConstraints = false
         heightAnchor.constraint(equalToConstant: height).isActive = true
@@ -108,5 +113,13 @@ extension UIView {
         guard let view = superview else { return }
         anchor(top: view.topAnchor, left: view.leftAnchor,
                bottom: view.bottomAnchor, right: view.rightAnchor)
+    }
+}
+
+// MARK: - Custom init
+extension UIView {
+    convenience init(withAutolayout: Bool) {
+        self.init(frame: .zero)
+        translatesAutoresizingMaskIntoConstraints = !withAutolayout
     }
 }

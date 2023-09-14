@@ -44,6 +44,22 @@ final class LaunchView: UIView {
         
         addSubview(subtitle)
         subtitle.centerX(inView: title, topAnchor: title.bottomAnchor, paddingTop: 0)
+        self.iconImage.transform = CGAffineTransform(scaleX: 0, y: 0)
+                self.iconImage.alpha = 0
+        title.alpha = 0
+        title.transform = CGAffineTransform(scaleX: 0, y: 0)
+        subtitle.alpha = 0
+        subtitle.transform = CGAffineTransform(scaleX: 0, y: 0)
+        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
+            self.iconImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+                    self.iconImage.alpha = 1
+            self.title.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.subtitle.transform = CGAffineTransform(scaleX: 1, y: 1)
+            self.title.alpha = 1
+            self.subtitle.alpha = 1
+                }) { (_) in
+                    // Animation completion block (if needed)
+                }
         
     }
     

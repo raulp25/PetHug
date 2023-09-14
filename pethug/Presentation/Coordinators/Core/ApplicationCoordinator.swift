@@ -31,6 +31,7 @@ final class ApplicationCoordinator: Coordinator {
     //MARK: - Setup / listen
     func start() {
         window.rootViewController = LaunchViewController()
+//        window.rootViewController = LoginViewController()
         bindAuthChangesToSession()
         
         $session
@@ -62,6 +63,9 @@ final class ApplicationCoordinator: Coordinator {
         switch state {
         case .signedOut:
             print("state signedOut setUpCoordinator(): => \(state)")
+            let coordinator = LoginCoordinator()
+            window.rootViewController = coordinator.rootViewController
+            childCoordinator = coordinator
         case .signedInButNotVerified:
             print("state signedInButNotVerified setUpCoordinator(): => \(state)")
         case .signedIn:

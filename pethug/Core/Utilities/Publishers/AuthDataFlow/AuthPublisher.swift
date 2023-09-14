@@ -1,14 +1,15 @@
 //
-//  Publishers.swift
+//  AuthPublisher.swift
 //  pethug
 //
-//  Created by Raul Pena on 12/09/23.
+//  Created by Raul Pena on 13/09/23.
 //
 
 import Combine
 import FirebaseAuth
 
 extension Publishers {
+    
     struct AuthPublisher: Publisher {
         typealias Output = SessionState
         typealias Failure = Never
@@ -52,12 +53,3 @@ extension Publishers {
     }
 }
 
-// MARK: - handleThreads (subscibe to background and receive on main)
-extension Publisher {
-    func handleThreadsOperator() -> AnyPublisher<Self.Output, Self.Failure> {
-        self
-            .subscribe(on: DispatchQueue.global())
-            .receive(on: DispatchQueue.main)
-            .eraseToAnyPublisher()
-    }
-}

@@ -19,22 +19,30 @@ final class LoginCoordinator: NSObject, StateCoordinator {
     }
     
     func start() {
+        let vc = LoginViewController()
+        vc.coordinator = self
+        rootViewController.delegate = self
+        rootViewController.pushViewController(vc, animated: true)
         
+    }
+    
+    func startCreateAccountCoordinator() {
+        print(": => start create acc coordinator")
     }
     
 }
 
 
-//extension LoginCoordinator: UINavigationControllerDelegate {
-//    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-//        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
-//            return
-//        }
-//
-//        if navigationController.viewControllers.contains(fromViewController) {
-//            return
-//        }
-//
-//
-//    }
-//}
+extension LoginCoordinator: UINavigationControllerDelegate {
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
+            return
+        }
+
+        if navigationController.viewControllers.contains(fromViewController) {
+            return
+        }
+
+
+    }
+}
