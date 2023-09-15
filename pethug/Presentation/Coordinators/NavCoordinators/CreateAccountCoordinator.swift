@@ -12,11 +12,9 @@ final class CreateAccountCoordinator: NavCoordinator {
     
     var rootViewController: UINavigationController
     
-//    var user = UserPrivate(id: nil, uuid: "", name: "", profileImageUrlString: "", email: "", dateOfBirth: 0)
-//    var password: String?
-    
     init(rootViewController: UINavigationController) {
         self.rootViewController = rootViewController
+        rootViewController.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     func start() {

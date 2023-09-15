@@ -37,6 +37,7 @@
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
+		C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
 		C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */; };
 		C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */; };
@@ -92,6 +93,7 @@
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
+		C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponser+Extensions.swift"; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 				C42616EA2AB27BC4006925DB /* UIViewController+Extensions.swift */,
 				C42616F42AB29DF4006925DB /* UILabel+Extensions.swift */,
 				C42616F62AB2A09F006925DB /* UIButton+Extensions.swift */,
+				C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -568,6 +571,7 @@
 				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
 				C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */,
 				C4CF74F62AB259A800D69185 /* AuthTextField.swift in Sources */,
+				C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */,
 				C42616EB2AB27BC4006925DB /* UIViewController+Extensions.swift in Sources */,
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,

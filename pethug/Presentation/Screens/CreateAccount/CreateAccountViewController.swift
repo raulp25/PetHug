@@ -15,7 +15,7 @@ class CreateAccountViewController: UIViewController {
 //    CHECAR SI AFECTO EL withoutAutoLayout - respuesta: parece que no afecta pero vamos a dejarlo para el futuro aver
 //    si afecta o no
     private let containerView = UIView(withAutolayout: true)
-    private let childContainerView = UIView()
+    private let childContainerView = UIView(withAutolayout: true)
     
     private let backgroundImageView: UIImageView = {
        let iv = UIImageView(image: UIImage(named: "orange"))
@@ -52,8 +52,9 @@ class CreateAccountViewController: UIViewController {
     private lazy var vStack: UIStackView = {
         let stack: UIStackView = .init(arrangedSubviews: [usernameTextField, emailTextField, passwordTextField])
         stack.axis = .vertical
-        stack.alignment = .fill
-        stack.spacing = 10
+        stack.distribution = .fill  // Set distribution to fill
+        stack.alignment = .fill     // Set alignment to fill
+        stack.spacing = 25
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -70,7 +71,7 @@ class CreateAccountViewController: UIViewController {
     private let emailTextField = AuthTextField(
         viewModel: .init(
             type: .email,
-            placeholderOption: .custom("Mobile number or email address"),
+            placeholderOption: .custom("Email"),
             returnKey: .continue
         )
     )
@@ -84,30 +85,12 @@ class CreateAccountViewController: UIViewController {
         )
     )
     
-    private lazy var forgotPasswordContainerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        return uv
-    }()
-
-    private lazy var forgotPasswordBtn: UIButton = {
-        let btn: UIButton = .createTextButton(with: "Forgot Password?")
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
-        btn.addTarget(self, action: #selector(forgotPassword), for: .touchUpInside)
+    private lazy var createAccountBtn: AuthButton = {
+        let btn = AuthButton(viewModel: .init(title: "Create account"))
+        btn.addTarget(self, action: #selector(createAccount), for: .touchUpInside)
         return btn
     }()
     
-    private lazy var loginBtn: AuthButton = {
-        let btn = AuthButton(viewModel: .init(title: "Log in"))
-        btn.addTarget(self, action: #selector(login), for: .touchUpInside)
-        return btn
-    }()
-    
-    private lazy var createAccountBtn: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.attributedRegularBoldColoredText(regularText: "New to Pet Hug?", boldText: "Create Account")
-        btn.addTarget(self, action: #selector(goToCreateNewAccount), for: .touchUpInside)
-        return btn
-    }()
     
     private lazy var googleSignInBtn: GradientUIViewButton = {
         let button = GradientUIViewButton()
@@ -117,8 +100,8 @@ class CreateAccountViewController: UIViewController {
         button.startColor = customRGBColor(red: 243, green: 117, blue: 121)
         button.endColor = customRGBColor(red: 243, green: 117, blue: 121)
 //
-//        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleResetPassword))
-//        button.addGestureRecognizer(gesture)
+//      let gesture = UITapGestureRecognizer(target: self, action: #selector(handleResetPassword))
+//      button.addGestureRecognizer(gesture)
         return button
     }()
     
@@ -127,7 +110,7 @@ class CreateAccountViewController: UIViewController {
     private var viewModel = CreateAcoountViewModel(authService: AuthService())
     private var subscriptions = Set<AnyCancellable>()
     private var keyboardPublisher: AnyCancellable?
-    //check if i delete this
+    
     private var flowLayoutConstraint: NSLayoutConstraint!
     
     //MARK: - Internal properties
@@ -137,6 +120,7 @@ class CreateAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = customRGBColor(red: 248, green: 111, blue: 14)
+        setupKeyboardHiding()
         hideKeyboardWhenTappedAround()
         setup()
         
@@ -146,61 +130,46 @@ class CreateAccountViewController: UIViewController {
                 guard let self else { return }
                 switch currentState {
                 case .loading:
-                    self.loginBtn.isLoading = true
+                    self.createAccountBtn.isLoading = true
                 case .success:
-                    self.loginBtn.isLoading = false
+                    self.createAccountBtn.isLoading = false
                 case let.error(err):
-                    self.loginBtn.isLoading = false
+                    self.createAccountBtn.isLoading = false
                     self.alert(message: err.localizedDescription, title: "Error")
                 }
             }.store(in: &subscriptions)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        if keyboardPublisher == nil {
-            keyboardPublisher = keyboardListener()
-                .sink(receiveValue: { [weak self] keyboard in
-                    switch keyboard.state {
-                    case .willShow:
-                        self?.manageKeyboardChange(height: keyboard.height)
-                    case .willHide:
-                        self?.manageKeyboardChange(height: 0)
-                    }
-                })
-        }
-    }
-    
+
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        print(":view will disapea CREATE ACC '''' =>")
         backgroundImageView.removeFromSuperview()
         keyboardPublisher = nil
         keyboardPublisher?.cancel()
     }
     
+    
     //MARK: - Actions
     
     @objc func handleProfilePhotoSelect() {
+        view.endEditing(true)
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
-        view.endEditing(true)
-        
         present(picker, animated: true, completion: nil)
     }
     
     
-    @objc func login() {
-        print(": => login clicked")
+    @objc func createAccount() {
         guard
+            let validUserName = usernameTextField.isValidText(),
             let validFirstName = emailTextField.isValidText(),
-            let validSurname = passwordTextField.isValidText() else {
+            let validPassword = passwordTextField.isValidText()  else {
             return
         }
-//        Task {
+        Task {
 //            await viewModel.login(email: emailTextField.textField.text, password: passwordTextField.textField.text)
-//        }
+        }
     }
     
     @objc private func forgotPassword() {
@@ -208,33 +177,60 @@ class CreateAccountViewController: UIViewController {
         print(": => forgot password clicked")
     }
     
-    @objc func goToCreateNewAccount() {
+    @objc func goBackToLogin() {
 //        coordinator?.startCreateAccountCoordinator()
     }
     
     //MARK: - Private Methods
-    private func manageKeyboardChange(height: CGFloat) {
-        let bottomPadding: CGFloat = 20
-        
-        if height != 0 {
-            flowLayoutConstraint.constant = (height - (view.frame.height - vStack.frame.maxY)) - bottomPadding
-        } else {
-            flowLayoutConstraint.constant = height
+    private func setupKeyboardHiding(){
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+   
+    @objc func keyboardWillShow(sender: NSNotification) {
+        guard let userInfo = sender.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let currentTextField = UIResponder.currentFirst() as? UITextField
+        else {
+            return
         }
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-        })
+        let keyboardTopY = keyboardFrame.cgRectValue.origin.y
+        let convertedTextFieldFrame = view.convert(currentTextField.frame, from: currentTextField.superview?.superview?.superview)
+        let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
+        
+        let intOne:CGFloat = 10, intTwo: CGFloat = 150
+
+        if (textFieldBottomY + intOne) > keyboardTopY {
+            let textBoxY = convertedTextFieldFrame.origin.y
+            let newFrameY = (textBoxY - keyboardTopY / 2) * -1
+            view.frame.origin.y = newFrameY + intTwo
+        }
     }
     
-    let paddintTop = UIScreen.main.bounds.height * 0.05
+    @objc func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
+    
     //MARK: - setup
     func setup() {
+        let paddintTop = UIScreen.main.bounds.height * 0.05
+        let sidePadding: CGFloat = 50
+        
+        usernameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        
-//        emailTextField.setHeight(55)
-//        passwordTextField.setHeight(55)
         
         view.addSubview(backgroundImageView)
         backgroundImageView.fillSuperview()
@@ -242,9 +238,6 @@ class CreateAccountViewController: UIViewController {
         view.addSubview(containerView)
         containerView.addSubview(plusPhotoImageView)
         containerView.addSubview(childContainerView)
-        containerView.addSubview(googleSignInBtn)
-        
-        let padding: CGFloat = 20
 
         flowLayoutConstraint = containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         flowLayoutConstraint.isActive = true
@@ -266,6 +259,7 @@ class CreateAccountViewController: UIViewController {
         childContainerView.addSubview(titleLabel)
         childContainerView.addSubview(iconImageView)
         childContainerView.addSubview(vStack)
+        childContainerView.addSubview(createAccountBtn)
         
         childContainerView.anchor(
             top: plusPhotoImageView.bottomAnchor,
@@ -274,7 +268,6 @@ class CreateAccountViewController: UIViewController {
             right: containerView.rightAnchor,
             paddingTop: CGFloat(Int(paddintTop))
         )
-        print("paddingTop ls: => \(paddintTop)")
         
         childContainerView.layer.cornerRadius = 30
         childContainerView.backgroundColor = .white
@@ -283,7 +276,7 @@ class CreateAccountViewController: UIViewController {
             top: childContainerView.topAnchor,
             left: childContainerView.leftAnchor,
             paddingTop: 30,
-            paddingLeft: padding
+            paddingLeft: sidePadding
         )
         
         iconImageView.centerY(
@@ -299,25 +292,17 @@ class CreateAccountViewController: UIViewController {
             left: childContainerView.leftAnchor,
             right: childContainerView.rightAnchor,
             paddingTop: 20,
-            paddingLeft: padding,
-            paddingRight: padding
+            paddingLeft: sidePadding,
+            paddingRight: sidePadding
         )
-        
-//        forgotPasswordContainerView.addSubview(forgotPasswordBtn)
-//        forgotPasswordBtn.anchor(
-//            top: forgotPasswordContainerView.topAnchor,
-//            bottom: forgotPasswordContainerView.bottomAnchor,
-//            right: forgotPasswordContainerView.rightAnchor
-//        )
-//
        
-        googleSignInBtn.anchor(
+        createAccountBtn.anchor(
             top: vStack.bottomAnchor,
             left: containerView.leftAnchor,
             right: containerView.rightAnchor,
             paddingTop: 50,
-            paddingLeft: padding,
-            paddingRight: padding
+            paddingLeft: sidePadding,
+            paddingRight: sidePadding
         )
         
     }
@@ -337,7 +322,6 @@ extension CreateAccountViewController: UIImagePickerControllerDelegate & UINavig
         plusPhotoImageView.layer.borderColor = UIColor.white.cgColor
         plusPhotoImageView.layer.borderWidth = 0.5
         plusPhotoImageView.image = selectedImage.withRenderingMode(.alwaysOriginal)
-//        plusPhotoImageView.setImage(selectedImage.withRenderingMode(.alwaysOriginal), for: .normal)
         
         self.dismiss(animated: true)
     }
@@ -347,22 +331,23 @@ extension CreateAccountViewController: UIImagePickerControllerDelegate & UINavig
 
 extension CreateAccountViewController: AuthTextFieldDelegate {
     func textFieldShouldReturn(_ textField: AuthTextField) -> Bool {
-//        if textField == usernameTextField {
-//            textField.textField.resignFirstResponder()
-//            emailTextField.becomeFirstResponder()
-//        }
         
-        if textField == emailTextField {
-            //check if we leave this behavior or we directly assign
-//            the password as first responder
+        print("current textfield in textfieldShouldreturn(): => \(textField)")
+        print("textField === usernameTextField: => \(textField === usernameTextField)")
+        
+        switch textField {
+        case usernameTextField:
+            textField.textField.resignFirstResponder()
+            emailTextField.textField.becomeFirstResponder()
+            
+        case emailTextField:
             textField.textField.resignFirstResponder()
             passwordTextField.textField.becomeFirstResponder()
             
-        } else {
-            // login
-            login()
+        default:
+            // create account
+            createAccount()
             textField.textField.resignFirstResponder()
-            print(": => keyboard continue button login clicked textfieldShouldReturn")
         }
         return true
     }

@@ -24,6 +24,13 @@ struct CreateAcoountViewModel {
         self.authService = authService
     }
     
+//    func k() {
+//        state.send(.loading)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute:{
+//            state.send(.success)
+//        })
+//    }
+    
     func crateAccount(username: String, email: String?, password: String?) async {
         guard let email, let password else {
             state.send(.error(.someThingWentWrong))

@@ -58,7 +58,7 @@ final class AuthTextField: UIView {
 
     private lazy var floatingLabel: UILabel = {
         let label = UILabel(withAutolayout: true)
-        label.font = .systemFont(ofSize: 17, weight: .regular)
+        label.font = .systemFont(ofSize: 14, weight: .regular)
         return label
     }()
 
@@ -196,7 +196,7 @@ final class AuthTextField: UIView {
         
         composeFirstStackBorderBottom.anchor(bottom: textFieldbackgroundView.bottomAnchor)
         composeFirstStackBorderBottom.setWidthConstraint(equalTo: textFieldbackgroundView.widthAnchor)
-        composeFirstStackBorderBottom.setHeight(0.3)
+        composeFirstStackBorderBottom.setHeight(0.29)
         composeFirstStackBorderBottom.backgroundColor = .black
         
         textFieldbackgroundView.addSubview(hStack)
@@ -216,9 +216,9 @@ final class AuthTextField: UIView {
             left: textFieldbackgroundView.leftAnchor,
             bottom: textFieldbackgroundView.bottomAnchor,
             right: textFieldbackgroundView.rightAnchor,
-            paddingTop: 20,
-            paddingLeft: 20,
-            paddingBottom: 20,
+            paddingTop: 5,
+            paddingLeft: 0,
+            paddingBottom: 10,
             paddingRight: 20
             
         )
@@ -231,7 +231,10 @@ final class AuthTextField: UIView {
 
         translatesAutoresizingMaskIntoConstraints = false
 //        anchor(height: expandingVstack.heightAnchor)
-        setHeightConstraint(equalTo: expandingVstack.heightAnchor)
+        print("String(describing: expandingVstack.heightAnchor: => \(expandingVstack.heightAnchor)")
+        
+//        setHeightConstraint(equalTo: expandingVstack.heightAnchor)
+        self.setHeight(50)
 
         // Add rightView if rightView is not nil
         if let rightViewBtnName = viewModel.rightViewButtonName {
@@ -257,6 +260,9 @@ final class AuthTextField: UIView {
     }
 
     // MARK: - Observe
+    // I can expose this satate publisher so if we have an error of type
+//    password dont contain any letter update the constraint of the forgot password
+//    view so it doesnt overlays with the error message
     private func observeStates() {
         print("observeStates =>~")
         statePublisher
@@ -360,7 +366,6 @@ final class AuthTextField: UIView {
         guard let rightViewButton = iconButton else { return }
         textField.togglePasswordVisibility()
 //      let prefix = "custom-"
-        let prefix = ""
         let end = textField.isSecureTextEntry ? "eye.slash" : "eye"
 
         if let image = UIImage(systemName: end) {
@@ -397,7 +402,7 @@ final class AuthTextField: UIView {
             switch textState {
             case .empty:
                 guard floatingLabel.transform != .identity else { return }
-                floatingLabelFont = .systemFont(ofSize: 17, weight: .regular)
+                floatingLabelFont = .systemFont(ofSize: 14, weight: .regular)
                 floatingTransform = .identity
                 textFieldTransform = .identity
 

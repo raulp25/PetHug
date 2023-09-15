@@ -15,7 +15,7 @@ class LoginViewController: UIViewController {
 //    CHECAR SI AFECTO EL withoutAutoLayout - respuesta: parece que no afecta pero vamos a dejarlo para el futuro aver
 //    si afecta o no
     private let containerView = UIView(withAutolayout: true)
-    private let childContainerView = UIView()
+    private let childContainerView = UIView(withAutolayout: true)
     
     private let iconImageView: UIImageView = {
        let iv = UIImageView(image: UIImage(named: "bull"))
@@ -34,10 +34,11 @@ class LoginViewController: UIViewController {
     
     
     private lazy var vStack: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [emailTextField, passwordTextField, forgotPasswordContainerView, loginBtn, createAccountBtn])
+        let stack: UIStackView = .init(arrangedSubviews: [emailTextField, passwordTextField])
         stack.axis = .vertical
+        stack.distribution = .equalSpacing
         stack.alignment = .fill
-        stack.spacing = 10
+        stack.spacing = 25
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -45,7 +46,15 @@ class LoginViewController: UIViewController {
     private let emailTextField = AuthTextField(
         viewModel: .init(
             type: .email,
-            placeholderOption: .custom("Mobile number or email address"),
+            placeholderOption: .custom("Email address"),
+            returnKey: .continue
+        )
+    )
+    
+    private let testTextField = AuthTextField(
+        viewModel: .init(
+            type: .email,
+            placeholderOption: .custom("email test"),
             returnKey: .continue
         )
     )
@@ -68,6 +77,16 @@ class LoginViewController: UIViewController {
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 13)
         btn.addTarget(self, action: #selector(forgotPassword), for: .touchUpInside)
         return btn
+    }()
+    
+    private lazy var vStack2: UIStackView = {
+        let stack: UIStackView = .init(arrangedSubviews: [loginBtn, createAccountBtn])
+        stack.axis = .vertical
+        stack.distribution = .equalSpacing
+        stack.alignment = .fill
+        stack.spacing = 5
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
     }()
     
     private lazy var loginBtn: AuthButton = {
@@ -111,6 +130,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = customRGBColor(red: 248, green: 111, blue: 14)
+        setupKeyboardHiding()
         hideKeyboardWhenTappedAround()
         setup()
         
@@ -132,17 +152,6 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if keyboardPublisher == nil {
-            keyboardPublisher = keyboardListener()
-                .sink(receiveValue: { [weak self] keyboard in
-                    switch keyboard.state {
-                    case .willShow:
-                        self?.manageKeyboardChange(height: keyboard.height)
-                    case .willHide:
-                        self?.manageKeyboardChange(height: 0)
-                    }
-                })
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -173,36 +182,53 @@ class LoginViewController: UIViewController {
         view.endEditing(true)
         coordinator?.startCreateAccountCoordinator()
     }
-    
-    //MARK: - Private Methods
-    private func manageKeyboardChange(height: CGFloat) {
-        let bottomPadding: CGFloat = 20
-        
-        if height != 0 {
-            flowLayoutConstraint.constant = (height - (view.frame.height - vStack.frame.maxY)) - bottomPadding
-        } else {
-            flowLayoutConstraint.constant = height
+   
+   
+    @objc func keyboardWillShow(sender: NSNotification) {
+        guard let userInfo = sender.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let currentTextField = UIResponder.currentFirst() as? UITextField
+        else {
+            return
         }
         
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
-            self.view.layoutIfNeeded()
-        })
+        let keyboardTopY = keyboardFrame.cgRectValue.origin.y
+        let convertedTextFieldFrame = view.convert(currentTextField.frame, from: currentTextField.superview?.superview?.superview)
+        let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
+        
+        let intOne: CGFloat = 10, intTwo:CGFloat = 150
+
+        if (textFieldBottomY + intOne) > keyboardTopY {
+            let textBoxY = convertedTextFieldFrame.origin.y
+            let newFrameY = (textBoxY - keyboardTopY / 2) * -1
+            view.frame.origin.y = newFrameY + intTwo
+        }
+        
     }
+    
+    @objc func keyboardWillHide(notification: NSNotification) {
+        view.frame.origin.y = 0
+    }
+    
+    
+//  private methods
+    private func setupKeyboardHiding(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
     
     //MARK: - setup
     func setup() {
         emailTextField.delegate = self
         passwordTextField.delegate = self
         
-//        emailTextField.setHeight(55)
-//        passwordTextField.setHeight(55)
-        
         view.addSubview(containerView)
         containerView.addSubview(iconImageView)
         containerView.addSubview(childContainerView)
         containerView.addSubview(googleSignInBtn)
         
-        let padding: CGFloat = 20
+        let padding: CGFloat = 30
 
         flowLayoutConstraint = containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
         flowLayoutConstraint.isActive = true
@@ -223,6 +249,8 @@ class LoginViewController: UIViewController {
         
         childContainerView.addSubview(titleLabel)
         childContainerView.addSubview(vStack)
+        childContainerView.addSubview(forgotPasswordContainerView)
+        childContainerView.addSubview(vStack2)
         
         childContainerView.anchor(
             top: iconImageView.bottomAnchor,
@@ -250,6 +278,14 @@ class LoginViewController: UIViewController {
             paddingRight: padding
         )
         
+        forgotPasswordContainerView.anchor(
+            top: vStack.bottomAnchor,
+            left: childContainerView.leftAnchor,
+            right: childContainerView.rightAnchor,
+            paddingTop: 8,
+            paddingLeft: padding,
+            paddingRight: padding
+        )
         forgotPasswordContainerView.addSubview(forgotPasswordBtn)
         forgotPasswordBtn.anchor(
             top: forgotPasswordContainerView.topAnchor,
@@ -257,6 +293,15 @@ class LoginViewController: UIViewController {
             right: forgotPasswordContainerView.rightAnchor
         )
         
+        
+        vStack2.anchor(
+            top: forgotPasswordContainerView.bottomAnchor,
+            left: childContainerView.leftAnchor,
+            right: childContainerView.rightAnchor,
+            paddingTop: 20,
+            paddingLeft: padding,
+            paddingRight: padding
+        )
        
         googleSignInBtn.anchor(
             left: containerView.leftAnchor,
@@ -273,8 +318,6 @@ class LoginViewController: UIViewController {
 extension LoginViewController: AuthTextFieldDelegate {
     func textFieldShouldReturn(_ textField: AuthTextField) -> Bool {
         if textField == emailTextField {
-            //check if we leave this behavior or we directly assign
-//            the password as first responder
             textField.textField.resignFirstResponder()
             passwordTextField.textField.becomeFirstResponder()
             
