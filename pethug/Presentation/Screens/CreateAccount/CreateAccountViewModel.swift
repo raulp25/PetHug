@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-struct CreateAcoountViewModel {
+struct CreateAccountViewModel {
     enum State {
         case loading
         case success
@@ -21,9 +21,12 @@ struct CreateAcoountViewModel {
     
     private let authService: AuthServiceProtocol
     private let imageService: ImageServiceProtocol
-    init(authService: AuthServiceProtocol, imageService: ImageServiceProtocol) {
+    private let useCase: DefaultRegisterUserUC
+    
+    init(authService: AuthServiceProtocol, imageService: ImageServiceProtocol, useCase: DefaultRegisterUserUC) {
         self.authService = authService
         self.imageService = imageService
+        self.useCase = useCase
     }
     
 //    func k() {
@@ -33,14 +36,19 @@ struct CreateAcoountViewModel {
 //        })
 //    }
     
-    func crateAccount(username: String, email: String, password: String) async throws {
+    func crateAccount(username: String?, email: String?, password: String?) async {
+        guard let username, let email, let password else {
+            state.send(.error(.someThingWentWrong))
+            return
+        }
+        
         state.send(.loading)
         
         do {
             
             var imageUrl: String? = nil
             if let image = profileImage {
-                imageUrl =  try await imageService.uploadImage(image: image)?.absoluteString
+                imageUrl =  try await imageService.uploadImage(image: image)
             }
             
             let uid = try await authService.createAccounWith(email: email, password: password)
@@ -55,23 +63,15 @@ struct CreateAcoountViewModel {
             
             try await registerUser(user: userNew)
             
+            state.send(.success)
+            
         } catch {
             state.send(.error(.default(error)))
         }
     }
     
-    func registerUser(user: User) async throws {
-        
-        let userRepo = DefaultUserRepository(userDataSource: DefaultUserDataSource())
-        
-        let result = try await userRepo.registerUser(user: user)
-        
-        switch result {
-        case .success(_):
-            state.send(.success)
-        case .failure(let error):
-            state.send(.error(.default(error)))
-        }
+    private func registerUser(user: User) async throws {
+        try await useCase.execute(user: user)
     }
     
     

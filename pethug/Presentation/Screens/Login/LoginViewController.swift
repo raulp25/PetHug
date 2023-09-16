@@ -120,7 +120,7 @@ class LoginViewController: UIViewController {
     private let viewModel = LoginViewModel(authService: AuthService())
     private var subscriptions = Set<AnyCancellable>()
     private var keyboardPublisher: AnyCancellable?
-    //check if i delete this
+    
     private var flowLayoutConstraint: NSLayoutConstraint!
     
     //MARK: - Internal properties

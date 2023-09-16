@@ -7,9 +7,7 @@
 
 import Foundation
 
-
 protocol ModelMapper {
     associatedtype UsermodelType
-
     func toModel() -> UsermodelType
 }

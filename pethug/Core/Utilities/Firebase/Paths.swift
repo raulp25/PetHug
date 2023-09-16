@@ -6,4 +6,4 @@
 //
 
 import FirebaseFirestore
-let FB_COLLECTION_USERS  = Firestore.firestore().collection("users")
+let FB_COLLECTION_USERS = Firestore.firestore().collection("users")

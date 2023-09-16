@@ -9,5 +9,5 @@ import Foundation
 
 protocol UserRepository {
     
-    func registerUser(user: User) async throws -> Result<Bool, Error>
+    func registerUser(user: User) async throws
 }

@@ -8,5 +8,5 @@
 import Foundation
 protocol ObjectLiteralMapper {
     associatedtype ObjectLiteral
-    func toDomainObject() -> ObjectLiteral
+    func toObjectLiteral() -> ObjectLiteral
 }

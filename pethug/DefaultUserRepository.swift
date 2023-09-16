@@ -14,14 +14,7 @@ final class DefaultUserRepository: UserRepository {
         self.userDataSource = userDataSource
     }
     
-    func registerUser(user: User) async throws -> Result<Bool, Error> {
-        let result = try await userDataSource.registerUser(user: user)
-        switch result {
-        case .success(let bool):
-            return .success(true)
-        case .failure(let error):
-            return .failure(error)
-        }
-        
+    func registerUser(user: User) async throws {
+        try await userDataSource.registerUser(user: user)
     }
 }

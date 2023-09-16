@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 // MARK: - Protocol -
 protocol UserDataSource {
-    func registerUser(user: User) async throws ->  Result<Bool, Error>
+    func registerUser(user: User) async throws
 }
 
 
@@ -19,12 +19,10 @@ final class DefaultUserDataSource: UserDataSource {
     
     private let db = Firestore.firestore()
     
-    
-    func registerUser(user: User) async throws -> Result<Bool, Error> {
-        let data = user.toDomainObject()
+    // theres no need to return nothing since throwing would indicate that something went wrong
+    func registerUser(user: User) async throws {
+        let data = user.toObjectLiteral()
         try await FB_COLLECTION_USERS.document(user.id).setData(data)
-        return .success(true)
-        
     }
     
 }

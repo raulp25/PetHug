@@ -52,8 +52,8 @@ class CreateAccountViewController: UIViewController {
     private lazy var vStack: UIStackView = {
         let stack: UIStackView = .init(arrangedSubviews: [usernameTextField, emailTextField, passwordTextField])
         stack.axis = .vertical
-        stack.distribution = .fill  // Set distribution to fill
-        stack.alignment = .fill     // Set alignment to fill
+        stack.distribution = .fill
+        stack.alignment = .fill
         stack.spacing = 25
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -107,7 +107,15 @@ class CreateAccountViewController: UIViewController {
     
     
     //MARK: - Private properties
-    private var viewModel = CreateAcoountViewModel(authService: AuthService(), imageService: ImageService())
+    private var viewModel = CreateAccountViewModel(
+                            authService: AuthService(),
+                            imageService: ImageService(),
+                            useCase: DefaultRegisterUserUC(
+                                userRepository: DefaultUserRepository(
+                                    userDataSource: DefaultUserDataSource()
+                                )
+                            )
+                        )
     private var subscriptions = Set<AnyCancellable>()
     private var keyboardPublisher: AnyCancellable?
     
@@ -162,14 +170,19 @@ class CreateAccountViewController: UIViewController {
     
     @objc func createAccount() {
         guard
-            let validUserName = usernameTextField.isValidText(),
-            let validFirstName = emailTextField.isValidText(),
+            let validUsername = usernameTextField.isValidText(),
+            let validEmail = emailTextField.isValidText(),
             let validPassword = passwordTextField.isValidText()  else {
             return
         }
-        Task {
-//            await viewModel.login(email: emailTextField.textField.text, password: passwordTextField.textField.text)
-        }
+//        Task {
+//            await viewModel.crateAccount(
+//                username: validUsername,
+//                email: validEmail,
+//                password: validPassword
+//            )
+//        }
+        
     }
     
     @objc private func forgotPassword() {

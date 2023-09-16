@@ -8,13 +8,11 @@
 import Foundation
 
 // MARK: - Protocol -
-
 protocol RegisterUserUC {
-    func execute(user: User) async throws -> Result<Bool, Error>
+    func execute(user: User) async throws
 }
 
 // MARK: - Implementation -
-
 class DefaultRegisterUserUC: RegisterUserUC {
     
     private let userRepository: UserRepository
@@ -23,13 +21,7 @@ class DefaultRegisterUserUC: RegisterUserUC {
         self.userRepository = userRepository
     }
     
-    func execute(user: User) async throws -> Result<Bool, Error> {
-        let result = try await userRepository.registerUser(user: user)
-        switch result {
-        case .success(_):
-            return .success(true)
-        case .failure(let error):
-            return .failure(error)
-        }
+    func execute(user: User) async throws  {
+        try await userRepository.registerUser(user: user)
     }
 }

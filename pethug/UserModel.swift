@@ -15,7 +15,5 @@ struct UserModel {
     let password: String
     let bio: String?
     let profileImageUrl: UIImage?
-    
-//    var isCurrentUser: Bool?
 }
 
