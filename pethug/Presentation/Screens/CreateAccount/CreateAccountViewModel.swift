@@ -20,8 +20,10 @@ struct CreateAcoountViewModel {
     var state = PassthroughSubject<State, Never>()
     
     private let authService: AuthServiceProtocol
-    init(authService: AuthServiceProtocol) {
+    private let imageService: ImageServiceProtocol
+    init(authService: AuthServiceProtocol, imageService: ImageServiceProtocol) {
         self.authService = authService
+        self.imageService = imageService
     }
     
 //    func k() {
@@ -31,16 +33,43 @@ struct CreateAcoountViewModel {
 //        })
 //    }
     
-    func crateAccount(username: String, email: String?, password: String?) async {
-        guard let email, let password else {
-            state.send(.error(.someThingWentWrong))
-            return
-        }
+    func crateAccount(username: String, email: String, password: String) async throws {
         state.send(.loading)
+        
         do {
-//            en el imageservice poner ahi la condicion de que la image no sea nil 
-            try await authService.createAccounWith(email: email, password: password)
+            
+            var imageUrl: String? = nil
+            if let image = profileImage {
+                imageUrl =  try await imageService.uploadImage(image: image)?.absoluteString
+            }
+            
+            let uid = try await authService.createAccounWith(email: email, password: password)
+            
+            let userNew = User(
+                id: uid,
+                username: username,
+                email: email,
+                bio: nil,
+                profileImageUrl: imageUrl
+            )
+            
+            try await registerUser(user: userNew)
+            
         } catch {
+            state.send(.error(.default(error)))
+        }
+    }
+    
+    func registerUser(user: User) async throws {
+        
+        let userRepo = DefaultUserRepository(userDataSource: DefaultUserDataSource())
+        
+        let result = try await userRepo.registerUser(user: user)
+        
+        switch result {
+        case .success(_):
+            state.send(.success)
+        case .failure(let error):
             state.send(.error(.default(error)))
         }
     }

@@ -107,7 +107,7 @@ class CreateAccountViewController: UIViewController {
     
     
     //MARK: - Private properties
-    private var viewModel = CreateAcoountViewModel(authService: AuthService())
+    private var viewModel = CreateAcoountViewModel(authService: AuthService(), imageService: ImageService())
     private var subscriptions = Set<AnyCancellable>()
     private var keyboardPublisher: AnyCancellable?
     

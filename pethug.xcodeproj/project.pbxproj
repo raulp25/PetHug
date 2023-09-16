@@ -33,6 +33,19 @@
 		C445F15A2AB141D000053BE7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = C445F1592AB141D000053BE7 /* FirebaseStorage */; };
 		C445F1602AB1435300053BE7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F15F2AB1435200053BE7 /* User.swift */; };
 		C445F16A2AB1581F00053BE7 /* Publishers+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1692AB1581F00053BE7 /* Publishers+Extensions.swift */; };
+		C448200C2AB5271B00E72BD2 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C448200B2AB5271B00E72BD2 /* ImageService.swift */; };
+		C448200E2AB5335500E72BD2 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C448200D2AB5335500E72BD2 /* UserService.swift */; };
+		C44820112AB5376900E72BD2 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820102AB5376900E72BD2 /* UserModel.swift */; };
+		C44820142AB538DC00E72BD2 /* DomainMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820132AB538DC00E72BD2 /* DomainMapperProtocol.swift */; };
+		C44820162AB539B400E72BD2 /* UserModel+DomainMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820152AB539B400E72BD2 /* UserModel+DomainMapper.swift */; };
+		C44820182AB53B7000E72BD2 /* UserEntity+DomainMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820172AB53B7000E72BD2 /* UserEntity+DomainMapper.swift */; };
+		C448201A2AB53EF200E72BD2 /* RegisterUserUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820192AB53EF200E72BD2 /* RegisterUserUC.swift */; };
+		C448201D2AB53FF300E72BD2 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C448201C2AB53FF300E72BD2 /* DefaultUserRepository.swift */; };
+		C448201F2AB5401600E72BD2 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C448201E2AB5401600E72BD2 /* UserRepository.swift */; };
+		C44820222AB5424900E72BD2 /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820212AB5424900E72BD2 /* UserDataSource.swift */; };
+		C44820242AB5438000E72BD2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820232AB5438000E72BD2 /* Constants.swift */; };
+		C44820282AB54ABA00E72BD2 /* ObjectLiterlMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820272AB54AB900E72BD2 /* ObjectLiterlMapper.swift */; };
+		C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */; };
 		C46338252AB2CE54000AF2F6 /* MessengerError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* MessengerError.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
@@ -89,6 +102,19 @@
 		C445F13C2AB1391B00053BE7 /* pethugUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pethugUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		C445F15F2AB1435200053BE7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		C445F1692AB1581F00053BE7 /* Publishers+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publishers+Extensions.swift"; sourceTree = "<group>"; };
+		C448200B2AB5271B00E72BD2 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
+		C448200D2AB5335500E72BD2 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		C44820102AB5376900E72BD2 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
+		C44820132AB538DC00E72BD2 /* DomainMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainMapperProtocol.swift; sourceTree = "<group>"; };
+		C44820152AB539B400E72BD2 /* UserModel+DomainMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserModel+DomainMapper.swift"; sourceTree = "<group>"; };
+		C44820172AB53B7000E72BD2 /* UserEntity+DomainMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+DomainMapper.swift"; sourceTree = "<group>"; };
+		C44820192AB53EF200E72BD2 /* RegisterUserUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUC.swift; sourceTree = "<group>"; };
+		C448201C2AB53FF300E72BD2 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
+		C448201E2AB5401600E72BD2 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		C44820212AB5424900E72BD2 /* UserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSource.swift; sourceTree = "<group>"; };
+		C44820232AB5438000E72BD2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C44820272AB54AB900E72BD2 /* ObjectLiterlMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectLiterlMapper.swift; sourceTree = "<group>"; };
+		C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToModelMapper.swift; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* MessengerError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessengerError.swift; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
@@ -241,7 +267,10 @@
 			children = (
 				C4CF74CD2AB21D5300D69185 /* Services */,
 				C445F16B2AB15A8500053BE7 /* Managers */,
+				C448200F2AB5373E00E72BD2 /* Model */,
+				C44820122AB5388D00E72BD2 /* Mappers */,
 				C445F1652AB1579800053BE7 /* Repository */,
+				C44820202AB541F200E72BD2 /* DataSource */,
 			);
 			name = Data;
 			sourceTree = "<group>";
@@ -271,6 +300,7 @@
 		C445F14F2AB1410300053BE7 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				C448201E2AB5401600E72BD2 /* UserRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -286,6 +316,7 @@
 		C445F1612AB1537200053BE7 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				C448201B2AB53EFE00E72BD2 /* User */,
 			);
 			path = UseCase;
 			sourceTree = "<group>";
@@ -293,6 +324,7 @@
 		C445F1652AB1579800053BE7 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				C448201C2AB53FF300E72BD2 /* DefaultUserRepository.swift */,
 			);
 			name = Repository;
 			sourceTree = "<group>";
@@ -321,6 +353,58 @@
 			name = Managers;
 			sourceTree = "<group>";
 		};
+		C448200F2AB5373E00E72BD2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C44820102AB5376900E72BD2 /* UserModel.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C44820122AB5388D00E72BD2 /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+				C44820262AB54AA200E72BD2 /* Protocols */,
+				C44820152AB539B400E72BD2 /* UserModel+DomainMapper.swift */,
+				C44820172AB53B7000E72BD2 /* UserEntity+DomainMapper.swift */,
+			);
+			name = Mappers;
+			sourceTree = "<group>";
+		};
+		C448201B2AB53EFE00E72BD2 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				C44820192AB53EF200E72BD2 /* RegisterUserUC.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		C44820202AB541F200E72BD2 /* DataSource */ = {
+			isa = PBXGroup;
+			children = (
+				C44820212AB5424900E72BD2 /* UserDataSource.swift */,
+			);
+			name = DataSource;
+			sourceTree = "<group>";
+		};
+		C44820252AB5478000E72BD2 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				C44820232AB5438000E72BD2 /* Constants.swift */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
+		C44820262AB54AA200E72BD2 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C44820132AB538DC00E72BD2 /* DomainMapperProtocol.swift */,
+				C44820272AB54AB900E72BD2 /* ObjectLiterlMapper.swift */,
+				C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */,
+			);
+			name = Protocols;
+			sourceTree = "<group>";
+		};
 		C46338232AB2CE41000AF2F6 /* Errors */ = {
 			isa = PBXGroup;
 			children = (
@@ -342,6 +426,8 @@
 			isa = PBXGroup;
 			children = (
 				C4CF74CE2AB21D8900D69185 /* AuthService.swift */,
+				C448200B2AB5271B00E72BD2 /* ImageService.swift */,
+				C448200D2AB5335500E72BD2 /* UserService.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -443,6 +529,7 @@
 		C4CF75002AB25C1900D69185 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C44820252AB5478000E72BD2 /* Firebase */,
 				C46338232AB2CE41000AF2F6 /* Errors */,
 				C42616E62AB27ACD006925DB /* Publishers */,
 				C4CF75042AB25CBD00D69185 /* Validation */,
@@ -552,8 +639,10 @@
 			files = (
 				C46338252AB2CE54000AF2F6 /* MessengerError.swift in Sources */,
 				C42616F12AB28296006925DB /* AuthButton.swift in Sources */,
+				C44820142AB538DC00E72BD2 /* DomainMapperProtocol.swift in Sources */,
 				C42616E92AB27B37006925DB /* AuthPublisher.swift in Sources */,
 				C4CF74E82AB22FD100D69185 /* UIView+Extensions.swift in Sources */,
+				C44820282AB54ABA00E72BD2 /* ObjectLiterlMapper.swift in Sources */,
 				C42616F52AB29DF4006925DB /* UILabel+Extensions.swift in Sources */,
 				C42616E52AB27944006925DB /* String+Extensions.swift in Sources */,
 				C42616DF2AB277E4006925DB /* ValidatorFactory.swift in Sources */,
@@ -568,34 +657,45 @@
 				C42616DD2AB277C4006925DB /* ValidatorType.swift in Sources */,
 				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
 				C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */,
+				C44820242AB5438000E72BD2 /* Constants.swift in Sources */,
 				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
+				C448201D2AB53FF300E72BD2 /* DefaultUserRepository.swift in Sources */,
+				C448201A2AB53EF200E72BD2 /* RegisterUserUC.swift in Sources */,
 				C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */,
 				C4CF74F62AB259A800D69185 /* AuthTextField.swift in Sources */,
 				C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */,
+				C44820222AB5424900E72BD2 /* UserDataSource.swift in Sources */,
 				C42616EB2AB27BC4006925DB /* UIViewController+Extensions.swift in Sources */,
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,
 				C445F16A2AB1581F00053BE7 /* Publishers+Extensions.swift in Sources */,
+				C448200C2AB5271B00E72BD2 /* ImageService.swift in Sources */,
 				C4CF74FC2AB25AF300D69185 /* AuthTextField+States.swift in Sources */,
 				C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */,
 				C4CF74DE2AB2291600D69185 /* StateCoordinatorProtocol.swift in Sources */,
+				C448201F2AB5401600E72BD2 /* UserRepository.swift in Sources */,
 				C4CF74F82AB25A9500D69185 /* AuthTextField+Types.swift in Sources */,
 				C42616D72AB27508006925DB /* IncreaseTapAreaButton.swift in Sources */,
 				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,
+				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C42616F32AB282DF006925DB /* SpinnerView.swift in Sources */,
 				C42616F92AB2A6B5006925DB /* GradientButton.swift in Sources */,
 				C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */,
 				C4CF74E22AB22B0200D69185 /* LaunchViewController.swift in Sources */,
 				C42616DB2AB27774006925DB /* Miscellaneous.swift in Sources */,
 				C42616F72AB2A09F006925DB /* UIButton+Extensions.swift in Sources */,
+				C44820182AB53B7000E72BD2 /* UserEntity+DomainMapper.swift in Sources */,
 				C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */,
 				C4CF74F12AB2505800D69185 /* LoginViewController.swift in Sources */,
+				C44820112AB5376900E72BD2 /* UserModel.swift in Sources */,
 				C4CF74EE2AB24A6500D69185 /* LoginCoordinator.swift in Sources */,
 				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,
+				C448200E2AB5335500E72BD2 /* UserService.swift in Sources */,
 				C445F1602AB1435300053BE7 /* User.swift in Sources */,
 				C42616EF2AB28285006925DB /* AuthButton+ViewModel.swift in Sources */,
 				C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */,
+				C44820162AB539B400E72BD2 /* UserModel+DomainMapper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

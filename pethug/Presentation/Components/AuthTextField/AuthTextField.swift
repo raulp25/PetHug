@@ -67,11 +67,8 @@ final class AuthTextField: UIView {
         let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         view.addGestureRecognizer(tap)
         view.backgroundColor = .clear
-//        view.layer.borderWidth = 1
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 0
-//        view.layer.borderColor = UIColor.theme.border?.cgColor
-//        view.layer.borderColor = UIColor.red.cgColor
         return view
     }()
 
@@ -161,14 +158,12 @@ final class AuthTextField: UIView {
         textField.returnKeyType = viewModel.returnKey
         textField.textContentType = viewModel.textContentTypes
         textField.autocapitalizationType = viewModel.autocapitalization
-//        textField.tintColor = viewModel.tintColor
         textField.tintColor = .black.withAlphaComponent(0.7)
         textField.isSecureTextEntry = viewModel.isSecure
         
         print(" textfield auth is secure \(viewModel.isSecure)")
 
         floatingLabel.text = viewModel.placeholder
-//        floatingLabel.textColor = viewModel.floatingLabelColor
         floatingLabel.textColor = .lightGray
 
         if viewModel.type == .date {
@@ -179,12 +174,7 @@ final class AuthTextField: UIView {
 
         textField.anchor(height: textFieldHeight)
         
-        
-
         addSubview(expandingVstack)
-        
-//        expandingVstack.layer.borderColor = UIColor.yellow.cgColor
-//        expandingVstack.layer.borderWidth = 2
 
         expandingVstack.addArrangedSubview(textFieldbackgroundView)
         expandingVstack.addArrangedSubview(errorLabel)
@@ -201,15 +191,9 @@ final class AuthTextField: UIView {
         
         textFieldbackgroundView.addSubview(hStack)
         textField.addSubview(floatingLabel)
-//        textField.layer.borderColor = UIColor.yellow.cgColor
-//        textField.layer.borderWidth = 2
         
         textFieldbackgroundView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
-        
-//        textFieldbackgroundView.layer.borderColor = UIColor.yellow.cgColor
-//        textFieldbackgroundView.layer.borderWidth = 2
-        
-        
+                
 
         hStack.anchor(
             top: textFieldbackgroundView.topAnchor,
@@ -222,18 +206,15 @@ final class AuthTextField: UIView {
             paddingRight: 20
             
         )
-        
-//        hStack.layer.borderColor = UIColor.yellow.cgColor
-//        hStack.layer.borderWidth = 2
 
         floatingLabel.centerY(inView: textField)
         errorLabel.setWidthConstraint(equalTo: widthAnchor)
 
         translatesAutoresizingMaskIntoConstraints = false
-//        anchor(height: expandingVstack.heightAnchor)
-        print("String(describing: expandingVstack.heightAnchor: => \(expandingVstack.heightAnchor)")
         
-//        setHeightConstraint(equalTo: expandingVstack.heightAnchor)
+        // stack acts wierd if you set heightConstraint equal to the vstack height anchor
+        //anchor(height: expandingVstack.heightAnchor)
+//      setHeightConstraint(equalTo: expandingVstack.heightAnchor)
         self.setHeight(50)
 
         // Add rightView if rightView is not nil
@@ -261,8 +242,8 @@ final class AuthTextField: UIView {
 
     // MARK: - Observe
     // I can expose this satate publisher so if we have an error of type
-//    password dont contain any letter update the constraint of the forgot password
-//    view so it doesnt overlays with the error message
+    // password dont contain any letter update the constraint of the forgot password
+    // view so it doesnt overlays with the error message
     private func observeStates() {
         print("observeStates =>~")
         statePublisher
@@ -485,7 +466,6 @@ final class TextfieldVC2: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         hideKeyboardWhenTappedAround()
-//        view.backgroundColor = .theme.background
         view.backgroundColor = .red.withAlphaComponent(0.2)
         
 

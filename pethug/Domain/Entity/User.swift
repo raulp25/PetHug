@@ -8,12 +8,11 @@
 import Foundation
 
 
-struct User: Identifiable {
-    let id: Int
+struct User: Codable {
+    let id: String
     let username: String
     let email: String
     let bio: String?
-    let profileImageUrl: String
-    
+    let profileImageUrl: String?
 //    var isCurrentUser: Bool?
 }
