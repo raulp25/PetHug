@@ -8,7 +8,7 @@
 import UIKit
 
 /// Default error.
-enum MessengerError: Error, LocalizedError {
+enum PetsError: Error, LocalizedError {
     case `default`(_ error: Error)
     case defaultCustom(_ string: String)
     case someThingWentWrong

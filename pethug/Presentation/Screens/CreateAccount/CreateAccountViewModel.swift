@@ -12,7 +12,7 @@ struct CreateAccountViewModel {
     enum State {
         case loading
         case success
-        case error(MessengerError)
+        case error(PetsError)
     }
     
     var profileImage: UIImage?

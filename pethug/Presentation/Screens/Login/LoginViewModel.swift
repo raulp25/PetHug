@@ -12,7 +12,7 @@ struct LoginViewModel {
     enum State {
         case loading
         case success
-        case error(MessengerError)
+        case error(PetsError)
     }
     
     var state = PassthroughSubject<State, Never>()
