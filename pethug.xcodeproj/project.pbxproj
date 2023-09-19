@@ -45,6 +45,9 @@
 		C43531502AB969D20070D7EE /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435314F2AB969D20070D7EE /* LoadingViewController.swift */; };
 		C43531532AB96BFC0070D7EE /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531522AB96BFC0070D7EE /* ErrorViewController.swift */; };
 		C43531552AB96C120070D7EE /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531542AB96C120070D7EE /* ErrorView.swift */; };
+		C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531562AB983920070D7EE /* PetsContentViewController.swift */; };
+		C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */; };
+		C435315B2AB9845D0070D7EE /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435315A2AB9845D0070D7EE /* Dog.swift */; };
 		C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1192AB1391A00053BE7 /* AppDelegate.swift */; };
 		C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */; };
 		C445F1232AB1391B00053BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C445F1222AB1391B00053BE7 /* Assets.xcassets */; };
@@ -126,6 +129,9 @@
 		C435314F2AB969D20070D7EE /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		C43531522AB96BFC0070D7EE /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		C43531542AB96C120070D7EE /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		C43531562AB983920070D7EE /* PetsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsContentViewController.swift; sourceTree = "<group>"; };
+		C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetsContentViewController+Types.swift"; sourceTree = "<group>"; };
+		C435315A2AB9845D0070D7EE /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
 		C445F1162AB1391A00053BE7 /* pethug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pethug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F1192AB1391A00053BE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -248,9 +254,9 @@
 		C426D2692AB6719900BFA357 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C426D26A2AB671AD00BFA357 /* SettingsViewController.swift */,
 				C435314B2AB960A10070D7EE /* PetsViewController.swift */,
-				C435314D2AB966750070D7EE /* ContentStateViewController.swift */,
+				C43531562AB983920070D7EE /* PetsContentViewController.swift */,
+				C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -258,6 +264,7 @@
 		C42D3D952AB65D5300EBA1B7 /* Containers */ = {
 			isa = PBXGroup;
 			children = (
+				C435314D2AB966750070D7EE /* ContentStateViewController.swift */,
 				C42D3D9A2AB65FB200EBA1B7 /* InAppContainerRootViewController */,
 				C42D3D962AB65D8A00EBA1B7 /* InAppTabBarController.swift */,
 			);
@@ -400,6 +407,7 @@
 			isa = PBXGroup;
 			children = (
 				C445F15F2AB1435200053BE7 /* User.swift */,
+				C435315A2AB9845D0070D7EE /* Dog.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -583,6 +591,7 @@
 				C4CF74EF2AB2504300D69185 /* Login */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
 				C435314F2AB969D20070D7EE /* LoadingViewController.swift */,
+				C426D26A2AB671AD00BFA357 /* SettingsViewController.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -788,7 +797,10 @@
 				C4CF74F82AB25A9500D69185 /* AuthTextField+Types.swift in Sources */,
 				C426D2622AB66F8800BFA357 /* ChildTabCoordinatorProtocol.swift in Sources */,
 				C42616D72AB27508006925DB /* IncreaseTapAreaButton.swift in Sources */,
+				C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */,
 				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,
+				C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */,
+				C435315B2AB9845D0070D7EE /* Dog.swift in Sources */,
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C42616F32AB282DF006925DB /* SpinnerView.swift in Sources */,
 				C42616F92AB2A6B5006925DB /* GradientButton.swift in Sources */,

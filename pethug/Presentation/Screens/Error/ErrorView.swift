@@ -14,6 +14,8 @@ final class ErrorView: UIViewController {
         label.text = "Error"
         label.textColor = UIColor.black.withAlphaComponent(0.6)
         label.font = UIFont.systemFont(ofSize: 17)
+        label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -22,6 +24,8 @@ final class ErrorView: UIViewController {
         label.text = self.error.localizedDescription
         label.textColor = UIColor.black.withAlphaComponent(0.6)
         label.font = UIFont.systemFont(ofSize: 18)
+        label.textAlignment = .center
+        label.numberOfLines = 0
         return label
     }()
     
@@ -45,10 +49,15 @@ final class ErrorView: UIViewController {
     
     
     func setup() {
+        let sidesInset = CGFloat(50)
+        let width = CGFloat(view.bounds.width - sidesInset)
+        
         view.addSubview(titleLabel)
         view.addSubview(errorMessage)
         
         titleLabel.center(inView: view)
+        titleLabel.setWidth(width)
         errorMessage.centerX(inView: titleLabel, topAnchor: titleLabel.bottomAnchor, paddingTop: 10)
+        errorMessage.setWidth(width)
     }
 }
