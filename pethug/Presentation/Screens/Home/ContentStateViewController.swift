@@ -42,7 +42,7 @@ private extension ContentStateViewController {
         case .loading:
             return LoadingViewController()
         case let .failed(error):
-            return ErrorViewController(err: error)
+            return ErrorViewController(retryAction: action, err: error)
         case let .render(viewController):
             return viewController
         }

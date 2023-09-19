@@ -15,7 +15,7 @@ final class HomeTabCoordinator: ChildTabCoordinator {
     var rootViewController: UINavigationController = .init()
     
     func start() {
-        let k = DummyView()
-        rootViewController.pushViewController(k, animated: true)
+        let vc = PetsViewController()
+        rootViewController.pushViewController(vc, animated: true)
     }
 }
