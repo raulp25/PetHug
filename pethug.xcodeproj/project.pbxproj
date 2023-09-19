@@ -48,6 +48,7 @@
 		C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531562AB983920070D7EE /* PetsContentViewController.swift */; };
 		C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */; };
 		C435315B2AB9845D0070D7EE /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435315A2AB9845D0070D7EE /* Dog.swift */; };
+		C435315D2AB986C00070D7EE /* UICollectionView+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435315C2AB986C00070D7EE /* UICollectionView+Factory.swift */; };
 		C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1192AB1391A00053BE7 /* AppDelegate.swift */; };
 		C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */; };
 		C445F1232AB1391B00053BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C445F1222AB1391B00053BE7 /* Assets.xcassets */; };
@@ -132,6 +133,7 @@
 		C43531562AB983920070D7EE /* PetsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsContentViewController.swift; sourceTree = "<group>"; };
 		C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetsContentViewController+Types.swift"; sourceTree = "<group>"; };
 		C435315A2AB9845D0070D7EE /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
+		C435315C2AB986C00070D7EE /* UICollectionView+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Factory.swift"; sourceTree = "<group>"; };
 		C445F1162AB1391A00053BE7 /* pethug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pethug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F1192AB1391A00053BE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -202,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				C42616D42AB274B4006925DB /* UIButton+Factory.swift */,
+				C435315C2AB986C00070D7EE /* UICollectionView+Factory.swift */,
 			);
 			path = Factories;
 			sourceTree = "<group>";
@@ -388,7 +391,6 @@
 				C4CF74FD2AB25B7700D69185 /* BaseComponents */,
 				C42D3D952AB65D5300EBA1B7 /* Containers */,
 				C4CF74F42AB2599B00D69185 /* Components */,
-				C42616D32AB274A1006925DB /* Factories */,
 				C4CF74D02AB225E700D69185 /* Coordinators */,
 				C4CF74DF2AB22A8C00D69185 /* Screens */,
 			);
@@ -619,6 +621,7 @@
 			children = (
 				C42616ED2AB2826D006925DB /* AuthButton */,
 				C42616EC2AB2825A006925DB /* AuthTextField */,
+				C42616D32AB274A1006925DB /* Factories */,
 				C42616F22AB282DF006925DB /* SpinnerView.swift */,
 				C42616F82AB2A6B5006925DB /* GradientButton.swift */,
 			);
@@ -762,6 +765,7 @@
 				C4CF74EC2AB23A1A00D69185 /* Colors.swift in Sources */,
 				C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */,
 				C426D25F2AB66E7C00BFA357 /* InAppManager.swift in Sources */,
+				C435315D2AB986C00070D7EE /* UICollectionView+Factory.swift in Sources */,
 				C42D3D972AB65D8A00EBA1B7 /* InAppTabBarController.swift in Sources */,
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,

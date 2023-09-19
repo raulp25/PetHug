@@ -5,10 +5,13 @@
 //  Created by Raul Pena on 19/09/23.
 //
 
-import Foundation
+import UIKit
 
 //MARK: - Types
 extension PetsContentViewController {
+    typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
+    typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
+    
     enum Section: Int, CaseIterable, Hashable {
         case dogs
     }
