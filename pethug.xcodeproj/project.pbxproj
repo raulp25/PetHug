@@ -47,7 +47,7 @@
 		C43531552AB96C120070D7EE /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531542AB96C120070D7EE /* ErrorView.swift */; };
 		C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531562AB983920070D7EE /* PetsContentViewController.swift */; };
 		C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */; };
-		C435315B2AB9845D0070D7EE /* Dog.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435315A2AB9845D0070D7EE /* Dog.swift */; };
+		C435315B2AB9845D0070D7EE /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435315A2AB9845D0070D7EE /* Pet.swift */; };
 		C435315D2AB986C00070D7EE /* UICollectionView+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435315C2AB986C00070D7EE /* UICollectionView+Factory.swift */; };
 		C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1192AB1391A00053BE7 /* AppDelegate.swift */; };
 		C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */; };
@@ -68,10 +68,12 @@
 		C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820272AB54AB900E72BD2 /* ObjectLiteralMapper.swift */; };
 		C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */; };
 		C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* PetsError.swift */; };
+		C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
 		C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */; };
+		C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
 		C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */; };
 		C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */; };
@@ -132,7 +134,7 @@
 		C43531542AB96C120070D7EE /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		C43531562AB983920070D7EE /* PetsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsContentViewController.swift; sourceTree = "<group>"; };
 		C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetsContentViewController+Types.swift"; sourceTree = "<group>"; };
-		C435315A2AB9845D0070D7EE /* Dog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dog.swift; sourceTree = "<group>"; };
+		C435315A2AB9845D0070D7EE /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		C435315C2AB986C00070D7EE /* UICollectionView+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Factory.swift"; sourceTree = "<group>"; };
 		C445F1162AB1391A00053BE7 /* pethug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pethug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F1192AB1391A00053BE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -158,10 +160,12 @@
 		C44820272AB54AB900E72BD2 /* ObjectLiteralMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectLiteralMapper.swift; sourceTree = "<group>"; };
 		C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToModelMapper.swift; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* PetsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsError.swift; sourceTree = "<group>"; };
+		C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewHeaderViewController.swift; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
 		C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponser+Extensions.swift"; sourceTree = "<group>"; };
+		C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPetCell.swift; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
@@ -260,6 +264,7 @@
 				C435314B2AB960A10070D7EE /* PetsViewController.swift */,
 				C43531562AB983920070D7EE /* PetsContentViewController.swift */,
 				C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */,
+				C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -387,6 +392,7 @@
 		C445F14C2AB13B5900053BE7 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				C4BC4A262ABA1A020017428D /* Cells */,
 				C42D3D9F2AB660B400EBA1B7 /* ChildView */,
 				C4CF74FD2AB25B7700D69185 /* BaseComponents */,
 				C42D3D952AB65D5300EBA1B7 /* Containers */,
@@ -409,7 +415,7 @@
 			isa = PBXGroup;
 			children = (
 				C445F15F2AB1435200053BE7 /* User.swift */,
-				C435315A2AB9845D0070D7EE /* Dog.swift */,
+				C435315A2AB9845D0070D7EE /* Pet.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -522,6 +528,14 @@
 				C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */,
 			);
 			path = CreateAccount;
+			sourceTree = "<group>";
+		};
+		C4BC4A262ABA1A020017428D /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */,
+			);
+			path = Cells;
 			sourceTree = "<group>";
 		};
 		C4CF74CD2AB21D5300D69185 /* Services */ = {
@@ -800,11 +814,13 @@
 				C448201F2AB5401600E72BD2 /* UserRepository.swift in Sources */,
 				C4CF74F82AB25A9500D69185 /* AuthTextField+Types.swift in Sources */,
 				C426D2622AB66F8800BFA357 /* ChildTabCoordinatorProtocol.swift in Sources */,
+				C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */,
 				C42616D72AB27508006925DB /* IncreaseTapAreaButton.swift in Sources */,
 				C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */,
+				C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */,
 				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,
 				C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */,
-				C435315B2AB9845D0070D7EE /* Dog.swift in Sources */,
+				C435315B2AB9845D0070D7EE /* Pet.swift in Sources */,
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C42616F32AB282DF006925DB /* SpinnerView.swift in Sources */,
 				C42616F92AB2A6B5006925DB /* GradientButton.swift in Sources */,

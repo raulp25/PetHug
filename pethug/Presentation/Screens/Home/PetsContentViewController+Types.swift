@@ -12,12 +12,12 @@ extension PetsContentViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
     
-    enum Section: Int, CaseIterable, Hashable {
-        case dogs
+    enum Section: Int {
+        case pets
     }
     
     enum Item: Hashable {
-        case dogs(Dog)
+        case pet(Pet)
     }
     
     struct SnapData {
