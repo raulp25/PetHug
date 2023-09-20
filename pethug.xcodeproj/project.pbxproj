@@ -69,6 +69,8 @@
 		C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */; };
 		C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* PetsError.swift */; };
 		C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */; };
+		C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B62ABA827E0014DEA4 /* PetsViewModel.swift */; };
+		C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B82ABA82FB0014DEA4 /* PetsViewModel+Types.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
@@ -161,6 +163,8 @@
 		C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToModelMapper.swift; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* PetsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsError.swift; sourceTree = "<group>"; };
 		C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewHeaderViewController.swift; sourceTree = "<group>"; };
+		C476E2B62ABA827E0014DEA4 /* PetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewModel.swift; sourceTree = "<group>"; };
+		C476E2B82ABA82FB0014DEA4 /* PetsViewModel+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetsViewModel+Types.swift"; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
@@ -261,6 +265,7 @@
 		C426D2692AB6719900BFA357 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				C476E2B52ABA82730014DEA4 /* ViewModel */,
 				C435314B2AB960A10070D7EE /* PetsViewController.swift */,
 				C43531562AB983920070D7EE /* PetsContentViewController.swift */,
 				C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */,
@@ -519,6 +524,15 @@
 				C46338242AB2CE54000AF2F6 /* PetsError.swift */,
 			);
 			path = Errors;
+			sourceTree = "<group>";
+		};
+		C476E2B52ABA82730014DEA4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C476E2B62ABA827E0014DEA4 /* PetsViewModel.swift */,
+				C476E2B82ABA82FB0014DEA4 /* PetsViewModel+Types.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		C482908B2AB391AE00DE6227 /* CreateAccount */ = {
@@ -782,6 +796,7 @@
 				C435315D2AB986C00070D7EE /* UICollectionView+Factory.swift in Sources */,
 				C42D3D972AB65D8A00EBA1B7 /* InAppTabBarController.swift in Sources */,
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
+				C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */,
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
@@ -821,6 +836,7 @@
 				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,
 				C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */,
 				C435315B2AB9845D0070D7EE /* Pet.swift in Sources */,
+				C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */,
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C42616F32AB282DF006925DB /* SpinnerView.swift in Sources */,
 				C42616F92AB2A6B5006925DB /* GradientButton.swift in Sources */,

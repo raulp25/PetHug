@@ -6,7 +6,7 @@
 //
 
 import UIKit
-protocol MessagesContentViewControllerDelegate: AnyObject {
+protocol PetsContentViewControllerDelegate: AnyObject {
 //    func didTap(recipient: Pet)
 //    func didTap(_:  Any)
 }
@@ -40,21 +40,7 @@ final class PetsContentViewController: UIViewController {
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 50, right: 0)
         
         configureDataSource()
-        
-        currentSnapData  = [.init(key: .pets, values: generatePet(total: 21))]
-        
-        snapshot = Snapshot()
-        snapshot.appendSections(currentSnapData.map {
-            print(": section=> \($0.key)")
-            return $0.key
-        })
-        
-        print("currentSnapData: => \(currentSnapData)")
-        
-        for datum in currentSnapData {
-            snapshot.appendItems(datum.values, toSection: datum.key)
-        }
-        dataSource.apply(snapshot, animatingDifferences: true)
+        updateSnapShot()
     }
     
     func generatePet(total: Int) -> [Item] {
@@ -130,6 +116,25 @@ final class PetsContentViewController: UIViewController {
         })
     }
         
+    // MARK: - Private methods
+    private func updateSnapShot(animated: Bool = true) {
+        currentSnapData  = [.init(key: .pets, values: generatePet(total: 21))]
+        
+        snapshot = Snapshot()
+        snapshot.appendSections(currentSnapData.map {
+            print(": section=> \($0.key)")
+            return $0.key
+        })
+        
+        print("currentSnapData: => \(currentSnapData)")
+        
+        for datum in currentSnapData {
+            snapshot.appendItems(datum.values, toSection: datum.key)
+        }
+//        print("snapshot en updateSnapshot(): => \(snapshot)")
+        dataSource.apply(snapshot, animatingDifferences: animated)
+    }
+
     
 }
 
