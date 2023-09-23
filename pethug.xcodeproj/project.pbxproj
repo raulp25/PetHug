@@ -67,10 +67,15 @@
 		C44820242AB5438000E72BD2 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820232AB5438000E72BD2 /* Paths.swift */; };
 		C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820272AB54AB900E72BD2 /* ObjectLiteralMapper.swift */; };
 		C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */; };
+		C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */; };
 		C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* PetsError.swift */; };
 		C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */; };
 		C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B62ABA827E0014DEA4 /* PetsViewModel.swift */; };
 		C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B82ABA82FB0014DEA4 /* PetsViewModel+Types.swift */; };
+		C476E2BE2ABA96C40014DEA4 /* FetchPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2BD2ABA96C40014DEA4 /* FetchPetsUC.swift */; };
+		C476E2C02ABA99760014DEA4 /* PetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2BF2ABA99760014DEA4 /* PetRepository.swift */; };
+		C476E2C22ABA99D30014DEA4 /* DefaultPetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2C12ABA99D30014DEA4 /* DefaultPetRepository.swift */; };
+		C476E2C42ABA9A1A0014DEA4 /* PetDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2C32ABA9A1A0014DEA4 /* PetDataSource.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
@@ -97,6 +102,7 @@
 		C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */; };
 		C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75022AB25C5B00D69185 /* Constants.swift */; };
 		C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75052AB25CE100D69185 /* ValidationState.swift */; };
+		C4E51C9A2ABB555900E8A33C /* UseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E51C992ABB555900E8A33C /* UseCaseFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -161,10 +167,15 @@
 		C44820232AB5438000E72BD2 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
 		C44820272AB54AB900E72BD2 /* ObjectLiteralMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectLiteralMapper.swift; sourceTree = "<group>"; };
 		C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToModelMapper.swift; sourceTree = "<group>"; };
+		C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummySectionHeader.swift; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* PetsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsError.swift; sourceTree = "<group>"; };
 		C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewHeaderViewController.swift; sourceTree = "<group>"; };
 		C476E2B62ABA827E0014DEA4 /* PetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewModel.swift; sourceTree = "<group>"; };
 		C476E2B82ABA82FB0014DEA4 /* PetsViewModel+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetsViewModel+Types.swift"; sourceTree = "<group>"; };
+		C476E2BD2ABA96C40014DEA4 /* FetchPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchPetsUC.swift; sourceTree = "<group>"; };
+		C476E2BF2ABA99760014DEA4 /* PetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetRepository.swift; sourceTree = "<group>"; };
+		C476E2C12ABA99D30014DEA4 /* DefaultPetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPetRepository.swift; sourceTree = "<group>"; };
+		C476E2C32ABA9A1A0014DEA4 /* PetDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetDataSource.swift; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
@@ -191,6 +202,7 @@
 		C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTextField.swift; sourceTree = "<group>"; };
 		C4CF75022AB25C5B00D69185 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C4CF75052AB25CE100D69185 /* ValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationState.swift; sourceTree = "<group>"; };
+		C4E51C992ABB555900E8A33C /* UseCaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -337,6 +349,7 @@
 				C445F14C2AB13B5900053BE7 /* Presentation */,
 				C445F1192AB1391A00053BE7 /* AppDelegate.swift */,
 				C426D26C2AB671D100BFA357 /* DummyView.swift */,
+				C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */,
 				C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */,
 				C445F1222AB1391B00053BE7 /* Assets.xcassets */,
 				C4CF74E92AB2325400D69185 /* GoogleService-Info.plist */,
@@ -412,6 +425,7 @@
 			isa = PBXGroup;
 			children = (
 				C448201E2AB5401600E72BD2 /* UserRepository.swift */,
+				C476E2BF2ABA99760014DEA4 /* PetRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -428,6 +442,7 @@
 		C445F1612AB1537200053BE7 /* UseCase */ = {
 			isa = PBXGroup;
 			children = (
+				C476E2BC2ABA96B20014DEA4 /* Pets */,
 				C448201B2AB53EFE00E72BD2 /* User */,
 			);
 			path = UseCase;
@@ -437,6 +452,7 @@
 			isa = PBXGroup;
 			children = (
 				C448201C2AB53FF300E72BD2 /* DefaultUserRepository.swift */,
+				C476E2C12ABA99D30014DEA4 /* DefaultPetRepository.swift */,
 			);
 			name = Repository;
 			sourceTree = "<group>";
@@ -496,6 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				C44820212AB5424900E72BD2 /* UserDataSource.swift */,
+				C476E2C32ABA9A1A0014DEA4 /* PetDataSource.swift */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
@@ -535,11 +552,35 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		C476E2BA2ABA8A870014DEA4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF74F22AB2506F00D69185 /* LoginViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C476E2BB2ABA8AA70014DEA4 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C476E2BC2ABA96B20014DEA4 /* Pets */ = {
+			isa = PBXGroup;
+			children = (
+				C476E2BD2ABA96C40014DEA4 /* FetchPetsUC.swift */,
+			);
+			path = Pets;
+			sourceTree = "<group>";
+		};
 		C482908B2AB391AE00DE6227 /* CreateAccount */ = {
 			isa = PBXGroup;
 			children = (
+				C476E2BB2ABA8AA70014DEA4 /* ViewModel */,
 				C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */,
-				C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */,
 			);
 			path = CreateAccount;
 			sourceTree = "<group>";
@@ -638,7 +679,7 @@
 		C4CF74EF2AB2504300D69185 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				C4CF74F22AB2506F00D69185 /* LoginViewModel.swift */,
+				C476E2BA2ABA8A870014DEA4 /* ViewModel */,
 				C4CF74F02AB2505800D69185 /* LoginViewController.swift */,
 			);
 			path = Login;
@@ -668,6 +709,7 @@
 		C4CF75002AB25C1900D69185 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C4E51C982ABB554000E8A33C /* UseCaseFactory */,
 				C44820252AB5478000E72BD2 /* Firebase */,
 				C46338232AB2CE41000AF2F6 /* Errors */,
 				C42616E62AB27ACD006925DB /* Publishers */,
@@ -695,6 +737,14 @@
 				C42616E22AB2788A006925DB /* Validator.swift */,
 			);
 			path = Validation;
+			sourceTree = "<group>";
+		};
+		C4E51C982ABB554000E8A33C /* UseCaseFactory */ = {
+			isa = PBXGroup;
+			children = (
+				C4E51C992ABB555900E8A33C /* UseCaseFactory.swift */,
+			);
+			path = UseCaseFactory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -776,6 +826,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C476E2BE2ABA96C40014DEA4 /* FetchPetsUC.swift in Sources */,
+				C476E2C02ABA99760014DEA4 /* PetRepository.swift in Sources */,
 				C426D2642AB66FC600BFA357 /* InAppCoordinator+TabBar.swift in Sources */,
 				C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */,
 				C42616F12AB28296006925DB /* AuthButton.swift in Sources */,
@@ -820,6 +872,7 @@
 				C426D2682AB6713A00BFA357 /* SettingsCoordinator.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,
 				C42D3D9E2AB65FF200EBA1B7 /* InAppContainerRootViewController+State.swift in Sources */,
+				C476E2C42ABA9A1A0014DEA4 /* PetDataSource.swift in Sources */,
 				C445F16A2AB1581F00053BE7 /* Publishers+Extensions.swift in Sources */,
 				C448200C2AB5271B00E72BD2 /* ImageService.swift in Sources */,
 				C4CF74FC2AB25AF300D69185 /* AuthTextField+States.swift in Sources */,
@@ -838,6 +891,7 @@
 				C435315B2AB9845D0070D7EE /* Pet.swift in Sources */,
 				C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */,
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
+				C476E2C22ABA99D30014DEA4 /* DefaultPetRepository.swift in Sources */,
 				C42616F32AB282DF006925DB /* SpinnerView.swift in Sources */,
 				C42616F92AB2A6B5006925DB /* GradientButton.swift in Sources */,
 				C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */,
@@ -858,8 +912,10 @@
 				C445F1602AB1435300053BE7 /* User.swift in Sources */,
 				C42616EF2AB28285006925DB /* AuthButton+ViewModel.swift in Sources */,
 				C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */,
+				C4E51C9A2ABB555900E8A33C /* UseCaseFactory.swift in Sources */,
 				C44820162AB539B400E72BD2 /* UserModel+DomainMapper.swift in Sources */,
 				C42D3D9C2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift in Sources */,
+				C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

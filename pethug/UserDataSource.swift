@@ -18,11 +18,10 @@ protocol UserDataSource {
 final class DefaultUserDataSource: UserDataSource {
     
     private let db = Firestore.firestore()
-    
     // theres no need to return nothing since throwing would indicate that something went wrong
     func registerUser(user: User) async throws {
         let data = user.toObjectLiteral()
-        try await FB_COLLECTION_USERS.document(user.id).setData(data)
+        try await db.collection(.getPath(for: .users)).document(user.id).setData(data)
     }
     
 }

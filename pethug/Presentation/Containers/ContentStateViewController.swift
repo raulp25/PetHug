@@ -23,8 +23,6 @@ final class ContentStateViewController: UIViewController {
         shownViewController?.remove()
         let vc = viewController(for: newState)
         add(vc)
-        vc.view.layer.borderColor = UIColor.blue.cgColor
-        vc.view.layer.borderWidth = 5
         shownViewController = vc
         state = newState
         UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut) {

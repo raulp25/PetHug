@@ -41,3 +41,21 @@ extension String {
         return true
     }
 }
+
+//MARK: - Factory for Firebase collection path
+extension String {
+    enum CollectionPath: String {
+        case users
+        case dogs
+        case cats
+        case rabbits
+        case birds
+    }
+    
+    static func getPath(for path: CollectionPath) -> String {
+        switch path {
+        case .users, .dogs, .cats, .rabbits, .birds:
+            return path.rawValue
+        }
+    }
+}

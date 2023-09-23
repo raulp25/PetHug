@@ -23,11 +23,6 @@ final class PetsContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        let label = UILabel()
-        label.text = "PASON"
-        label.textColor = UIColor.blue
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(collectionView)
         view.addSubview(headerView.view)
@@ -37,7 +32,7 @@ final class PetsContentViewController: UIViewController {
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        collectionView.contentInset = .init(top: 0, left: 0, bottom: 50, right: 0)
+        collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
         
         configureDataSource()
         updateSnapShot()
@@ -63,6 +58,21 @@ final class PetsContentViewController: UIViewController {
             switch section {
             case .pets:
                 print("dogs section")
+                
+                let headerSize = NSCollectionLayoutSize(
+                    widthDimension: .fractionalWidth(1.0),
+                    heightDimension: .absolute(50) // Adjust the height as needed
+                )
+                
+                let spacingheader = CGFloat(-24)
+
+                let header = NSCollectionLayoutBoundarySupplementaryItem(
+                    layoutSize: headerSize,
+                    elementKind: UICollectionView.elementKindSectionHeader,
+                    alignment: .top,
+                    absoluteOffset: .init(x: 0, y: spacingheader)
+                )
+                
 
                 let itemSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1),
@@ -72,23 +82,25 @@ final class PetsContentViewController: UIViewController {
 
                 let groupSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(170)
+                    heightDimension: .estimated(190)
                 )
                 
-                let group = NSCollectionLayoutGroup.horizontal(
-                    layoutSize: groupSize,
-                    repeatingSubitem: item,
-                    count: 2
-                )
+//                let group = NSCollectionLayoutGroup.horizontal(
+//                    layoutSize: groupSize,
+//                    repeatingSubitem: item,
+//                    count: 2
+//                )
+                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
                 
                 let spacing = CGFloat(40)
                 group.interItemSpacing = .fixed(spacing)
-                group.contentInsets = .init(top: 0, leading: 30, bottom: 0, trailing: 30)
+//                group.contentInsets = .init(top: 0, leading: 30, bottom: 0, trailing: 30)
                 
                 let section = NSCollectionLayoutSection(group: group)
                 section.interGroupSpacing = spacing
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+                
+                section.boundarySupplementaryItems = [header]
                 return section
             }
             
@@ -102,6 +114,16 @@ final class PetsContentViewController: UIViewController {
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
         
+        let headerRegistration = UICollectionView.SupplementaryRegistration
+            <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
+            supplementaryView, string, indexPath in
+                print("header registration llamado: => ")
+                supplementaryView.titleLabel.text = "Adopta un amigo"
+//            supplementaryView.label.text = "\(string) for section \(indexPath.section)"
+//            supplementaryView.backgroundColor = .lightGray
+        }
+
+        
         let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { [weak self] cell, _, model in
 //            cell.startAnimation()
         }
@@ -114,6 +136,23 @@ final class PetsContentViewController: UIViewController {
             }
             
         })
+        
+        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
+            print("self es nil")
+            guard let self else {
+                return nil
+            }
+
+            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+            
+            print("entra section header: => \(section)")
+
+            switch section {
+            case .pets:
+                print("hace return del section header: => \(section)")
+                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+            }
+        }
     }
         
     // MARK: - Private methods

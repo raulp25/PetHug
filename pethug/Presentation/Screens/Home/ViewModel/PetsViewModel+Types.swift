@@ -27,7 +27,8 @@ extension PetsViewModel {
         }
         
         case loading
-        case pets([Pet])
+        case loaded([Pet])
         case error(PetsError)
     }
+    
 }

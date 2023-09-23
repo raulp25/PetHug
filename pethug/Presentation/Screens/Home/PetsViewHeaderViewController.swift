@@ -11,9 +11,9 @@ final class PetsViewHeaderViewController: UIViewController {
     
     private let logoImageView: UIImageView = {
        let iv = UIImageView()
-        iv.image = UIImage(systemName: "pawprint")
+        iv.image = UIImage(named: "dog3")
         iv.tintColor = UIColor.systemPink.withAlphaComponent(0.7)
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
@@ -48,17 +48,20 @@ final class PetsViewHeaderViewController: UIViewController {
     func setup() {
         let paddingTop: CGFloat = 15
         let sidePadding: CGFloat = 25
+        view.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
         
         view.addSubview(logoImageView)
         view.addSubview(titleLabel)
         view.addSubview(filterImageView)
         
         logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 0, paddingLeft: sidePadding)
-        logoImageView.setDimensions(height: 50, width: 50)
-        
+//        logoImageView.setDimensions(height: 50, width: 50)
+        logoImageView.setDimensions(height: 60, width: 60)
+//        logoImageView.layer.borderColor = UIColor.green.cgColor
+//        logoImageView.layer.borderWidth = 1
         titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
         
-        filterImageView.anchor(top: view.topAnchor, right: view.rightAnchor, paddingTop: paddingTop, paddingRight: sidePadding)
+        filterImageView.anchor(top: view.topAnchor, right: view.rightAnchor, paddingTop: 10, paddingRight: sidePadding)
         filterImageView.setDimensions(height: 30, width: 30)
     }
     

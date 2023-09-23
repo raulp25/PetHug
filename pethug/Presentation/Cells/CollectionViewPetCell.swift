@@ -11,11 +11,12 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     
     let petImage: UIImageView = {
        let iv = UIImageView()
-        iv.image = UIImage(named: "sal")
+        let k = Int(arc4random_uniform(6))
+        iv.image = UIImage(named: k < 1 ? "sal" : "pr\(k)")
         iv.clipsToBounds = true
         iv.isUserInteractionEnabled = true
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 10
+        iv.layer.cornerRadius = 10 
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()

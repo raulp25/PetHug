@@ -16,8 +16,7 @@ final class InAppTabBarController: UITabBarController {
     // MARK: - setup
     private func setupRoot() {
         view.clipsToBounds = false
-        tabBar.backgroundColor = .systemYellow.withAlphaComponent(0.4)
-        tabBar.barTintColor = .green
+        tabBar.barTintColor = customRGBColor(red: 246, green: 246, blue: 246)
         tabBar.tintColor = .systemPink
     }
 }

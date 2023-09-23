@@ -8,8 +8,6 @@
 import Foundation
 
 
-
-
 extension User: DomainMapper {
     func toDomain() -> User {
         return User(
