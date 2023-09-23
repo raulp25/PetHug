@@ -25,3 +25,14 @@ class DefaultRegisterUserUC: RegisterUserUC {
         try await userRepository.registerUser(user: user)
     }
 }
+
+
+protocol ComposeRegisterUserUC {
+    static func composeRegisterUserUC() -> DefaultRegisterUserUC
+}
+
+struct RegisterUser: ComposeRegisterUserUC {
+    static func composeRegisterUserUC() -> DefaultRegisterUserUC {
+        DefaultRegisterUserUC(userRepository: DefaultUserRepository(userDataSource: DefaultUserDataSource()))
+    }
+}

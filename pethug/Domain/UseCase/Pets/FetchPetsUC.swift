@@ -26,3 +26,15 @@ final class DefaultFetchPetsUC: FetchPetsUC {
         return pets
     }
 }
+
+
+protocol ComposeFetchPetsUC {
+    static func composeFetchPetsUC() -> DefaultFetchPetsUC
+}
+
+struct FetchPets: ComposeFetchPetsUC {
+    static func composeFetchPetsUC() -> DefaultFetchPetsUC {
+        DefaultFetchPetsUC(petRepository: DefaultPetRepository(petDataSource: DefaultPetDataSource()))
+    }
+}
+

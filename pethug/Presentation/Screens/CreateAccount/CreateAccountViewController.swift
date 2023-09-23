@@ -110,11 +110,7 @@ class CreateAccountViewController: UIViewController {
     private var viewModel = CreateAccountViewModel(
                             authService: AuthService(),
                             imageService: ImageService(),
-                            useCase: DefaultRegisterUserUC(
-                                userRepository: DefaultUserRepository(
-                                    userDataSource: DefaultUserDataSource()
-                                )
-                            )
+                            useCase: RegisterUser.composeRegisterUserUC()
                         )
     private var subscriptions = Set<AnyCancellable>()
     private var keyboardPublisher: AnyCancellable?

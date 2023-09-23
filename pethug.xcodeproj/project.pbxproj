@@ -102,7 +102,6 @@
 		C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */; };
 		C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75022AB25C5B00D69185 /* Constants.swift */; };
 		C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75052AB25CE100D69185 /* ValidationState.swift */; };
-		C4E51C9A2ABB555900E8A33C /* UseCaseFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E51C992ABB555900E8A33C /* UseCaseFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -202,7 +201,6 @@
 		C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTextField.swift; sourceTree = "<group>"; };
 		C4CF75022AB25C5B00D69185 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C4CF75052AB25CE100D69185 /* ValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationState.swift; sourceTree = "<group>"; };
-		C4E51C992ABB555900E8A33C /* UseCaseFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UseCaseFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -709,7 +707,6 @@
 		C4CF75002AB25C1900D69185 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				C4E51C982ABB554000E8A33C /* UseCaseFactory */,
 				C44820252AB5478000E72BD2 /* Firebase */,
 				C46338232AB2CE41000AF2F6 /* Errors */,
 				C42616E62AB27ACD006925DB /* Publishers */,
@@ -737,14 +734,6 @@
 				C42616E22AB2788A006925DB /* Validator.swift */,
 			);
 			path = Validation;
-			sourceTree = "<group>";
-		};
-		C4E51C982ABB554000E8A33C /* UseCaseFactory */ = {
-			isa = PBXGroup;
-			children = (
-				C4E51C992ABB555900E8A33C /* UseCaseFactory.swift */,
-			);
-			path = UseCaseFactory;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -912,7 +901,6 @@
 				C445F1602AB1435300053BE7 /* User.swift in Sources */,
 				C42616EF2AB28285006925DB /* AuthButton+ViewModel.swift in Sources */,
 				C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */,
-				C4E51C9A2ABB555900E8A33C /* UseCaseFactory.swift in Sources */,
 				C44820162AB539B400E72BD2 /* UserModel+DomainMapper.swift in Sources */,
 				C42D3D9C2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift in Sources */,
 				C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */,
