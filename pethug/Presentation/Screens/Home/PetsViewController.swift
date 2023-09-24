@@ -37,6 +37,11 @@ final class PetsViewController: UIViewController {
         super.viewDidLoad()
         setup()
 //        render([""])
+        bind()
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+//            try! AuthService().signOut()
+//        })
     }
     
     // MARK: - setup

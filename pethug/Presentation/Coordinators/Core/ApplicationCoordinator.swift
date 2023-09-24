@@ -63,13 +63,19 @@ final class ApplicationCoordinator: Coordinator {
         switch state {
         case .signedOut:
             print("state signedOut setUpCoordinator(): => \(state)")
-            let coordinator = InAppCoordinator()
+            let coordinator = LoginCoordinator()
             window.rootViewController = coordinator.rootViewController
             childCoordinator = coordinator
         case .signedInButNotVerified:
             print("state signedInButNotVerified setUpCoordinator(): => \(state)")
+            let coordinator = InAppCoordinator()
+            window.rootViewController = coordinator.rootViewController
+            childCoordinator = coordinator
         case .signedIn:
             print("state signedIn setUpCoordinator(): => \(state)")
+            let coordinator = InAppCoordinator()
+            window.rootViewController = coordinator.rootViewController
+            childCoordinator = coordinator
         }
         
         guard let childCoordinator else { return }

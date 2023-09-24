@@ -171,13 +171,14 @@ class CreateAccountViewController: UIViewController {
             let validPassword = passwordTextField.isValidText()  else {
             return
         }
-//        Task {
-//            await viewModel.crateAccount(
-//                username: validUsername,
-//                email: validEmail,
-//                password: validPassword
-//            )
-//        }
+        print("create account ()")
+        Task {
+            await viewModel.crateAccount(
+                username: validUsername,
+                email: validEmail,
+                password: validPassword
+            )
+        }
         
     }
     

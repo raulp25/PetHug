@@ -168,9 +168,9 @@ class LoginViewController: UIViewController {
             let validSurname = passwordTextField.isValidText() else {
             return
         }
-//        Task {
-//            await viewModel.login(email: emailTextField.textField.text, password: passwordTextField.textField.text)
-//        }
+        Task {
+            await viewModel.login(email: emailTextField.textField.text, password: passwordTextField.textField.text)
+        }
     }
     
     @objc private func forgotPassword() {

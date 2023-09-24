@@ -30,6 +30,8 @@ final class PetsViewModel {
     
     init(fetchPetsUC: DefaultFetchPetsUC) {
         self.fetchPetsUC = fetchPetsUC
+//        observeState()
+//        fetchPets(collection: .getPath(for: .dogs))
     }
     
     deinit {
@@ -37,13 +39,16 @@ final class PetsViewModel {
     }
     
     //MARK: - Private methods
-    private func fetchPets(collection: String) async {
-        state.send(.loading)
-        do {
-            let data = try await fetchPetsUC.execute(fetchCollection: .getPath(for: .dogs))
-            petsSubject.send(data)
-        } catch {
-            state.send(.error(.default(error)))
+    private func fetchPets(collection: String) {
+        Task {
+            state.send(.loading)
+            do {
+                let data = try await fetchPetsUC.execute(fetchCollection: .getPath(for: .dogs))
+                print("data en fetch pets(): => \(data)")
+                petsSubject.send(data)
+            } catch {
+                state.send(.error(.default(error)))
+            }
         }
     }
     
