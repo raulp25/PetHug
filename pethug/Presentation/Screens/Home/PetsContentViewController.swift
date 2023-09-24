@@ -23,15 +23,10 @@ final class PetsContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        
+        view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
-        view.addSubview(headerView.view)
-        
-        headerView.view.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, right: view.rightAnchor, paddingTop: 10)
-        headerView.view.setHeight(70)
-        
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+
+        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
         
         configureDataSource()
@@ -61,7 +56,7 @@ final class PetsContentViewController: UIViewController {
                 
                 let headerSize = NSCollectionLayoutSize(
                     widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .absolute(50) // Adjust the height as needed
+                    heightDimension: .estimated(50) // Adjust the height as needed
                 )
                 
                 let spacingheader = CGFloat(-24)
@@ -118,7 +113,7 @@ final class PetsContentViewController: UIViewController {
             <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
             supplementaryView, string, indexPath in
                 print("header registration llamado: => ")
-                supplementaryView.titleLabel.text = "Adopta un amigo"
+                supplementaryView.titleLabel.text = "Adopta a un amigo fiel texto largo de preuba a ver pa joanna"
 //            supplementaryView.label.text = "\(string) for section \(indexPath.section)"
 //            supplementaryView.backgroundColor = .lightGray
         }

@@ -12,7 +12,7 @@ final class LaunchViewController: UIViewController {
     
     //MARK: - Properties
     
-    var countDown: Double = 1.7
+    var countDown: Double = 1
     
     //MARK: - Lifecycle
     

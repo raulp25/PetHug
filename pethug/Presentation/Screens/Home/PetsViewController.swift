@@ -36,16 +36,26 @@ final class PetsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-        render([""])
+//        render([""])
     }
     
     // MARK: - setup
     private func setup() {
-        view.backgroundColor = .white
+        view.backgroundColor = customRGBColor(red: 111, green: 235, blue: 210)
         view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
-        add(contentStateVC)
+      
+        addChild(contentStateVC)
+        view.addSubview(contentStateVC.view)
+        contentStateVC.didMove(toParent: self)
+        ////Check at the end if we re-vert the paddings strategy in the ContentStateViewController
         contentStateVC.view.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        contentStateVC.view.layer.borderColor = UIColor.green.cgColor
+        contentStateVC.view.layer.borderWidth = 2
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+            self.render([""])
+        })
     }
     
     //MARK: - Bind

@@ -22,7 +22,7 @@ final class PetsViewHeaderViewController: UIViewController {
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Animales"
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
@@ -55,10 +55,8 @@ final class PetsViewHeaderViewController: UIViewController {
         view.addSubview(filterImageView)
         
         logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 0, paddingLeft: sidePadding)
-//        logoImageView.setDimensions(height: 50, width: 50)
         logoImageView.setDimensions(height: 60, width: 60)
-//        logoImageView.layer.borderColor = UIColor.green.cgColor
-//        logoImageView.layer.borderWidth = 1
+        
         titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
         
         filterImageView.anchor(top: view.topAnchor, right: view.rightAnchor, paddingTop: 10, paddingRight: sidePadding)

@@ -15,7 +15,7 @@ protocol PetsNavigatable: AnyObject {
 final class PetsViewModel {
     //MARK: - Internal Properties
     weak var navigation: PetsNavigatable?
-    var state = PassthroughSubject<State,Never>()
+    var state = CurrentValueSubject<State,Never>(.loading)
     
 //    var fetchPetsUseCase
     
@@ -23,10 +23,13 @@ final class PetsViewModel {
     private var subscriptions = Set<AnyCancellable>()
     
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
-    @Published private var pets: [Pet] = []
+    private var pets: [Pet] = []
+    
+    private let fetchPetsUC: DefaultFetchPetsUC
     
     
-    init() {
+    init(fetchPetsUC: DefaultFetchPetsUC) {
+        self.fetchPetsUC = fetchPetsUC
     }
     
     deinit {
@@ -34,8 +37,30 @@ final class PetsViewModel {
     }
     
     //MARK: - Private methods
-    private func fetchPets(collection: String) {
-        
+    private func fetchPets(collection: String) async {
+        state.send(.loading)
+        do {
+            let data = try await fetchPetsUC.execute(fetchCollection: .getPath(for: .dogs))
+            petsSubject.send(data)
+        } catch {
+            state.send(.error(.default(error)))
+        }
+    }
+    
+    // MARK: - Private observers
+    private func observeState() {
+        petsSubject
+            .sink { completion in
+            switch completion {
+            case .finished:
+                break
+            case .failure(let err):
+                print("Error retreiving pets: => \(err)")
+            }
+        } receiveValue: { [weak self] pets in
+            self?.state.send(.loaded(pets))
+        }.store(in: &subscriptions)
+
     }
     
     
