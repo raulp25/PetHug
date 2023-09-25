@@ -40,6 +40,7 @@ final class ContentStateViewController: UIViewController {
     func transition(to newState: State) {
         shownViewController?.remove()
         let vc = viewController(for: newState)
+        vc.view.alpha = 0
         add(vc)
         shownViewController = vc
         state = newState

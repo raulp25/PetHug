@@ -57,10 +57,10 @@ final class PetsViewController: UIViewController {
         contentStateVC.view.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         contentStateVC.view.layer.borderColor = UIColor.green.cgColor
         contentStateVC.view.layer.borderWidth = 2
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-            self.render([""])
-        })
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+//            self.render([""])
+//        })
     }
     
     //MARK: - Bind
@@ -82,9 +82,20 @@ final class PetsViewController: UIViewController {
     }
     
     //MARK: - Private methods
-    private func render(_ data: Any) {
-        contentVc = PetsContentViewController()
-        contentStateVC.transition(to: .render(contentVc!))
+    private func render(_ data: [Pet]) {
+//        let snapData: [PetsContentViewController.SnapData] = [
+//            .init(key: .pets, values: data.map { .pet($0) })
+//        ]
+        let snapData: [PetsContentViewController.SnapData] = [
+//            .init(key: .pets, values: data.map { .pet($0) })
+        ]
+        
+        if contentStateVC.shownViewController == contentVc {
+            contentVc?.snapData = snapData
+        } else {
+            contentVc = PetsContentViewController(snapData: snapData)
+            contentStateVC.transition(to: .render(contentVc!))
+        }
         
     }
     

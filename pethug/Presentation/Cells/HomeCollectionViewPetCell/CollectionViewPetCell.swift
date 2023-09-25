@@ -7,12 +7,17 @@
 
 import UIKit
 
+protocol PetContentDelegate: AnyObject {
+    func didTapLike(_ pet: PetsContentViewController.Item)
+}
+
 final class PetControllerCollectionViewCell: UICollectionViewCell {
     
+    //MARK: - Private components
     let petImage: UIImageView = {
        let iv = UIImageView()
         let k = Int(arc4random_uniform(6))
-        iv.image = UIImage(named: k < 1 ? "sal" : "pr\(k)")
+//        iv.image = UIImage(named: k < 1 ? "sal" : "pr\(k)")
         iv.clipsToBounds = true
         iv.isUserInteractionEnabled = true
         iv.contentMode = .scaleAspectFill
@@ -59,9 +64,21 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    //MARK: - Private properties
+    private var viewModel: PetCellViewModel?
+    private weak var delegate: PetContentDelegate?
+    //MARK: - Internal properties
     var liked = false
     
     var action: ((_ cellId: String) -> Void)? = nil
+    
+    //MARK: - LifeCycle
+    func configure(with pet: Pet, delegate: PetContentDelegate) {
+        viewModel = .init(pet: pet)
+        self.delegate = delegate
+        guard viewModel != nil else { return }
+        configureCellUI(with: viewModel!)
+    }
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
@@ -90,18 +107,24 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         address.anchor(top: name.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 5)
     }
     
+    private func configureCellUI(with viewModel: PetCellViewModel) {
+        petImage.image = UIImage(named: viewModel.petImage)
+        heartImage.image = UIImage(systemName: viewModel.heartImage)
+        name.text = viewModel.name
+        address.text = viewModel.address
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     @objc func didTapLike(_ sender: UITapGestureRecognizer) {
-        if let action = action {
-            action("")
-        }
         print("clicked liked")
-        liked = !liked
-        let image = liked ?  "heart.fill" : "heart"
-        heartImage.image = UIImage(systemName: image)
+//        liked = !liked
+//        let image = liked ?  "heart.fill" : "heart"
+//        heartImage.image = UIImage(systemName: image)
+        guard viewModel != nil else { return }
+        delegate?.didTapLike(.pet(viewModel!.pet))
     }
 
 }

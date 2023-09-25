@@ -14,11 +14,36 @@ protocol PetsContentViewControllerDelegate: AnyObject {
 final class PetsContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
+    private let headerView: PetsViewHeaderViewController = PetsViewHeaderViewController()
+    
+    //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    private var currentSnapData = [SnapData]()
     
-    private let headerView: PetsViewHeaderViewController = PetsViewHeaderViewController()
+    //MARK: - Internal properties
+    private var currentSnapData = [SnapData]() {
+        didSet {
+            print("cambio currentsnap data checar")
+        }
+    }
+    var snapData: [SnapData] {
+        didSet {
+//            updateSnapShot()
+        }
+    }
+    
+    init(snapData: [SnapData]) {
+        self.snapData = snapData
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    @available(*, unavailable) required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("✅ Deinit PetsContentViewController")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +61,20 @@ final class PetsContentViewController: UIViewController {
     func generatePet(total: Int) -> [Item] {
         var pets = [Item]()
         
-        for number in 1...total {
-            pets.append(.pet(.init(id: String(number), name: "Joanna", age: 3, gender: "F", size: "SM", breed: "Girl", imageUrl: "d", type: .cat(.persian))))
+        for number in 0...total {
+            let k = Int(arc4random_uniform(6))
+            pets.append(.pet(.init(
+                id: String(number),
+                name: "Joanna",
+                age: k,
+                gender: "F",
+                size: "SM",
+                breed: "Girl",
+                imageUrl: "d",
+                type: .cat(.persian),
+                address: "Calle Campanario 23, Queretaro",
+                isLiked: k < 3 ? false : true
+            )))
         }
         
         return pets
@@ -112,16 +149,14 @@ final class PetsContentViewController: UIViewController {
         let headerRegistration = UICollectionView.SupplementaryRegistration
             <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
             supplementaryView, string, indexPath in
-                print("header registration llamado: => ")
                 supplementaryView.titleLabel.text = "Adopta a un amigo fiel texto largo de preuba a ver pa joanna"
-//            supplementaryView.label.text = "\(string) for section \(indexPath.section)"
-//            supplementaryView.backgroundColor = .lightGray
         }
 
         
-        let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { [weak self] cell, _, model in
-//            cell.startAnimation()
+        let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { cell, _, model in
+            cell.configure(with: model, delegate: self)
         }
+        
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
@@ -133,18 +168,14 @@ final class PetsContentViewController: UIViewController {
         })
         
         dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-            print("self es nil")
             guard let self else {
                 return nil
             }
 
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
             
-            print("entra section header: => \(section)")
-
             switch section {
             case .pets:
-                print("hace return del section header: => \(section)")
                 return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
             }
         }
@@ -152,23 +183,48 @@ final class PetsContentViewController: UIViewController {
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-        currentSnapData  = [.init(key: .pets, values: generatePet(total: 21))]
+        currentSnapData  = [.init(key: .pets, values: generatePet(total: 211))]
+//        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
         snapshot = Snapshot()
         snapshot.appendSections(currentSnapData.map {
             print(": section=> \($0.key)")
             return $0.key
         })
+//        snapshot.appendSections(snapData.map {
+//            print(": section=> \($0.key)")
+//            return $0.key
+//        })
         
         print("currentSnapData: => \(currentSnapData)")
+//        print("currentSnapData: => \(snapData)")
         
         for datum in currentSnapData {
             snapshot.appendItems(datum.values, toSection: datum.key)
         }
+//        for datum in snapData {
+//            snapshot.appendItems(datum.values, toSection: datum.key)
+//        }
 //        print("snapshot en updateSnapshot(): => \(snapshot)")
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
-
-    
 }
+
+
+extension PetsContentViewController: PetContentDelegate {
+    func didTapLike(_ pet: PetsContentViewController.Item) {
+        switch pet {
+        case .pet(let pet):
+            pet.isLiked.toggle()
+        }
+        
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadItems([pet])
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+        
+
+
 

@@ -7,7 +7,15 @@
 
 import Foundation
 
-struct Pet: Codable, Hashable {
+class Pet: Codable, Hashable {
+    static func == (lhs: Pet, rhs: Pet) -> Bool {
+        return lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+           hasher.combine(id)
+       }
+    
     let id: String
     let name: String
     let age: Int
@@ -16,6 +24,32 @@ struct Pet: Codable, Hashable {
     let breed: String
     let imageUrl: String
     let type: PetType
+    let address: String
+    var isLiked: Bool
+    
+    init(
+        id: String,
+        name: String,
+        age: Int,
+        gender: String,
+        size: String,
+        breed: String,
+        imageUrl: String,
+        type: PetType,
+        address: String,
+        isLiked: Bool
+    ) {
+        self.id = id
+        self.name = name
+        self.age = age
+        self.gender = gender
+        self.size = size
+        self.breed = breed
+        self.imageUrl = imageUrl
+        self.type = type
+        self.address = address
+        self.isLiked = isLiked
+    }
 }
 
 extension Pet {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C418BBA52AC0A50600C31967 /* PetEntity+DomainMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418BBA42AC0A50600C31967 /* PetEntity+DomainMapper.swift */; };
+		C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418BBA72AC0BE5400C31967 /* PetCellViewModel.swift */; };
 		C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616D42AB274B4006925DB /* UIButton+Factory.swift */; };
 		C42616D72AB27508006925DB /* IncreaseTapAreaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616D62AB27508006925DB /* IncreaseTapAreaButton.swift */; };
 		C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616D82AB276CA006925DB /* UITextField+Extensions.swift */; };
@@ -105,6 +107,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C418BBA42AC0A50600C31967 /* PetEntity+DomainMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetEntity+DomainMapper.swift"; sourceTree = "<group>"; };
+		C418BBA72AC0BE5400C31967 /* PetCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCellViewModel.swift; sourceTree = "<group>"; };
 		C42616D42AB274B4006925DB /* UIButton+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Factory.swift"; sourceTree = "<group>"; };
 		C42616D62AB27508006925DB /* IncreaseTapAreaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncreaseTapAreaButton.swift; sourceTree = "<group>"; };
 		C42616D82AB276CA006925DB /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
@@ -218,6 +222,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C418BBA62AC0BE3800C31967 /* HomeCollectionViewPetCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */,
+				C418BBA72AC0BE5400C31967 /* PetCellViewModel.swift */,
+			);
+			path = HomeCollectionViewPetCell;
+			sourceTree = "<group>";
+		};
 		C42616D32AB274A1006925DB /* Factories */ = {
 			isa = PBXGroup;
 			children = (
@@ -494,6 +507,7 @@
 				C44820262AB54AA200E72BD2 /* Protocols */,
 				C44820152AB539B400E72BD2 /* UserModel+DomainMapper.swift */,
 				C44820172AB53B7000E72BD2 /* UserEntity+DomainMapper.swift */,
+				C418BBA42AC0A50600C31967 /* PetEntity+DomainMapper.swift */,
 			);
 			name = Mappers;
 			sourceTree = "<group>";
@@ -586,7 +600,7 @@
 		C4BC4A262ABA1A020017428D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */,
+				C418BBA62AC0BE3800C31967 /* HomeCollectionViewPetCell */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -846,6 +860,7 @@
 				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
 				C426D26B2AB671AD00BFA357 /* SettingsViewController.swift in Sources */,
 				C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */,
+				C418BBA52AC0A50600C31967 /* PetEntity+DomainMapper.swift in Sources */,
 				C44820242AB5438000E72BD2 /* Paths.swift in Sources */,
 				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
 				C448201D2AB53FF300E72BD2 /* DefaultUserRepository.swift in Sources */,
@@ -855,6 +870,7 @@
 				C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */,
 				C44820222AB5424900E72BD2 /* UserDataSource.swift in Sources */,
 				C426D26D2AB671D100BFA357 /* DummyView.swift in Sources */,
+				C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */,
 				C42616EB2AB27BC4006925DB /* UIViewController+Extensions.swift in Sources */,
 				C43531532AB96BFC0070D7EE /* ErrorViewController.swift in Sources */,
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
