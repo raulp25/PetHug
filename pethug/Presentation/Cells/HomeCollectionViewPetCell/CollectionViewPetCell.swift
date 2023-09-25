@@ -17,7 +17,7 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     let petImage: UIImageView = {
        let iv = UIImageView()
         let k = Int(arc4random_uniform(6))
-//        iv.image = UIImage(named: k < 1 ? "sal" : "pr\(k)")
+        iv.backgroundColor = UIColor.blue
         iv.clipsToBounds = true
         iv.isUserInteractionEnabled = true
         iv.contentMode = .scaleAspectFill
@@ -107,11 +107,33 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         address.anchor(top: name.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 5)
     }
     
+    private var work: DispatchWorkItem?
+    private var didMount: Bool = false
+    
     private func configureCellUI(with viewModel: PetCellViewModel) {
-        petImage.image = UIImage(named: viewModel.petImage)
         heartImage.image = UIImage(systemName: viewModel.heartImage)
+        print("didMount al inicio: => \(didMount)")
+        if didMount == true {
+            return
+        }
+         work = DispatchWorkItem(block: {
+             self.petImage.image = UIImage(named: viewModel.petImage)
+        })
+        let m = CGFloat(Int(arc4random_uniform(2)))
+        DispatchQueue.main.asyncAfter(deadline: .now() + m, execute: work!)
+        
         name.text = viewModel.name
         address.text = viewModel.address
+        didMount = true
+        
+        print("didMount al final\(didMount)")
+    }
+    
+    override func prepareForReuse() {
+        work?.cancel()
+        didMount = false
+        petImage.image = nil
+        
     }
     
     required init?(coder: NSCoder) {
@@ -119,12 +141,10 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     }
     
     @objc func didTapLike(_ sender: UITapGestureRecognizer) {
-        print("clicked liked")
-//        liked = !liked
-//        let image = liked ?  "heart.fill" : "heart"
-//        heartImage.image = UIImage(systemName: image)
-        guard viewModel != nil else { return }
-        delegate?.didTapLike(.pet(viewModel!.pet))
+        guard let viewModel = viewModel else { return }
+        viewModel.isLiked.toggle()
+        heartImage.image = UIImage(systemName: viewModel.heartImage)
+        delegate?.didTapLike(.pet(viewModel.pet))
     }
 
 }

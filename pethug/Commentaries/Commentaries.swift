@@ -10,9 +10,22 @@ import Foundation
 
 
 //MARK: - DiffableDataSoruce
-
-///FUNCIONA REY DEFINITVA - Had to change from STRUCT to CLASS
+///Works but Had to leave this strategy since we are using classes si theres no need to toggle the liked property
+///directly on the viewcontroller, instead we do it from the cell
 ///IT SEEMS THAT THERES AN APPLE BUG OR SOMETHING WAST WELL DESING WHEN USING STRUCTS
+//extension PetsContentViewController: PetContentDelegate {
+//    func didTapLike(_ pet: PetsContentViewController.Item) {
+//        switch pet {
+//        case .pet(let pet):
+//            pet.isLiked.toggle()
+//        }
+//
+//        var snapshot = dataSource.snapshot()
+//        snapshot.reloadItems([pet])
+//        dataSource.apply(snapshot, animatingDifferences: false)
+//    }
+//}
+
 //
 //func didTapLike(_ pet: PetsContentViewController.Item) {
 //    guard let indexPath = self.dataSource.indexPath(for: pet) else { return }

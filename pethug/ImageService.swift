@@ -13,7 +13,7 @@ protocol ImageServiceProtocol {
     /// - Parameters:
     ///   - image:
     /// - Returns url with type ``URL`` or ``Nil``
-    func uploadImage(image: UIImage) async throws -> String?
+    func uploadImage(image: UIImage, path: String) async throws -> String?
     
     //Doesn't support async
     /// Downloads image and returns the data through completion handler.
@@ -27,8 +27,8 @@ protocol ImageServiceProtocol {
 
 final class ImageService: ImageServiceProtocol {
 
-    func uploadImage(image: UIImage) async throws -> String? {
-        guard let imageData = image.jpegData(compressionQuality: 0.75) else { return nil}
+    func uploadImage(image: UIImage, path: String) async throws -> String? {
+        guard let imageData = image.jpegData(compressionQuality: 0.95) else { return nil}
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference(withPath: "/profile_images/\(filename)")
         

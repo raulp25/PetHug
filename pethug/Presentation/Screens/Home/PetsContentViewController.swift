@@ -213,14 +213,9 @@ final class PetsContentViewController: UIViewController {
 
 extension PetsContentViewController: PetContentDelegate {
     func didTapLike(_ pet: PetsContentViewController.Item) {
-        switch pet {
-        case .pet(let pet):
-            pet.isLiked.toggle()
-        }
-        
-        var snapshot = dataSource.snapshot()
-        snapshot.reloadItems([pet])
-        dataSource.apply(snapshot, animatingDifferences: true)
+        guard let indexPath = self.dataSource.indexPath(for: pet) else { return }
+        self.currentSnapData[indexPath.section].values.remove(at: indexPath.row)
+        self.currentSnapData[indexPath.section].values.insert(pet, at: indexPath.row)
     }
 }
 
