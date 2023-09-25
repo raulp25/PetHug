@@ -33,6 +33,7 @@
 		C426D2682AB6713A00BFA357 /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D2672AB6713A00BFA357 /* SettingsCoordinator.swift */; };
 		C426D26B2AB671AD00BFA357 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D26A2AB671AD00BFA357 /* SettingsViewController.swift */; };
 		C426D26D2AB671D100BFA357 /* DummyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D26C2AB671D100BFA357 /* DummyView.swift */; };
+		C42A584D2AC1258A00A6FFBF /* Commentaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42A584C2AC1258A00A6FFBF /* Commentaries.swift */; };
 		C42D3D8C2AB6356900EBA1B7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C42D3D8B2AB6356900EBA1B7 /* FirebaseAuth */; };
 		C42D3D8E2AB6356900EBA1B7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C42D3D8D2AB6356900EBA1B7 /* FirebaseFirestore */; };
 		C42D3D902AB6356900EBA1B7 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C42D3D8F2AB6356900EBA1B7 /* FirebaseFirestoreSwift */; };
@@ -133,6 +134,7 @@
 		C426D2672AB6713A00BFA357 /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
 		C426D26A2AB671AD00BFA357 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C426D26C2AB671D100BFA357 /* DummyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyView.swift; sourceTree = "<group>"; };
+		C42A584C2AC1258A00A6FFBF /* Commentaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commentaries.swift; sourceTree = "<group>"; };
 		C42D3D962AB65D8A00EBA1B7 /* InAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppTabBarController.swift; sourceTree = "<group>"; };
 		C42D3D982AB65EB100EBA1B7 /* InAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppCoordinator.swift; sourceTree = "<group>"; };
 		C42D3D9B2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppContainerRootViewController.swift; sourceTree = "<group>"; };
@@ -297,6 +299,14 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
+		C42A584B2AC1257E00A6FFBF /* Commentaries */ = {
+			isa = PBXGroup;
+			children = (
+				C42A584C2AC1258A00A6FFBF /* Commentaries.swift */,
+			);
+			path = Commentaries;
+			sourceTree = "<group>";
+		};
 		C42D3D952AB65D5300EBA1B7 /* Containers */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,6 +364,7 @@
 		C445F1182AB1391A00053BE7 /* pethug */ = {
 			isa = PBXGroup;
 			children = (
+				C42A584B2AC1257E00A6FFBF /* Commentaries */,
 				C445F1492AB13B2C00053BE7 /* Core */,
 				C445F14A2AB13B3500053BE7 /* Data */,
 				C445F14B2AB13B3F00053BE7 /* Domain */,
@@ -873,6 +884,7 @@
 				C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */,
 				C42616EB2AB27BC4006925DB /* UIViewController+Extensions.swift in Sources */,
 				C43531532AB96BFC0070D7EE /* ErrorViewController.swift in Sources */,
+				C42A584D2AC1258A00A6FFBF /* Commentaries.swift in Sources */,
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
 				C426D2682AB6713A00BFA357 /* SettingsCoordinator.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,
