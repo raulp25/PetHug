@@ -36,10 +36,10 @@ class DummySectionHeader: UICollectionReusableView {
         layer.borderWidth = 3
         layer.cornerRadius = 10
         addSubview(titleLabel)
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
+        titleLabel.center(inView: self)
         
-        addSubview(titleLabel2)
-        titleLabel2.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10)
+//        addSubview(titleLabel2)
+//        titleLabel2.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10)
     }
 
     @available(*, unavailable) required init?(coder _: NSCoder) {

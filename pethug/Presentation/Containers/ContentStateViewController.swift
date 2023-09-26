@@ -13,25 +13,6 @@ final class ContentStateViewController: UIViewController {
     let headerView = PetsViewHeaderViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
-        addChild(headerView)
-        view.addSubview(headerView.view)
-        headerView.didMove(toParent: self)
-        headerView.view.setHeight(70)
-        ////Check at the end if we leave the PetviewController as it is or we change the child controller and add this padding tops mods
-        headerView.view.anchor(
-            top: view.safeAreaLayoutGuide.topAnchor,
-            left: view.leftAnchor,
-            right: view.rightAnchor
-//            ,
-//            paddingTop:
-//                UIScreen.main.bounds.size.height <= 700 ?
-//                40 :
-//                    UIScreen.main.bounds.size.height <= 926 ?
-//                    60 :
-//                        75
-//            )
-        )
-        
         if state == nil {
             transition(to: .loading)
         }
@@ -44,7 +25,7 @@ final class ContentStateViewController: UIViewController {
         add(vc)
         shownViewController = vc
         state = newState
-        vc.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        vc.view.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut) {
             vc.view.alpha = 1
         }

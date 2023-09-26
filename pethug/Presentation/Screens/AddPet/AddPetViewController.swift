@@ -1,19 +1,14 @@
 //
-//  PetsViewController.swift
+//  AddPetViewController.swift
 //  pethug
 //
-//  Created by Raul Pena on 18/09/23.
+//  Created by Raul Pena on 26/09/23.
 //
 
 import UIKit
 import Combine
 
-//protocol PetsViewControllerDelegate: AnyObject {
-//    func didTap(recipient: Any)
-////    func didTap(_: Any)
-//}
-
-final class PetsViewController: UIViewController {
+final class AddPetViewController: UIViewController {
     
     //MARK: - Private components
     private lazy var contentStateVC = ContentStateViewController()
@@ -43,7 +38,6 @@ final class PetsViewController: UIViewController {
 //            try! AuthService().signOut()
 //        })
     }
-    let headerView = PetsViewHeaderViewController()
     
     // MARK: - setup
     private func setup() {
@@ -51,23 +45,19 @@ final class PetsViewController: UIViewController {
         view.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
         view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
+      
+        addChild(contentStateVC)
+        view.addSubview(contentStateVC.view)
+        contentStateVC.didMove(toParent: self)
+        ////Check at the end if we re-vert the paddings strategy in the ContentStateViewController
+//        contentStateVC.view.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         
-        add(headerView)
-        headerView.view.setHeight(70)
-        headerView.view.anchor(
-            top: view.topAnchor,
-            left: view.leftAnchor,
-            right: view.rightAnchor,
-            paddingTop:
-                UIScreen.main.bounds.size.height <= 700 ?
-                40 :
-                    UIScreen.main.bounds.size.height <= 926 ?
-                    60 :
-                        75
-        )
-        
-        add(contentStateVC)
-        contentStateVC.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+//        contentStateVC.view.layer.borderColor = UIColor.green.cgColor
+//        contentStateVC.view.layer.borderWidth = 2
+//
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+//            self.render([""])
+//        })
     }
     
     //MARK: - Bind
@@ -107,3 +97,4 @@ final class PetsViewController: UIViewController {
     }
     
 }
+

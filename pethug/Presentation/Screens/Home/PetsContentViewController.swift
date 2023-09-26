@@ -65,14 +65,14 @@ final class PetsContentViewController: UIViewController {
             let k = Int(arc4random_uniform(6))
             pets.append(.pet(.init(
                 id: String(number),
-                name: "Joanna",
+                name: k < 2 ? "Ruti" : k < 5 ? "Gregoria" : "Doli",
                 age: k,
                 gender: "F",
                 size: "SM",
                 breed: "Girl",
                 imageUrl: "d",
                 type: .cat(.persian),
-                address: "Calle Campanario 23, Queretaro",
+                address: k < 2 ? "Mirador del Cimatario Cancun Quintana Roo" : k < 5 ? "Huixquilucan Estado de Mexico" : "Calle Campanario 23, Queretaro",
                 isLiked: k < 3 ? false : true
             )))
         }
@@ -90,50 +90,7 @@ final class PetsContentViewController: UIViewController {
             switch section {
             case .pets:
                 print("dogs section")
-                
-                let headerSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(50) // Adjust the height as needed
-                )
-                
-                let spacingheader = CGFloat(-24)
-
-                let header = NSCollectionLayoutBoundarySupplementaryItem(
-                    layoutSize: headerSize,
-                    elementKind: UICollectionView.elementKindSectionHeader,
-                    alignment: .top,
-                    absoluteOffset: .init(x: 0, y: spacingheader)
-                )
-                
-
-                let itemSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1),
-                    heightDimension: .fractionalHeight(1.0)
-                )
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-
-                let groupSize = NSCollectionLayoutSize(
-                    widthDimension: .fractionalWidth(1.0),
-                    heightDimension: .estimated(190)
-                )
-                
-//                let group = NSCollectionLayoutGroup.horizontal(
-//                    layoutSize: groupSize,
-//                    repeatingSubitem: item,
-//                    count: 2
-//                )
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
-                
-                let spacing = CGFloat(40)
-                group.interItemSpacing = .fixed(spacing)
-//                group.contentInsets = .init(top: 0, leading: 30, bottom: 0, trailing: 30)
-                
-                let section = NSCollectionLayoutSection(group: group)
-                section.interGroupSpacing = spacing
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
-                
-                section.boundarySupplementaryItems = [header]
-                return section
+                return .createPetsLayout()
             }
             
         }
@@ -149,7 +106,7 @@ final class PetsContentViewController: UIViewController {
         let headerRegistration = UICollectionView.SupplementaryRegistration
             <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
             supplementaryView, string, indexPath in
-                supplementaryView.titleLabel.text = "Adopta a un amigo fiel texto largo de preuba a ver pa joanna"
+                supplementaryView.titleLabel.text = "Adopta a un amigo"
         }
 
         
@@ -183,7 +140,7 @@ final class PetsContentViewController: UIViewController {
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-        currentSnapData  = [.init(key: .pets, values: generatePet(total: 211))]
+        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
         snapshot = Snapshot()
@@ -214,8 +171,8 @@ final class PetsContentViewController: UIViewController {
 extension PetsContentViewController: PetContentDelegate {
     func didTapLike(_ pet: PetsContentViewController.Item) {
         guard let indexPath = self.dataSource.indexPath(for: pet) else { return }
-        self.currentSnapData[indexPath.section].values.remove(at: indexPath.row)
-        self.currentSnapData[indexPath.section].values.insert(pet, at: indexPath.row)
+//        self.currentSnapData[indexPath.section].values.remove(at: indexPath.row)
+//        self.currentSnapData[indexPath.section].values.insert(pet, at: indexPath.row)
     }
 }
 
