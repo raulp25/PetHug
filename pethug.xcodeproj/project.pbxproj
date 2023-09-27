@@ -96,6 +96,11 @@
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
+		C48D9B462AC49BBB002EDA90 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B452AC49BBB002EDA90 /* ListCollectionViewCell.swift */; };
+		C48D9B482AC49BCC002EDA90 /* ContentConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B472AC49BCC002EDA90 /* ContentConfigurable.swift */; };
+		C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B4A2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift */; };
+		C48D9B4D2AC49DE9002EDA90 /* NameCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B4C2AC49DE9002EDA90 /* NameCellViewModel.swift */; };
+		C48D9B4F2AC49E3B002EDA90 /* NewPetNameCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B4E2AC49E3B002EDA90 /* NewPetNameCellContentView.swift */; };
 		C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */; };
 		C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
@@ -212,6 +217,11 @@
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
+		C48D9B452AC49BBB002EDA90 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
+		C48D9B472AC49BCC002EDA90 /* ContentConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentConfigurable.swift; sourceTree = "<group>"; };
+		C48D9B4A2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetNameListCellConfiguration.swift; sourceTree = "<group>"; };
+		C48D9B4C2AC49DE9002EDA90 /* NameCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameCellViewModel.swift; sourceTree = "<group>"; };
+		C48D9B4E2AC49E3B002EDA90 /* NewPetNameCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetNameCellContentView.swift; sourceTree = "<group>"; };
 		C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponser+Extensions.swift"; sourceTree = "<group>"; };
 		C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPetCell.swift; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -678,9 +688,30 @@
 			path = CreateAccount;
 			sourceTree = "<group>";
 		};
+		C48D9B442AC49B63002EDA90 /* GenericListCell */ = {
+			isa = PBXGroup;
+			children = (
+				C48D9B452AC49BBB002EDA90 /* ListCollectionViewCell.swift */,
+				C48D9B472AC49BCC002EDA90 /* ContentConfigurable.swift */,
+			);
+			path = GenericListCell;
+			sourceTree = "<group>";
+		};
+		C48D9B492AC49D47002EDA90 /* NewPetCollectionViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				C48D9B4A2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift */,
+				C48D9B4C2AC49DE9002EDA90 /* NameCellViewModel.swift */,
+				C48D9B4E2AC49E3B002EDA90 /* NewPetNameCellContentView.swift */,
+			);
+			path = NewPetCollectionViewCell;
+			sourceTree = "<group>";
+		};
 		C4BC4A262ABA1A020017428D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C48D9B492AC49D47002EDA90 /* NewPetCollectionViewCell */,
+				C48D9B442AC49B63002EDA90 /* GenericListCell */,
 				C4779BE92AC3A9CF00E3A16F /* AddPetCollectionViewPetCell */,
 				C418BBA62AC0BE3800C31967 /* HomeCollectionViewPetCell */,
 			);
@@ -945,14 +976,18 @@
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
+				C48D9B4F2AC49E3B002EDA90 /* NewPetNameCellContentView.swift in Sources */,
 				C42616DD2AB277C4006925DB /* ValidatorType.swift in Sources */,
 				C435314C2AB960A10070D7EE /* PetsViewController.swift in Sources */,
+				C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */,
 				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
 				C426D26B2AB671AD00BFA357 /* SettingsViewController.swift in Sources */,
 				C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */,
 				C418BBA52AC0A50600C31967 /* PetEntity+DomainMapper.swift in Sources */,
 				C44820242AB5438000E72BD2 /* Paths.swift in Sources */,
 				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
+				C48D9B462AC49BBB002EDA90 /* ListCollectionViewCell.swift in Sources */,
+				C48D9B4D2AC49DE9002EDA90 /* NameCellViewModel.swift in Sources */,
 				C448201D2AB53FF300E72BD2 /* DefaultUserRepository.swift in Sources */,
 				C448201A2AB53EF200E72BD2 /* RegisterUserUC.swift in Sources */,
 				C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */,
@@ -1009,6 +1044,7 @@
 				C44820112AB5376900E72BD2 /* UserModel.swift in Sources */,
 				C4CF74EE2AB24A6500D69185 /* LoginCoordinator.swift in Sources */,
 				C426D2662AB6703E00BFA357 /* HomeTabCoordinator.swift in Sources */,
+				C48D9B482AC49BCC002EDA90 /* ContentConfigurable.swift in Sources */,
 				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,
 				C448200E2AB5335500E72BD2 /* UserService.swift in Sources */,

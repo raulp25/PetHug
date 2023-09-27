@@ -35,10 +35,14 @@ final class AddPetViewController: UIViewController {
         setup()
 //        render([""])
         bind()
-//
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
 //            try! AuthService().signOut()
 //        })
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchPets(collection: .getPath(for: .dogs))
     }
     
     // MARK: - setup

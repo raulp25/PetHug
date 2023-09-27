@@ -32,7 +32,7 @@ final class AddPetViewModel {
     init(fetchPetsUC: DefaultFetchPetsUC) {
         self.fetchPetsUC = fetchPetsUC
         observeState()
-        fetchPets(collection: .getPath(for: .dogs))
+//        fetchPets(collection: .getPath(for: .dogs))
         ///Mock pet, do not uncomment
 //        createMockPet()
         
@@ -44,7 +44,7 @@ final class AddPetViewModel {
     }
     
     //MARK: - Private methods
-    private func fetchPets(collection: String) {
+     func fetchPets(collection: String) {
         Task {
             state.send(.loading)
             do {
