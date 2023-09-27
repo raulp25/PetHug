@@ -10,7 +10,7 @@ import UIKit
 final class NewPetViewController: UIViewController {
     
     // MARK: - Private components
-    //    private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
+    private let contentVC = NewPetContentViewController()
     
     private lazy var xmarkImageContainer: UIView = {
        let uv = UIView(withAutolayout: true)
@@ -48,12 +48,19 @@ final class NewPetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = customRGBColor(red: 58, green: 91, blue: 144)
+        
         view.addSubview(xmarkImageContainer)
         xmarkImageContainer.addSubview(xmarkImageView)
+        add(contentVC)
         
         xmarkImageContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingLeft: 15)
         xmarkImageContainer.setDimensions(height: 30, width: 30)
+        
         xmarkImageView.center(inView: xmarkImageContainer)
+        
+        contentVC.view.anchor(top: xmarkImageContainer.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20)
+        contentVC.view.layer.borderColor = UIColor.green.cgColor
+        contentVC.view.layer.borderWidth = 2
         
     }
     

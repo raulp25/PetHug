@@ -91,6 +91,8 @@
 		C4779BEB2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BEA2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift */; };
 		C4779BED2AC3A9FD00E3A16F /* AddPetCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BEC2AC3A9FD00E3A16F /* AddPetCellViewModel.swift */; };
 		C4779BF02AC3BADE00E3A16F /* NewPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */; };
+		C4779BF22AC3C92000E3A16F /* NewPetContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BF12AC3C92000E3A16F /* NewPetContentViewController+Types.swift */; };
+		C4779BF42AC3C97E00E3A16F /* NewPetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
@@ -205,6 +207,8 @@
 		C4779BEA2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewAddPetCell.swift; sourceTree = "<group>"; };
 		C4779BEC2AC3A9FD00E3A16F /* AddPetCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetCellViewModel.swift; sourceTree = "<group>"; };
 		C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewController.swift; sourceTree = "<group>"; };
+		C4779BF12AC3C92000E3A16F /* NewPetContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPetContentViewController+Types.swift"; sourceTree = "<group>"; };
+		C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetContentViewController.swift; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
@@ -659,6 +663,8 @@
 			isa = PBXGroup;
 			children = (
 				C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */,
+				C4779BF12AC3C92000E3A16F /* NewPetContentViewController+Types.swift */,
+				C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */,
 			);
 			path = NewPet;
 			sourceTree = "<group>";
@@ -955,6 +961,7 @@
 				C44820222AB5424900E72BD2 /* UserDataSource.swift in Sources */,
 				C426D26D2AB671D100BFA357 /* DummyView.swift in Sources */,
 				C4779BE62AC3A78E00E3A16F /* AddPetContentViewController.swift in Sources */,
+				C4779BF42AC3C97E00E3A16F /* NewPetContentViewController.swift in Sources */,
 				C4779BF02AC3BADE00E3A16F /* NewPetViewController.swift in Sources */,
 				C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */,
 				C42616EB2AB27BC4006925DB /* UIViewController+Extensions.swift in Sources */,
@@ -1005,6 +1012,7 @@
 				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,
 				C448200E2AB5335500E72BD2 /* UserService.swift in Sources */,
+				C4779BF22AC3C92000E3A16F /* NewPetContentViewController+Types.swift in Sources */,
 				C435314E2AB966750070D7EE /* ContentStateViewController.swift in Sources */,
 				C445F1602AB1435300053BE7 /* User.swift in Sources */,
 				C42616EF2AB28285006925DB /* AuthButton+ViewModel.swift in Sources */,
