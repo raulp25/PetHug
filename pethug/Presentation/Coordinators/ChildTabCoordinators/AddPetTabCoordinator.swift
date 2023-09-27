@@ -15,8 +15,21 @@ final class AddPetTabCoordinator: ChildTabCoordinator {
     var rootViewController: UINavigationController = .init()
     
     func start() {
-        let vc = PetsViewController(viewModel: .init(fetchPetsUC: FetchPets.composeFetchPetsUC()))
+        let viewModel = AddPetViewModel(fetchPetsUC: FetchPets.composeFetchPetsUC())
+        viewModel.navigation = self
+        let vc = AddPetViewController(viewModel: viewModel)
         rootViewController.pushViewController(vc, animated: true)
     }
+    
+    
+}
+
+extension AddPetTabCoordinator: AddPetNavigatable {
+    func startAddPetFlow() {
+        let child = NewPetCoordinator()
+        child.parentCoordinator = self
+        childCoordinators.append(child)
+        child.start()
+    }    
 }
 

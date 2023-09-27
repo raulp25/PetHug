@@ -9,33 +9,33 @@ import Foundation
 
 extension InAppCoordinator {
     enum TabBar: String, CaseIterable {
-        case chats = "Chats"
-        case calls = "Calls"
-        case people = "People"
-        case stories = "Stories"
+        case home = "Home"
+        case add = "Add"
+        case favorites = "Favorites"
+        case about = "About"
 
         var imageName: String {
             switch self {
-            case .chats:
+            case .home:
                 return "house.fill"
-            case .calls:
-                return "heart.fill"
-            case .people:
+            case .add:
+                return "pawprint"
+            case .favorites:
                 return "person.2.fill"
-            case .stories:
+            case .about:
                 return "rectangle.portrait.on.rectangle.portrait.fill"
             }
         }
 
         var tag: Int {
             switch self {
-            case .chats:
+            case .home:
                 return 0
-            case .calls:
+            case .add:
                 return 1
-            case .people:
+            case .favorites:
                 return 2
-            case .stories:
+            case .about:
                 return 3
             }
         }

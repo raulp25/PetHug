@@ -8,18 +8,20 @@
 import UIKit
 import Combine
 
+
 final class AddPetViewController: UIViewController {
     
     //MARK: - Private components
     private lazy var contentStateVC = ContentStateViewController()
-    private lazy var contentVc: PetsContentViewController? = nil
+    private lazy var contentVc: AddPetContentViewController? = nil
     
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
-    private let viewModel: PetsViewModel
+    private let viewModel: AddPetViewModel
+    private let headerView = AddPetViewHeaderViewController()
     
     // MARK: - LifeCycle
-    init(viewModel: PetsViewModel) {
+    init(viewModel: AddPetViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -45,19 +47,24 @@ final class AddPetViewController: UIViewController {
         view.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
         view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
-      
-        addChild(contentStateVC)
-        view.addSubview(contentStateVC.view)
-        contentStateVC.didMove(toParent: self)
-        ////Check at the end if we re-vert the paddings strategy in the ContentStateViewController
-//        contentStateVC.view.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         
-//        contentStateVC.view.layer.borderColor = UIColor.green.cgColor
-//        contentStateVC.view.layer.borderWidth = 2
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-//            self.render([""])
-//        })
+        add(headerView)
+        headerView.delegate = self
+        headerView.view.setHeight(70)
+        headerView.view.anchor(
+            top: view.topAnchor,
+            left: view.leftAnchor,
+            right: view.rightAnchor,
+            paddingTop:
+                UIScreen.main.bounds.size.height <= 700 ?
+                40 :
+                    UIScreen.main.bounds.size.height <= 926 ?
+                    60 :
+                        75
+        )
+        
+        add(contentStateVC)
+        contentStateVC.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
     }
     
     //MARK: - Bind
@@ -83,14 +90,14 @@ final class AddPetViewController: UIViewController {
 //        let snapData: [PetsContentViewController.SnapData] = [
 //            .init(key: .pets, values: data.map { .pet($0) })
 //        ]
-        let snapData: [PetsContentViewController.SnapData] = [
+        let snapData: [AddPetContentViewController.SnapData] = [
 //            .init(key: .pets, values: data.map { .pet($0) })
         ]
         
         if contentStateVC.shownViewController == contentVc {
             contentVc?.snapData = snapData
         } else {
-            contentVc = PetsContentViewController(snapData: snapData)
+            contentVc = AddPetContentViewController(snapData: snapData)
             contentStateVC.transition(to: .render(contentVc!))
         }
         
@@ -98,3 +105,8 @@ final class AddPetViewController: UIViewController {
     
 }
 
+extension AddPetViewController: AddPetViewHeaderDelegate {
+    func action() {
+        viewModel.navigation?.startAddPetFlow()
+    }
+}

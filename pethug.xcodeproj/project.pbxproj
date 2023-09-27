@@ -84,6 +84,13 @@
 		C4779BDB2AC38D5500E3A16F /* AddPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BDA2AC38D5500E3A16F /* AddPetViewController.swift */; };
 		C4779BDE2AC38DC100E3A16F /* AddPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BDD2AC38DC100E3A16F /* AddPetViewModel.swift */; };
 		C4779BE02AC38E3B00E3A16F /* AddPetViewModel+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BDF2AC38E3B00E3A16F /* AddPetViewModel+Types.swift */; };
+		C4779BE22AC3A34D00E3A16F /* NewPetCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BE12AC3A34D00E3A16F /* NewPetCoordinator.swift */; };
+		C4779BE42AC3A4A700E3A16F /* AddPetViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BE32AC3A4A700E3A16F /* AddPetViewHeaderViewController.swift */; };
+		C4779BE62AC3A78E00E3A16F /* AddPetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BE52AC3A78E00E3A16F /* AddPetContentViewController.swift */; };
+		C4779BE82AC3A7F100E3A16F /* AddPetContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BE72AC3A7F100E3A16F /* AddPetContentViewController+Types.swift */; };
+		C4779BEB2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BEA2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift */; };
+		C4779BED2AC3A9FD00E3A16F /* AddPetCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BEC2AC3A9FD00E3A16F /* AddPetCellViewModel.swift */; };
+		C4779BF02AC3BADE00E3A16F /* NewPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
@@ -191,6 +198,13 @@
 		C4779BDA2AC38D5500E3A16F /* AddPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetViewController.swift; sourceTree = "<group>"; };
 		C4779BDD2AC38DC100E3A16F /* AddPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetViewModel.swift; sourceTree = "<group>"; };
 		C4779BDF2AC38E3B00E3A16F /* AddPetViewModel+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddPetViewModel+Types.swift"; sourceTree = "<group>"; };
+		C4779BE12AC3A34D00E3A16F /* NewPetCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetCoordinator.swift; sourceTree = "<group>"; };
+		C4779BE32AC3A4A700E3A16F /* AddPetViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetViewHeaderViewController.swift; sourceTree = "<group>"; };
+		C4779BE52AC3A78E00E3A16F /* AddPetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetContentViewController.swift; sourceTree = "<group>"; };
+		C4779BE72AC3A7F100E3A16F /* AddPetContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddPetContentViewController+Types.swift"; sourceTree = "<group>"; };
+		C4779BEA2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewAddPetCell.swift; sourceTree = "<group>"; };
+		C4779BEC2AC3A9FD00E3A16F /* AddPetCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetCellViewModel.swift; sourceTree = "<group>"; };
+		C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewController.swift; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
@@ -350,6 +364,9 @@
 			children = (
 				C4779BDC2AC38DBC00E3A16F /* ViewModel */,
 				C4779BDA2AC38D5500E3A16F /* AddPetViewController.swift */,
+				C4779BE32AC3A4A700E3A16F /* AddPetViewHeaderViewController.swift */,
+				C4779BE52AC3A78E00E3A16F /* AddPetContentViewController.swift */,
+				C4779BE72AC3A7F100E3A16F /* AddPetContentViewController+Types.swift */,
 			);
 			path = AddPet;
 			sourceTree = "<group>";
@@ -629,6 +646,23 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		C4779BE92AC3A9CF00E3A16F /* AddPetCollectionViewPetCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4779BEA2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift */,
+				C4779BEC2AC3A9FD00E3A16F /* AddPetCellViewModel.swift */,
+			);
+			path = AddPetCollectionViewPetCell;
+			sourceTree = "<group>";
+		};
+		C4779BEE2AC3BA6B00E3A16F /* NewPet */ = {
+			isa = PBXGroup;
+			children = (
+				C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */,
+			);
+			path = NewPet;
+			sourceTree = "<group>";
+		};
 		C482908B2AB391AE00DE6227 /* CreateAccount */ = {
 			isa = PBXGroup;
 			children = (
@@ -641,6 +675,7 @@
 		C4BC4A262ABA1A020017428D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C4779BE92AC3A9CF00E3A16F /* AddPetCollectionViewPetCell */,
 				C418BBA62AC0BE3800C31967 /* HomeCollectionViewPetCell */,
 			);
 			path = Cells;
@@ -702,6 +737,7 @@
 				C4CF74DB2AB227C200D69185 /* NavCoordinatorProtocol.swift */,
 				C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */,
 				C426D2672AB6713A00BFA357 /* SettingsCoordinator.swift */,
+				C4779BE12AC3A34D00E3A16F /* NewPetCoordinator.swift */,
 			);
 			path = NavCoordinators;
 			sourceTree = "<group>";
@@ -710,11 +746,12 @@
 			isa = PBXGroup;
 			children = (
 				C43531512AB96A420070D7EE /* Error */,
-				C43261D72AC2254800B70ACA /* AddPet */,
-				C426D2692AB6719900BFA357 /* Home */,
-				C482908B2AB391AE00DE6227 /* CreateAccount */,
-				C4CF74EF2AB2504300D69185 /* Login */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
+				C4CF74EF2AB2504300D69185 /* Login */,
+				C482908B2AB391AE00DE6227 /* CreateAccount */,
+				C426D2692AB6719900BFA357 /* Home */,
+				C43261D72AC2254800B70ACA /* AddPet */,
+				C4779BEE2AC3BA6B00E3A16F /* NewPet */,
 				C435314F2AB969D20070D7EE /* LoadingViewController.swift */,
 				C426D26A2AB671AD00BFA357 /* SettingsViewController.swift */,
 			);
@@ -876,6 +913,7 @@
 				C426D2642AB66FC600BFA357 /* InAppCoordinator+TabBar.swift in Sources */,
 				C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */,
 				C43261D62AC222B900B70ACA /* AddPetTabCoordinator.swift in Sources */,
+				C4779BE82AC3A7F100E3A16F /* AddPetContentViewController+Types.swift in Sources */,
 				C42616F12AB28296006925DB /* AuthButton.swift in Sources */,
 				C44820142AB538DC00E72BD2 /* DomainMapperProtocol.swift in Sources */,
 				C42616E92AB27B37006925DB /* AuthPublisher.swift in Sources */,
@@ -897,6 +935,7 @@
 				C43261D42AC2213700B70ACA /* UICollectionView+Layout.swift in Sources */,
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
 				C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */,
+				C4779BED2AC3A9FD00E3A16F /* AddPetCellViewModel.swift in Sources */,
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
@@ -915,8 +954,11 @@
 				C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */,
 				C44820222AB5424900E72BD2 /* UserDataSource.swift in Sources */,
 				C426D26D2AB671D100BFA357 /* DummyView.swift in Sources */,
+				C4779BE62AC3A78E00E3A16F /* AddPetContentViewController.swift in Sources */,
+				C4779BF02AC3BADE00E3A16F /* NewPetViewController.swift in Sources */,
 				C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */,
 				C42616EB2AB27BC4006925DB /* UIViewController+Extensions.swift in Sources */,
+				C4779BE22AC3A34D00E3A16F /* NewPetCoordinator.swift in Sources */,
 				C43531532AB96BFC0070D7EE /* ErrorViewController.swift in Sources */,
 				C42A584D2AC1258A00A6FFBF /* Commentaries.swift in Sources */,
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
@@ -946,6 +988,7 @@
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C476E2C22ABA99D30014DEA4 /* DefaultPetRepository.swift in Sources */,
 				C42616F32AB282DF006925DB /* SpinnerView.swift in Sources */,
+				C4779BEB2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift in Sources */,
 				C42616F92AB2A6B5006925DB /* GradientButton.swift in Sources */,
 				C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */,
 				C4CF74E22AB22B0200D69185 /* LaunchViewController.swift in Sources */,
@@ -953,6 +996,7 @@
 				C43531552AB96C120070D7EE /* ErrorView.swift in Sources */,
 				C42616F72AB2A09F006925DB /* UIButton+Extensions.swift in Sources */,
 				C44820182AB53B7000E72BD2 /* UserEntity+DomainMapper.swift in Sources */,
+				C4779BE42AC3A4A700E3A16F /* AddPetViewHeaderViewController.swift in Sources */,
 				C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */,
 				C4CF74F12AB2505800D69185 /* LoginViewController.swift in Sources */,
 				C44820112AB5376900E72BD2 /* UserModel.swift in Sources */,

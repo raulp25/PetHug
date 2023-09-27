@@ -10,7 +10,7 @@ import Combine
 import FirebaseFirestore
 
 protocol AddPetNavigatable: AnyObject {
-    func tapped(pet: Pet)
+    func startAddPetFlow()
 }
 
 final class AddPetViewModel {

@@ -18,6 +18,7 @@ final class PetsViewController: UIViewController {
     //MARK: - Private components
     private lazy var contentStateVC = ContentStateViewController()
     private lazy var contentVc: PetsContentViewController? = nil
+    private let headerView = PetsViewHeaderViewController()
     
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
@@ -43,7 +44,7 @@ final class PetsViewController: UIViewController {
 //            try! AuthService().signOut()
 //        })
     }
-    let headerView = PetsViewHeaderViewController()
+    
     
     // MARK: - setup
     private func setup() {

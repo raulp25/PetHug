@@ -46,13 +46,13 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
     func startChildTabCoordinator(with tab: TabBar) {
         var childCoordinator: ChildTabCoordinator!
         switch tab {
-        case .chats:
+        case .home:
             childCoordinator = HomeTabCoordinator()
-        case .calls:
+        case .add:
+            childCoordinator = AddPetTabCoordinator()
+        case .favorites:
             childCoordinator = HomeTabCoordinator()
-        case .people:
-            childCoordinator = HomeTabCoordinator()
-        case .stories:
+        case .about:
             childCoordinator = HomeTabCoordinator()
         }
 

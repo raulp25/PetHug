@@ -1,17 +1,17 @@
 //
-//  PetsContentViewController.swift
+//  AddPetContentViewController.swift
 //  pethug
 //
-//  Created by Raul Pena on 19/09/23.
+//  Created by Raul Pena on 26/09/23.
 //
 
 import UIKit
-protocol PetsContentViewControllerDelegate: AnyObject {
+protocol AddPetContentViewControllerDelegate: AnyObject {
 //    func didTap(recipient: Pet)
 //    func didTap(_:  Any)
 }
 
-final class PetsContentViewController: UIViewController {
+final class AddPetContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     
@@ -105,12 +105,13 @@ final class PetsContentViewController: UIViewController {
         let headerRegistration = UICollectionView.SupplementaryRegistration
             <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
             supplementaryView, string, indexPath in
-                supplementaryView.titleLabel.text = "Adopta a un amigo"
+                supplementaryView.titleLabel.text = "Sube, edita o borra tus animales en adopcion"
+                supplementaryView.titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         }
 
         
-        let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { cell, _, model in
-            cell.configure(with: model, delegate: self)
+        let petViewCellRegistration = UICollectionView.CellRegistration<AddPetControllerCollectionViewCell, Pet> { cell, _, model in
+            cell.configure(with: model)
         }
         
         
@@ -139,7 +140,7 @@ final class PetsContentViewController: UIViewController {
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
+        currentSnapData  = [.init(key: .pets, values: generatePet(total: 5))]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
         snapshot = Snapshot()
@@ -167,15 +168,9 @@ final class PetsContentViewController: UIViewController {
 }
 
 
-extension PetsContentViewController: PetContentDelegate {
-    func didTapLike(_ pet: PetsContentViewController.Item) {
-        guard let indexPath = self.dataSource.indexPath(for: pet) else { return }
-//        self.currentSnapData[indexPath.section].values.remove(at: indexPath.row)
-//        self.currentSnapData[indexPath.section].values.insert(pet, at: indexPath.row)
-    }
-}
 
         
+
 
 
 
