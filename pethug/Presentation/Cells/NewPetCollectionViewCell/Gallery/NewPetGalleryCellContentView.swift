@@ -66,14 +66,14 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         addSubview(titleLabel)
         addSubview(containerView)
         containerView.addSubview(collectionView)
-        
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: 30)
+        let sideInsets = CGFloat(40)
+        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: sideInsets)
         titleLabel.setHeight(14)
         
         containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 30)
         containerView.setDimensions(height: 90, width: 90)
         collectionView.fillSuperview()
-        collectionView.contentInset = .init(top: 15, left: 30, bottom: 15, right: 10)
+        collectionView.contentInset = .init(top: 15, left: sideInsets, bottom: 15, right: 10)
         collectionView.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
         collectionView.showsHorizontalScrollIndicator = false
         configureDataSource()

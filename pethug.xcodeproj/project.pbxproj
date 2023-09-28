@@ -99,6 +99,12 @@
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
+		C483EB982AC5382A005E8BE2 /* NewPetTypeListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483EB972AC5382A005E8BE2 /* NewPetTypeListCellConfiguration.swift */; };
+		C483EB9A2AC538F2005E8BE2 /* NewPetTypeCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483EB992AC538F2005E8BE2 /* NewPetTypeCellContentView.swift */; };
+		C483EB9D2AC558ED005E8BE2 /* NewPetGenderListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483EB9C2AC558ED005E8BE2 /* NewPetGenderListCellConfiguration.swift */; };
+		C483EB9F2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483EB9E2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift */; };
+		C483EBA22AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483EBA12AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift */; };
+		C483EBA42AC55C11005E8BE2 /* NewPetSizeCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483EBA32AC55C11005E8BE2 /* NewPetSizeCellContentView.swift */; };
 		C48D9B462AC49BBB002EDA90 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B452AC49BBB002EDA90 /* ListCollectionViewCell.swift */; };
 		C48D9B482AC49BCC002EDA90 /* ContentConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B472AC49BCC002EDA90 /* ContentConfigurable.swift */; };
 		C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B4A2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift */; };
@@ -225,6 +231,12 @@
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
+		C483EB972AC5382A005E8BE2 /* NewPetTypeListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetTypeListCellConfiguration.swift; sourceTree = "<group>"; };
+		C483EB992AC538F2005E8BE2 /* NewPetTypeCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetTypeCellContentView.swift; sourceTree = "<group>"; };
+		C483EB9C2AC558ED005E8BE2 /* NewPetGenderListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetGenderListCellConfiguration.swift; sourceTree = "<group>"; };
+		C483EB9E2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetGenderCellContentView.swift; sourceTree = "<group>"; };
+		C483EBA12AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSizeListCellConfiguration.swift; sourceTree = "<group>"; };
+		C483EBA32AC55C11005E8BE2 /* NewPetSizeCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSizeCellContentView.swift; sourceTree = "<group>"; };
 		C48D9B452AC49BBB002EDA90 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
 		C48D9B472AC49BCC002EDA90 /* ContentConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentConfigurable.swift; sourceTree = "<group>"; };
 		C48D9B4A2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetNameListCellConfiguration.swift; sourceTree = "<group>"; };
@@ -698,6 +710,33 @@
 			path = CreateAccount;
 			sourceTree = "<group>";
 		};
+		C483EB962AC5380D005E8BE2 /* Type */ = {
+			isa = PBXGroup;
+			children = (
+				C483EB972AC5382A005E8BE2 /* NewPetTypeListCellConfiguration.swift */,
+				C483EB992AC538F2005E8BE2 /* NewPetTypeCellContentView.swift */,
+			);
+			path = Type;
+			sourceTree = "<group>";
+		};
+		C483EB9B2AC558CC005E8BE2 /* Gender */ = {
+			isa = PBXGroup;
+			children = (
+				C483EB9C2AC558ED005E8BE2 /* NewPetGenderListCellConfiguration.swift */,
+				C483EB9E2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift */,
+			);
+			path = Gender;
+			sourceTree = "<group>";
+		};
+		C483EBA02AC55BA0005E8BE2 /* Size */ = {
+			isa = PBXGroup;
+			children = (
+				C483EBA12AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift */,
+				C483EBA32AC55C11005E8BE2 /* NewPetSizeCellContentView.swift */,
+			);
+			path = Size;
+			sourceTree = "<group>";
+		};
 		C48D9B442AC49B63002EDA90 /* GenericListCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -712,6 +751,9 @@
 			children = (
 				C48D9B512AC4CA05002EDA90 /* Name */,
 				C48D9B522AC4CA17002EDA90 /* Gallery */,
+				C483EB962AC5380D005E8BE2 /* Type */,
+				C483EB9B2AC558CC005E8BE2 /* Gender */,
+				C483EBA02AC55BA0005E8BE2 /* Size */,
 			);
 			path = NewPetCollectionViewCell;
 			sourceTree = "<group>";
@@ -995,6 +1037,7 @@
 				C4CF74DC2AB227C200D69185 /* NavCoordinatorProtocol.swift in Sources */,
 				C4CF74E42AB22B7D00D69185 /* LaunchView.swift in Sources */,
 				C42616E12AB27858006925DB /* Validatable.swift in Sources */,
+				C483EB9D2AC558ED005E8BE2 /* NewPetGenderListCellConfiguration.swift in Sources */,
 				C4CF74EC2AB23A1A00D69185 /* Colors.swift in Sources */,
 				C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */,
 				C426D25F2AB66E7C00BFA357 /* InAppManager.swift in Sources */,
@@ -1005,6 +1048,7 @@
 				C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */,
 				C4779BED2AC3A9FD00E3A16F /* AddPetCellViewModel.swift in Sources */,
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
+				C483EB9F2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
 				C48D9B4F2AC49E3B002EDA90 /* NewPetNameCellContentView.swift in Sources */,
@@ -1014,6 +1058,7 @@
 				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
 				C426D26B2AB671AD00BFA357 /* SettingsViewController.swift in Sources */,
 				C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */,
+				C483EBA42AC55C11005E8BE2 /* NewPetSizeCellContentView.swift in Sources */,
 				C418BBA52AC0A50600C31967 /* PetEntity+DomainMapper.swift in Sources */,
 				C44820242AB5438000E72BD2 /* Paths.swift in Sources */,
 				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
@@ -1031,10 +1076,12 @@
 				C4779BF42AC3C97E00E3A16F /* NewPetContentViewController.swift in Sources */,
 				C4779BF02AC3BADE00E3A16F /* NewPetViewController.swift in Sources */,
 				C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */,
+				C483EB9A2AC538F2005E8BE2 /* NewPetTypeCellContentView.swift in Sources */,
 				C42616EB2AB27BC4006925DB /* UIViewController+Extensions.swift in Sources */,
 				C4779BE22AC3A34D00E3A16F /* NewPetCoordinator.swift in Sources */,
 				C43531532AB96BFC0070D7EE /* ErrorViewController.swift in Sources */,
 				C42A584D2AC1258A00A6FFBF /* Commentaries.swift in Sources */,
+				C483EB982AC5382A005E8BE2 /* NewPetTypeListCellConfiguration.swift in Sources */,
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
 				C426D2682AB6713A00BFA357 /* SettingsCoordinator.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,
@@ -1081,6 +1128,7 @@
 				C426D2662AB6703E00BFA357 /* HomeTabCoordinator.swift in Sources */,
 				C48D9B482AC49BCC002EDA90 /* ContentConfigurable.swift in Sources */,
 				C48D9B562AC4CB16002EDA90 /* NewPetGalleryCellContentView.swift in Sources */,
+				C483EBA22AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift in Sources */,
 				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,
 				C448200E2AB5335500E72BD2 /* UserService.swift in Sources */,
