@@ -63,10 +63,10 @@ final class AddPetViewHeaderViewController: UIViewController {
     
     
     func setup() {
-        let paddingTop: CGFloat = 15
+        let paddingTop: CGFloat = 20
         let sidePadding: CGFloat = 25
-        view.layer.borderColor = UIColor.blue.cgColor
-        view.layer.borderWidth = 1
+//        view.layer.borderColor = UIColor.blue.cgColor
+//        view.layer.borderWidth = 1
         view.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
         
         view.addSubview(logoImageView)
@@ -80,8 +80,8 @@ final class AddPetViewHeaderViewController: UIViewController {
         
         titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
         
-        plusImageContainer.anchor(top: view.topAnchor, right: view.rightAnchor, paddingTop: 10, paddingRight: sidePadding)
-        plusImageContainer.setDimensions(height: 30, width: 30)
+        plusImageContainer.anchor(top: view.topAnchor, right: view.rightAnchor, paddingTop: 15, paddingRight: sidePadding)
+        plusImageContainer.setDimensions(height: 32, width: 32)
         
         plusImageView.center(inView: plusImageContainer)
         plusImageView.setDimensions(height: 20, width: 20)

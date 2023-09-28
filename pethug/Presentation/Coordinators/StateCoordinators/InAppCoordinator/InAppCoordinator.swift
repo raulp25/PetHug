@@ -48,10 +48,10 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         switch tab {
         case .home:
             childCoordinator = HomeTabCoordinator()
-        case .add:
-            childCoordinator = AddPetTabCoordinator()
         case .favorites:
             childCoordinator = HomeTabCoordinator()
+        case .add:
+            childCoordinator = AddPetTabCoordinator()
         case .about:
             childCoordinator = HomeTabCoordinator()
         }

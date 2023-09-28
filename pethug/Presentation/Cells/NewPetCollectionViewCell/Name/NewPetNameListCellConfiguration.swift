@@ -7,8 +7,27 @@
 
 import UIKit
 
+protocol NewPetNameDelegate: AnyObject {
+    func textFieldDidChange(text: String)
+}
+
+class NewPetName: Hashable {
+    static func == (lhs: NewPetName, rhs: NewPetName) -> Bool {
+        lhs.id == rhs.id
+    }
+    var id = UUID().uuidString
+    var name: String?
+    weak var delegate: NewPetNameDelegate?
+    func hash(into hasher: inout Hasher) {
+           hasher.combine(name)
+       }
+    init(name: String? = nil) {
+        self.name = name
+    }
+}
+
 struct NewPetNameListCellConfiguration: ContentConfigurable {
-    var viewModel: String?
+    var viewModel: NewPetName?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetNameCellContentView(configuration: self)

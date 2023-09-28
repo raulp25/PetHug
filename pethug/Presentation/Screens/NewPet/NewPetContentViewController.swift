@@ -38,10 +38,13 @@ final class NewPetContentViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
-
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
         
+        
+        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
+        collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
+        collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        collectionView.delegate = self
+        collectionView.showsVerticalScrollIndicator = false 
         configureDataSource()
         updateSnapShot()
     }
@@ -75,27 +78,68 @@ final class NewPetContentViewController: UIViewController {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
             guard let self else { fatalError() }
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
-
+            var listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators()
+//            listConfiguration.headerMode = .supplementary
             switch section {
             case .name:
                 print("dogs section")
-                return .createPetsLayout()
+//                return .createPetsLayout()
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = 30
+                section.contentInsets.trailing = 30
+                return section
             case .gallery:
-                return .createPetsLayout()
+//                return .createPetsLayout()
+                var listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparatorsWithInsets(leftInset: 30, rightInset: 30)
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                
+                return section
             case .type:
-                return .createPetsLayout()
+//                return .createPetsLayout()
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = 30
+                section.contentInsets.trailing = 30
+                
+                return section
             case .gender:
-                return .createPetsLayout()
+//                return .createPetsLayout()
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = 30
+                section.contentInsets.trailing = 30
+                
+                return section
             case .size:
-                return .createPetsLayout()
+//                return .createPetsLayout()
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = 30
+                section.contentInsets.trailing = 30
+                
+                return section
             case .info:
-                return .createPetsLayout()
+//                return .createPetsLayout()
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = 30
+                section.contentInsets.trailing = 30
+                
+                return section
             case .end:
-                return .createPetsLayout()
+//                return .createPetsLayout()
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = 30
+                section.contentInsets.trailing = 30
+                
+                return section
+                
             }
             
         }
-        
         return layout
     }
     
@@ -111,28 +155,39 @@ final class NewPetContentViewController: UIViewController {
         }
 
         
-        let petViewCellRegistration = UICollectionView.CellRegistration<AddPetControllerCollectionViewCell, Pet> { cell, _, model in
+        let newPetNameViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetNameListCellConfiguration>, NewPetName> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
+            cell.viewModel = model
         }
         
+        let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { cell, _, model in
+//            cell.configure(with: model, delegate: self)
+            cell.viewModel = model
+        }
+        
+        
+        let mockViewModel = NewPetName(name: "Fernanda Sanchez")
+        mockViewModel.delegate = self
+        
+        let galleryMockVM = NewPetGallery(images: [])
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
             case .name:
-                return collectionView.dequeueConfiguredReusableCell(using: petViewCellRegistration, for: indexPath, item: nil)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: mockViewModel)
             case .gallery:
-                return collectionView.dequeueConfiguredReusableCell(using: petViewCellRegistration, for: indexPath, item: nil)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetGalleryViewCellRegistration, for: indexPath, item: galleryMockVM)
             case .type:
-                return collectionView.dequeueConfiguredReusableCell(using: petViewCellRegistration, for: indexPath, item: nil)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: mockViewModel)
             case .gender:
-                return collectionView.dequeueConfiguredReusableCell(using: petViewCellRegistration, for: indexPath, item: nil)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: mockViewModel)
             case .size:
-                return collectionView.dequeueConfiguredReusableCell(using: petViewCellRegistration, for: indexPath, item: nil)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: mockViewModel)
             case .info:
-                return collectionView.dequeueConfiguredReusableCell(using: petViewCellRegistration, for: indexPath, item: nil)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: mockViewModel)
             case .end:
-                return collectionView.dequeueConfiguredReusableCell(using: petViewCellRegistration, for: indexPath, item: nil)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: mockViewModel)
             }
             
         })
@@ -166,7 +221,15 @@ final class NewPetContentViewController: UIViewController {
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
 //        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
-        currentSnapData  = []
+        currentSnapData  = [
+            .init(key: .name, values: [.name]),
+            .init(key: .gallery, values: [.gallery]),
+            .init(key: .gender, values: [.gender]),
+            .init(key: .size, values: [.size]),
+            .init(key: .type, values: [.type]),
+            .init(key: .info, values: [.info]),
+            .init(key: .end, values: [.end]),
+        ]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
         snapshot = Snapshot()
@@ -191,11 +254,33 @@ final class NewPetContentViewController: UIViewController {
 //        print("snapshot en updateSnapshot(): => \(snapshot)")
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
+    var counter = 0
 }
 
+extension NewPetContentViewController: NewPetNameDelegate {
+    func textFieldDidChange(text: String) {
+        print("cambio texto a: => \(text)")
+    }
+}
 
-
-
+extension NewPetContentViewController: UICollectionViewDelegate {
+    
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        print(":ejecuta didselect con metodo normal => ")
+//        collectionView.deselectItem(at: indexPath, animated: true)
+//    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+        
+        counter += 1
+        print(":ejecuta didselect con datasource => \(counter)")
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
+    
+    
+}
         
 
 

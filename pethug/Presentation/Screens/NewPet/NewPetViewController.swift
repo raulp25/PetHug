@@ -35,6 +35,15 @@ final class NewPetViewController: UIViewController {
         return iv
     }()
     
+    private let titleLabel: UILabel = {
+       let label = UILabel()
+        label.text = "Subir"
+        label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
+        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
+        return label
+    }()
+    
+    
     
     // MARK: - Internal properties
     weak var coordinator: NewPetCoordinator?
@@ -47,10 +56,13 @@ final class NewPetViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = customRGBColor(red: 58, green: 91, blue: 144)
+//        view.backgroundColor = customRGBColor(red: 58, green: 91, blue: 144)
+        view.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
         
         view.addSubview(xmarkImageContainer)
         xmarkImageContainer.addSubview(xmarkImageView)
+        view.addSubview(titleLabel)
+        titleLabel.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         add(contentVC)
         
         xmarkImageContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingLeft: 15)
@@ -59,8 +71,6 @@ final class NewPetViewController: UIViewController {
         xmarkImageView.center(inView: xmarkImageContainer)
         
         contentVC.view.anchor(top: xmarkImageContainer.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20)
-        contentVC.view.layer.borderColor = UIColor.green.cgColor
-        contentVC.view.layer.borderWidth = 2
         
     }
     
