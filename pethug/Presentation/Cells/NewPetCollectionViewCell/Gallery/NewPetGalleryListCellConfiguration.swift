@@ -20,7 +20,8 @@ struct NewPetGallery: Hashable {
     }
     var id = UUID().uuidString
     var images: [String] = []
-    weak var delegate: NewPetNameDelegate?
+    weak var delegate: NewPetGalleryDelegate?
+    weak var nagivagtion: NewPetContentViewController?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }

@@ -244,6 +244,7 @@ final class NewPetContentViewController: UIViewController {
         let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
+            cell.viewModel?.nagivagtion = self
         }
         
         let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetTypeListCellConfiguration>, NewPetType> { cell, _, model in
