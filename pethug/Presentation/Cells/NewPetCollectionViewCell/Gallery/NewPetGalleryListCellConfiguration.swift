@@ -8,7 +8,7 @@
 import UIKit
 
 protocol NewPetGalleryDelegate: AnyObject {
-    func imagesDidChange(text: String)
+    func galleryDidChange(images: [UIImage])
 }
 
 class NewPetGallery: Hashable {
@@ -16,18 +16,18 @@ class NewPetGallery: Hashable {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var images: [Data] = []
+    var images: [String] = []
     weak var delegate: NewPetNameDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(images: [Data] = []) {
+    init(images: [String] = []) {
         self.images = images
     }
 }
 
 struct NewPetGalleryListCellConfiguration: ContentConfigurable {
-    var viewModel: FormDataManager?
+    var viewModel: NewPetGallery?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetGalleryCellContentView(configuration: self)

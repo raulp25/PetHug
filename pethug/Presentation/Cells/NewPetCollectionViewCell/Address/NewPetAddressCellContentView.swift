@@ -29,7 +29,7 @@ final class NewPetAddressCellContentView: UIView, UIContentView {
     
     private let addressLabel: UILabel = {
        let label = UILabel()
-        label.text = "Coquer Spaniel Danish y joanna camacho pasandonos de largo mi rey"
+        label.text = "Seleccione un estado de la Republica"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         label.numberOfLines = 1
@@ -97,7 +97,7 @@ final class NewPetAddressCellContentView: UIView, UIContentView {
 //
         guard let item = currentConfiguration.viewModel else { return }
 //        nameLabel.text = item.name
-        addressLabel.text = item.formData.address ?? "Cancun"
+        addressLabel.text = item.address?.rawValue ?? "Cancun"
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
 //

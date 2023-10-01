@@ -17,18 +17,18 @@ class NewPetAddress: Hashable {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var address: String
+    var address: Pet.State?
     weak var delegate: NewPetAddressDelegate?
     func hash(into hasher: inout Hasher) {
-           hasher.combine(address)
+           hasher.combine(id)
        }
-    init(address: String) {
+    init(address: Pet.State?) {
         self.address = address
     }
 }
 
 struct NewPetAddressListCellConfiguration: ContentConfigurable {
-    var viewModel: FormDataManager?
+    var viewModel: NewPetAddress?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetAddressCellContentView(configuration: self)

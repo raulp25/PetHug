@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class NewPetUploadCellContentView: UIView, UIContentView {
     //MARK: - Private components
@@ -37,13 +38,13 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
             apply(configuration: newConfiguration)
         }
     }
+    private var cancellables = Set<AnyCancellable>()
     
     // MARK: - LifeCycle
     init(configuration: NewPetUploadListCellConfiguration) {
         super.init(frame: .zero)
         // create the content view UI
         setup()
-
         // apply the configuration (set data to UI elements / define custom content view appearance)
         apply(configuration: configuration)
     }
@@ -54,6 +55,7 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
     
     // MARK: - Private actions
     @objc private func upload() {
+        print(":clicked upload button => ")
     }
     
     
@@ -66,6 +68,13 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
 //
         guard let item = currentConfiguration.viewModel else { return }
+        uploadBtn.backgroundColor = customRGBColor(red: 255, green: 176, blue: 42)
+        
+        item.isValid?.sink(receiveValue: { [weak self] isValid in
+            self?.uploadBtn.backgroundColor = isValid ? customRGBColor(red: 255, green: 176, blue: 42) : customRGBColor(red: 232, green: 160, blue: 35)
+            self?.uploadBtn.isEnabled = isValid
+        }).store(in: &cancellables)
+//        layoutIfNeeded()
 //        nameLabel.text = item.name
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)

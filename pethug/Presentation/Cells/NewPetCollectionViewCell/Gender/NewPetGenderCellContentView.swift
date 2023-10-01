@@ -229,13 +229,12 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     //    }
     
     enum CurrentChecked: Int {
-        case dog = 1
-        case cat = 2
-        case bird = 3
-        case rabbit = 4
+        case male = 1
+        case female = 2
+        case unset = 3
     }
     
-    var currentButton: CurrentChecked? = nil
+    var currentButton: CurrentChecked = .unset
     var buttons: [UIButton] = []
     //    @objc func didTapCheckMark(_ sender: UIButton) {
     //        print("sender tag: => \(sender.tag)")
@@ -295,7 +294,7 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
                 if checked == currentButton {
                     button.setImage(UIImage(systemName: "square"), for: .normal)
                     button.tintColor = .black
-                    currentButton = nil
+                    currentButton = .unset
                 } else {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
@@ -305,6 +304,15 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
                 button.setImage(UIImage(systemName: "square"), for: .normal)
                 button.tintColor = .black
             }
+        }
+        
+        switch checked {
+        case .male:
+            currentConfiguration.viewModel?.delegate?.genderDidChange(type: .male)
+        case .female:
+            currentConfiguration.viewModel?.delegate?.genderDidChange(type: .female)
+        case .unset:
+            currentConfiguration.viewModel?.delegate?.genderDidChange(type: nil)
         }
     }
 }

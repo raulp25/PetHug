@@ -66,12 +66,12 @@ final class PetsContentViewController: UIViewController {
                 id: String(number),
                 name: k < 2 ? "Ruti" : k < 5 ? "Gregoria" : "Doli",
                 age: k,
-                gender: "F",
-                size: "SM",
+                gender: .female,
+                size: .small,
                 breed: "Girl",
                 imageUrl: "d",
                 type: .cat(.persian),
-                address: k < 2 ? "Mirador del Cimatario Cancun Quintana Roo" : k < 5 ? "Huixquilucan Estado de Mexico" : "Calle Campanario 23, Queretaro",
+                address: .BajaCaliforniaSur,
                 isLiked: k < 3 ? false : true
             )))
         }

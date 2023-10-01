@@ -19,24 +19,24 @@ class Pet: Codable, Hashable {
     let id: String
     let name: String
     let age: Int
-    let gender: String
-    let size: String
+    let gender: Gender
+    let size: Size
     let breed: String
     let imageUrl: String
     let type: PetType
-    let address: String
+    let address: State
     var isLiked: Bool
     
     init(
         id: String,
         name: String,
         age: Int,
-        gender: String,
-        size: String,
+        gender: Gender,
+        size: Size,
         breed: String,
         imageUrl: String,
         type: PetType,
-        address: String,
+        address: State,
         isLiked: Bool
     ) {
         self.id = id
@@ -56,8 +56,54 @@ extension Pet {
     enum PetType: Codable, Hashable {
         case dog(DogBreed)
         case cat(CatBreed)
-        case bird
-        case rabbit
+        case bird(BirdBreed)
+        case rabbit(RabbitBreed)
+    }
+    
+    enum Gender: Codable, Hashable {
+        case male
+        case female
+    }
+    
+    enum Size: Codable, Hashable {
+        case small
+        case medium
+        case large
+    }
+    
+    enum State: String, Codable, Hashable {
+        case Aguascalientes
+        case BajaCalifornia
+        case BajaCaliforniaSur
+        case Campeche
+        case Chiapas
+        case Chihuahua
+        case Coahuila
+        case Colima
+        case Durango
+        case Guanajuato
+        case Guerrero
+        case Hidalgo
+        case Jalisco
+        case MexicoCity = "Ciudad de Mexico"
+        case MexicoState = "Estado de Mexico"
+        case Michoacan
+        case Morelos
+        case Nayarit
+        case NuevoLeon
+        case Oaxaca
+        case Puebla
+        case Queretaro
+        case QuintanaRoo
+        case SanLuisPotosi
+        case Sinaloa
+        case Sonora
+        case Tabasco
+        case Tamaulipas
+        case Tlaxcala
+        case Veracruz
+        case Yucatan
+        case Zacatecas
     }
 }
 
@@ -72,4 +118,14 @@ enum CatBreed: String, Codable {
     case persian
     case siamese
     // Add more cat breeds here
+}
+
+enum BirdBreed: String, Codable {
+    case colibri
+    case tucan
+}
+
+enum RabbitBreed: String, Codable {
+    case americanFuzzyLop
+    case hollandLop
 }

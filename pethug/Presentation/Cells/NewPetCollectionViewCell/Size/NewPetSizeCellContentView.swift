@@ -184,13 +184,13 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
     }
 
     enum CurrentChecked: Int {
-        case dog = 1
-        case cat = 2
-        case bird = 3
-        case rabbit = 4
+        case small = 1
+        case medium = 2
+        case large = 3
+        case unset = 4
     }
     
-    var currentButton: CurrentChecked? = nil
+    var currentButton: CurrentChecked = .unset
     var buttons: [UIButton] = []
     
     @objc func didTapCheckMark(_ sender: UIButton) {
@@ -203,7 +203,7 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
                 if checked == currentButton {
                     button.setImage(UIImage(systemName: "square"), for: .normal)
                     button.tintColor = .black
-                    currentButton = nil
+                    currentButton = .unset
                 } else {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
@@ -214,6 +214,18 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
                 button.tintColor = .black
             }
         }
+        
+        switch checked {
+        case .small:
+            currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .small)
+        case .medium:
+            currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .medium)
+        case .large:
+            currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .large)
+        case .unset:
+            currentConfiguration.viewModel?.delegate?.sizeDidChange(size: nil)
+        }
+        
     }
 }
 

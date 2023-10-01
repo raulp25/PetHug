@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import Combine
 protocol NewPetUploadDelegate: AnyObject {
     func uploaddDidChange(text: String)
 }
@@ -16,18 +16,17 @@ class NewPetUpload: Hashable {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var isEnabled: Bool
-    weak var delegate: NewPetNameDelegate?
+    var isValid: CurrentValueSubject<Bool, Never>?
+//    weak var delegate: NewPetNameDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(isEnabled: Bool = false) {
-        self.isEnabled = isEnabled
+    init() {
     }
 }
 
 struct NewPetUploadListCellConfiguration: ContentConfigurable {
-    var viewModel: FormDataManager?
+    var viewModel: NewPetUpload?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetUploadCellContentView(configuration: self)

@@ -17,9 +17,19 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
         return label
     }()
     
+    
+    lazy var containerView: UIView = {
+        let uv = UIView(withAutolayout: true)
+        uv.backgroundColor = .white
+        
+        //isUserInteractionEnabled is handled by the apply() fn
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
+        uv.addGestureRecognizer(tapGesture)
+        return uv
+    }()
+    
     private let breedLabel: UILabel = {
        let label = UILabel()
-        label.text = "Coquer Spaniel Danish y joanna camacho pasandonos de largo mi rey"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         label.numberOfLines = 1
@@ -86,6 +96,9 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
 //
         guard let item = currentConfiguration.viewModel else { return }
+        containerView.isUserInteractionEnabled = item.isEnabled
+//        breedLabel.text = item.breed != nil ? "Eliga el tipo de animal para continuar" : "Dachshund"
+          breedLabel.text = item.breedsFor == nil ? "Eliga un tipo de animal para continuar" : "Dachshund"
 //        nameLabel.text = item.name
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
@@ -94,15 +107,7 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
     }
     
     
-    lazy var containerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        uv.backgroundColor = .white
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
-        uv.isUserInteractionEnabled = true
-        uv.addGestureRecognizer(tapGesture)
-        return uv
-    }()
+
     
     private func setup() {
         backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)

@@ -41,6 +41,90 @@ class FormDataManager: Hashable, ObservableObject {
     }
 }
 
+class NewPetViewModel {
+    
+    enum State {
+        case valid
+        case invalid
+    }
+    
+    
+    //MARK: - Properties
+    let state = CurrentValueSubject<State, Error>(.invalid)
+    @Published var nameState: String? = nil
+    @Published var galleryState: [UIImage] = []
+    @Published var typeState: Pet.PetType? = nil
+    @Published var breedState: String? = nil
+    @Published var genderState: Pet.Gender? = nil
+    @Published var sizeState: Pet.Size? = nil
+    @Published var addressState: Pet.State? = nil
+    @Published var infoState: String? = nil
+    
+    var breedsFor: Pet.PetType? = nil
+    var isValid: Bool = false
+//    private var statePublisher: AnyPublisher<(String?, String?), Never> {
+//        return Publishers.CombineLatest($nameState, $addressState)
+//            .removeDuplicates { prev, curr in
+//                prev == curr
+//            }.eraseToAnyPublisher()
+//    }
+    
+    var formValidationState: AnyPublisher<NewPetViewModel.State, Never> {
+        return Publishers.CombineLatest3(
+            Publishers.CombineLatest3($nameState, $galleryState, $typeState),
+            Publishers.CombineLatest3($breedState, $genderState, $sizeState),
+            Publishers.CombineLatest($addressState, $infoState)
+        )
+        .map { nameGalleryType, breedGenderSize, addressInfo in
+            let (name, gallery, type) = nameGalleryType
+            let (breed, gender, size) = breedGenderSize
+            let (address, info) = addressInfo
+            
+//            return [name, gallery]
+            
+            print("name inside validation publisher fn: => \(name)")
+            print("info inside validation publisher fn: => \(info)")
+            
+            return self.validateForm(
+                name: name,
+                gallery: gallery,
+                type: type,
+                breed: breed,
+                gender: gender,
+                size: size,
+                address: address,
+                info: info
+            )
+            
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func validateForm(
+        name: String?,
+        gallery: [UIImage],
+        type: Pet.PetType?,
+        breed: String?,
+        gender: Pet.Gender?,
+        size: Pet.Size?,
+        address: Pet.State?,
+        info: String?
+    ) -> State{
+        isValid = false
+        guard let name = name else { return .invalid }
+//        guard gallery.count > 0 else { return .invalid }
+//        guard let type = type else { return .invalid }
+//        guard let breed = breed else { return .invalid }
+        //gender and size are optional
+//        guard let address = address else { return .invalid }
+        guard let info = info else { return .invalid }
+        
+        isValid = true
+        return .valid
+    }
+    
+}
+
 
 final class NewPetContentViewController: UIViewController {
     //MARK: - Private components
@@ -48,9 +132,10 @@ final class NewPetContentViewController: UIViewController {
     private let dummyView = DummyView()
 //
     //MARK: - Private properties
+    private var isValid = CurrentValueSubject<Bool, Never>(false)
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    
+    private var viewModel = NewPetViewModel()
     //MARK: - Internal properties
     private var currentSnapData = [SnapData]() {
         didSet {
@@ -91,12 +176,31 @@ final class NewPetContentViewController: UIViewController {
         
         PetDataManager.delegate = self
         PetDataManager.$formData
+            .handleThreadsOperator()
             .sink { newFormData in
                 // React to changes in the formData globally
                 // Example: updateUI(newFormData)
                 print("form data changed: => \(newFormData)")
             }
             .store(in: &cancellables)
+        
+        viewModel.formValidationState.handleThreadsOperator()
+            .sink { state in
+            switch state {
+            case .valid:
+                print("is valid STATE FUCK: => VALID")
+                self.isValid.send(true)
+//                var snapshot = self.dataSource.snapshot()
+//                snapshot.reloadSections([.end])
+//                self.dataSource.apply(snapshot, animatingDifferences: false)
+            case .invalid:
+                self.isValid.send(false)
+//                var snapshot = self.dataSource.snapshot()
+//                snapshot.reloadSections([.end])
+//                self.dataSource.apply(snapshot, animatingDifferences: false)
+                print("is not valid STATE FUCK: NOT VALID=>")
+            }
+            }.store(in: &cancellables)
         
     }
     
@@ -139,8 +243,11 @@ final class NewPetContentViewController: UIViewController {
             from: currentTextField.superview
         )
         let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
-//
+
         let intOne:CGFloat = 10, intTwo: CGFloat = 150
+        print(":UIScreen.main.bounds.height intone => \(UIScreen.main.bounds.height)")
+        print(" (textFieldBottomY + intOne)  => \((textFieldBottomY + intOne)), > keyboardTopY ): \(keyboardTopY)")
+        print(" (textFieldBottomY + intOne) > keyboardTopY ): => \((textFieldBottomY + intOne) > keyboardTopY )")
         if (textFieldBottomY + intOne) > keyboardTopY {
             let textBoxY = convertedTextFieldFrame.origin.y
             let newFrameY = (textBoxY - keyboardTopY / 2) * -1
@@ -149,16 +256,16 @@ final class NewPetContentViewController: UIViewController {
             let horizontalScrollPosition = contentOffset.y
             let height =
                 UIScreen.main.bounds.size.height <= 870 ?
-                    UIScreen.main.bounds.height / 1.2 :
+            UIScreen.main.bounds.height / 0.86:
                         UIScreen.main.bounds.size.height <= 926 ?
-                            UIScreen.main.bounds.height / 1.4 :
-                                UIScreen.main.bounds.height / 1.5
+                            UIScreen.main.bounds.height / 1 :
+                                UIScreen.main.bounds.height / 1.1
             collectionView.setContentOffset(CGPoint(x: 0, y:  height), animated: true)
             collectionView.isScrollEnabled = false
         }
         
         if UIScreen.main.bounds.size.height <= 700 {
-            collectionView.setContentOffset(CGPoint(x: 0, y: UIScreen.main.bounds.size.height / 1 ), animated: true)
+            collectionView.setContentOffset(CGPoint(x: 0, y: UIScreen.main.bounds.size.height / 0.68), animated: true)
             collectionView.isScrollEnabled = false
         }
     }
@@ -177,7 +284,7 @@ final class NewPetContentViewController: UIViewController {
         }
         
         if UIScreen.main.bounds.size.height <= 700 {
-            collectionView.setContentOffset(CGPoint(x: 0, y: (UIScreen.main.bounds.size.height / 1) - 80), animated: true)
+            collectionView.setContentOffset(CGPoint(x: 0, y: (UIScreen.main.bounds.size.height / 0.68) - 160), animated: true)
         }
     }
     
@@ -311,48 +418,69 @@ final class NewPetContentViewController: UIViewController {
         
         let newPetNameViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetNameListCellConfiguration>, NewPetName> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+//            cell.viewModel = self.PetDataManager
         }
         
         let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+//            cell.viewModel = self.PetDataManager
         }
         
         let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetTypeListCellConfiguration>, NewPetType> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.delegate  = self
+//            cell.viewModel = self.PetDataManager
         }
         
         let newPetBreedViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetBreedListCellConfiguration>, NewPetBreed> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+            cell.viewModel?.isEnabled = self.viewModel.breedsFor != nil ? true : false
+            cell.viewModel?.breedsFor = self.viewModel.breedsFor
+//            cell.viewModel = self.PetDataManager
         }
         
         let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGenderListCellConfiguration>, NewPetGender> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+//            cell.viewModel = self.PetDataManager
         }
         
         let newPetSizeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSizeListCellConfiguration>, NewPetSize> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+//            cell.viewModel = self.PetDataManager
         }
         
         let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+//            cell.viewModel = self.PetDataManager
         }
         
         let newPetInfoViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetInfoListCellConfiguration>, NewPetInfo> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
 //            cell.viewModel = model
-            cell.viewModel = self.PetDataManager
+//            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
         }
         
         let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetUploadListCellConfiguration>, NewPetUpload> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = self.PetDataManager
+            cell.viewModel = model
+            cell.viewModel?.isValid = self.isValid
+//            cell.viewModel?.isValid = self.isValid
+//            cell.viewModel = self.PetDataManager
         }
         
         let nameMockVM = NewPetName(name: "Fernanda Sanchez")
@@ -362,9 +490,9 @@ final class NewPetContentViewController: UIViewController {
         
         let typeMockVM = NewPetType(type: .dog(.goldenRetriever))
         
-        let breedMockVM = NewPetBreed(petType: .dog(.goldenRetriever))
+        let breedMockVM = NewPetBreed(breed: "Golden Retriever")
         
-        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: "dd", size: "dd", breed: "dd", imageUrl: "dd", type: .dog(.goldenRetriever), address: "dd", isLiked: true)
+        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imageUrl: "dd", type: .dog(.goldenRetriever), address: .QuintanaRoo, isLiked: true)
         switch (typeMockVM.type, pet1.type) {
         case (.dog, .dog):
             print("son iguales qwe DOG: =>")
@@ -384,15 +512,15 @@ final class NewPetContentViewController: UIViewController {
 //            print("no son iguales qwe")
 //        }
 //
-        let genderMockVM = NewPetGender(gender: "")
+        let genderMockVM = NewPetGender(gender: .none)
         
         let sizeMockVM = NewPetSize()
         
-        let addressMockVM = NewPetAddress(address: "Queretaro")
+        let addressMockVM = NewPetAddress(address: .Queretaro)
         
         let infoMockVM = NewPetInfo(info: nil)
         
-        let uploadMockVM = NewPetUpload(isEnabled: true)
+        let uploadMockVM = NewPetUpload()
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
@@ -491,8 +619,48 @@ final class NewPetContentViewController: UIViewController {
 extension NewPetContentViewController: NewPetNameDelegate {
     func textFieldDidChange(text: String) {
         print("cambio texto a: => \(text)")
+        let text = text.count > 0 ? text : nil
+        viewModel.nameState = text
     }
 }
+
+extension NewPetContentViewController: NewPetGalleryDelegate {
+    func galleryDidChange(images: [UIImage]) {
+        
+    }
+}
+
+extension NewPetContentViewController: NewPetTypeDelegate {
+    func typeDidChange(type: Pet.PetType) {
+        viewModel.typeState = type
+        viewModel.breedsFor = type
+        
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections([.breed])
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+extension NewPetContentViewController: NewPetGenderDelegate {
+    func genderDidChange(type: Pet.Gender?) {
+        viewModel.genderState = type
+    }
+}
+
+extension NewPetContentViewController: NewPetSizeDelegate {
+    func sizeDidChange(size: Pet.Size?) {
+        viewModel.sizeState = size
+    }
+}
+
+extension NewPetContentViewController: NewPetInfoDelegate {
+    func textViewdDidChange(text: String) {
+        print("cambio texto a: => \(text)")
+        let text = text.count > 0 ? text : nil
+        viewModel.infoState = text
+    }
+}
+
 
 //func presentSearchController() {}
 

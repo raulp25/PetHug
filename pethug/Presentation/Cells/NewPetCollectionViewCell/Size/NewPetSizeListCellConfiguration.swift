@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol NewPetSizeDelegate: AnyObject {
-    func sizeDidChange(type: String)
+    func sizeDidChange(size: Pet.Size?)
 }
 
 class NewPetSize: Hashable {
@@ -18,18 +18,18 @@ class NewPetSize: Hashable {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var size: String? = nil
+    var size: Pet.Size? = nil
     weak var delegate: NewPetSizeDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(size: String? = nil) {
+    init(size: Pet.Size? = nil) {
         self.size = size
     }
 }
 
 struct NewPetSizeListCellConfiguration: ContentConfigurable {
-    var viewModel: FormDataManager?
+    var viewModel: NewPetSize?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetSizeCellContentView(configuration: self)

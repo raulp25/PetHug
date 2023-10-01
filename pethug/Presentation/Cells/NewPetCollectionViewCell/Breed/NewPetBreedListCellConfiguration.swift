@@ -17,18 +17,20 @@ class NewPetBreed: Hashable {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var petType: Pet.PetType
+    var breed: String?
+    var breedsFor: Pet.PetType?
+    var isEnabled: Bool = false
     weak var delegate: NewPetBreedDelegate?
     func hash(into hasher: inout Hasher) {
-           hasher.combine(petType)
+           hasher.combine(breed)
        }
-    init(petType: Pet.PetType) {
-        self.petType = petType
+    init(breed: String) {
+        self.breed = breed
     }
 }
 
 struct NewPetBreedListCellConfiguration: ContentConfigurable {
-    var viewModel: FormDataManager?
+    var viewModel: NewPetBreed?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetBreedCellContentView(configuration: self)

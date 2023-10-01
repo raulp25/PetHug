@@ -119,7 +119,7 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         
         heartImage.image = UIImage(systemName: viewModel.heartImage)
         name.text = viewModel.name
-        address.text = viewModel.address
+        address.text = viewModel.address.rawValue
     }
     
     override func prepareForReuse() {

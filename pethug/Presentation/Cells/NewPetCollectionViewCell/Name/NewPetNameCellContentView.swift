@@ -59,8 +59,8 @@ final class NewPetNameCellContentView: UIView, UIContentView {
     
     // MARK: - Private actions
     @objc private func textFieldDidChange(_ textField: UITextField) {
-//        currentConfiguration.viewModel?.delegate?.textFieldDidChange(text: textField.text ?? "")
-        currentConfiguration.viewModel?.formData.name = textField.text
+        currentConfiguration.viewModel?.delegate?.textFieldDidChange(text: textField.text ?? "")
+//        currentConfiguration.viewModel?.formData.name = textField.text
 //        print("textfield did change text viewmodel: => \(currentConfiguration.viewModel?.formData.name)")
 //        currentConfiguration.viewModel?.objectWillChange.send()
         
@@ -75,7 +75,7 @@ final class NewPetNameCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
 //
         guard let item = currentConfiguration.viewModel else { return }
-        print("item en celda: => \(item.formData.name)")
+//        print("item en celda: => \(item.formData.name)")
 //        nameLabel.text = item.name
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)

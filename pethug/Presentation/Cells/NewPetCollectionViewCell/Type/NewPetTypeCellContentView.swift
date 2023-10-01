@@ -236,6 +236,17 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
                 button.tintColor = .black
                 currentButton = checked
             }
+            
+            switch checked {
+            case .dog:
+                currentConfiguration.viewModel?.delegate?.typeDidChange(type: .dog(.goldenRetriever))
+            case .cat:
+                currentConfiguration.viewModel?.delegate?.typeDidChange(type: .cat(.persian))
+            case .bird:
+                currentConfiguration.viewModel?.delegate?.typeDidChange(type: .bird(.colibri))
+            case .rabbit:
+                currentConfiguration.viewModel?.delegate?.typeDidChange(type: .rabbit(.americanFuzzyLop))
+            }
         }
     }
 }

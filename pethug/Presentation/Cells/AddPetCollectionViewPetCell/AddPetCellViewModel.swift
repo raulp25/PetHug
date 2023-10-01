@@ -33,7 +33,7 @@ final class AddPetCellViewModel {
         pet.name
     }
     
-    var address: String {
+    var address: Pet.State {
         pet.address
     }
     

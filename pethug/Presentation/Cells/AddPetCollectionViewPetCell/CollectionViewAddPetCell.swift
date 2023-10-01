@@ -91,7 +91,7 @@ final class AddPetControllerCollectionViewCell: UICollectionViewCell {
         DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber, execute: work!)
         
         name.text = viewModel.name
-        address.text = viewModel.address
+        address.text = viewModel.address.rawValue
     }
     
     override func prepareForReuse() {

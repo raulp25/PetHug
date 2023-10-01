@@ -60,12 +60,13 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
     @objc private func textFieldDidChange(_ textField: UITextField) {
 //        currentConfiguration.viewModel?.delegate?.textViewdDidChange(text: textField.text ?? "")
         
-        currentConfiguration.viewModel?.formData.info = textField.text
-        print("textfield did change text viewmodel I N F O: => \(currentConfiguration.viewModel?.formData.info)")
+//        currentConfiguration.viewModel?.formData.info = textField.text
+//        print("textfield did change text viewmodel I N F O: => \(currentConfiguration.viewModel?.formData.info)")
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        currentConfiguration.viewModel?.formData.info = textView.text
+//        currentConfiguration.viewModel?.formData.info = textView.text
+        currentConfiguration.viewModel?.delegate?.textViewdDidChange(text: textView.text)
     }
     
     // MARK: - Functions

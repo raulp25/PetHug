@@ -8,7 +8,7 @@
 import UIKit
 
 protocol NewPetGenderDelegate: AnyObject {
-    func genderDidChange(type: String)
+    func genderDidChange(type: Pet.Gender?)
 }
 
 class NewPetGender: Hashable {
@@ -16,18 +16,18 @@ class NewPetGender: Hashable {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var gender: String? = nil
+    var gender: Pet.Gender? = nil
     weak var delegate: NewPetGenderDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(gender: String? = nil) {
+    init(gender: Pet.Gender? = nil) {
         self.gender = gender
     }
 }
 
 struct NewPetGenderListCellConfiguration: ContentConfigurable {
-    var viewModel: FormDataManager?
+    var viewModel: NewPetGender?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetGenderCellContentView(configuration: self)
