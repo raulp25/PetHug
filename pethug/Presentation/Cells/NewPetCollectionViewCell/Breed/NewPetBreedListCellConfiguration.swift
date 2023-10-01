@@ -8,13 +8,15 @@
 import UIKit
 
 protocol NewPetBreedDelegate: AnyObject {
-//    func textViewdDidChange(text: String)
     func didTapBreedSelector()
 }
 
 struct NewPetBreed: Hashable {
     static func == (lhs: NewPetBreed, rhs: NewPetBreed) -> Bool {
-        lhs.id == rhs.id
+        (
+            lhs.id == rhs.id &&
+            lhs.breeds == rhs.breeds
+        )
     }
     var id = UUID().uuidString
     var currentBreed: String?

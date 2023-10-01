@@ -13,7 +13,10 @@ protocol NewPetTypeDelegate: AnyObject {
 
 struct NewPetType: Hashable {
     static func == (lhs: NewPetType, rhs: NewPetType) -> Bool {
-        lhs.id == rhs.id
+        (
+            lhs.id == rhs.id &&
+            lhs.type == rhs.type
+        )
     }
     var id = UUID().uuidString
     var type: Pet.PetType? = nil

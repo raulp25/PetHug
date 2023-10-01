@@ -67,7 +67,7 @@ final class AddPetViewHeaderViewController: UIViewController {
         let sidePadding: CGFloat = 25
 //        view.layer.borderColor = UIColor.blue.cgColor
 //        view.layer.borderWidth = 1
-        view.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         view.addSubview(logoImageView)
         view.addSubview(titleLabel)

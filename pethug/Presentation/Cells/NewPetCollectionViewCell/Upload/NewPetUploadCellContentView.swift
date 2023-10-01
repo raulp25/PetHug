@@ -71,7 +71,7 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
         uploadBtn.backgroundColor = customRGBColor(red: 255, green: 176, blue: 42)
         
         item.isValid?.sink(receiveValue: { [weak self] isValid in
-            self?.uploadBtn.backgroundColor = isValid ? customRGBColor(red: 255, green: 176, blue: 42) : customRGBColor(red: 232, green: 160, blue: 35)
+            self?.uploadBtn.backgroundColor = isValid ? customRGBColor(red: 255, green: 176, blue: 42) : customRGBColor(red: 250, green: 219, blue: 165, alpha: 1)
             self?.uploadBtn.isEnabled = isValid
         }).store(in: &cancellables)
 //        layoutIfNeeded()
@@ -89,7 +89,7 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
     }()
     
     private func setup() {
-        backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         addSubview(containerView)
         containerView.addSubview(uploadBtn)
         

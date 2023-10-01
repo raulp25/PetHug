@@ -89,6 +89,7 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
     
     // MARK: - Functions
     private func apply(configuration: NewPetBreedListCellConfiguration) {
+        print("currentConfiguration != configuration 552: => \(currentConfiguration != configuration)")
         guard currentConfiguration != configuration else {
             return
         }
@@ -110,7 +111,7 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
 
     
     private func setup() {
-        backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         addSubview(titleLabel)
         addSubview(containerView)
         

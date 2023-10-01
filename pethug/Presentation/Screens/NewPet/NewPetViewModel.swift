@@ -15,7 +15,6 @@ class NewPetViewModel {
         case invalid
     }
     
-    
     //MARK: - Properties
     @Published var nameState: String? = nil
     @Published var galleryState: [UIImage] = []
@@ -93,7 +92,7 @@ class NewPetViewModel {
     ) -> State{
         guard name != nil else { return .invalid }
 //        guard gallery.count > 0 else { return .invalid }
-//        guard let type = type else { return .invalid }
+        guard type != nil else { return .invalid }
 //        guard let breeds = breeds else { return .invalid }
         //gender and size are optional
 //        guard let address = address else { return .invalid }

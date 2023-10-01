@@ -167,7 +167,7 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
     
     private func setup() {
         let height = CGFloat(30)
-        backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         addSubview(titleLabel)
         addSubview(vStack)

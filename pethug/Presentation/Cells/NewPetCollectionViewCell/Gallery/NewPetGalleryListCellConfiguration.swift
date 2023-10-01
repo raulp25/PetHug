@@ -13,7 +13,10 @@ protocol NewPetGalleryDelegate: AnyObject {
 
 struct NewPetGallery: Hashable {
     static func == (lhs: NewPetGallery, rhs: NewPetGallery) -> Bool {
-        lhs.id == rhs.id
+        (
+            lhs.id == rhs.id &&
+            lhs.images == rhs.images
+        )
     }
     var id = UUID().uuidString
     var images: [String] = []

@@ -32,8 +32,6 @@ final class NewPetContentViewController: UIViewController {
     deinit {
         print("✅ Deinit PetsContentViewController")
     }
-    
-//    let vc = PetsViewController(viewModel: .init(fetchPetsUC: FetchPets.composeFetchPetsUC()))
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -136,29 +134,6 @@ final class NewPetContentViewController: UIViewController {
         }
     }
     
-    func generatePet(total: Int) -> [Item] {
-//        var pets = [Item]()
-//
-//        for number in 0...total {
-//            let k = Int(arc4random_uniform(6))
-//            pets.append(.pet(.init(
-//                id: String(number),
-//                name: k < 2 ? "Ruti" : k < 5 ? "Gregoria" : "Doli",
-//                age: k,
-//                gender: "F",
-//                size: "SM",
-//                breed: "Girl",
-//                imageUrl: "d",
-//                type: .cat(.persian),
-//                address: k < 2 ? "Mirador del Cimatario Cancun Quintana Roo" : k < 5 ? "Huixquilucan Estado de Mexico" : "Calle Campanario 23, Queretaro",
-//                isLiked: k < 3 ? false : true
-//            )))
-//        }
-//
-//        return pets
-        []
-    }
-    
     //MARK: - CollectionView layout
 //   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
@@ -250,9 +225,6 @@ final class NewPetContentViewController: UIViewController {
         return layout
     }
     
-  
-    
-    
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
@@ -265,10 +237,8 @@ final class NewPetContentViewController: UIViewController {
 
         
         let newPetNameViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetNameListCellConfiguration>, NewPetName> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate = self
-//            cell.viewModel = self.PetDataManager
         }
         
         let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { cell, _, model in

@@ -74,7 +74,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         containerView.setDimensions(height: 90, width: 90)
         collectionView.fillSuperview()
         collectionView.contentInset = .init(top: 15, left: sideInsets, bottom: 15, right: 10)
-        collectionView.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        collectionView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         collectionView.showsHorizontalScrollIndicator = false
         configureDataSource()
         updateSnapShot()
@@ -105,7 +105,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     }
     
     private func setup() {
-        backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
     }
     
     //MARK: - CollectionView layout

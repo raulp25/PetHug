@@ -90,7 +90,7 @@ final class NewPetNameCellContentView: UIView, UIContentView {
     }()
     
     private func setup() {
-        backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(nameTextField)

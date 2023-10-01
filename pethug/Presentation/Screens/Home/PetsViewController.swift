@@ -49,7 +49,7 @@ final class PetsViewController: UIViewController {
     // MARK: - setup
     private func setup() {
 //        view.backgroundColor = customRGBColor(red: 111, green: 235, blue: 210)
-        view.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
         

@@ -14,7 +14,10 @@ protocol NewPetAddressDelegate: AnyObject {
 
 struct NewPetAddress: Hashable {
     static func == (lhs: NewPetAddress, rhs: NewPetAddress) -> Bool {
-        lhs.id == rhs.id
+        (
+            lhs.id == rhs.id &&
+            lhs.address == rhs.address
+        )
     }
     var id = UUID().uuidString
     var address: Pet.State?

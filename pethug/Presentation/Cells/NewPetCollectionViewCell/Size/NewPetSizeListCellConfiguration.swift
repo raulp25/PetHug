@@ -15,7 +15,10 @@ protocol NewPetSizeDelegate: AnyObject {
 
 struct NewPetSize: Hashable {
     static func == (lhs: NewPetSize, rhs: NewPetSize) -> Bool {
-        lhs.id == rhs.id
+        (
+            lhs.id == rhs.id &&
+            lhs.size == rhs.size
+        )
     }
     var id = UUID().uuidString
     var size: Pet.Size? = nil

@@ -13,7 +13,10 @@ protocol NewPetUploadDelegate: AnyObject {
 
 class NewPetUpload: Hashable {
     static func == (lhs: NewPetUpload, rhs: NewPetUpload) -> Bool {
-        lhs.id == rhs.id
+        //Since we are using a publisher we dont need to check isValid for equality
+        (
+            lhs.id == rhs.id
+        )
     }
     var id = UUID().uuidString
     var isValid: CurrentValueSubject<Bool, Never>?
