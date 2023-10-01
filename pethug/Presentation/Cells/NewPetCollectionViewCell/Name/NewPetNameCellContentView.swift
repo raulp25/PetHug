@@ -9,16 +9,6 @@ import UIKit
 
 final class NewPetNameCellContentView: UIView, UIContentView {
     //MARK: - Private components
-    private lazy var vStack: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [containerView])
-        stack.axis = .vertical
-//        stack.distribution = .
-        stack.alignment = .fill
-//        stack.spacing = 10
-        stack.translatesAutoresizingMaskIntoConstraints = true
-        return stack
-    }()
-    
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Nombre del animal / Título"
@@ -27,14 +17,14 @@ final class NewPetNameCellContentView: UIView, UIContentView {
         return label
     }()
     
-    lazy var nameTextField: UITextField = {
+    private lazy var nameTextField: UITextField = {
         let txtField = UITextField(frame: .zero)
-//        txtField.placeholder = "Search ANAL5"
         txtField.textColor = .label
         txtField.tintColor = .orange
         txtField.textAlignment = .left
         txtField.font = .systemFont(ofSize: 16, weight: .regular)
         txtField.backgroundColor = .clear
+        txtField.delegate = self
         txtField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         return txtField
     }()
@@ -56,7 +46,6 @@ final class NewPetNameCellContentView: UIView, UIContentView {
     // MARK: - LifeCycle
     init(configuration: NewPetNameListCellConfiguration) {
         super.init(frame: .zero)
-
         // create the content view UI
         setup()
 
@@ -70,7 +59,11 @@ final class NewPetNameCellContentView: UIView, UIContentView {
     
     // MARK: - Private actions
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        currentConfiguration.viewModel?.delegate?.textFieldDidChange(text: textField.text ?? "")
+//        currentConfiguration.viewModel?.delegate?.textFieldDidChange(text: textField.text ?? "")
+        currentConfiguration.viewModel?.formData.name = textField.text
+//        print("textfield did change text viewmodel: => \(currentConfiguration.viewModel?.formData.name)")
+//        currentConfiguration.viewModel?.objectWillChange.send()
+        
     }
     
     // MARK: - Functions
@@ -82,6 +75,7 @@ final class NewPetNameCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
 //
         guard let item = currentConfiguration.viewModel else { return }
+        print("item en celda: => \(item.formData.name)")
 //        nameLabel.text = item.name
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
@@ -97,30 +91,21 @@ final class NewPetNameCellContentView: UIView, UIContentView {
     
     private func setup() {
         backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
-//        addSubview(vStack)
         addSubview(containerView)
-//        vStack.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingBottom: 20)
-//        let bottomConstraint = vStack.bottomAnchor.constraint(equalTo: bottomAnchor)
-//        bottomConstraint.priority = .sceneSizeStayPut
-//        bottomConstraint.isActive = true
-        
-//        vStack.layer.borderColor = UIColor.green.cgColor
-//        vStack.layer.borderWidth = 2
-//        titleLabel.setHeight(18)
-//        nameTextField.setHeight(20)
-        containerView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingBottom: 10)
         containerView.addSubview(titleLabel)
         containerView.addSubview(nameTextField)
+        containerView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingBottom: 10)
         containerView.setHeight(50)
-//            containerView.layer.borderColor = UIColor.green.cgColor
-//            containerView.layer.borderWidth = 2
         
         titleLabel.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, right: containerView.rightAnchor)
-//        titleLabel.setHeight(18)
-        
         nameTextField.anchor(top: titleLabel.bottomAnchor, left: containerView.leftAnchor, right: containerView.rightAnchor, paddingTop: 10)
-//        nameTextField.setHeight(20)
     }
 
 
+}
+
+extension NewPetNameCellContentView: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        nameTextField.resignFirstResponder()
+    }
 }

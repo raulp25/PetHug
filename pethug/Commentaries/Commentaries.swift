@@ -91,3 +91,175 @@ import Foundation
 //        self.dataSource.apply(snapshot, animatingDifferences: false)
 //    }
 
+///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+///UIBUTTON
+//set tag
+//button.tag = CurrentChecked.cat.rawValue
+
+//    enum CurrentChecked: String {
+//        case dog
+//        case cat
+//        case bird
+//        case rabbit
+//
+//    }
+//    var currentButton: CurrentChecked? = nil
+///~1st way horrible
+//    @objc func didTapCheckMark(_ sender: UIButton) {
+//        if sender == dogCheckMarkButton && currentButton == .dog {
+//           sender.setImage(UIImage(systemName: "square"), for: .normal)
+//           sender.tintColor = .black
+//        } else if sender == dogCheckMarkButton {
+//            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+//            sender.tintColor = .systemOrange
+//            currentButton = .dog
+//        } else {
+//            dogCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+//            dogCheckMarkButton.tintColor = .black
+//        }
+//
+//        if sender == catCheckMarkButton && currentButton == .cat {
+//           sender.setImage(UIImage(systemName: "square"), for: .normal)
+//           sender.tintColor = .black
+//        } else if sender == catCheckMarkButton {
+//            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+//            sender.tintColor = .systemOrange
+//            currentButton = .cat
+//        } else {
+//            catCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+//            catCheckMarkButton.tintColor = .black
+//        }
+//
+//        if sender == birdCheckMarkButton && currentButton == .bird {
+//           sender.setImage(UIImage(systemName: "square"), for: .normal)
+//           sender.tintColor = .black
+//        } else if sender == birdCheckMarkButton {
+//            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+//            sender.tintColor = .systemOrange
+//            currentButton = .bird
+//        } else {
+//            birdCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+//            birdCheckMarkButton.tintColor = .black
+//        }
+//
+//        if sender == rabbitCheckMarkButton && currentButton == .rabbit {
+//           sender.setImage(UIImage(systemName: "square"), for: .normal)
+//           sender.tintColor = .black
+//        } else if sender == rabbitCheckMarkButton {
+//            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+//            sender.tintColor = .systemOrange
+//            currentButton = .rabbit
+//        } else {
+//            rabbitCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+//            rabbitCheckMarkButton.tintColor = .black
+//        }
+//    }
+
+//enum CurrentChecked: Int {
+//    case dog = 1
+//    case cat = 2
+//    case bird = 3
+//    case rabbit = 4
+//}
+//
+//var currentButton: CurrentChecked? = nil
+//var buttons: [UIButton] = []
+
+///~2nd way but bulkier
+//    @objc func didTapCheckMark(_ sender: UIButton) {
+//        print("sender tag: => \(sender.tag)")
+//        print("CurrentChecked(rawValue: sender.tag) : => \(CurrentChecked(rawValue: sender.tag) )")
+//        guard let checked = CurrentChecked(rawValue: sender.tag) else {
+//            return
+//        }
+//
+//        // Reset all buttons to "square"
+//        dogCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+//        catCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+//        birdCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+//        rabbitCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+//
+//        // Reset all buttons to black color
+//        dogCheckMarkButton.tintColor = .black
+//        catCheckMarkButton.tintColor = .black
+//        birdCheckMarkButton.tintColor = .black
+//        rabbitCheckMarkButton.tintColor = .black
+//
+////        if checked == currentButton {
+////            sender.setImage(UIImage(systemName: "square"), for: .normal)
+////            sender.tintColor = .black
+////            currentButton = nil
+////        } else {
+//            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+//            sender.tintColor = .systemOrange
+//            currentButton = checked
+////        }
+//    }
+
+///~3rd way
+//init() {
+//    buttons = [smallCheckMarkButton, mediumCheckMarkButton, largeCheckMarkButton]
+//    for (index, button) in buttons.enumerated() {
+//        button.tag = index + 1
+//    }
+
+//@objc func didTapCheckMark(_ sender: UIButton) {
+//    guard let checked = CurrentChecked(rawValue: sender.tag) else {
+//        return
+//    }
+//
+////        for button in buttons {
+////            if button == sender {
+////                button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+////                button.tintColor = .systemOrange
+////            } else {
+////                button.setImage(UIImage(systemName: "square"), for: .normal)
+////                button.tintColor = .black
+////            }
+////        }
+////
+////        if checked == currentButton {
+////            sender.setImage(UIImage(systemName: "square"), for: .normal)
+////            sender.tintColor = .black
+////            currentButton = nil
+////        } else {
+////            currentButton = checked
+////        }
+//      allows deselecting a selected box [ optional ]
+//    for button in buttons {
+//        if button == sender {
+//            if checked == currentButton {
+//                button.setImage(UIImage(systemName: "square"), for: .normal)
+//                button.tintColor = .black
+//                currentButton = nil
+//            } else {
+//                button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+//                button.tintColor = .systemOrange
+//                currentButton = checked
+//            }
+//        } else {
+//            button.setImage(UIImage(systemName: "square"), for: .normal)
+//            button.tintColor = .black
+//        }
+//    }
+//       doesnt allows deselect a selected box [ obligatory ]
+//@objc func didTapCheckMark(_ sender: UIButton) {
+//    guard let checked = CurrentChecked(rawValue: sender.tag) else {
+//        return
+//    }
+//
+//    for button in buttons {
+//        if button == sender {
+//                button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+//                button.tintColor = .systemOrange
+//                currentButton = checked
+//        } else {
+//            button.setImage(UIImage(systemName: "square"), for: .normal)
+//            button.tintColor = .black
+//            currentButton = checked
+//        }
+//    }
+//}
+//}
+

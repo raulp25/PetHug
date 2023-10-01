@@ -92,19 +92,6 @@ class CreateAccountViewController: UIViewController {
     }()
     
     
-    private lazy var googleSignInBtn: GradientUIViewButton = {
-        let button = GradientUIViewButton()
-        button.title.text = "Sign in with Google"
-        button.setImage(image: UIImage(systemName: "snowflake")!, withDimensions: Dimensions(height: 25, width: 25))
-        button.setHeight(50)
-        button.startColor = customRGBColor(red: 243, green: 117, blue: 121)
-        button.endColor = customRGBColor(red: 243, green: 117, blue: 121)
-//
-//      let gesture = UITapGestureRecognizer(target: self, action: #selector(handleResetPassword))
-//      button.addGestureRecognizer(gesture)
-        return button
-    }()
-    
     
     //MARK: - Private properties
     private var viewModel = CreateAccountViewModel(

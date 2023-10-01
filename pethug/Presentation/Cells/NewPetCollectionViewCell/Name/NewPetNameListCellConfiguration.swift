@@ -27,7 +27,7 @@ class NewPetName: Hashable {
 }
 
 struct NewPetNameListCellConfiguration: ContentConfigurable {
-    var viewModel: NewPetName?
+    var viewModel: FormDataManager?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetNameCellContentView(configuration: self)

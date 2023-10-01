@@ -322,7 +322,6 @@ extension LoginViewController: AuthTextFieldDelegate {
             passwordTextField.textField.becomeFirstResponder()
             
         } else {
-            // login
             login()
             textField.textField.resignFirstResponder()
             print(": => keyboard continue button login clicked textfieldShouldReturn")

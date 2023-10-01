@@ -16,9 +16,11 @@ extension NewPetContentViewController {
         case name
         case gallery
         case type
+        case breed
         case gender
         case size
         case info
+        case address
         case end
     }
     
@@ -26,9 +28,11 @@ extension NewPetContentViewController {
         case name
         case gallery
         case type
+        case breed
         case gender
         case size
         case info
+        case address
         case end
     }
     

@@ -17,6 +17,7 @@ extension UICollectionLayoutListConfiguration {
             listConfiguration.itemSeparatorHandler = { indexPath, sectionSeparatorConfiguration in
                 var configuration = sectionSeparatorConfiguration
                 configuration.topSeparatorVisibility = indexPath.row == 0 ? .hidden : .visible
+                configuration.bottomSeparatorVisibility = indexPath.row == indexPath.count ? .hidden : .visible
                 configuration.topSeparatorInsets.leading = 0
                 configuration.bottomSeparatorInsets.leading = 0
                 configuration.topSeparatorInsets.trailing = 0
@@ -30,6 +31,29 @@ extension UICollectionLayoutListConfiguration {
         listConfiguration.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
         return listConfiguration
     }
+    
+    static func createBaseEndListConfigWithSeparators() -> UICollectionLayoutListConfiguration {
+//        Configura el tipo de agrupamiento de las celdas en cada section y tambien las lineas de separacion
+        var listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
+        
+        if #available(iOS 14.5, *) {
+            listConfiguration.itemSeparatorHandler = { indexPath, sectionSeparatorConfiguration in
+                var configuration = sectionSeparatorConfiguration
+                configuration.bottomSeparatorVisibility = .hidden
+                configuration.topSeparatorInsets.leading = 0
+                configuration.bottomSeparatorInsets.leading = 0
+                configuration.topSeparatorInsets.trailing = 0
+                configuration.bottomSeparatorInsets.trailing = 0
+                configuration.color = .separator.withAlphaComponent(0.5)
+                return configuration
+            }
+        } else {
+            // Fallback on earlier versions
+        }
+        listConfiguration.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
+        return listConfiguration
+    }
+    
     
     static func createBaseListConfigWithSeparatorsWithInsets(leftInset: CGFloat, rightInset: CGFloat) -> UICollectionLayoutListConfiguration {
 //        Configura el tipo de agrupamiento de las celdas en cada section y tambien las lineas de separacion

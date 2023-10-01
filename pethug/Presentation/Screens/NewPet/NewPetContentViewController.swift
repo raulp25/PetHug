@@ -6,12 +6,47 @@
 //
 
 import UIKit
+import Combine
+
+struct NewPetDataManager: Hashable {
+    var id =  UUID().uuidString
+    var name: String? = nil
+    var gallery: [String] = []
+    var type: Pet.PetType? = nil
+    var breed: String? = nil
+    var gender: String? = nil
+    var size: String? = nil
+    var address: String? = nil
+    var info: String? = nil
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+    static func == (lhs: NewPetDataManager, rhs: NewPetDataManager) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
+class FormDataManager: Hashable, ObservableObject {
+    @Published var formData: NewPetDataManager = NewPetDataManager()
+    var id = UUID().uuidString
+    var delegate: NewPetContentViewController?
+    
+    static func == (lhs: FormDataManager, rhs: FormDataManager) -> Bool {
+        lhs.id == rhs.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(formData)
+    }
+}
 
 
 final class NewPetContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
-    
+    private let dummyView = DummyView()
+//
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
@@ -32,21 +67,118 @@ final class NewPetContentViewController: UIViewController {
     deinit {
         print("✅ Deinit PetsContentViewController")
     }
+    let PetDataManager = FormDataManager()
     
+    private var cancellables = Set<AnyCancellable>()
+    
+//    let vc = PetsViewController(viewModel: .init(fetchPetsUC: FetchPets.composeFetchPetsUC()))
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        hideKeyboardWhenTappedAround()
+        setupKeyboardHiding()
         navigationController?.navigationBar.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
-        
-        
         collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
         collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.delegate = self
-        collectionView.showsVerticalScrollIndicator = false 
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.dragInteractionEnabled = false
         configureDataSource()
         updateSnapShot()
+        
+        PetDataManager.delegate = self
+        PetDataManager.$formData
+            .sink { newFormData in
+                // React to changes in the formData globally
+                // Example: updateUI(newFormData)
+                print("form data changed: => \(newFormData)")
+            }
+            .store(in: &cancellables)
+        
+    }
+    
+    
+//    @objc func didTapIcon() {
+//        print("tap handlek: =>")
+//        view.endEditing(true)
+//    }
+    
+    private func setupKeyboardHiding(){
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardWillShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
+   
+    var keyboardY = CGFloat(0)
+    
+    @objc func keyboardWillShow(sender: NSNotification) {
+        print("keyboard will show lmr: => ")
+        guard let userInfo = sender.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let currentTextField = UIResponder.currentFirst() as? UITextView
+        else {
+            return
+        }
+        
+        let keyboardTopY = keyboardFrame.cgRectValue.origin.y
+    
+        let convertedTextFieldFrame = view.convert(
+            currentTextField.frame,
+            from: currentTextField.superview
+        )
+        let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
+//
+        let intOne:CGFloat = 10, intTwo: CGFloat = 150
+        if (textFieldBottomY + intOne) > keyboardTopY {
+            let textBoxY = convertedTextFieldFrame.origin.y
+            let newFrameY = (textBoxY - keyboardTopY / 2) * -1
+            
+            let contentOffset = collectionView.contentOffset
+            let horizontalScrollPosition = contentOffset.y
+            let height =
+                UIScreen.main.bounds.size.height <= 870 ?
+                    UIScreen.main.bounds.height / 1.2 :
+                        UIScreen.main.bounds.size.height <= 926 ?
+                            UIScreen.main.bounds.height / 1.4 :
+                                UIScreen.main.bounds.height / 1.5
+            collectionView.setContentOffset(CGPoint(x: 0, y:  height), animated: true)
+            collectionView.isScrollEnabled = false
+        }
+        
+        if UIScreen.main.bounds.size.height <= 700 {
+            collectionView.setContentOffset(CGPoint(x: 0, y: UIScreen.main.bounds.size.height / 1 ), animated: true)
+            collectionView.isScrollEnabled = false
+        }
+    }
+    
+//
+    @objc func keyboardWillHide(sender: NSNotification) {
+        view.endEditing(true)
+        collectionView.isScrollEnabled = true
+        
+//      Check if sender is UITextView
+        guard let userInfo = sender.userInfo,
+              let _ = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
+              let _ = UIResponder.currentFirst() as? UITextView
+        else {
+            return
+        }
+        
+        if UIScreen.main.bounds.size.height <= 700 {
+            collectionView.setContentOffset(CGPoint(x: 0, y: (UIScreen.main.bounds.size.height / 1) - 80), animated: true)
+        }
     }
     
     func generatePet(total: Int) -> [Item] {
@@ -76,11 +208,14 @@ final class NewPetContentViewController: UIViewController {
 //   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
+            
             guard let self else { fatalError() }
+            
             let sideInsets = CGFloat(40)
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
-            var listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators()
+            let listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators()
 //            listConfiguration.headerMode = .supplementary
+            
             switch section {
             case .name:
                 print("dogs section")
@@ -92,13 +227,20 @@ final class NewPetContentViewController: UIViewController {
                 return section
             case .gallery:
 //                return .createPetsLayout()
-                var listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparatorsWithInsets(leftInset: sideInsets, rightInset: sideInsets)
+                let listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparatorsWithInsets(leftInset: sideInsets, rightInset: sideInsets)
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
                 section.contentInsets.bottom = 30
                 
                 return section
             case .type:
 //                return .createPetsLayout()
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = sideInsets
+                section.contentInsets.trailing = sideInsets
+                
+                return section
+            case .breed:
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
                 section.contentInsets.bottom = 30
                 section.contentInsets.leading = sideInsets
@@ -121,6 +263,13 @@ final class NewPetContentViewController: UIViewController {
                 section.contentInsets.trailing = sideInsets
                 
                 return section
+            case .address:
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = sideInsets
+                section.contentInsets.trailing = sideInsets
+                
+                return section
             case .info:
 //                return .createPetsLayout()
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
@@ -131,6 +280,8 @@ final class NewPetContentViewController: UIViewController {
                 return section
             case .end:
 //                return .createPetsLayout()
+                var listConfiguration: UICollectionLayoutListConfiguration = .createBaseEndListConfigWithSeparators()
+                listConfiguration.separatorConfiguration.bottomSeparatorVisibility = .hidden
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
                 section.contentInsets.bottom = 30
                 section.contentInsets.leading = sideInsets
@@ -143,6 +294,8 @@ final class NewPetContentViewController: UIViewController {
         }
         return layout
     }
+    
+  
     
     
     
@@ -158,29 +311,49 @@ final class NewPetContentViewController: UIViewController {
         
         let newPetNameViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetNameListCellConfiguration>, NewPetName> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = model
+            cell.viewModel = self.PetDataManager
         }
         
         let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = model
+            cell.viewModel = self.PetDataManager
         }
         
         let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetTypeListCellConfiguration>, NewPetType> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = model
+            cell.viewModel = self.PetDataManager
+        }
+        
+        let newPetBreedViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetBreedListCellConfiguration>, NewPetBreed> { cell, _, model in
+//            cell.configure(with: model, delegate: self)
+            cell.viewModel = self.PetDataManager
         }
         
         let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGenderListCellConfiguration>, NewPetGender> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = model
+            cell.viewModel = self.PetDataManager
         }
         
         let newPetSizeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSizeListCellConfiguration>, NewPetSize> { cell, _, model in
 //            cell.configure(with: model, delegate: self)
-            cell.viewModel = model
+            cell.viewModel = self.PetDataManager
         }
         
+        let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { cell, _, model in
+//            cell.configure(with: model, delegate: self)
+            cell.viewModel = self.PetDataManager
+        }
+        
+        let newPetInfoViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetInfoListCellConfiguration>, NewPetInfo> { cell, _, model in
+//            cell.configure(with: model, delegate: self)
+//            cell.viewModel = model
+            cell.viewModel = self.PetDataManager
+        }
+        
+        let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetUploadListCellConfiguration>, NewPetUpload> { cell, _, model in
+//            cell.configure(with: model, delegate: self)
+            cell.viewModel = self.PetDataManager
+        }
         
         let nameMockVM = NewPetName(name: "Fernanda Sanchez")
         nameMockVM.delegate = self
@@ -189,9 +362,37 @@ final class NewPetContentViewController: UIViewController {
         
         let typeMockVM = NewPetType(type: .dog(.goldenRetriever))
         
+        let breedMockVM = NewPetBreed(petType: .dog(.goldenRetriever))
+        
+        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: "dd", size: "dd", breed: "dd", imageUrl: "dd", type: .dog(.goldenRetriever), address: "dd", isLiked: true)
+        switch (typeMockVM.type, pet1.type) {
+        case (.dog, .dog):
+            print("son iguales qwe DOG: =>")
+        case (.cat, .cat):
+            print("extra ///.2: =>")
+        case (.bird, .bird):
+            print("extra ///.2: =>")
+        case (.rabbit, .rabbit):
+            print("extra ///.2: =>")
+        default:
+            print("extra ///.2: =>")
+        }
+        
+//        if typeMockVM.type == .dog(.goldenRetriever) {
+//            print("son iguales qwe: => \(typeMockVM.type == .dog(.goldenRetriever))")
+//        } else {
+//            print("no son iguales qwe")
+//        }
+//
         let genderMockVM = NewPetGender(gender: "")
         
         let sizeMockVM = NewPetSize()
+        
+        let addressMockVM = NewPetAddress(address: "Queretaro")
+        
+        let infoMockVM = NewPetInfo(info: nil)
+        
+        let uploadMockVM = NewPetUpload(isEnabled: true)
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
@@ -202,42 +403,48 @@ final class NewPetContentViewController: UIViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: newPetGalleryViewCellRegistration, for: indexPath, item: galleryMockVM)
             case .type:
                 return collectionView.dequeueConfiguredReusableCell(using: newPetTypeViewCellRegistration, for: indexPath, item: typeMockVM)
+            case .breed:
+                return collectionView.dequeueConfiguredReusableCell(using: newPetBreedViewCellRegistration, for: indexPath, item: breedMockVM)
             case .gender:
                 return collectionView.dequeueConfiguredReusableCell(using: newPetGenderViewCellRegistration, for: indexPath, item: genderMockVM)
             case .size:
                 return collectionView.dequeueConfiguredReusableCell(using: newPetSizeViewCellRegistration, for: indexPath, item: sizeMockVM)
+            case .address:
+                return collectionView.dequeueConfiguredReusableCell(using: newPetAddressViewCellRegistration, for: indexPath, item: addressMockVM)
             case .info:
-                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: nameMockVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetInfoViewCellRegistration, for: indexPath, item: infoMockVM)
             case .end:
-                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: nameMockVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetUploadViewCellRegistration, for: indexPath, item: uploadMockVM)
             }
             
         })
         
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-            guard let self else {
-                return nil
-            }
-
-            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            
-            switch section {
-            case .name:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            case .gallery:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            case .type:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            case .gender:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            case .size:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            case .info:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            case .end:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            }
-        }
+//        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
+//            guard let self else {
+//                return nil
+//            }
+//
+//            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+//
+//            switch section {
+//            case .name:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            case .gallery:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            case .type:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            case .breed:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            case .gender:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            case .size:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            case .info:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            case .end:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            }
+//        }
     }
         
     // MARK: - Private methods
@@ -247,8 +454,10 @@ final class NewPetContentViewController: UIViewController {
             .init(key: .name, values: [.name]),
             .init(key: .gallery, values: [.gallery]),
             .init(key: .type, values: [.type]),
+            .init(key: .breed, values: [.breed]),
             .init(key: .gender, values: [.gender]),
             .init(key: .size, values: [.size]),
+            .init(key: .address, values: [.address]),
             .init(key: .info, values: [.info]),
             .init(key: .end, values: [.end])
         ]
@@ -285,6 +494,8 @@ extension NewPetContentViewController: NewPetNameDelegate {
     }
 }
 
+//func presentSearchController() {}
+
 extension NewPetContentViewController: UICollectionViewDelegate {
     
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -304,6 +515,93 @@ extension NewPetContentViewController: UICollectionViewDelegate {
     
 }
         
+extension NewPetContentViewController: NewPetBreedDelegate {
+    func didTapBreedSelector() {
+        let searchController = BreedPopupSearch()
+        searchController.delegate = self
+        let dummyNavigator = UINavigationController(rootViewController: searchController)
+        dummyView.add(dummyNavigator)
+        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
+        dummyNavigator.view.layer.cornerRadius = 15
+        
+        add(dummyView)
+        dummyView.view.fillSuperview()
+        
+        
+        print("ejecuta async after: => ")
+//        dummyView.view.isHidden = false
+        dummyView.view.alpha = 0
+        self.view.bringSubviewToFront(dummyView.view)
+        self.collectionView.isUserInteractionEnabled = false
+        dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+            self.dummyView.view.alpha = 1
+        }
+        self.view.layoutIfNeeded()
+        
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 7, execute: {
+//            print("ejecuta async after: => ")
+//            dummyView.view.isHidden = true
+//            self.view.sendSubviewToBack(dummyView.view)
+//            self.collectionView.isUserInteractionEnabled = true
+//            self.view.layoutIfNeeded()
+//        })
+        
+    }
+}
+
+extension NewPetContentViewController: PopupSearchDelegate, AddressPopupSearchDelegate {
+    func didTapCancell() {
+        print(":didTapCancell from parent => ")
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
+            self.dummyView.view.alpha = 0
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
+                self.dummyView.remove()
+                self.collectionView.isUserInteractionEnabled = true
+                self.view.layoutIfNeeded()
+            })
+        }
+        
+    }
+}
+
+extension NewPetContentViewController: NewPetAddressDelegate {
+    func didTapAddressSelector() {
+        let searchController = AddressPopupSearch()
+        searchController.delegate = self
+        let dummyNavigator = UINavigationController(rootViewController: searchController)
+        dummyView.add(dummyNavigator)
+        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
+        dummyNavigator.view.layer.cornerRadius = 15
+        
+        add(dummyView)
+        dummyView.view.fillSuperview()
+        
+        
+        print("ejecuta async after: => ")
+//        dummyView.view.isHidden = false
+        dummyView.view.alpha = 0
+        self.view.bringSubviewToFront(dummyView.view)
+        self.collectionView.isUserInteractionEnabled = false
+        dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+            self.dummyView.view.alpha = 1
+        }
+        self.view.layoutIfNeeded()
+        
+        
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 7, execute: {
+//            print("ejecuta async after: => ")
+//            dummyView.view.isHidden = true
+//            self.view.sendSubviewToBack(dummyView.view)
+//            self.collectionView.isUserInteractionEnabled = true
+//            self.view.layoutIfNeeded()
+//        })
+        
+    }
+}
 
 
 

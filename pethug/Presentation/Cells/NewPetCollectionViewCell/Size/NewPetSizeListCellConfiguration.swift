@@ -29,7 +29,7 @@ class NewPetSize: Hashable {
 }
 
 struct NewPetSizeListCellConfiguration: ContentConfigurable {
-    var viewModel: NewPetSize?
+    var viewModel: FormDataManager?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetSizeCellContentView(configuration: self)

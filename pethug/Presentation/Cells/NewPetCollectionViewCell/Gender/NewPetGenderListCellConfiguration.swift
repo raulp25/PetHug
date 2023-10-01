@@ -27,7 +27,7 @@ class NewPetGender: Hashable {
 }
 
 struct NewPetGenderListCellConfiguration: ContentConfigurable {
-    var viewModel: NewPetGender?
+    var viewModel: FormDataManager?
 
     func makeContentView() -> UIView & UIContentView {
         return NewPetGenderCellContentView(configuration: self)

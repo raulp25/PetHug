@@ -27,7 +27,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.alignment = .fill
-        //        stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = true
         return stack
     }()
@@ -37,13 +36,10 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    //    checkmark.square
+    
     private let dogLabel: UILabel = {
         let label = UILabel()
         label.text = "Perro"
@@ -58,7 +54,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.dog.rawValue
         return button
     }()
     
@@ -67,9 +62,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -87,7 +79,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.cat.rawValue
         return button
     }()
     
@@ -96,9 +87,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-//        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -116,7 +104,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.bird.rawValue
         return button
     }()
     
@@ -125,8 +112,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -144,7 +129,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.rabbit.rawValue
         return button
     }()
     
@@ -227,66 +211,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         }
     }
     
-    
-    //    enum CurrentChecked: String {
-    //        case dog
-    //        case cat
-    //        case bird
-    //        case rabbit
-    //
-    //    }
-    //    var currentButton: CurrentChecked? = nil
-    
-    //    @objc func didTapCheckMark(_ sender: UIButton) {
-    //        if sender == dogCheckMarkButton && currentButton == .dog {
-    //           sender.setImage(UIImage(systemName: "square"), for: .normal)
-    //           sender.tintColor = .black
-    //        } else if sender == dogCheckMarkButton {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = .dog
-    //        } else {
-    //            dogCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //            dogCheckMarkButton.tintColor = .black
-    //        }
-    //
-    //        if sender == catCheckMarkButton && currentButton == .cat {
-    //           sender.setImage(UIImage(systemName: "square"), for: .normal)
-    //           sender.tintColor = .black
-    //        } else if sender == catCheckMarkButton {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = .cat
-    //        } else {
-    //            catCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //            catCheckMarkButton.tintColor = .black
-    //        }
-    //
-    //        if sender == birdCheckMarkButton && currentButton == .bird {
-    //           sender.setImage(UIImage(systemName: "square"), for: .normal)
-    //           sender.tintColor = .black
-    //        } else if sender == birdCheckMarkButton {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = .bird
-    //        } else {
-    //            birdCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //            birdCheckMarkButton.tintColor = .black
-    //        }
-    //
-    //        if sender == rabbitCheckMarkButton && currentButton == .rabbit {
-    //           sender.setImage(UIImage(systemName: "square"), for: .normal)
-    //           sender.tintColor = .black
-    //        } else if sender == rabbitCheckMarkButton {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = .rabbit
-    //        } else {
-    //            rabbitCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //            rabbitCheckMarkButton.tintColor = .black
-    //        }
-    //    }
-    
     enum CurrentChecked: Int {
         case dog = 1
         case cat = 2
@@ -296,73 +220,21 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
     
     var currentButton: CurrentChecked? = nil
     var buttons: [UIButton] = []
-    //    @objc func didTapCheckMark(_ sender: UIButton) {
-    //        print("sender tag: => \(sender.tag)")
-    //        print("CurrentChecked(rawValue: sender.tag) : => \(CurrentChecked(rawValue: sender.tag) )")
-    //        guard let checked = CurrentChecked(rawValue: sender.tag) else {
-    //            return
-    //        }
-    //
-    //        // Reset all buttons to "square"
-    //        dogCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //        catCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //        birdCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //        rabbitCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //
-    //        // Reset all buttons to black color
-    //        dogCheckMarkButton.tintColor = .black
-    //        catCheckMarkButton.tintColor = .black
-    //        birdCheckMarkButton.tintColor = .black
-    //        rabbitCheckMarkButton.tintColor = .black
-    //
-    ////        if checked == currentButton {
-    ////            sender.setImage(UIImage(systemName: "square"), for: .normal)
-    ////            sender.tintColor = .black
-    ////            currentButton = nil
-    ////        } else {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = checked
-    ////        }
-    //    }
     
     @objc func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else {
             return
         }
         
-//        for button in buttons {
-//            if button == sender {
-//                button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-//                button.tintColor = .systemOrange
-//            } else {
-//                button.setImage(UIImage(systemName: "square"), for: .normal)
-//                button.tintColor = .black
-//            }
-//        }
-//
-//        if checked == currentButton {
-//            sender.setImage(UIImage(systemName: "square"), for: .normal)
-//            sender.tintColor = .black
-//            currentButton = nil
-//        } else {
-//            currentButton = checked
-//        }
-        
         for button in buttons {
             if button == sender {
-                if checked == currentButton {
-                    button.setImage(UIImage(systemName: "square"), for: .normal)
-                    button.tintColor = .black
-                    currentButton = nil
-                } else {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
                     currentButton = checked
-                }
             } else {
                 button.setImage(UIImage(systemName: "square"), for: .normal)
                 button.tintColor = .black
+                currentButton = checked
             }
         }
     }
