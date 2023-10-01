@@ -12,7 +12,7 @@ protocol NewPetAddressDelegate: AnyObject {
     func didTapAddressSelector()
 }
 
-class NewPetAddress: Hashable {
+struct NewPetAddress: Hashable {
     static func == (lhs: NewPetAddress, rhs: NewPetAddress) -> Bool {
         lhs.id == rhs.id
     }

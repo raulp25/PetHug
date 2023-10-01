@@ -6,125 +6,6 @@
 //
 
 import UIKit
-import Combine
-
-struct NewPetDataManager: Hashable {
-    var id =  UUID().uuidString
-    var name: String? = nil
-    var gallery: [String] = []
-    var type: Pet.PetType? = nil
-    var breed: String? = nil
-    var gender: String? = nil
-    var size: String? = nil
-    var address: String? = nil
-    var info: String? = nil
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
-    }
-    static func == (lhs: NewPetDataManager, rhs: NewPetDataManager) -> Bool {
-        lhs.id == rhs.id
-    }
-}
-
-class FormDataManager: Hashable, ObservableObject {
-    @Published var formData: NewPetDataManager = NewPetDataManager()
-    var id = UUID().uuidString
-    var delegate: NewPetContentViewController?
-    
-    static func == (lhs: FormDataManager, rhs: FormDataManager) -> Bool {
-        lhs.id == rhs.id
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(formData)
-    }
-}
-
-class NewPetViewModel {
-    
-    enum State {
-        case valid
-        case invalid
-    }
-    
-    
-    //MARK: - Properties
-    let state = CurrentValueSubject<State, Error>(.invalid)
-    @Published var nameState: String? = nil
-    @Published var galleryState: [UIImage] = []
-    @Published var typeState: Pet.PetType? = nil
-    @Published var breedState: String? = nil
-    @Published var genderState: Pet.Gender? = nil
-    @Published var sizeState: Pet.Size? = nil
-    @Published var addressState: Pet.State? = nil
-    @Published var infoState: String? = nil
-    
-    var breedsFor: Pet.PetType? = nil
-    var isValid: Bool = false
-//    private var statePublisher: AnyPublisher<(String?, String?), Never> {
-//        return Publishers.CombineLatest($nameState, $addressState)
-//            .removeDuplicates { prev, curr in
-//                prev == curr
-//            }.eraseToAnyPublisher()
-//    }
-    
-    var formValidationState: AnyPublisher<NewPetViewModel.State, Never> {
-        return Publishers.CombineLatest3(
-            Publishers.CombineLatest3($nameState, $galleryState, $typeState),
-            Publishers.CombineLatest3($breedState, $genderState, $sizeState),
-            Publishers.CombineLatest($addressState, $infoState)
-        )
-        .map { nameGalleryType, breedGenderSize, addressInfo in
-            let (name, gallery, type) = nameGalleryType
-            let (breed, gender, size) = breedGenderSize
-            let (address, info) = addressInfo
-            
-//            return [name, gallery]
-            
-            print("name inside validation publisher fn: => \(name)")
-            print("info inside validation publisher fn: => \(info)")
-            
-            return self.validateForm(
-                name: name,
-                gallery: gallery,
-                type: type,
-                breed: breed,
-                gender: gender,
-                size: size,
-                address: address,
-                info: info
-            )
-            
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    func validateForm(
-        name: String?,
-        gallery: [UIImage],
-        type: Pet.PetType?,
-        breed: String?,
-        gender: Pet.Gender?,
-        size: Pet.Size?,
-        address: Pet.State?,
-        info: String?
-    ) -> State{
-        isValid = false
-        guard let name = name else { return .invalid }
-//        guard gallery.count > 0 else { return .invalid }
-//        guard let type = type else { return .invalid }
-//        guard let breed = breed else { return .invalid }
-        //gender and size are optional
-//        guard let address = address else { return .invalid }
-        guard let info = info else { return .invalid }
-        
-        isValid = true
-        return .valid
-    }
-    
-}
-
 
 final class NewPetContentViewController: UIViewController {
     //MARK: - Private components
@@ -132,7 +13,6 @@ final class NewPetContentViewController: UIViewController {
     private let dummyView = DummyView()
 //
     //MARK: - Private properties
-    private var isValid = CurrentValueSubject<Bool, Never>(false)
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
     private var viewModel = NewPetViewModel()
@@ -152,9 +32,6 @@ final class NewPetContentViewController: UIViewController {
     deinit {
         print("✅ Deinit PetsContentViewController")
     }
-    let PetDataManager = FormDataManager()
-    
-    private var cancellables = Set<AnyCancellable>()
     
 //    let vc = PetsViewController(viewModel: .init(fetchPetsUC: FetchPets.composeFetchPetsUC()))
     override func viewDidLoad() {
@@ -173,35 +50,6 @@ final class NewPetContentViewController: UIViewController {
         collectionView.dragInteractionEnabled = false
         configureDataSource()
         updateSnapShot()
-        
-        PetDataManager.delegate = self
-        PetDataManager.$formData
-            .handleThreadsOperator()
-            .sink { newFormData in
-                // React to changes in the formData globally
-                // Example: updateUI(newFormData)
-                print("form data changed: => \(newFormData)")
-            }
-            .store(in: &cancellables)
-        
-        viewModel.formValidationState.handleThreadsOperator()
-            .sink { state in
-            switch state {
-            case .valid:
-                print("is valid STATE FUCK: => VALID")
-                self.isValid.send(true)
-//                var snapshot = self.dataSource.snapshot()
-//                snapshot.reloadSections([.end])
-//                self.dataSource.apply(snapshot, animatingDifferences: false)
-            case .invalid:
-                self.isValid.send(false)
-//                var snapshot = self.dataSource.snapshot()
-//                snapshot.reloadSections([.end])
-//                self.dataSource.apply(snapshot, animatingDifferences: false)
-                print("is not valid STATE FUCK: NOT VALID=>")
-            }
-            }.store(in: &cancellables)
-        
     }
     
     
@@ -424,73 +272,54 @@ final class NewPetContentViewController: UIViewController {
         }
         
         let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate = self
-//            cell.viewModel = self.PetDataManager
         }
         
         let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetTypeListCellConfiguration>, NewPetType> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate  = self
-//            cell.viewModel = self.PetDataManager
         }
         
         let newPetBreedViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetBreedListCellConfiguration>, NewPetBreed> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.isEnabled = self.viewModel.breedsFor != nil ? true : false
-            cell.viewModel?.breedsFor = self.viewModel.breedsFor
-//            cell.viewModel = self.PetDataManager
+            cell.viewModel?.breeds = self.viewModel.breedsState
         }
         
         let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGenderListCellConfiguration>, NewPetGender> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate = self
-//            cell.viewModel = self.PetDataManager
         }
         
         let newPetSizeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSizeListCellConfiguration>, NewPetSize> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate = self
-//            cell.viewModel = self.PetDataManager
         }
         
         let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate = self
-//            cell.viewModel = self.PetDataManager
         }
         
         let newPetInfoViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetInfoListCellConfiguration>, NewPetInfo> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
-//            cell.viewModel = model
-//            cell.viewModel = self.PetDataManager
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }
         
         let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetUploadListCellConfiguration>, NewPetUpload> { cell, _, model in
-//            cell.configure(with: model, delegate: self)
             cell.viewModel = model
-            cell.viewModel?.isValid = self.isValid
-//            cell.viewModel?.isValid = self.isValid
-//            cell.viewModel = self.PetDataManager
+            cell.viewModel?.isValid = self.viewModel.isValid
         }
         
-        let nameMockVM = NewPetName(name: "Fernanda Sanchez")
+        var nameMockVM = NewPetName(name: "Fernanda Sanchez")
         nameMockVM.delegate = self
         
         let galleryMockVM = NewPetGallery(images: [])
         
         let typeMockVM = NewPetType(type: .dog(.goldenRetriever))
         
-        let breedMockVM = NewPetBreed(breed: "Golden Retriever")
+        let breedMockVM = NewPetBreed(currentBreed: "Golden Retriever")
         
         let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imageUrl: "dd", type: .dog(.goldenRetriever), address: .QuintanaRoo, isLiked: true)
         switch (typeMockVM.type, pet1.type) {
@@ -633,7 +462,7 @@ extension NewPetContentViewController: NewPetGalleryDelegate {
 extension NewPetContentViewController: NewPetTypeDelegate {
     func typeDidChange(type: Pet.PetType) {
         viewModel.typeState = type
-        viewModel.breedsFor = type
+        viewModel.breedsState = type
         
         var snapshot = dataSource.snapshot()
         snapshot.reloadSections([.breed])

@@ -11,7 +11,7 @@ protocol NewPetInfoDelegate: AnyObject {
     func textViewdDidChange(text: String)
 }
 
-class NewPetInfo: Hashable {
+struct NewPetInfo: Hashable {
     static func == (lhs: NewPetInfo, rhs: NewPetInfo) -> Bool {
         lhs.id == rhs.id
     }
@@ -19,7 +19,7 @@ class NewPetInfo: Hashable {
     var info: String?
     weak var delegate: NewPetInfoDelegate?
     func hash(into hasher: inout Hasher) {
-           hasher.combine(info)
+           hasher.combine(id)
        }
     init(info: String? = nil) {
         self.info = info

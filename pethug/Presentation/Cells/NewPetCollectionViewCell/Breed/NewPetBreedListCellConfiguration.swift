@@ -12,20 +12,19 @@ protocol NewPetBreedDelegate: AnyObject {
     func didTapBreedSelector()
 }
 
-class NewPetBreed: Hashable {
+struct NewPetBreed: Hashable {
     static func == (lhs: NewPetBreed, rhs: NewPetBreed) -> Bool {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var breed: String?
-    var breedsFor: Pet.PetType?
-    var isEnabled: Bool = false
+    var currentBreed: String?
+    var breeds: Pet.PetType?
     weak var delegate: NewPetBreedDelegate?
     func hash(into hasher: inout Hasher) {
-           hasher.combine(breed)
+           hasher.combine(id)
        }
-    init(breed: String) {
-        self.breed = breed
+    init(currentBreed: String? = nil) {
+        self.currentBreed = currentBreed
     }
 }
 
@@ -42,7 +41,7 @@ struct NewPetBreedListCellConfiguration: ContentConfigurable {
         }
 
         let updateConfiguration = self
-
+        
         if state.isSwiped {
         }
 

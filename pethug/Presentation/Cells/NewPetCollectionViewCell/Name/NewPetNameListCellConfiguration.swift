@@ -11,7 +11,7 @@ protocol NewPetNameDelegate: AnyObject {
     func textFieldDidChange(text: String)
 }
 
-class NewPetName: Hashable {
+struct NewPetName: Hashable {
     static func == (lhs: NewPetName, rhs: NewPetName) -> Bool {
         lhs.id == rhs.id
     }
@@ -19,7 +19,7 @@ class NewPetName: Hashable {
     var name: String?
     weak var delegate: NewPetNameDelegate?
     func hash(into hasher: inout Hasher) {
-           hasher.combine(name)
+           hasher.combine(id)
        }
     init(name: String? = nil) {
         self.name = name

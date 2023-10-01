@@ -11,7 +11,7 @@ protocol NewPetTypeDelegate: AnyObject {
     func typeDidChange(type: Pet.PetType)
 }
 
-class NewPetType: Hashable {
+struct NewPetType: Hashable {
     static func == (lhs: NewPetType, rhs: NewPetType) -> Bool {
         lhs.id == rhs.id
     }

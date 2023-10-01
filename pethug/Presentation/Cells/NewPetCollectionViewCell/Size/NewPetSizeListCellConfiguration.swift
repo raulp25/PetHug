@@ -13,7 +13,7 @@ protocol NewPetSizeDelegate: AnyObject {
     func sizeDidChange(size: Pet.Size?)
 }
 
-class NewPetSize: Hashable {
+struct NewPetSize: Hashable {
     static func == (lhs: NewPetSize, rhs: NewPetSize) -> Bool {
         lhs.id == rhs.id
     }

@@ -11,7 +11,7 @@ protocol NewPetGalleryDelegate: AnyObject {
     func galleryDidChange(images: [UIImage])
 }
 
-class NewPetGallery: Hashable {
+struct NewPetGallery: Hashable {
     static func == (lhs: NewPetGallery, rhs: NewPetGallery) -> Bool {
         lhs.id == rhs.id
     }
