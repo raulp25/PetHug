@@ -7,17 +7,14 @@
 
 import UIKit
 
+protocol GalleryPageSheetDelegate: AnyObject {
+    func didTapCamera()
+    func didTapGallery()
+}
+
 final class GalleryPageSheetView: UIViewController {
-    //MARK: - Private components
-    lazy private var containerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        uv.backgroundColor = .clear
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
-//        uv.isUserInteractionEnabled = true
-//        uv.addGestureRecognizer(tapGesture)
-        return uv
-    }()
     
+    //MARK: - Private components
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Origen"
@@ -105,6 +102,7 @@ final class GalleryPageSheetView: UIViewController {
     }()
     
     //MARK: - Internal properties
+    weak var delegate: GalleryPageSheetDelegate?
     var pageSheetHeight: CGFloat? = nil
     
     override func viewDidLoad() {
@@ -116,19 +114,19 @@ final class GalleryPageSheetView: UIViewController {
     
     //MARK: - Private Actions
      @objc private func didTapCamera() {
-        print(": => tapped camera logo")
+         delegate?.didTapCamera()
          dismiss(animated: true)
     }
     
      @objc private func didTapGallery() {
-        print(": => tapped gallery logo")
+         delegate?.didTapGallery()
          dismiss(animated: true)
     }
     
     //MARK: - Private Methods
     private func configure() {
         let paddingTop = (pageSheetHeight ?? 0) / 3
-        
+        view.backgroundColor = .white
         view.addSubview(titleLabel)
         view.addSubview(hStackContainer)
         

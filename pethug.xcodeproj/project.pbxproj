@@ -1414,7 +1414,8 @@
 				DEVELOPMENT_TEAM = 75SHBQ42MK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pethug/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a profile picture";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a photo";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your gallery to post a picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1447,7 +1448,8 @@
 				DEVELOPMENT_TEAM = 75SHBQ42MK;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = pethug/Info.plist;
-				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a profile picture";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need access to your camera to take a photo";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "We need access to your gallery to post a picture";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

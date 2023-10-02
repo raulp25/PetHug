@@ -13,15 +13,23 @@ protocol PetsViewHeaderDelegate: AnyObject {
 
 final class PetsViewHeaderViewController: UIViewController {
     //MARK: - Private components
-    private let logoImageView: UIImageView = {
+    private lazy var logoImageView: UIImageView = {
        let iv = UIImageView()
         iv.image = UIImage(named: "dog3")
         iv.tintColor = UIColor.systemPink.withAlphaComponent(0.7)
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapSingOut))
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(tapGesture)
         return iv
     }()
+    
+    @objc private func didTapSingOut() {
+        try! AuthService().signOut()
+    }
     
     private let titleLabel: UILabel = {
        let label = UILabel()

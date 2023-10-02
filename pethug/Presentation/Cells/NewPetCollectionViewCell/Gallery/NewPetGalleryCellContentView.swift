@@ -14,10 +14,23 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     private let titleLabel: UILabel = {
        let label = UILabel(withAutolayout: true)
-        label.text = "Galería"
+        label.text = "Galería mielda"
         label.textColor = .black.withAlphaComponent(0.8)
         label.font = UIFont.systemFont(ofSize: 12.3, weight: .bold)
         return label
+    }()
+    private lazy var logoImageView: UIImageView = {
+       let iv = UIImageView()
+        iv.image = UIImage(named: "dog3")
+        iv.tintColor = UIColor.systemPink.withAlphaComponent(0.7)
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapSingOut))
+//        iv.isUserInteractionEnabled = true
+//        iv.addGestureRecognizer(tapGesture)
+        return iv
     }()
     
     //MARK: - Private properties
@@ -64,13 +77,21 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
         translatesAutoresizingMaskIntoConstraints = true
         addSubview(titleLabel)
+        addSubview(logoImageView)
         addSubview(collectionView)
         
         let sideInsets = CGFloat(40)
         titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: sideInsets)
         titleLabel.setHeight(14)
         
-        collectionView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingBottom: 20)
+        
+        logoImageView.anchor(top: topAnchor, right: rightAnchor)
+        logoImageView.setDimensions(height: 60, width: 60)
+        
+            logoImageView.layer.borderColor = UIColor.green.cgColor
+            logoImageView.layer.borderWidth = 2
+        
+        collectionView.anchor(top: logoImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingBottom: 20)
         collectionView.setHeight(90)
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
@@ -165,20 +186,20 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         currentSnapData  = [.init(key: .gallery, values: [
             .image(UIImage(systemName: "pencil")!),
             .image(UIImage(named: "pr1")!),
-            .image(UIImage(named: "pr2")!),
-            .image(UIImage(named: "pr3")!),
-            .image(UIImage(named: "pr4")!),
-            .image(UIImage(named: "pr5")!),
-            .image(UIImage(named: "pr6")!),
-            .image(UIImage(named: "pr7")!),
-            .image(UIImage(named: "pr8")!),
-            .image(UIImage(named: "pr9")!),
-            .image(UIImage(named: "pr10")!),
-            .image(UIImage(named: "sal")!),
-            .image(UIImage(named: "bull")!),
-            .image(UIImage(named: "dog1")!),
-            .image(UIImage(named: "dog3")!),
-            .image(UIImage(named: "orange")!),
+//            .image(UIImage(named: "pr2")!),
+//            .image(UIImage(named: "pr3")!),
+//            .image(UIImage(named: "pr4")!),
+//            .image(UIImage(named: "pr5")!),
+//            .image(UIImage(named: "pr6")!),
+//            .image(UIImage(named: "pr7")!),
+//            .image(UIImage(named: "pr8")!),
+//            .image(UIImage(named: "pr9")!),
+//            .image(UIImage(named: "pr10")!),
+//            .image(UIImage(named: "sal")!),
+//            .image(UIImage(named: "bull")!),
+//            .image(UIImage(named: "dog1")!),
+//            .image(UIImage(named: "dog3")!),
+//            .image(UIImage(named: "orange")!),
         ])]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
@@ -216,6 +237,7 @@ extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
         
         let controller = GalleryPageSheetView()
         controller.pageSheetHeight = height
+        controller.delegate = self
         
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .pageSheet
@@ -232,3 +254,50 @@ extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
     }
 }
 
+extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
+    func didTapCamera() {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.allowsEditing = true
+        picker.delegate = self
+//        let nav = UINavigationController(rootViewController: picker)
+        currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: {
+            self.currentConfiguration.viewModel?.nagivagtion?.present(picker, animated: true)
+        })
+//        nav.present(picker, animated: true)
+    }
+    
+    func didTapGallery() {
+        
+    }
+}
+
+extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
+        print("image despues de elgiir: => \(image)")
+        logoImageView.image = image
+        
+        
+        
+        if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
+            currentSnapData[gallerySectionIndex].values.append(.image(image))
+            
+            snapshot = Snapshot()
+            
+            snapshot.appendSections([.gallery])
+            snapshot.appendItems(currentSnapData[gallerySectionIndex].values, toSection: .gallery)
+            
+            
+            dataSource.apply(snapshot, animatingDifferences: true)
+            
+           }
+    }
+    
+}
