@@ -210,50 +210,25 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
 
 
 extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
-    ///Image multi picker
     func didTapSelectPhoto() {
-
-        let controller = DummyView()
-        controller.view.backgroundColor = .red
-        controller.view.fillSuperview()
-//        controller.delegate = self
-        // controller.postId = postId
+        
+        let height = CGFloat(153)
+        
+        let controller = GalleryPageSheetView()
+        controller.pageSheetHeight = height
         
         let nav = UINavigationController(rootViewController: controller)
-        
-//        nav.modalPresentationStyle = .popover
-////        controller.preferredContentSize = CGSize(width: 300, height: 400)
-//        if let popoverController = nav.popoverPresentationController {
-//              popoverController.delegate = self // Set the delegate if needed
-//            popoverController.sourceView = cell.elipsisContainerView // The view to anchor the popover
-//            popoverController.sourceRect = cell.elipsisContainerView.bounds // The rect in the source view to anchor the popover
-//            popoverController.permittedArrowDirections = .up// Specify the arrow direction
-//          }
-        
-//        nav.navigationBar.isUserInteractionEnabled = true
-        
-        
-        
-//        if let navigationBarSuperview = nav.navigationBar.superview {
-//                   let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handleNavigationBarPan(_:)))
-//                   navigationBarSuperview.addGestureRecognizer(gestureRecognizer)
-//            navigationBarSuperview.isUserInteractionEnabled = true
-//               }
         nav.modalPresentationStyle = .pageSheet
+        
         if let sheet = nav.sheetPresentationController {
             sheet.detents = [.custom(resolver: { _ in
-                return (self.bounds.height / 2.5)  +  100
+                return height
             })]
-
-//            sheet.detents = [.large()]
-//            sheet.delegate = controller
-//            sheet.prefersScrollingExpandsWhenScrolledToEdge = false
-//            sheet.selectedDetentIdentifier = .medium
             sheet.prefersGrabberVisible = true
             sheet.preferredCornerRadius = 20
         }
         
-        
         currentConfiguration.viewModel?.nagivagtion?.present(nav, animated: true, completion: nil)
     }
 }
+

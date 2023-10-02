@@ -152,6 +152,7 @@
 		C4E654532AC8FF58009E027F /* AddressPopupSearchViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654522AC8FF58009E027F /* AddressPopupSearchViewController+Types.swift */; };
 		C4E654552AC8FFBB009E027F /* SearchAddressListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654542AC8FFBB009E027F /* SearchAddressListCellConfiguration.swift */; };
 		C4E654572AC90024009E027F /* SearchAddressCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654562AC90024009E027F /* SearchAddressCellContentView.swift */; };
+		C4EF851E2ACB3CD20088A53A /* GalleryPageSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF851D2ACB3CD20088A53A /* GalleryPageSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -301,6 +302,7 @@
 		C4E654522AC8FF58009E027F /* AddressPopupSearchViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddressPopupSearchViewController+Types.swift"; sourceTree = "<group>"; };
 		C4E654542AC8FFBB009E027F /* SearchAddressListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4E654562AC90024009E027F /* SearchAddressCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressCellContentView.swift; sourceTree = "<group>"; };
+		C4EF851D2ACB3CD20088A53A /* GalleryPageSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPageSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -932,8 +934,6 @@
 		C4CF74DF2AB22A8C00D69185 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				C4E6544E2AC8FE2A009E027F /* AddressPopupSearch */,
-				C4C4950C2AC7A58C00CBBDE4 /* BreedPopupSearch */,
 				C43531512AB96A420070D7EE /* Error */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
 				C4CF74EF2AB2504300D69185 /* Login */,
@@ -968,6 +968,9 @@
 		C4CF74F42AB2599B00D69185 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C4C4950C2AC7A58C00CBBDE4 /* BreedPopupSearch */,
+				C4E6544E2AC8FE2A009E027F /* AddressPopupSearch */,
+				C4EF851C2ACB3C7D0088A53A /* GalleryPageSheet */,
 				C42616ED2AB2826D006925DB /* AuthButton */,
 				C42616EC2AB2825A006925DB /* AuthTextField */,
 				C42616D32AB274A1006925DB /* Factories */,
@@ -1052,6 +1055,14 @@
 				C4E654562AC90024009E027F /* SearchAddressCellContentView.swift */,
 			);
 			path = SearchAdress;
+			sourceTree = "<group>";
+		};
+		C4EF851C2ACB3C7D0088A53A /* GalleryPageSheet */ = {
+			isa = PBXGroup;
+			children = (
+				C4EF851D2ACB3CD20088A53A /* GalleryPageSheetView.swift */,
+			);
+			path = GalleryPageSheet;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1169,6 +1180,7 @@
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
 				C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */,
 				C4779BED2AC3A9FD00E3A16F /* AddPetCellViewModel.swift in Sources */,
+				C4EF851E2ACB3CD20088A53A /* GalleryPageSheetView.swift in Sources */,
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
 				C483EB9F2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
