@@ -64,16 +64,15 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
         translatesAutoresizingMaskIntoConstraints = true
         addSubview(titleLabel)
-        addSubview(containerView)
-        containerView.addSubview(collectionView)
+        addSubview(collectionView)
+        
         let sideInsets = CGFloat(40)
         titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: sideInsets)
         titleLabel.setHeight(14)
         
-        containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 30)
-        containerView.setDimensions(height: 90, width: 90)
-        collectionView.fillSuperview()
-        collectionView.contentInset = .init(top: 15, left: sideInsets, bottom: 15, right: 10)
+        collectionView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingBottom: 20)
+        collectionView.setHeight(90)
+        collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         collectionView.showsHorizontalScrollIndicator = false
         configureDataSource()
@@ -243,7 +242,7 @@ extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
         nav.modalPresentationStyle = .pageSheet
         if let sheet = nav.sheetPresentationController {
             sheet.detents = [.custom(resolver: { _ in
-                return (self.bounds.height / 2.5)  +  120
+                return (self.bounds.height / 2.5)  +  100
             })]
 
 //            sheet.detents = [.large()]

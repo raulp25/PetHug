@@ -136,8 +136,8 @@ extension NSCollectionLayoutSection {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
 
         let groupSize = NSCollectionLayoutSize(
-            widthDimension: .absolute(60),
-            heightDimension: .absolute(60)
+            widthDimension: .absolute(70),
+            heightDimension: .absolute(70)
         )
         
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -147,7 +147,7 @@ extension NSCollectionLayoutSection {
         
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = spacing
-        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 30)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 40, bottom: 0, trailing: 40)
         
         section.orthogonalScrollingBehavior = .continuous
         return section
