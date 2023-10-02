@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 final class NewPetGalleryCellContentView: UIView, UIContentView {
     
@@ -14,23 +15,10 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     private let titleLabel: UILabel = {
        let label = UILabel(withAutolayout: true)
-        label.text = "Galería mielda"
+        label.text = "Galería"
         label.textColor = .black.withAlphaComponent(0.8)
         label.font = UIFont.systemFont(ofSize: 12.3, weight: .bold)
         return label
-    }()
-    private lazy var logoImageView: UIImageView = {
-       let iv = UIImageView()
-        iv.image = UIImage(named: "dog3")
-        iv.tintColor = UIColor.systemPink.withAlphaComponent(0.7)
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapSingOut))
-//        iv.isUserInteractionEnabled = true
-//        iv.addGestureRecognizer(tapGesture)
-        return iv
     }()
     
     //MARK: - Private properties
@@ -77,21 +65,13 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
         translatesAutoresizingMaskIntoConstraints = true
         addSubview(titleLabel)
-        addSubview(logoImageView)
         addSubview(collectionView)
         
         let sideInsets = CGFloat(40)
         titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: sideInsets)
         titleLabel.setHeight(14)
         
-        
-        logoImageView.anchor(top: topAnchor, right: rightAnchor)
-        logoImageView.setDimensions(height: 60, width: 60)
-        
-            logoImageView.layer.borderColor = UIColor.green.cgColor
-            logoImageView.layer.borderWidth = 2
-        
-        collectionView.anchor(top: logoImageView.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingBottom: 20)
+        collectionView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingBottom: 20)
         collectionView.setHeight(90)
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
@@ -260,16 +240,62 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
         picker.sourceType = .camera
         picker.allowsEditing = true
         picker.delegate = self
-//        let nav = UINavigationController(rootViewController: picker)
         currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: {
             self.currentConfiguration.viewModel?.nagivagtion?.present(picker, animated: true)
         })
-//        nav.present(picker, animated: true)
     }
     
     func didTapGallery() {
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 8
+        
+        let phPicker = PHPickerViewController(configuration: config)
+        phPicker.delegate = self
+        currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: {
+            self.currentConfiguration.viewModel?.nagivagtion?.present(phPicker, animated: true)
+        })
+    }
+}
+
+extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: nil)
+        
+        guard let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) else { return }
+        
+        let dispatchGroup = DispatchGroup()
+        
+        snapshot = dataSource.snapshot()
+//        snapshot.appendSections([.gallery])
+        
+        for result in results {
+            dispatchGroup.enter()
+            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+                if let error = error {
+                    print("error transformando imagen: => \(error)")
+                }
+                
+                if let image = object as? UIImage {
+                    self?.currentSnapData[gallerySectionIndex].values.append(.image(image))
+                    self?.snapshot.appendItems((self?.currentSnapData[gallerySectionIndex].values)!, toSection: .gallery)
+                    dispatchGroup.leave()
+                } else {
+                    dispatchGroup.leave()
+                }
+                
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            
+            DispatchQueue.main.async {[weak self] in
+                self?.dataSource.apply((self?.snapshot)!, animatingDifferences: true)
+            }
+        }
         
     }
+    
+    
 }
 
 extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -281,10 +307,6 @@ extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavig
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
-        print("image despues de elgiir: => \(image)")
-        logoImageView.image = image
-        
-        
         
         if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
             currentSnapData[gallerySectionIndex].values.append(.image(image))

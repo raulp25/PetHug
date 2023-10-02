@@ -9,7 +9,8 @@ import Foundation
 
 
 
-//MARK: - DiffableDataSoruce
+//MARK: - DiffableDataSoruce===========================================================================
+
 ///Works but Had to leave this strategy since we are using classes si theres no need to toggle the liked property
 ///directly on the viewcontroller, instead we do it from the cell
 ///IT SEEMS THAT THERES AN APPLE BUG OR SOMETHING WAST WELL DESING WHEN USING STRUCTS
@@ -91,9 +92,43 @@ import Foundation
 //        self.dataSource.apply(snapshot, animatingDifferences: false)
 //    }
 
+
+///Upload single section
+//func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+//    picker.dismiss(animated: true, completion: nil)
+//
+//    guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
+//    print("image despues de elgiir: => \(image)")
+//    logoImageView.image = image
+//
+//
+//
+//    if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
+//        currentSnapData[gallerySectionIndex].values.append(.image(image))
+//
+//        snapshot = Snapshot()
+//
+//        snapshot.appendSections([.gallery])
+//        snapshot.appendItems(currentSnapData[gallerySectionIndex].values, toSection: .gallery)
+//
+//
+//        dataSource.apply(snapshot, animatingDifferences: true)
+//
+//       }
+//
+////           snapshot = Snapshot()
+////           snapshot.appendSections(currentSnapData.map { $0.key })
+////
+////           for datum in currentSnapData {
+////               snapshot.appendItems(datum.values, toSection: datum.key)
+////           }
+////           dataSource.apply(snapshot, animatingDifferences: true)
+//}
+
+
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-///UIBUTTON
+///UIBUTTON============================================================
 //set tag
 //button.tag = CurrentChecked.cat.rawValue
 
