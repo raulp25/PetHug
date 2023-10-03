@@ -240,13 +240,13 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         
         switch checked {
         case .dog:
-            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .dog(.goldenRetriever))
+            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .dog)
         case .cat:
-            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .cat(.persian))
+            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .cat)
         case .bird:
-            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .bird(.colibri))
+            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .bird)
         case .rabbit:
-            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .rabbit(.americanFuzzyLop))
+            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .rabbit)
         }
     }
 }

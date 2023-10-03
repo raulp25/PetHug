@@ -77,7 +77,8 @@ final class SearchAddressCellContentView: UIView, UIContentView {
     
     @objc func didTapCell() {
         print(": =>didtap cell objc ")
-        currentConfiguration.viewModel?.delegate?.didTapBreedSelector()
+        guard let state = currentConfiguration.viewModel?.state else { return }
+        currentConfiguration.viewModel?.delegate?.didTapCell(state: state)
     }
     
     // MARK: - Functions

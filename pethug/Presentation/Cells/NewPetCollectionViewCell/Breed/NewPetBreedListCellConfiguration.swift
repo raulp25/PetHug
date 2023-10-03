@@ -15,12 +15,12 @@ struct NewPetBreed: Hashable {
     static func == (lhs: NewPetBreed, rhs: NewPetBreed) -> Bool {
         (
             lhs.id == rhs.id &&
-            lhs.breeds == rhs.breeds
+            lhs.currentBreed == rhs.currentBreed
         )
     }
     var id = UUID().uuidString
     var currentBreed: String?
-    var breeds: Pet.PetType?
+    var petType: Pet.PetType?
     weak var delegate: NewPetBreedDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)

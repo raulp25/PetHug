@@ -77,7 +77,8 @@ final class SearchBreedCellContentView: UIView, UIContentView {
     
     @objc func didTapCell() {
         print(": =>didtap cell objc ")
-        currentConfiguration.viewModel?.delegate?.didTapBreedSelector()
+        guard let viewModel = currentConfiguration.viewModel else { return }
+        currentConfiguration.viewModel?.delegate?.didTapCell(breed:  viewModel.breed)
     }
     
     // MARK: - Functions

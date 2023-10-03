@@ -8,7 +8,8 @@
 import UIKit
 
 protocol AddressPopupSearchDelegate: AnyObject {
-    func didTapCancell()
+    func didSelectState(state: Pet.State)
+    func didTapCancellSearchAddress()
 }
 
 class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
@@ -53,7 +54,7 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     
 ///    Use generics 4 receiving any type array and yeah
 //    let data: T = [T]()
-    var delegate: PopupSearchDelegate?
+    var delegate: AddressPopupSearchDelegate?
     var km = false
    
     //MARK: - Lifecycle
@@ -81,7 +82,7 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     //MARK: - Private actions
     @objc func didTapCancell() {
         print(": => didTapCancell from popup")
-        delegate?.didTapCancell()
+        delegate?.didTapCancellSearchAddress()
     }
     
     //MARK: - Setup
@@ -90,7 +91,7 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = true
-        searchController.searchBar.placeholder = "Buscar por raza"
+        searchController.searchBar.placeholder = "Buscar por estado"
         searchController.searchBar.showsCancelButton = false
         navigationItem.searchController = searchController
         definesPresentationContext = false
@@ -105,9 +106,9 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
         collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: cancelButton.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 23, paddingRight: 23)
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
-        
+        collectionView.layer.borderColor = customRGBColor(red: 220, green: 220, blue: 220).cgColor
+        collectionView.layer.borderWidth = 1
         cancelButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, paddingLeft: 23, paddingBottom: 5, paddingRight: 23)
     }
     
@@ -132,11 +133,11 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
             
             let sideInsets = CGFloat(0)
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
-            let listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators()
+            var listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators(separatorColor: customRGBColor(red: 225, green: 225, blue: 225))
 //            listConfiguration.headerMode = .supplementary
             
             switch section {
-            case .title:
+            case .state:
                 print("dogs section")
 //                return .createPetsLayout()
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
@@ -164,13 +165,14 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
         let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchAddressListCellConfiguration>, SearchAddress> { cell, _, model in
             //            cell.configure(with: model, delegate: self)
             cell.viewModel = model
+            cell.viewModel?.delegate = self
         }
         
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
-            case let .title(address):
+            case let .state(address):
                 return collectionView.dequeueConfiguredReusableCell(using: titleViewCellRegistration, for: indexPath, item: address)
             }
             
@@ -184,67 +186,31 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
             
             switch section {
-            case .title:
+            case .state:
                 return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
             }
         }
         
     }
-    func generatePetBreeds(total: Int) -> [Item] {
-        var addresses = [Item]()
-//        for number in 0...total {
-//            let k = Int(arc4random_uniform(6))
-//            addresses.append(.title(.init(address: "Queretaro")))
-//        }
-//
-        let estadosMexicanos = [
-            "Aguascalientes",
-            "Baja California",
-            "Baja California Sur",
-            "Campeche",
-            "Chiapas",
-            "Chihuahua",
-            "Coahuila",
-            "Colima",
-            "Durango",
-            "Guanajuato",
-            "Guerrero",
-            "Hidalgo",
-            "Jalisco",
-            "Estado de México",
-            "Michoacán",
-            "Morelos",
-            "Nayarit",
-            "Nuevo León",
-            "Oaxaca",
-            "Puebla",
-            "Querétaro",
-            "Quintana Roo",
-            "San Luis Potosí",
-            "Sinaloa",
-            "Sonora",
-            "Tabasco",
-            "Tamaulipas",
-            "Tlaxcala",
-            "Veracruz",
-            "Yucatán",
-            "Zacatecas"
-        ]
+    
+    
+    func generateStates() -> [Item] {
+        var searchAddresses = [Item]()
 
-
-        for estado in estadosMexicanos {
-            addresses.append(.title(.init(address: estado)))
+        for state in Pet.State.allCases {
+            let searchAddress = SearchAddress(address: state.rawValue)
+            searchAddress.state = state
+            searchAddresses.append(.state(searchAddress))
         }
-
         
-        return addresses
+        return searchAddresses
     }
     
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
 //        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
         currentSnapData  = [
-            .init(key: .title, values: generatePetBreeds(total: 20))
+            .init(key: .state, values: generateStates())
             ]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
@@ -276,80 +242,38 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
 //MARK: -  UISearchController updateSearchResults
 extension AddressPopupSearch {
     func updateSearchResults(for searchController: UISearchController) {
-//        print("DEGUB: FN UPDATE SEARCH RESULTS: => ")
-        
-        guard let searchText = searchController.searchBar.text?.lowercased() else { return }
-        
-        if !searchText.isEmpty {
-            km = true
+        if let stateSectionIndex = currentSnapData.firstIndex(where: { $0.key == .state }) {
+            guard let searchText = searchController.searchBar.text else { return }
+            
+            var items: [Item] = []
+            var snapshot = Snapshot()
+            
+            if searchText.isEmpty {
+                items = currentSnapData[stateSectionIndex].values
+            }
+            
+            if !searchText.isEmpty {
+                items = currentSnapData[stateSectionIndex].values.filter { item in
+                    switch item {
+                    case .state(let state):
+                        return state.address!.lowercased().contains(searchText.lowercased())
+                    }
+                }
+            }
+            
+            
+            snapshot.appendSections([.state])
+            snapshot.appendItems(items, toSection: .state)
+            dataSource.apply(snapshot, animatingDifferences: true)
         }
-        
-        if searchText.isEmpty && km == true {
-            km = false
-//            filteredUsers = []
-//            tableView.reloadData()
-            return
-        }
-        
-        if km == true {
-//            filteredUsers = users.filter({ $0.username.lowercased().contains(searchText) || $0.fullname.lowercased().contains(searchText) })
-//
-//            tableView.reloadData()
-        }
-        
-        
-    }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-//        view.addSubview(tableView)
-//        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor)
-//        tableView.setWidth(view.frame.width - 15)ø
-        
-        
-//        collectionView.removeFromSuperview()
-    }
-    
-}
-
-
-//extension PopupSearch: UISearchBarDelegate {
-//
-//}
-
-//MARK: -  UITableViewDataSource
-//extension SearchController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-////        return inSearchMode ? filteredUsers.count : users.count
-//        return 1
-//    }
-////
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! UserCell
-//
-//        cell.userViewModel = UserCellViewModel(user: inSearchMode ? filteredUsers[indexPath.row] : users[indexPath.row])
-//
-//
-//}
-
-
-extension AddressPopupSearch: UICollectionViewDelegate {
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //        print(":ejecuta didselect con metodo normal => ")
-    //        collectionView.deselectItem(at: indexPath, animated: true)
-    //    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
-        
-        
-//        print(":ejecuta didselect con datasource => \(counter)")
-//        collectionView.deselectItem(at: indexPath, animated: true)
     }
     
     
 }
-        
 
 
+extension AddressPopupSearch: SearchAddressDelegate {
+    func didTapCell(state: Pet.State) {
+        delegate?.didSelectState(state: state)
+    }
+}

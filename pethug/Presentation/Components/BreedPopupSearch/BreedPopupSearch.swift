@@ -9,6 +9,7 @@
 import UIKit
 
 protocol PopupSearchDelegate: AnyObject {
+    func didSelectBreed(breed: String)
     func didTapCancell()
 }
 
@@ -55,6 +56,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
 ///    Use generics 4 receiving any type array and yeah
 //    let data: T = [T]()
     var delegate: PopupSearchDelegate?
+    var breedsForType: Pet.PetType?
     var km = false
    
     //MARK: - Lifecycle
@@ -106,10 +108,8 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: cancelButton.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 23, paddingRight: 23)
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
-//        collectionView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
-        collectionView.layer.borderColor = customRGBColor(red: 55, green: 239, blue: 143).cgColor
+        collectionView.layer.borderColor = customRGBColor(red: 220, green: 220, blue: 220).cgColor
         collectionView.layer.borderWidth = 1
         cancelButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, paddingLeft: 23, paddingBottom: 5, paddingRight: 23)
     }
@@ -135,8 +135,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
             
             let sideInsets = CGFloat(0)
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
-            let listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators()
-//            listConfiguration.headerMode = .supplementary
+            let listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators(separatorColor: customRGBColor(red: 225, green: 225, blue: 225))
             
             switch section {
             case .breed:
@@ -167,6 +166,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchBreedListCellConfiguration>, SearchBreed> { cell, _, model in
             //            cell.configure(with: model, delegate: self)
             cell.viewModel = model
+            cell.viewModel?.delegate = self
         }
         
         
@@ -446,6 +446,11 @@ extension BreedPopupSearch {
     }
 }
     
+extension BreedPopupSearch: SearchBreedDelegate {
+    func didTapCell(breed: String) {
+        delegate?.didSelectBreed(breed: breed)
+    }
 
+}
         
 

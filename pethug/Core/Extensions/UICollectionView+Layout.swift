@@ -9,7 +9,7 @@ import UIKit
 
 
 extension UICollectionLayoutListConfiguration {
-    static func createBaseListConfigWithSeparators() -> UICollectionLayoutListConfiguration {
+    static func createBaseListConfigWithSeparators(separatorColor: UIColor? = nil) -> UICollectionLayoutListConfiguration {
 //        Configura el tipo de agrupamiento de las celdas en cada section y tambien las lineas de separacion
         var listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
         
@@ -22,7 +22,7 @@ extension UICollectionLayoutListConfiguration {
                 configuration.bottomSeparatorInsets.leading = 0
                 configuration.topSeparatorInsets.trailing = 0
                 configuration.bottomSeparatorInsets.trailing = 0
-                configuration.color = .separator.withAlphaComponent(0.5)
+                configuration.color = separatorColor != nil ? separatorColor! : .separator.withAlphaComponent(0.5)
                 return configuration
             }
         } else {

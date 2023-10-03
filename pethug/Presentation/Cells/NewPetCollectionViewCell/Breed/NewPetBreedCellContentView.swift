@@ -97,9 +97,12 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
 //
         guard let item = currentConfiguration.viewModel else { return }
-        containerView.isUserInteractionEnabled = item.breeds != nil ? true : false
+        containerView.isUserInteractionEnabled = item.petType != nil ? true : false
 //        breedLabel.text = item.breed != nil ? "Eliga el tipo de animal para continuar" : "Dachshund"
-          breedLabel.text = item.breeds == nil ? "Eliga un tipo de animal para continuar" : "Dachshund"
+        breedLabel.text = item.petType == nil ?
+            "Eliga un tipo de animal para continuar" :
+                item.currentBreed != nil ? item.currentBreed :
+                    "Elige una raza"
 //        nameLabel.text = item.name
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
@@ -127,7 +130,7 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
         chevronImageView.anchor(right: containerView.rightAnchor, paddingRight: 5)
         
         breedLabel.centerY(inView: containerView)
-        breedLabel.anchor(left: containerView.leftAnchor, right: chevronImageView.leftAnchor, paddingLeft: 5)
+        breedLabel.anchor(left: containerView.leftAnchor, right: chevronImageView.leftAnchor, paddingLeft: 10)
     }
     
     

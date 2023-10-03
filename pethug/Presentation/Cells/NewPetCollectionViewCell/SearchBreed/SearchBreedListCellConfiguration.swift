@@ -8,8 +8,7 @@
 import UIKit
 
 protocol SearchBreedDelegate: AnyObject {
-//    func textViewdDidChange(text: String)
-    func didTapBreedSelector()
+    func didTapCell(breed: String)
 }
 
 class SearchBreed: Hashable {

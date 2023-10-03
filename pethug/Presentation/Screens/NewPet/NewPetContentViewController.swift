@@ -255,7 +255,8 @@ final class NewPetContentViewController: UIViewController {
         let newPetBreedViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetBreedListCellConfiguration>, NewPetBreed> { cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.breeds = self.viewModel.breedsState
+            cell.viewModel?.currentBreed = self.viewModel.breedsState
+            cell.viewModel?.petType = self.viewModel.typeState
         }
         
         let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGenderListCellConfiguration>, NewPetGender> { cell, _, model in
@@ -271,6 +272,7 @@ final class NewPetContentViewController: UIViewController {
         let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
+            cell.viewModel?.address = self.viewModel.addressState
         }
         
         let newPetInfoViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetInfoListCellConfiguration>, NewPetInfo> { cell, _, model in
@@ -288,11 +290,11 @@ final class NewPetContentViewController: UIViewController {
         
         let galleryMockVM = NewPetGallery(images: [])
         
-        let typeMockVM = NewPetType(type: .dog(.goldenRetriever))
+        let typeMockVM = NewPetType(type: .dog)
         
         let breedMockVM = NewPetBreed(currentBreed: "Golden Retriever")
         
-        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imageUrl: "dd", type: .dog(.goldenRetriever), address: .QuintanaRoo, isLiked: true)
+        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imageUrl: "dd", type: .dog, address: .QuintanaRoo, isLiked: true)
         switch (typeMockVM.type, pet1.type) {
         case (.dog, .dog):
             print("son iguales qwe DOG: =>")
@@ -316,7 +318,7 @@ final class NewPetContentViewController: UIViewController {
         
         let sizeMockVM = NewPetSize()
         
-        let addressMockVM = NewPetAddress(address: .Queretaro)
+        let addressMockVM = NewPetAddress(address: nil)
         
         let infoMockVM = NewPetInfo(info: nil)
         
@@ -433,7 +435,7 @@ extension NewPetContentViewController: NewPetGalleryDelegate {
 extension NewPetContentViewController: NewPetTypeDelegate {
     func typeDidChange(type: Pet.PetType) {
         viewModel.typeState = type
-        viewModel.breedsState = type
+        viewModel.breedsState = nil
         
         var snapshot = dataSource.snapshot()
         snapshot.reloadSections([.breed])
@@ -487,6 +489,7 @@ extension NewPetContentViewController: NewPetBreedDelegate {
     func didTapBreedSelector() {
         let searchController = BreedPopupSearch()
         searchController.delegate = self
+        searchController.breedsForType = viewModel.typeState
         let dummyNavigator = UINavigationController(rootViewController: searchController)
         dummyView.add(dummyNavigator)
         dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
@@ -519,8 +522,64 @@ extension NewPetContentViewController: NewPetBreedDelegate {
     }
 }
 
-extension NewPetContentViewController: PopupSearchDelegate, AddressPopupSearchDelegate {
+//MARK: - Breed search Delegate
+extension NewPetContentViewController: PopupSearchDelegate {
+    
+    func didSelectBreed(breed: String) {
+        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
+            self.dummyView.view.alpha = 0
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.dummyView.remove()
+                self.collectionView.isUserInteractionEnabled = true
+                self.view.layoutIfNeeded()
+            })
+        }
+        
+        viewModel.breedsState = breed
+        
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections([.breed])
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
     func didTapCancell() {
+        print(":didTapCancell from parent => ")
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
+            self.dummyView.view.alpha = 0
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
+                self.dummyView.remove()
+                self.collectionView.isUserInteractionEnabled = true
+                self.view.layoutIfNeeded()
+            })
+        }
+        
+    }
+}
+
+
+//MARK: - Address search Delegate
+extension NewPetContentViewController: AddressPopupSearchDelegate {
+    func didSelectState(state: Pet.State) {
+        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
+            self.dummyView.view.alpha = 0
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+                self.dummyView.remove()
+                self.collectionView.isUserInteractionEnabled = true
+                self.view.layoutIfNeeded()
+            })
+        }
+        
+        viewModel.addressState = state
+        
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections([.address])
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+    
+    func didTapCancellSearchAddress() {
         print(":didTapCancell from parent => ")
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
             self.dummyView.view.alpha = 0

@@ -75,7 +75,7 @@ final class PetsViewModel {
     
     
     private func createMockPet() {
-        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: .female, size: .large, breed: "labrador", imageUrl: "km", type: .dog(.goldenRetriever), address: .NuevoLeon, isLiked: false)
+        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: .female, size: .large, breed: "labrador", imageUrl: "km", type: .dog, address: .NuevoLeon, isLiked: false)
         let db = Firestore.firestore()
         Task {
             do {

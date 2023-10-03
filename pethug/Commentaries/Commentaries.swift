@@ -8,8 +8,8 @@
 import Foundation
 
 
-
-//MARK: - DiffableDataSoruce===========================================================================
+///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//MARK: - DiffableDataSoruce
 
 ///Works but Had to leave this strategy since we are using classes si theres no need to toggle the liked property
 ///directly on the viewcontroller, instead we do it from the cell
@@ -298,3 +298,56 @@ import Foundation
 //}
 //}
 
+///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///GENERAL
+
+//Append states from case and init
+///    func generatePetBreeds(total: Int) -> [Item] {
+//var addresses = [Item]()
+////        for number in 0...total {
+////            let k = Int(arc4random_uniform(6))
+////            addresses.append(.title(.init(address: "Queretaro")))
+////        }
+////
+//let estadosMexicanos = [
+//    "Aguascalientes",
+//    "Baja California",
+//    "Baja California Sur",
+//    "Campeche",
+//    "Chiapas",
+//    "Chihuahua",
+//    "Coahuila",
+//    "Colima",
+//    "Durango",
+//    "Guanajuato",
+//    "Guerrero",
+//    "Hidalgo",
+//    "Jalisco",
+//    "Estado de México",
+//    "Michoacán",
+//    "Morelos",
+//    "Nayarit",
+//    "Nuevo León",
+//    "Oaxaca",
+//    "Puebla",
+//    "Querétaro",
+//    "Quintana Roo",
+//    "San Luis Potosí",
+//    "Sinaloa",
+//    "Sonora",
+//    "Tabasco",
+//    "Tamaulipas",
+//    "Tlaxcala",
+//    "Veracruz",
+//    "Yucatán",
+//    "Zacatecas"
+//]
+//
+//
+//for estado in estadosMexicanos {
+//    addresses.append(.title(.init(address: estado)))
+//}
+//
+//
+//return addresses
+//}

@@ -19,7 +19,7 @@ class NewPetViewModel {
     @Published var nameState: String? = nil
     @Published var galleryState: [UIImage] = []
     @Published var typeState: Pet.PetType? = nil
-    @Published var breedsState: Pet.PetType? = nil
+    @Published var breedsState: String? = nil
     @Published var genderState: Pet.Gender? = nil
     @Published var sizeState: Pet.Size? = nil
     @Published var addressState: Pet.State? = nil
@@ -84,7 +84,7 @@ class NewPetViewModel {
         name: String?,
         gallery: [UIImage],
         type: Pet.PetType?,
-        breeds: Pet.PetType?,
+        breeds: String?,
         gender: Pet.Gender?,
         size: Pet.Size?,
         address: Pet.State?,

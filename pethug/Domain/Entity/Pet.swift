@@ -53,28 +53,28 @@ class Pet: Codable, Hashable {
 }
 
 extension Pet {
-    enum PetType: Codable, Hashable {
-        case dog(DogBreed)
-        case cat(CatBreed)
-        case bird(BirdBreed)
-        case rabbit(RabbitBreed)
+    enum PetType: String, Codable, Hashable {
+        case dog
+        case cat
+        case bird
+        case rabbit
     }
     
-    enum Gender: Codable, Hashable {
+    enum Gender: String, Codable, Hashable {
         case male
         case female
     }
     
-    enum Size: Codable, Hashable {
+    enum Size: String, Codable, Hashable {
         case small
         case medium
         case large
     }
     
-    enum State: String, Codable, Hashable {
+    enum State: String, Codable, Hashable, CaseIterable {
         case Aguascalientes
-        case BajaCalifornia
-        case BajaCaliforniaSur
+        case BajaCalifornia = "Baja California"
+        case BajaCaliforniaSur = "Baja California Sur"
         case Campeche
         case Chiapas
         case Chihuahua
@@ -90,20 +90,20 @@ extension Pet {
         case Michoacan
         case Morelos
         case Nayarit
-        case NuevoLeon
+        case NuevoLeon = "Nuevo Leon"
         case Oaxaca
         case Puebla
         case Queretaro
-        case QuintanaRoo
-        case SanLuisPotosi
+        case QuintanaRoo = "Quintana Roo"
+        case SanLuisPotosi = "San Luis Potosi"
         case Sinaloa
-        case Sonora
-        case Tabasco
-        case Tamaulipas
-        case Tlaxcala
-        case Veracruz
-        case Yucatan
-        case Zacatecas
+        case Sonora 
+        case Tabasco 
+        case Tamaulipas 
+        case Tlaxcala 
+        case Veracruz 
+        case Yucatan 
+        case Zacatecas 
     }
 }
 

@@ -70,7 +70,7 @@ final class AddPetContentViewController: UIViewController {
                 size: .medium,
                 breed: "Girl",
                 imageUrl: "d",
-                type: .cat(.persian),
+                type: .cat,
                 address: .BajaCaliforniaSur,
                 isLiked: k < 3 ? false : true
             )))

@@ -9,7 +9,7 @@ import UIKit
 
 protocol SearchAddressDelegate: AnyObject {
 //    func textViewdDidChange(text: String)
-    func didTapBreedSelector()
+    func didTapCell(state: Pet.State)
 }
 
 

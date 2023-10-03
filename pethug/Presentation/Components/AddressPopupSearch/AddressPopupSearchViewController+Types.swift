@@ -13,11 +13,11 @@ extension AddressPopupSearch {
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
     
     enum Section: Int {
-        case title
+        case state
     }
     
     enum Item: Hashable {
-        case title(SearchAddress)
+        case state(SearchAddress)
     }
     
     struct SnapData {
@@ -31,7 +31,8 @@ class SearchAddress: Hashable {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var address: String
+    var state: Pet.State?
+    var address: String?
     weak var delegate: SearchAddressDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(address)

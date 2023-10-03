@@ -97,7 +97,7 @@ final class NewPetAddressCellContentView: UIView, UIContentView {
 //
         guard let item = currentConfiguration.viewModel else { return }
 //        nameLabel.text = item.name
-        addressLabel.text = item.address?.rawValue ?? "Cancun"
+        addressLabel.text = item.address?.rawValue ?? "Donde te ubicas?"
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
 //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
 //
@@ -122,7 +122,7 @@ final class NewPetAddressCellContentView: UIView, UIContentView {
         chevronImageView.anchor(right: containerView.rightAnchor, paddingRight: 5)
         chevronImageView.setDimensions(height: 20, width: 20)
         addressLabel.centerY(inView: containerView)
-        addressLabel.anchor(left: containerView.leftAnchor, right: chevronImageView.leftAnchor, paddingLeft: 5)
+        addressLabel.anchor(left: containerView.leftAnchor, right: chevronImageView.leftAnchor, paddingLeft: 10)
     }
     
     
