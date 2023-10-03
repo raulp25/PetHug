@@ -108,7 +108,9 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
-        
+//        collectionView.layer.borderColor = UIColor.lightGray.withAlphaComponent(0.5).cgColor
+        collectionView.layer.borderColor = customRGBColor(red: 55, green: 239, blue: 143).cgColor
+        collectionView.layer.borderWidth = 1
         cancelButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, paddingLeft: 23, paddingBottom: 5, paddingRight: 23)
     }
     
@@ -137,7 +139,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
 //            listConfiguration.headerMode = .supplementary
             
             switch section {
-            case .title:
+            case .breed:
                 print("dogs section")
 //                return .createPetsLayout()
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
@@ -174,7 +176,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
-            case let .title(breed):
+            case let .breed(breed):
                 return collectionView.dequeueConfiguredReusableCell(using: titleViewCellRegistration, for: indexPath, item: breed)
             }
             
@@ -188,7 +190,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
             let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
             
             switch section {
-            case .title:
+            case .breed:
                 return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
             }
         }
@@ -375,7 +377,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         ]
 
         for breed in dog_breeds {
-            breeds.append(.title(.init(breed: breed)))
+            breeds.append(.breed(.init(breed: breed)))
         }
         
         return breeds
@@ -385,7 +387,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     private func updateSnapShot(animated: Bool = true) {
 //        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
         currentSnapData  = [
-            .init(key: .title, values: generatePetBreeds(total: 20))
+            .init(key: .breed, values: generatePetBreeds(total: 20))
             ]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
@@ -417,79 +419,33 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
 //MARK: -  UISearchController updateSearchResults
 extension BreedPopupSearch {
     func updateSearchResults(for searchController: UISearchController) {
-//        print("DEGUB: FN UPDATE SEARCH RESULTS: => ")
-        
-        guard let searchText = searchController.searchBar.text?.lowercased() else { return }
-        
-        if !searchText.isEmpty {
-            km = true
+        if let breedSectionIndex = currentSnapData.firstIndex(where: { $0.key == .breed }) {
+            guard let searchText = searchController.searchBar.text else { return }
+            
+            var items: [Item] = []
+            var snapshot = Snapshot()
+            
+            if searchText.isEmpty {
+                items = currentSnapData[breedSectionIndex].values
+            }
+            
+            if !searchText.isEmpty {
+                items = currentSnapData[breedSectionIndex].values.filter { item in
+                    switch item {
+                    case .breed(let breed):
+                        return breed.breed.lowercased().contains(searchText.lowercased())
+                    }
+                }
+            }
+            
+            
+            snapshot.appendSections([.breed])
+            snapshot.appendItems(items, toSection: .breed)
+            dataSource.apply(snapshot, animatingDifferences: true)
         }
-        
-        if searchText.isEmpty && km == true {
-            km = false
-//            filteredUsers = []
-//            tableView.reloadData()
-            return
-        }
-        
-        if km == true {
-//            filteredUsers = users.filter({ $0.username.lowercased().contains(searchText) || $0.fullname.lowercased().contains(searchText) })
-//
-//            tableView.reloadData()
-        }
-        
-        
     }
-    
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-//        view.addSubview(tableView)
-//        tableView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor)
-//        tableView.setWidth(view.frame.width - 15)ø
-        
-        
-//        collectionView.removeFromSuperview()
-    }
-    
 }
-
-
-//extension PopupSearch: UISearchBarDelegate {
-//
-//}
-
-//MARK: -  UITableViewDataSource
-//extension SearchController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-////        return inSearchMode ? filteredUsers.count : users.count
-//        return 1
-//    }
-////
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//
-//        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath) as! UserCell
-//
-//        cell.userViewModel = UserCellViewModel(user: inSearchMode ? filteredUsers[indexPath.row] : users[indexPath.row])
-//
-//
-//}
-
-
-extension BreedPopupSearch: UICollectionViewDelegate {
-    //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    //        print(":ejecuta didselect con metodo normal => ")
-    //        collectionView.deselectItem(at: indexPath, animated: true)
-    //    }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
-        
-        
-//        print(":ejecuta didselect con datasource => \(counter)")
-//        collectionView.deselectItem(at: indexPath, animated: true)
-    }
-    
-    
-}
+
         
 

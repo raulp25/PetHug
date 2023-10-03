@@ -210,7 +210,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
 
 }
 
-///MARK: - Camera / Gallery select PageSheet
+///MARK: - Camera / Gallery PageSheet
 extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
     func didTapSelectPhoto() {
         
@@ -235,7 +235,7 @@ extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
     }
 }
 
-///MARK: - Did select camera / gallery Delegate
+///MARK: - Did select camera / gallery action Delegate
 extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
     func didTapCamera() {
         let picker = UIImagePickerController()
@@ -260,7 +260,7 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
 }
 
 
-///MARK: - Delete / Edit image select PageSheet
+///MARK: - Delete / Edit image PageSheet
 extension NewPetGalleryCellContentView: GalleryCellDelegate {
     func didTapCell(_ cell: Item) {
         guard let item = dataSource.indexPath(for: cell) else { return }
@@ -287,13 +287,22 @@ extension NewPetGalleryCellContentView: GalleryCellDelegate {
     }
 }
 
-///MARK: - Did select delete / edit image Delegate
+///MARK: - Did select delete / edit image action Delegate
 extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
     func didTapDelete(cell indexPath: IndexPath) {
         if let item = dataSource.itemIdentifier(for: indexPath) {
-            var snapshot = dataSource.snapshot()
-            snapshot.deleteItems([item])
-            dataSource.apply(snapshot, animatingDifferences: false)
+            
+            if let sectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }),
+               
+               let itemIndex = currentSnapData[sectionIndex].values.firstIndex(where: { $0 == item }) {
+                
+                // Remove the item from currentSnapData
+                currentSnapData[sectionIndex].values.remove(at: itemIndex)
+                
+                var snapshot = dataSource.snapshot()
+                snapshot.deleteItems([item])
+                dataSource.apply(snapshot, animatingDifferences: false)
+            }
         }
     }
     
@@ -303,7 +312,7 @@ extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
 }
 
 
-//MARK: - Picker Camera
+//MARK: - Picker Camera Delegate
 extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
@@ -325,7 +334,7 @@ extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavig
     }
 }
 
-///MARK: - Picker Gallery
+///MARK: - PHPicker Gallery Delegate
 extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: nil)

@@ -13,11 +13,11 @@ extension BreedPopupSearch {
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
     
     enum Section: Int {
-        case title
+        case breed
     }
     
     enum Item: Hashable {
-        case title(SearchBreed)
+        case breed(SearchBreed)
     }
     
     struct SnapData {
