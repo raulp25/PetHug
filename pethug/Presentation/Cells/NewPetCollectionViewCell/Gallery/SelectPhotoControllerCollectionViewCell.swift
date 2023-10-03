@@ -22,10 +22,6 @@ final class SelectPhotoControllerCollectionViewCell: UICollectionViewCell {
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIcon))
-        iv.isUserInteractionEnabled = true
-        iv.addGestureRecognizer(tapGesture)
         return iv
     }()
     
@@ -39,6 +35,9 @@ final class SelectPhotoControllerCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIcon))
+        addGestureRecognizer(tapGesture)
         
         let dummyView = UIView()
         dummyView.backgroundColor = customRGBColor(red: 238, green: 238, blue: 238)

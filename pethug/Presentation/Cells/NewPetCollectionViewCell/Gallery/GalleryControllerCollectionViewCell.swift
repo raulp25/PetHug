@@ -7,9 +7,9 @@
 
 import UIKit
 
-//protocol GalleryCellDelegate: AnyObject {
-//    func didTapCell(_ id: String)
-//}
+protocol GalleryCellDelegate: AnyObject {
+    func didTapCell(_ cell: NewPetGalleryCellContentView.Item)
+}
 ///Did tap row collectionview built in method
 final class GalleryControllerCollectionViewCell: UICollectionViewCell {
     
@@ -49,7 +49,8 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
     //MARK: - Private properties
 //    private weak var delegate: GalleryCellDelegate?
     //MARK: - Internal properties
-    
+    weak var delegate: GalleryCellDelegate?
+    private var image: UIImage? = nil
     //MARK: - LifeCycle
     func configure(with image: UIImage) {
 //        self.delegate = delegate
@@ -58,8 +59,9 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-        let dummyView = UIView()
-        dummyView.backgroundColor = .systemPink.withAlphaComponent(0.5)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
+        addGestureRecognizer(tapGesture)
         
         addSubview(petImage)
         addSubview(editImageContainer)
@@ -76,10 +78,12 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
         
     }
     
+    
     private var work: DispatchWorkItem?
     
     private func configureCellUI(with image: UIImage) {
         petImage.image = image
+        self.image = image
     }
     
     override func prepareForReuse() {
@@ -89,6 +93,11 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Private actions
+    @objc private func didTapCell() {
+        delegate?.didTapCell(.image(image!))
     }
 
 }

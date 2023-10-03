@@ -153,6 +153,7 @@
 		C4E654552AC8FFBB009E027F /* SearchAddressListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654542AC8FFBB009E027F /* SearchAddressListCellConfiguration.swift */; };
 		C4E654572AC90024009E027F /* SearchAddressCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654562AC90024009E027F /* SearchAddressCellContentView.swift */; };
 		C4EF851E2ACB3CD20088A53A /* GalleryPageSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF851D2ACB3CD20088A53A /* GalleryPageSheetView.swift */; };
+		C4EF85232ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF85222ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -303,6 +304,7 @@
 		C4E654542AC8FFBB009E027F /* SearchAddressListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4E654562AC90024009E027F /* SearchAddressCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressCellContentView.swift; sourceTree = "<group>"; };
 		C4EF851D2ACB3CD20088A53A /* GalleryPageSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPageSheetView.swift; sourceTree = "<group>"; };
+		C4EF85222ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGalleryImagePageSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -971,6 +973,7 @@
 				C4C4950C2AC7A58C00CBBDE4 /* BreedPopupSearch */,
 				C4E6544E2AC8FE2A009E027F /* AddressPopupSearch */,
 				C4EF851C2ACB3C7D0088A53A /* GalleryPageSheet */,
+				C4EF85212ACB99A40088A53A /* EditGalleryImagePageSheet */,
 				C42616ED2AB2826D006925DB /* AuthButton */,
 				C42616EC2AB2825A006925DB /* AuthTextField */,
 				C42616D32AB274A1006925DB /* Factories */,
@@ -1063,6 +1066,14 @@
 				C4EF851D2ACB3CD20088A53A /* GalleryPageSheetView.swift */,
 			);
 			path = GalleryPageSheet;
+			sourceTree = "<group>";
+		};
+		C4EF85212ACB99A40088A53A /* EditGalleryImagePageSheet */ = {
+			isa = PBXGroup;
+			children = (
+				C4EF85222ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift */,
+			);
+			path = EditGalleryImagePageSheet;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1233,6 +1244,7 @@
 				C467578D2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift in Sources */,
 				C4CF74FC2AB25AF300D69185 /* AuthTextField+States.swift in Sources */,
 				C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */,
+				C4EF85232ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift in Sources */,
 				C42D3D992AB65EB100EBA1B7 /* InAppCoordinator.swift in Sources */,
 				C4CF74DE2AB2291600D69185 /* StateCoordinatorProtocol.swift in Sources */,
 				C448201F2AB5401600E72BD2 /* UserRepository.swift in Sources */,

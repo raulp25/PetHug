@@ -1,5 +1,5 @@
 //
-//  CameraPageSheetViewController.swift
+//  EditGalleryImagePageSheetView.swift
 //  pethug
 //
 //  Created by Raul Pena on 02/10/23.
@@ -7,12 +7,12 @@
 
 import UIKit
 
-protocol GalleryPageSheetDelegate: AnyObject {
-    func didTapCamera()
-    func didTapGallery()
+protocol EditGalleryImagePageSheetDelegate: AnyObject {
+    func didTapDelete(cell indexPath: IndexPath)
+    func didTapEdit()
 }
 
-final class GalleryPageSheetView: UIViewController {
+final class EditGalleryImagePageSheetView: UIViewController {
     
     //MARK: - Private components
     private let titleLabel: UILabel = {
@@ -24,7 +24,7 @@ final class GalleryPageSheetView: UIViewController {
     }()
     
     private lazy var hStackContainer: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [hStackCamera, hStackGallery])
+        let stack = UIStackView(arrangedSubviews: [hStackDelete, hStackEdit])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .fillEqually
@@ -33,22 +33,22 @@ final class GalleryPageSheetView: UIViewController {
         return stack
     }()
     
-    private lazy var hStackCamera: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [cameraImage, cameraLabel])
+    private lazy var hStackDelete: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [deleteImage, deleteLabel])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
         stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCamera))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapDelete))
         stack.isUserInteractionEnabled = true
         stack.addGestureRecognizer(tapGesture)
         return stack
     }()
     
-    private let cameraImage: UIImageView = {
-        let iv = UIImageView(image: UIImage(systemName: "camera.aperture"))
+    private let deleteImage: UIImageView = {
+        let iv = UIImageView(image: UIImage(systemName: "trash"))
         iv.backgroundColor = .clear
         iv.tintColor = .orange
         iv.clipsToBounds = true
@@ -57,30 +57,30 @@ final class GalleryPageSheetView: UIViewController {
         return iv
     }()
     
-    private let cameraLabel: UILabel = {
+    private let deleteLabel: UILabel = {
         let label = UILabel()
-        label.text = "Camara"
+        label.text = "Eliminar"
         label.font = UIFont.systemFont(ofSize: 15.3, weight: .medium)
         label.textColor = .black.withAlphaComponent(0.74)
         return label
     }()
     
-    private lazy var hStackGallery: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [galleryImage, galleryLabel])
+    private lazy var hStackEdit: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [editImage, editLabel])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
         stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapGallery))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapEdit))
         stack.isUserInteractionEnabled = true
         stack.addGestureRecognizer(tapGesture)
         return stack
     }()
     
-    private let galleryImage: UIImageView = {
-        let iv = UIImageView(image: UIImage(systemName: "photo"))
+    private let editImage: UIImageView = {
+        let iv = UIImageView(image: UIImage(systemName: "pencil.and.outline"))
         iv.backgroundColor = .clear
         iv.tintColor = .orange
         iv.clipsToBounds = true
@@ -89,17 +89,18 @@ final class GalleryPageSheetView: UIViewController {
         return iv
     }()
     
-    private let galleryLabel: UILabel = {
+    private let editLabel: UILabel = {
         let label = UILabel()
-        label.text = "Galeria"
+        label.text = "Editar"
         label.font = UIFont.systemFont(ofSize: 15.3, weight: .medium)
         label.textColor = .black.withAlphaComponent(0.74)
         return label
     }()
     
     //MARK: - Internal properties
-    weak var delegate: GalleryPageSheetDelegate?
+    weak var delegate: EditGalleryImagePageSheetDelegate?
     var pageSheetHeight: CGFloat? = nil
+    var cellIndexPath: IndexPath? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,13 +110,14 @@ final class GalleryPageSheetView: UIViewController {
     
     
     //MARK: - Private Actions
-     @objc private func didTapCamera() {
-         delegate?.didTapCamera()
+     @objc private func didTapDelete() {
+         guard let cellIndexPath = cellIndexPath else { return }
+         delegate?.didTapDelete(cell: cellIndexPath)
          dismiss(animated: true)
     }
     
-     @objc private func didTapGallery() {
-         delegate?.didTapGallery()
+     @objc private func didTapEdit() {
+         delegate?.didTapEdit()
          dismiss(animated: true)
     }
     
@@ -130,10 +132,11 @@ final class GalleryPageSheetView: UIViewController {
         
         hStackContainer.centerX(inView: titleLabel, topAnchor: titleLabel.bottomAnchor, paddingTop: 30)
         
-        cameraImage.setDimensions(height: 30, width: 30)
+        deleteImage.setDimensions(height: 30, width: 30)
         
-        galleryImage.setDimensions(height: 30, width: 30)
+        editImage.setDimensions(height: 30, width: 30)
         
     }
     
 }
+

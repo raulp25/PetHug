@@ -64,6 +64,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         apply(configuration: configuration)
         
         translatesAutoresizingMaskIntoConstraints = true
+        isUserInteractionEnabled = true
         addSubview(titleLabel)
         addSubview(collectionView)
         
@@ -145,6 +146,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
         let galleryImageViewCellRegistration = UICollectionView.CellRegistration<GalleryControllerCollectionViewCell, UIImage> { cell, _, model in
             cell.configure(with: model)
+            cell.delegate = self
         }
         
         
@@ -206,10 +208,9 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
 
-
 }
 
-
+///MARK: - Camera / Gallery select PageSheet
 extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
     func didTapSelectPhoto() {
         
@@ -234,6 +235,7 @@ extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
     }
 }
 
+///MARK: - Did select camera / gallery Delegate
 extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
     func didTapCamera() {
         let picker = UIImagePickerController()
@@ -257,6 +259,73 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
     }
 }
 
+
+///MARK: - Delete / Edit image select PageSheet
+extension NewPetGalleryCellContentView: GalleryCellDelegate {
+    func didTapCell(_ cell: Item) {
+        guard let item = dataSource.indexPath(for: cell) else { return }
+        
+        let height = CGFloat(153)
+        
+        let controller = EditGalleryImagePageSheetView()
+        controller.pageSheetHeight = height
+        controller.delegate = self
+        controller.cellIndexPath = item
+        let nav = UINavigationController(rootViewController: controller)
+        nav.modalPresentationStyle = .pageSheet
+        
+        if let sheet = nav.sheetPresentationController {
+            sheet.detents = [.custom(resolver: { _ in
+                return height
+            })]
+            sheet.prefersGrabberVisible = true
+            sheet.preferredCornerRadius = 20
+        }
+        
+        currentConfiguration.viewModel?.nagivagtion?.present(nav, animated: true, completion: nil)
+               
+    }
+}
+
+///MARK: - Did select delete / edit image Delegate
+extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
+    func didTapDelete(cell indexPath: IndexPath) {
+        if let item = dataSource.itemIdentifier(for: indexPath) {
+            var snapshot = dataSource.snapshot()
+            snapshot.deleteItems([item])
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
+    }
+    
+    func didTapEdit() {
+        //TODO We'll need a third party to crop "edit" the images
+    }
+}
+
+
+//MARK: - Picker Camera
+extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let image = info[.editedImage] as? UIImage else { return }
+        
+        if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
+            currentSnapData[gallerySectionIndex].values.append(.image(image))
+            
+            snapshot = dataSource.snapshot()
+            snapshot.appendItems(currentSnapData[gallerySectionIndex].values, toSection: .gallery)
+            dataSource.apply(snapshot, animatingDifferences: true)
+            
+           }
+    }
+}
+
+///MARK: - Picker Gallery
 extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: nil)
@@ -266,13 +335,12 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
         let dispatchGroup = DispatchGroup()
         
         snapshot = dataSource.snapshot()
-//        snapshot.appendSections([.gallery])
         
         for result in results {
             dispatchGroup.enter()
             result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
                 if let error = error {
-                    print("error transformando imagen: => \(error)")
+                    print("error loading image object: => \(error)")
                 }
                 
                 if let image = object as? UIImage {
@@ -294,32 +362,4 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
         }
         
     }
-    
-    
-}
-
-extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        guard let image = info[UIImagePickerController.InfoKey.editedImage] as? UIImage else { return }
-        
-        if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
-            currentSnapData[gallerySectionIndex].values.append(.image(image))
-            
-            snapshot = Snapshot()
-            
-            snapshot.appendSections([.gallery])
-            snapshot.appendItems(currentSnapData[gallerySectionIndex].values, toSection: .gallery)
-            
-            
-            dataSource.apply(snapshot, animatingDifferences: true)
-            
-           }
-    }
-    
 }
