@@ -29,7 +29,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     }()
     
     private lazy var cancelButton: UIButton = {
-        let btn = UIButton.createTextButton(with: "cancel")
+        let btn = UIButton.createTextButton(with: "cancel", fontSize: 18)
         btn.addTarget(self, action: #selector(didTapCancell), for: .touchUpInside)
         return btn
     }()
@@ -47,17 +47,10 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
             print("cambio currentsnap data checar")
         }
     }
-//    var snapData: [SnapData] {
-//        didSet {
-////            updateSnapShot()
-//        }
-//    }
     
-///    Use generics 4 receiving any type array and yeah
-//    let data: T = [T]()
+    
     var delegate: PopupSearchDelegate?
     var breedsForType: Pet.PetType?
-    var km = false
    
     //MARK: - Lifecycle
     
@@ -78,7 +71,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     
     
     deinit {
-//        put the worker.cancel()
+        print("✅ Deinit BreedPopupSearch")
     }
     
     //MARK: - Private actions
@@ -111,6 +104,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         collectionView.showsVerticalScrollIndicator = false
         collectionView.layer.borderColor = customRGBColor(red: 220, green: 220, blue: 220).cgColor
         collectionView.layer.borderWidth = 1
+        
         cancelButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, paddingLeft: 23, paddingBottom: 5, paddingRight: 23)
     }
     
@@ -120,31 +114,20 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         DispatchQueue.main.asyncAfter(deadline: .now() + 0, execute: {
             searchController.searchBar.becomeFirstResponder()
         })
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-//            searchController.searchBar.resignFirstResponder()
-//        })
-        }
+    }
     
     //MARK: - CollectionView layout
-//   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
             
             guard let self else { fatalError() }
             
-            let sideInsets = CGFloat(0)
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
             let listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators(separatorColor: customRGBColor(red: 225, green: 225, blue: 225))
             
             switch section {
             case .breed:
-                print("dogs section")
-//                return .createPetsLayout()
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
-                section.contentInsets.bottom = 0
-                section.contentInsets.leading = sideInsets
-                section.contentInsets.trailing = sideInsets
                 return section
             }
             
@@ -164,14 +147,10 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         
         
         let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchBreedListCellConfiguration>, SearchBreed> { cell, _, model in
-            //            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }
         
-        
-        let searchBreedMockVM = SearchBreed(breed: "Dachshund")
-//        searchBreedMockVM.delegate = self
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
@@ -198,11 +177,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     }
     func generatePetBreeds(total: Int) -> [Item] {
         var breeds = [Item]()
-//        for number in 0...total {
-//            let k = Int(arc4random_uniform(6))
-//            breeds.append(.title(.init(breed: "joanna \(number)")))
-//        }
-//
+
         let dog_breeds = [
             "Labrador Retriever",
             "German Shepherd",
@@ -385,32 +360,19 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-//        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
         currentSnapData  = [
             .init(key: .breed, values: generatePetBreeds(total: 20))
-            ]
-//        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
+        ]
         
         snapshot = Snapshot()
         snapshot.appendSections(currentSnapData.map {
-            print(": section=> \($0.key)")
             return $0.key
         })
-//        snapshot.appendSections(snapData.map {
-//            print(": section=> \($0.key)")
-//            return $0.key
-//        })
-        
-        print("currentSnapData: => \(currentSnapData)")
-//        print("currentSnapData: => \(snapData)")
         
         for datum in currentSnapData {
             snapshot.appendItems(datum.values, toSection: datum.key)
         }
-//        for datum in snapData {
-//            snapshot.appendItems(datum.values, toSection: datum.key)
-//        }
-//        print("snapshot en updateSnapshot(): => \(snapshot)")
+
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
     

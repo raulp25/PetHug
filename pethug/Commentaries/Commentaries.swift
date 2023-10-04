@@ -27,7 +27,7 @@ import Foundation
 //    }
 //}
 
-//
+/////~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 //func didTapLike(_ pet: PetsContentViewController.Item) {
 //    guard let indexPath = self.dataSource.indexPath(for: pet) else { return }
 //    var item = dataSource.itemIdentifier(for: indexPath)
@@ -67,7 +67,7 @@ import Foundation
 //       self.dataSource.apply(snapshot, animatingDifferences: false)
 //    }
 
-
+///~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ///To remember options of code, theres no need to search for nothing just use the pet parameter
 //func didTapLike(_ pet: PetsContentViewController.Item) {
 //    guard let indexPath = self.dataSource.indexPath(for: pet) else { return }
@@ -92,7 +92,7 @@ import Foundation
 //        self.dataSource.apply(snapshot, animatingDifferences: false)
 //    }
 
-
+///~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ///Upload single section
 //func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 //    picker.dismiss(animated: true, completion: nil)
@@ -140,6 +140,7 @@ import Foundation
 //
 //    }
 //    var currentButton: CurrentChecked? = nil
+///~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ///~1st way horrible
 //    @objc func didTapCheckMark(_ sender: UIButton) {
 //        if sender == dogCheckMarkButton && currentButton == .dog {
@@ -200,7 +201,7 @@ import Foundation
 //
 //var currentButton: CurrentChecked? = nil
 //var buttons: [UIButton] = []
-
+///~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ///~2nd way but bulkier
 //    @objc func didTapCheckMark(_ sender: UIButton) {
 //        print("sender tag: => \(sender.tag)")
@@ -231,7 +232,7 @@ import Foundation
 //            currentButton = checked
 ////        }
 //    }
-
+///~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 ///~3rd way
 //init() {
 //    buttons = [smallCheckMarkButton, mediumCheckMarkButton, largeCheckMarkButton]
@@ -300,7 +301,8 @@ import Foundation
 
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ///GENERAL
-
+//////~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+///quick appending
 //Append states from case and init
 ///    func generatePetBreeds(total: Int) -> [Item] {
 //var addresses = [Item]()
@@ -350,4 +352,53 @@ import Foundation
 //
 //
 //return addresses
+//}
+//
+///~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+///text validation with prefix
+//if text.count > 1 && text.hasPrefix("0") {
+//    let text = String(text.dropFirst())
+//    textField.text = text
+//    currentConfiguration.viewModel?.delegate?.activityLevelChanged(to: Int(text))
+//
+//}
+
+///~~~~~~~~~~~%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+///Decoding / encoding
+//func mockDecodePetModel() {
+//    print("corre mock pet model decode 789: => ")
+//    let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna Camacho", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
+//
+//    let petModelData: [String: Any] = [
+//        "id": "3323-ews3",
+//        "name": "Joanna Camacho",
+//        "age": 22,
+//        "gender": "female",
+//        "size": "small",
+//        "breed": "Dachshund",
+//        "imagesUrls": ["firebase.com/ImageExampleMyCousin"],
+//        "type": "dog",
+//        "address": "Sinaloa",
+//        "isLiked": false
+//    ]
+//
+//    if let jsonData = try? JSONSerialization.data(withJSONObject: petModelData, options: []) {
+//
+//        print("JSON DATA 335: => \(jsonData)")
+//        let pet = try? JSONDecoder().decode(Pet.self, from: jsonData)
+//        print("DECODE JSON DATA 335: => \(pet?.type)")
+//
+//    }
+
+       ////this below doesnt work
+//    let data  = try? JSONEncoder().encode(petModel)
+//
+//    print("JSON ENCODER DIFFERENT FROM SEARILIZATION 335: => \(data)")
+////        if let jsonData = try? JSONEncoder().encode(petModel){
+////            let pet = try? JSONDecoder().decode(Pet.self, from: jsonData)
+////             // You now have a Pet instance with enum properties properly converted
+////             // ...
+////
+////        }
+//
 //}

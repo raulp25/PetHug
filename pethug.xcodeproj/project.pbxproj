@@ -56,6 +56,8 @@
 		C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */; };
 		C435315B2AB9845D0070D7EE /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435315A2AB9845D0070D7EE /* Pet.swift */; };
 		C435315D2AB986C00070D7EE /* UICollectionView+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435315C2AB986C00070D7EE /* UICollectionView+Factory.swift */; };
+		C43A5C712ACCE547007C8ECB /* FirebaseMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A5C702ACCE547007C8ECB /* FirebaseMapper.swift */; };
+		C43A5C732ACCE7A5007C8ECB /* PetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43A5C722ACCE7A5007C8ECB /* PetModel.swift */; };
 		C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1192AB1391A00053BE7 /* AppDelegate.swift */; };
 		C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */; };
 		C445F1232AB1391B00053BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C445F1222AB1391B00053BE7 /* Assets.xcassets */; };
@@ -154,6 +156,16 @@
 		C4E654572AC90024009E027F /* SearchAddressCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654562AC90024009E027F /* SearchAddressCellContentView.swift */; };
 		C4EF851E2ACB3CD20088A53A /* GalleryPageSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF851D2ACB3CD20088A53A /* GalleryPageSheetView.swift */; };
 		C4EF85232ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4EF85222ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift */; };
+		C4F7DFC72ACC7F76000D5F76 /* NewPetViewModel+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFC62ACC7F76000D5F76 /* NewPetViewModel+Types.swift */; };
+		C4F7DFCA2ACC8407000D5F76 /* CreatePetUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFC92ACC8407000D5F76 /* CreatePetUC.swift */; };
+		C4F7DFCD2ACC8FED000D5F76 /* NewPetAgeListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFCC2ACC8FED000D5F76 /* NewPetAgeListCellConfiguration.swift */; };
+		C4F7DFCF2ACC9077000D5F76 /* NewPetAgeCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFCE2ACC9077000D5F76 /* NewPetAgeCellContentView.swift */; };
+		C4F7DFD42ACCA8C2000D5F76 /* NewPetActivityListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFD32ACCA8C2000D5F76 /* NewPetActivityListCellConfiguration.swift */; };
+		C4F7DFD62ACCA8CA000D5F76 /* NewPetSocialListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFD52ACCA8CA000D5F76 /* NewPetSocialListCellConfiguration.swift */; };
+		C4F7DFD82ACCA8D4000D5F76 /* NewPetAffectionListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFD72ACCA8D4000D5F76 /* NewPetAffectionListCellConfiguration.swift */; };
+		C4F7DFDA2ACCA8E2000D5F76 /* NewPetActivityCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFD92ACCA8E2000D5F76 /* NewPetActivityCellContentView.swift */; };
+		C4F7DFDC2ACCA8E9000D5F76 /* NewPetSocialCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFDB2ACCA8E9000D5F76 /* NewPetSocialCellContentView.swift */; };
+		C4F7DFDE2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4F7DFDD2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -202,6 +214,8 @@
 		C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetsContentViewController+Types.swift"; sourceTree = "<group>"; };
 		C435315A2AB9845D0070D7EE /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		C435315C2AB986C00070D7EE /* UICollectionView+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Factory.swift"; sourceTree = "<group>"; };
+		C43A5C702ACCE547007C8ECB /* FirebaseMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseMapper.swift; sourceTree = "<group>"; };
+		C43A5C722ACCE7A5007C8ECB /* PetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetModel.swift; sourceTree = "<group>"; };
 		C445F1162AB1391A00053BE7 /* pethug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pethug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F1192AB1391A00053BE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -305,6 +319,16 @@
 		C4E654562AC90024009E027F /* SearchAddressCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressCellContentView.swift; sourceTree = "<group>"; };
 		C4EF851D2ACB3CD20088A53A /* GalleryPageSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryPageSheetView.swift; sourceTree = "<group>"; };
 		C4EF85222ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGalleryImagePageSheetView.swift; sourceTree = "<group>"; };
+		C4F7DFC62ACC7F76000D5F76 /* NewPetViewModel+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPetViewModel+Types.swift"; sourceTree = "<group>"; };
+		C4F7DFC92ACC8407000D5F76 /* CreatePetUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePetUC.swift; sourceTree = "<group>"; };
+		C4F7DFCC2ACC8FED000D5F76 /* NewPetAgeListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetAgeListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4F7DFCE2ACC9077000D5F76 /* NewPetAgeCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetAgeCellContentView.swift; sourceTree = "<group>"; };
+		C4F7DFD32ACCA8C2000D5F76 /* NewPetActivityListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetActivityListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4F7DFD52ACCA8CA000D5F76 /* NewPetSocialListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSocialListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4F7DFD72ACCA8D4000D5F76 /* NewPetAffectionListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetAffectionListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4F7DFD92ACCA8E2000D5F76 /* NewPetActivityCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetActivityCellContentView.swift; sourceTree = "<group>"; };
+		C4F7DFDB2ACCA8E9000D5F76 /* NewPetSocialCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSocialCellContentView.swift; sourceTree = "<group>"; };
+		C4F7DFDD2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetAffectionCellContentView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -629,6 +653,7 @@
 			isa = PBXGroup;
 			children = (
 				C44820102AB5376900E72BD2 /* UserModel.swift */,
+				C43A5C722ACCE7A5007C8ECB /* PetModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -675,6 +700,7 @@
 				C44820132AB538DC00E72BD2 /* DomainMapperProtocol.swift */,
 				C44820272AB54AB900E72BD2 /* ObjectLiteralMapper.swift */,
 				C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */,
+				C43A5C702ACCE547007C8ECB /* FirebaseMapper.swift */,
 			);
 			name = Protocols;
 			sourceTree = "<group>";
@@ -725,6 +751,7 @@
 			isa = PBXGroup;
 			children = (
 				C476E2BD2ABA96C40014DEA4 /* FetchPetsUC.swift */,
+				C4F7DFC92ACC8407000D5F76 /* CreatePetUC.swift */,
 			);
 			path = Pets;
 			sourceTree = "<group>";
@@ -750,10 +777,10 @@
 		C4779BEE2AC3BA6B00E3A16F /* NewPet */ = {
 			isa = PBXGroup;
 			children = (
+				C4F7DFC52ACC7F6A000D5F76 /* ViewModel */,
 				C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */,
 				C4779BF12AC3C92000E3A16F /* NewPetContentViewController+Types.swift */,
 				C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */,
-				C4AB87712ACA082C0081451F /* NewPetViewModel.swift */,
 			);
 			path = NewPet;
 			sourceTree = "<group>";
@@ -806,6 +833,10 @@
 		C48D9B492AC49D47002EDA90 /* NewPetCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				C4F7DFD22ACCA8B1000D5F76 /* Affection */,
+				C4F7DFD12ACCA8AA000D5F76 /* Social */,
+				C4F7DFD02ACCA8A1000D5F76 /* Activity */,
+				C4F7DFCB2ACC8FD5000D5F76 /* Age */,
 				C4E654512AC8FF22009E027F /* SearchAdress */,
 				C4E654492AC8F655009E027F /* Address */,
 				C4E654442AC8E7EF009E027F /* SearchBreed */,
@@ -1076,6 +1107,51 @@
 			path = EditGalleryImagePageSheet;
 			sourceTree = "<group>";
 		};
+		C4F7DFC52ACC7F6A000D5F76 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4AB87712ACA082C0081451F /* NewPetViewModel.swift */,
+				C4F7DFC62ACC7F76000D5F76 /* NewPetViewModel+Types.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C4F7DFCB2ACC8FD5000D5F76 /* Age */ = {
+			isa = PBXGroup;
+			children = (
+				C4F7DFCC2ACC8FED000D5F76 /* NewPetAgeListCellConfiguration.swift */,
+				C4F7DFCE2ACC9077000D5F76 /* NewPetAgeCellContentView.swift */,
+			);
+			path = Age;
+			sourceTree = "<group>";
+		};
+		C4F7DFD02ACCA8A1000D5F76 /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				C4F7DFD32ACCA8C2000D5F76 /* NewPetActivityListCellConfiguration.swift */,
+				C4F7DFD92ACCA8E2000D5F76 /* NewPetActivityCellContentView.swift */,
+			);
+			path = Activity;
+			sourceTree = "<group>";
+		};
+		C4F7DFD12ACCA8AA000D5F76 /* Social */ = {
+			isa = PBXGroup;
+			children = (
+				C4F7DFD52ACCA8CA000D5F76 /* NewPetSocialListCellConfiguration.swift */,
+				C4F7DFDB2ACCA8E9000D5F76 /* NewPetSocialCellContentView.swift */,
+			);
+			path = Social;
+			sourceTree = "<group>";
+		};
+		C4F7DFD22ACCA8B1000D5F76 /* Affection */ = {
+			isa = PBXGroup;
+			children = (
+				C4F7DFD72ACCA8D4000D5F76 /* NewPetAffectionListCellConfiguration.swift */,
+				C4F7DFDD2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift */,
+			);
+			path = Affection;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1190,6 +1266,7 @@
 				C43261D42AC2213700B70ACA /* UICollectionView+Layout.swift in Sources */,
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
 				C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */,
+				C4F7DFCD2ACC8FED000D5F76 /* NewPetAgeListCellConfiguration.swift in Sources */,
 				C4779BED2AC3A9FD00E3A16F /* AddPetCellViewModel.swift in Sources */,
 				C4EF851E2ACB3CD20088A53A /* GalleryPageSheetView.swift in Sources */,
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
@@ -1198,6 +1275,7 @@
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
 				C48D9B4F2AC49E3B002EDA90 /* NewPetNameCellContentView.swift in Sources */,
 				C42616DD2AB277C4006925DB /* ValidatorType.swift in Sources */,
+				C4F7DFDA2ACCA8E2000D5F76 /* NewPetActivityCellContentView.swift in Sources */,
 				C435314C2AB960A10070D7EE /* PetsViewController.swift in Sources */,
 				C4E6544B2AC8F66A009E027F /* NewPetAddressListCellConfiguration.swift in Sources */,
 				C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */,
@@ -1214,6 +1292,8 @@
 				C448201D2AB53FF300E72BD2 /* DefaultUserRepository.swift in Sources */,
 				C448201A2AB53EF200E72BD2 /* RegisterUserUC.swift in Sources */,
 				C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */,
+				C43A5C712ACCE547007C8ECB /* FirebaseMapper.swift in Sources */,
+				C4F7DFD42ACCA8C2000D5F76 /* NewPetActivityListCellConfiguration.swift in Sources */,
 				C4CF74F62AB259A800D69185 /* AuthTextField.swift in Sources */,
 				C4A95C3F2AC8BE33002781E2 /* NewPetBreedCellContentView.swift in Sources */,
 				C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */,
@@ -1231,14 +1311,20 @@
 				C4779BE22AC3A34D00E3A16F /* NewPetCoordinator.swift in Sources */,
 				C43531532AB96BFC0070D7EE /* ErrorViewController.swift in Sources */,
 				C42A584D2AC1258A00A6FFBF /* Commentaries.swift in Sources */,
+				C4F7DFD62ACCA8CA000D5F76 /* NewPetSocialListCellConfiguration.swift in Sources */,
 				C483EB982AC5382A005E8BE2 /* NewPetTypeListCellConfiguration.swift in Sources */,
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
 				C426D2682AB6713A00BFA357 /* SettingsCoordinator.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,
 				C42D3D9E2AB65FF200EBA1B7 /* InAppContainerRootViewController+State.swift in Sources */,
+				C43A5C732ACCE7A5007C8ECB /* PetModel.swift in Sources */,
 				C476E2C42ABA9A1A0014DEA4 /* PetDataSource.swift in Sources */,
 				C4779BDB2AC38D5500E3A16F /* AddPetViewController.swift in Sources */,
+				C4F7DFCF2ACC9077000D5F76 /* NewPetAgeCellContentView.swift in Sources */,
+				C4F7DFDC2ACCA8E9000D5F76 /* NewPetSocialCellContentView.swift in Sources */,
+				C4F7DFD82ACCA8D4000D5F76 /* NewPetAffectionListCellConfiguration.swift in Sources */,
 				C445F16A2AB1581F00053BE7 /* Publishers+Extensions.swift in Sources */,
+				C4F7DFCA2ACC8407000D5F76 /* CreatePetUC.swift in Sources */,
 				C4779BDE2AC38DC100E3A16F /* AddPetViewModel.swift in Sources */,
 				C448200C2AB5271B00E72BD2 /* ImageService.swift in Sources */,
 				C467578D2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift in Sources */,
@@ -1258,10 +1344,12 @@
 				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,
 				C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */,
 				C435315B2AB9845D0070D7EE /* Pet.swift in Sources */,
+				C4F7DFDE2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift in Sources */,
 				C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */,
 				C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */,
 				C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */,
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
+				C4F7DFC72ACC7F76000D5F76 /* NewPetViewModel+Types.swift in Sources */,
 				C476E2C22ABA99D30014DEA4 /* DefaultPetRepository.swift in Sources */,
 				C42616F32AB282DF006925DB /* SpinnerView.swift in Sources */,
 				C4779BEB2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift in Sources */,

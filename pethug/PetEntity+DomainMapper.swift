@@ -16,7 +16,7 @@ extension Pet: DomainMapper {
             gender: gender,
             size: size,
             breed: breed,
-            imageUrl: imageUrl,
+            imagesUrls: imagesUrls,
             type: type,
             address: address,
             isLiked: isLiked
@@ -33,8 +33,51 @@ extension Pet: ObjectLiteralMapper {
             "gender": gender,
             "size": size,
             "breed": breed,
-            "imageUrl": imageUrl,
-            "type": type
+            "imagesUrls": imagesUrls,
+            "type": type,
+            "address": address,
+            "isLiked": isLiked
         ]
     }
 }
+
+extension Pet: FirebaseMapper {
+    typealias FirebaseModel = PetModel
+    
+    func toFirebaseEntity() -> PetModel {
+        return PetModel(
+            id: id,
+            name: name,
+            age: age,
+            gender: gender.rawValue,
+            size: size.rawValue,
+            breed: breed,
+            imagesUrls: imagesUrls,
+            type: type.rawValue,
+            address: address.rawValue,
+            isLiked: false
+        )
+
+    }
+}
+
+extension PetModel: ObjectLiteralMapper {
+    func toObjectLiteral() -> [String: Any] {
+        return [
+            "id": id,
+            "name": name,
+            "age": age,
+            "gender": gender,
+            "size": size,
+            "breed": breed,
+            "imagesUrls": imagesUrls,
+            "type": type,
+            "address": address,
+            "isLiked": isLiked
+        ]
+    }
+}
+
+
+
+

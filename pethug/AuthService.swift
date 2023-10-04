@@ -11,6 +11,9 @@ import Foundation
 
 /// Methods for Firebase Auth.
 protocol AuthServiceProtocol {
+    
+    var uid: String { get }
+    
     /// Signs out.
     func signOut() throws
 
@@ -45,6 +48,7 @@ enum SessionState: Equatable {
 }
 
 final class AuthService: AuthServiceProtocol {
+    var uid: String = Auth.auth().currentUser?.uid ?? "0"
     // MARK: - Create Account
     func createAccounWith(email: String, password: String) async throws -> String {
         let result = try await Auth.auth().createUser(withEmail: email, password: password)

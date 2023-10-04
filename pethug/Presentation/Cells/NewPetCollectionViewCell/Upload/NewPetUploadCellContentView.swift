@@ -56,6 +56,7 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
     // MARK: - Private actions
     @objc private func upload() {
         print(":clicked upload button => ")
+        currentConfiguration.viewModel?.delegate?.didTapUpload()
     }
     
     
@@ -70,10 +71,30 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
         guard let item = currentConfiguration.viewModel else { return }
         uploadBtn.backgroundColor = customRGBColor(red: 255, green: 176, blue: 42)
         
-        item.isValid?.sink(receiveValue: { [weak self] isValid in
-            self?.uploadBtn.backgroundColor = isValid ? customRGBColor(red: 255, green: 176, blue: 42) : customRGBColor(red: 250, green: 219, blue: 165, alpha: 1)
-            self?.uploadBtn.isEnabled = isValid
-        }).store(in: &cancellables)
+        item.isFormValid?
+            .handleThreadsOperator()
+            .sink(receiveValue: { [weak self] isValid in
+                self?.uploadBtn.backgroundColor = isValid ?
+                customRGBColor(red: 255, green: 176, blue: 42) :
+                customRGBColor(red: 250, green: 219, blue: 165, alpha: 1)
+                
+                self?.uploadBtn.isEnabled = isValid
+            }).store(in: &cancellables)
+        
+        item.state?
+            .handleThreadsOperator()
+            .sink(receiveValue: { [weak self] state in
+                switch state {
+                case .loading:
+                    self?.uploadBtn.isLoading = true
+                case .success:
+                    self?.uploadBtn.isLoading = false
+                case .error(let error):
+                    self?.uploadBtn.isLoading = false
+                    print("error uploading pet: => \(error.localizedDescription)")
+                }
+            }).store(in: &cancellables)
+        
 //        layoutIfNeeded()
 //        nameLabel.text = item.name
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)

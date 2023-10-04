@@ -12,6 +12,7 @@ import FirebaseFirestoreSwift
 //MARK: - Protocol
 protocol PetDataSource {
     func fetchPets(fetchCollection path: String) async throws -> [Pet]
+    func createPet(collection path: String, data: Pet) async throws -> Bool
 }
 
 final class DefaultPetDataSource: PetDataSource {
@@ -29,5 +30,31 @@ final class DefaultPetDataSource: PetDataSource {
         }
         
         return pets
+    }
+    
+    func createPet(collection path: String, data: Pet) async throws -> Bool {
+//        let pet: [String: Any] = [
+//            "id": data.id,
+//            "name": data.name,
+//            "age": data.age,
+//            "gender": data.gender,
+//            "size": data.size,
+//            "breed": data.breed,
+//            "imageUrl": data.imageUrl,
+//            "type": data.type,
+//            "address": data.address,
+//            "isLiked": data.isLiked
+//        ]
+        
+        
+        let petFirebaseEntinty = data.toFirebaseEntity()
+        let dataModel = petFirebaseEntinty.toObjectLiteral()
+        
+        print("pet in createPost 578=> \(petFirebaseEntinty)")
+        
+        let db = Firestore.firestore()
+        try await db.collection(path).document(data.id).setData(dataModel)
+        return true
+        
     }
 }

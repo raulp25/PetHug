@@ -31,6 +31,11 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
             print("cambio currentsnap data checar")
         }
     }
+    private var images: [UIImage] = [] {
+        didSet {
+            currentConfiguration.viewModel?.delegate?.galleryDidChange(images: images)
+        }
+    }
 //    var snapData: [SnapData] {
 //        didSet {
 ////            updateSnapShot()
@@ -166,8 +171,8 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
         currentSnapData  = [.init(key: .gallery, values: [
-            .image(UIImage(systemName: "pencil")!),
-            .image(UIImage(named: "pr1")!),
+            .image(UIImage(systemName: "pencil")!)
+//            .image(UIImage(named: "pr1")!),
 //            .image(UIImage(named: "pr2")!),
 //            .image(UIImage(named: "pr3")!),
 //            .image(UIImage(named: "pr4")!),
@@ -293,11 +298,12 @@ extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
         if let item = dataSource.itemIdentifier(for: indexPath) {
             
             if let sectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }),
-               
-               let itemIndex = currentSnapData[sectionIndex].values.firstIndex(where: { $0 == item }) {
+               let itemIndex = currentSnapData[sectionIndex].values.firstIndex(where: { $0 == item })
+            {
                 
                 // Remove the item from currentSnapData
                 currentSnapData[sectionIndex].values.remove(at: itemIndex)
+                images.remove(at: itemIndex - 1)
                 
                 var snapshot = dataSource.snapshot()
                 snapshot.deleteItems([item])
@@ -325,6 +331,7 @@ extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavig
         
         if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
             currentSnapData[gallerySectionIndex].values.append(.image(image))
+            images.append(image)
             
             snapshot = dataSource.snapshot()
             snapshot.appendItems(currentSnapData[gallerySectionIndex].values, toSection: .gallery)
@@ -354,6 +361,8 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
                 
                 if let image = object as? UIImage {
                     self?.currentSnapData[gallerySectionIndex].values.append(.image(image))
+                    self?.images.append(image)
+                    
                     self?.snapshot.appendItems((self?.currentSnapData[gallerySectionIndex].values)!, toSection: .gallery)
                     dispatchGroup.leave()
                 } else {

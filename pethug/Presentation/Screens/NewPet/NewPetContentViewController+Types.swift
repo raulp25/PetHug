@@ -19,6 +19,10 @@ extension NewPetContentViewController {
         case breed
         case gender
         case size
+        case age
+        case activity
+        case social
+        case affection
         case info
         case address
         case end
@@ -31,6 +35,10 @@ extension NewPetContentViewController {
         case breed
         case gender
         case size
+        case age
+        case activity
+        case social
+        case affection
         case info
         case address
         case end
@@ -41,6 +49,7 @@ extension NewPetContentViewController {
         var values: [Item]
     }
 }
+
 
 
 ///For the editing feature

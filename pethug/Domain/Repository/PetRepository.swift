@@ -9,4 +9,5 @@ import Foundation
 
 protocol PetRepository {
     func fetchPets(fetchCollection path: String) async throws -> [Pet]
+    func createPet(collection path: String, data: Pet) async throws -> Bool
 }

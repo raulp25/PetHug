@@ -15,7 +15,7 @@ final class NewPetContentViewController: UIViewController {
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    private var viewModel = NewPetViewModel()
+    private var viewModel = NewPetViewModel(imageService: ImageService(), useCase: CreatePet.composeCreatePetUC())
     //MARK: - Internal properties
     private var currentSnapData = [SnapData]() {
         didSet {
@@ -193,6 +193,34 @@ final class NewPetContentViewController: UIViewController {
                 section.contentInsets.trailing = sideInsets
                 
                 return section
+            case .age:
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = sideInsets
+                section.contentInsets.trailing = sideInsets
+                
+                return section
+            case .activity:
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = sideInsets
+                section.contentInsets.trailing = sideInsets
+                
+                return section
+            case .social:
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = sideInsets
+                section.contentInsets.trailing = sideInsets
+                
+                return section
+            case .affection:
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = sideInsets
+                section.contentInsets.trailing = sideInsets
+                
+                return section
             case .address:
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
                 section.contentInsets.bottom = 30
@@ -269,6 +297,26 @@ final class NewPetContentViewController: UIViewController {
             cell.viewModel?.delegate = self
         }
         
+        let newPetAgeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAgeListCellConfiguration>, NewPetAge> { cell, _, model in
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+        }
+        
+        let newPetActivityViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetActivityListCellConfiguration>, NewPetActivity> { cell, _, model in
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+        }
+        
+        let newPetSocialViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSocialListCellConfiguration>, NewPetSocial> { cell, _, model in
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+        }
+        
+        let newPetAffectionViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAffectionListCellConfiguration>, NewPetAffection> { cell, _, model in
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+        }
+        
         let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
@@ -282,7 +330,9 @@ final class NewPetContentViewController: UIViewController {
         
         let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetUploadListCellConfiguration>, NewPetUpload> { cell, _, model in
             cell.viewModel = model
-            cell.viewModel?.isValid = self.viewModel.isValid
+            cell.viewModel?.isFormValid = self.viewModel.isValidSubject
+            cell.viewModel?.state = self.viewModel.stateSubject
+            cell.viewModel?.delegate = self
         }
         
         var nameMockVM = NewPetName(name: "Fernanda Sanchez")
@@ -294,7 +344,7 @@ final class NewPetContentViewController: UIViewController {
         
         let breedMockVM = NewPetBreed(currentBreed: "Golden Retriever")
         
-        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imageUrl: "dd", type: .dog, address: .QuintanaRoo, isLiked: true)
+        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imagesUrls: [], type: .dog, address: .QuintanaRoo, isLiked: true)
         switch (typeMockVM.type, pet1.type) {
         case (.dog, .dog):
             print("son iguales qwe DOG: =>")
@@ -318,6 +368,14 @@ final class NewPetContentViewController: UIViewController {
         
         let sizeMockVM = NewPetSize()
         
+        let ageMockVM = NewPetAge(age: nil)
+        
+        let activityMockVM = NewPetActivity(activityLevel: nil)
+        
+        let socialMockVM = NewPetSocial(socialLevel: nil)
+        
+        let affectionMockVM = NewPetAffection(affectionLevel: nil)
+        
         let addressMockVM = NewPetAddress(address: nil)
         
         let infoMockVM = NewPetInfo(info: nil)
@@ -339,6 +397,14 @@ final class NewPetContentViewController: UIViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: newPetGenderViewCellRegistration, for: indexPath, item: genderMockVM)
             case .size:
                 return collectionView.dequeueConfiguredReusableCell(using: newPetSizeViewCellRegistration, for: indexPath, item: sizeMockVM)
+            case .age:
+                return collectionView.dequeueConfiguredReusableCell(using: newPetAgeViewCellRegistration, for: indexPath, item: ageMockVM)
+            case .activity:
+                return collectionView.dequeueConfiguredReusableCell(using: newPetActivityViewCellRegistration, for: indexPath, item: activityMockVM)
+            case .social:
+                return collectionView.dequeueConfiguredReusableCell(using: newPetSocialViewCellRegistration, for: indexPath, item: socialMockVM)
+            case .affection:
+                return collectionView.dequeueConfiguredReusableCell(using: newPetAffectionViewCellRegistration, for: indexPath, item: affectionMockVM)
             case .address:
                 return collectionView.dequeueConfiguredReusableCell(using: newPetAddressViewCellRegistration, for: indexPath, item: addressMockVM)
             case .info:
@@ -381,15 +447,19 @@ final class NewPetContentViewController: UIViewController {
     private func updateSnapShot(animated: Bool = true) {
 //        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
         currentSnapData  = [
-            .init(key: .name, values: [.name]),
-            .init(key: .gallery, values: [.gallery]),
-            .init(key: .type, values: [.type]),
-            .init(key: .breed, values: [.breed]),
-            .init(key: .gender, values: [.gender]),
-            .init(key: .size, values: [.size]),
-            .init(key: .address, values: [.address]),
-            .init(key: .info, values: [.info]),
-            .init(key: .end, values: [.end])
+            .init(key: .name,      values: [.name]),
+            .init(key: .gallery,   values: [.gallery]),
+            .init(key: .type,      values: [.type]),
+            .init(key: .breed,     values: [.breed]),
+            .init(key: .gender,    values: [.gender]),
+            .init(key: .size,      values: [.size]),
+            .init(key: .age,       values: [.age]),
+            .init(key: .activity,  values: [.activity]),
+            .init(key: .social,    values: [.social]),
+            .init(key: .affection, values: [.affection]),
+            .init(key: .address,   values: [.address]),
+            .init(key: .info,      values: [.info]),
+            .init(key: .end,       values: [.end])
         ]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
@@ -428,7 +498,8 @@ extension NewPetContentViewController: NewPetNameDelegate {
 
 extension NewPetContentViewController: NewPetGalleryDelegate {
     func galleryDidChange(images: [UIImage]) {
-        
+        print("images gallery did change 221: => \(images)")
+        viewModel.galleryState = images
     }
 }
 
@@ -455,11 +526,44 @@ extension NewPetContentViewController: NewPetSizeDelegate {
     }
 }
 
+extension NewPetContentViewController: NewPetAgeDelegate {
+    func ageChanged(age: Int?) {
+        viewModel.ageState = age
+    }
+}
+
+extension NewPetContentViewController: NewPetActivityDelegate {
+    func activityLevelChanged(to level: Int?) {
+        print(" cambio el activity level a 221: \(level)")
+        viewModel.activityState = level
+    }
+}
+
+extension NewPetContentViewController: NewPetSocialDelegate {
+    func socialLevelChanged(to level: Int?) {
+        viewModel.socialState = level
+    }
+}
+
+extension NewPetContentViewController: NewPetAffectionDelegate {
+    func affectionLevelChanged(to level: Int?) {
+        viewModel.affectionState = level
+    }
+}
+
 extension NewPetContentViewController: NewPetInfoDelegate {
     func textViewdDidChange(text: String) {
         print("cambio texto a: => \(text)")
         let text = text.count > 0 ? text : nil
         viewModel.infoState = text
+    }
+}
+
+extension NewPetContentViewController: NewPetUploadDelegate {
+    func didTapUpload() {
+        Task {
+            await viewModel.createPet()
+        }
     }
 }
 
@@ -629,6 +733,7 @@ extension NewPetContentViewController: NewPetAddressDelegate {
         
     }
 }
+
 
 
 

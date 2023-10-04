@@ -28,7 +28,7 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     }()
     
     private lazy var cancelButton: UIButton = {
-        let btn = UIButton.createTextButton(with: "cancel")
+        let btn = UIButton.createTextButton(with: "cancel", fontSize: 18)
         btn.addTarget(self, action: #selector(didTapCancell), for: .touchUpInside)
         return btn
     }()
@@ -39,23 +39,10 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     }
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    
+    private var currentSnapData = [SnapData]()
+        
     //MARK: - Internal Properties
-    private var currentSnapData = [SnapData]() {
-        didSet {
-            print("cambio currentsnap data checar")
-        }
-    }
-//    var snapData: [SnapData] {
-//        didSet {
-////            updateSnapShot()
-//        }
-//    }
-    
-///    Use generics 4 receiving any type array and yeah
-//    let data: T = [T]()
     var delegate: AddressPopupSearchDelegate?
-    var km = false
    
     //MARK: - Lifecycle
     
@@ -76,7 +63,7 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     
     
     deinit {
-//        put the worker.cancel()
+        print("✅ Deinit AddressPopupSearch")
     }
     
     //MARK: - Private actions
@@ -118,32 +105,20 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
         DispatchQueue.main.asyncAfter(deadline: .now() + 0, execute: {
             searchController.searchBar.becomeFirstResponder()
         })
-        
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-//            searchController.searchBar.resignFirstResponder()
-//        })
-        }
+    }
     
     //MARK: - CollectionView layout
-//   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
             
             guard let self else { fatalError() }
             
-            let sideInsets = CGFloat(0)
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
-            var listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators(separatorColor: customRGBColor(red: 225, green: 225, blue: 225))
-//            listConfiguration.headerMode = .supplementary
+            let listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators(separatorColor: customRGBColor(red: 225, green: 225, blue: 225))
             
             switch section {
             case .state:
-                print("dogs section")
-//                return .createPetsLayout()
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
-                section.contentInsets.bottom = 0
-                section.contentInsets.leading = sideInsets
-                section.contentInsets.trailing = sideInsets
                 return section
             }
             
@@ -163,7 +138,6 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
         
         
         let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchAddressListCellConfiguration>, SearchAddress> { cell, _, model in
-            //            cell.configure(with: model, delegate: self)
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }
@@ -208,32 +182,18 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-//        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
         currentSnapData  = [
             .init(key: .state, values: generateStates())
-            ]
-//        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
+        ]
         
         snapshot = Snapshot()
         snapshot.appendSections(currentSnapData.map {
-            print(": section=> \($0.key)")
             return $0.key
         })
-//        snapshot.appendSections(snapData.map {
-//            print(": section=> \($0.key)")
-//            return $0.key
-//        })
-        
-        print("currentSnapData: => \(currentSnapData)")
-//        print("currentSnapData: => \(snapData)")
         
         for datum in currentSnapData {
             snapshot.appendItems(datum.values, toSection: datum.key)
         }
-//        for datum in snapData {
-//            snapshot.appendItems(datum.values, toSection: datum.key)
-//        }
-//        print("snapshot en updateSnapshot(): => \(snapshot)")
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
     

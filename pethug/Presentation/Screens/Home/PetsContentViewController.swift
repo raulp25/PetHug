@@ -69,7 +69,7 @@ final class PetsContentViewController: UIViewController {
                 gender: .female,
                 size: .small,
                 breed: "Girl",
-                imageUrl: "d",
+                imagesUrls: [],
                 type: .cat,
                 address: .BajaCaliforniaSur,
                 isLiked: k < 3 ? false : true

@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 protocol NewPetUploadDelegate: AnyObject {
-    func uploaddDidChange(text: String)
+    func didTapUpload()
 }
 
 class NewPetUpload: Hashable {
@@ -19,8 +19,9 @@ class NewPetUpload: Hashable {
         )
     }
     var id = UUID().uuidString
-    var isValid: CurrentValueSubject<Bool, Never>?
-//    weak var delegate: NewPetNameDelegate?
+    var isFormValid: CurrentValueSubject<Bool, Never>?
+    var state: PassthroughSubject<NewPetViewModel.LoadingState, Never>?
+    weak var delegate: NewPetUploadDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }

@@ -150,7 +150,7 @@ class CustomTextView: UITextView {
     
     //MARK: - Lifecycle
     
-    
+    var paddingTop: CGFloat? = nil
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
@@ -160,7 +160,7 @@ class CustomTextView: UITextView {
         showsVerticalScrollIndicator = false
         
         addSubview(placeholderLabel)
-        placeholderLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: 7, paddingLeft: 5)
+        placeholderLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: paddingTop ?? 7, paddingLeft: 5)
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextDidChange), name: UITextView.textDidChangeNotification, object: nil)
     }

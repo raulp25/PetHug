@@ -23,8 +23,7 @@ public extension UIButton {
             systemName: icon,
             withConfiguration: config
         )?.withTintColor(
-//            color ?? (.theme.tintColor ?? .label)
-            UIColor.black,
+            color ?? UIColor.black,
             renderingMode: .alwaysOriginal
         )
         button.setImage(iconImage, for: .normal)
@@ -65,13 +64,13 @@ extension UIButton {
 
 // MARK: - TextButton
 public extension UIButton {
-    static func createTextButton(with buttonText: String) -> UIButton {
+    static func createTextButton(with buttonText: String, fontSize: CGFloat? = nil) -> UIButton {
         let button = UIButton(frame: .zero)
         button.setTitle(buttonText, for: .normal)
 //        button.setTitleColor(.theme.tintColor, for: .normal)
-        button.setTitleColor(customRGBColor(red: 243, green: 117, blue: 121), for: .normal)
+        button.setTitleColor(.orange, for: .normal)
         button.titleLabel?.textAlignment = .center
-        button.titleLabel?.font = .systemFont(ofSize: 15, weight: .semibold)
+        button.titleLabel?.font = .systemFont(ofSize: fontSize ?? 15, weight: .semibold)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }
