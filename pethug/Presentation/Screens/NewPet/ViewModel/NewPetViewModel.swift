@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 import Combine
 
 class NewPetViewModel {
@@ -17,31 +18,33 @@ class NewPetViewModel {
         self.imageService = imageService
         self.useCase = useCase
         observeValidation()
-        mockDecodePetModel()
+//        mockDecodePetModel()
     }
     
-    func mockDecodePetModel() {
-        print("corre mock pet model decode 789: => ")
-        let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna Camacho", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
-        
-        let petModelData: [String: Any] = [
-            "id": "3323-ews3",
-            "name": "Joanna Camacho",
-            "age": 22,
-            "gender": "female",
-            "size": "small",
-            "breed": "Dachshund",
-            "imagesUrls": ["firebase.com/ImageExampleMyCousin"],
-            "type": "dog",
-            "address": "Sinaloa",
-            "isLiked": false
-        ]
-        
-        if let jsonData = try? JSONSerialization.data(withJSONObject: petModelData, options: []) {
-            let pet = try? JSONDecoder().decode(Pet.self, from: jsonData)
-        }
-       
-    }
+//    func mockDecodePetModel() {
+//        print("corre mock pet model decode 789: => ")
+//        let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna Camacho", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
+//
+//        let petModelData: [String: Any] = [
+//            "id": "3323-ews3",
+//            "name": "Joanna Camacho",
+//            "age": 22,
+//            "gender": "female",
+//            "size": "small",
+//            "breed": "Dachshund",
+//            "imagesUrls": ["firebase.com/ImageExampleMyCousin"],
+//            "type": "dog",
+//            "address": "Sinaloa",
+//            "isLiked": false
+//        ]
+//
+//        if let jsonData = try? JSONSerialization.data(withJSONObject: petModelData, options: []) {
+//            let pet = try? JSONDecoder().decode(Pet.self, from: jsonData)
+//
+//            print("data firebase niga PET IN CUSTOM DECODER: => \(pet?.address)")
+//        }
+//
+//    }
     
     //MARK: - Form Validation
     private var cancellables = Set<AnyCancellable>()
@@ -190,7 +193,8 @@ class NewPetViewModel {
                 imagesUrls: imagesUrls,
                 type: typeState!,
                 address: addressState!,
-                isLiked: false
+                isLiked: false,
+                timestamp: Timestamp(date: Date())
             )
             
             

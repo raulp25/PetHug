@@ -28,7 +28,7 @@ protocol ImageServiceProtocol {
 final class ImageService: ImageServiceProtocol {
 
     func uploadImage(image: UIImage, path: String) async throws -> String? {
-        guard let imageData = image.jpegData(compressionQuality: 0.95) else { return nil}
+        guard let imageData = image.jpegData(compressionQuality: 0.78) else { return nil}
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference(withPath: "/profile_images/\(filename)")
         

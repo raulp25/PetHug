@@ -48,8 +48,7 @@ final class AddPetViewModel {
         Task {
             state.send(.loading)
             do {
-//                let data = try await fetchPetsUC.execute(fetchCollection: .getPath(for: .dogs))
-                let data: [Pet] = [] 
+                let data = try await fetchPetsUC.execute(fetchCollection: .getPath(for: .dogs))
                 petsSubject.send(data)
             } catch {
                 state.send(.error(.default(error)))
@@ -75,17 +74,17 @@ final class AddPetViewModel {
     }
     
     
-    private func createMockPet() {
-        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: .male, size: .large, breed: "labrador", imagesUrls: [], type: .dog, address: .MexicoCity, isLiked: false)
-        let db = Firestore.firestore()
-        Task {
-            do {
-                try db.collection(.getPath(for: .dogs)).document(pet.id).setData(from: pet)
-            } catch {
-                
-            }
-        }
-    }
+//    private func createMockPet() {
+//        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: .male, size: .large, breed: "labrador", imagesUrls: [], type: .dog, address: .MexicoCity, isLiked: false)
+//        let db = Firestore.firestore()
+//        Task {
+//            do {
+//                try db.collection(.getPath(for: .dogs)).document(pet.id).setData(from: pet)
+//            } catch {
+//                
+//            }
+//        }
+//    }
     
     
     

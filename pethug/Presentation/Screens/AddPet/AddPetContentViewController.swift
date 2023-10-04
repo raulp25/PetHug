@@ -20,14 +20,9 @@ final class AddPetContentViewController: UIViewController {
     private var snapshot: Snapshot!
     
     //MARK: - Internal properties
-    private var currentSnapData = [SnapData]() {
-        didSet {
-            print("cambio currentsnap data checar")
-        }
-    }
     var snapData: [SnapData] {
         didSet {
-//            updateSnapShot()
+            updateSnapShot()
         }
     }
     
@@ -46,6 +41,7 @@ final class AddPetContentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         navigationController?.navigationBar.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
@@ -56,28 +52,28 @@ final class AddPetContentViewController: UIViewController {
         configureDataSource()
         updateSnapShot()
     }
-    
-    func generatePet(total: Int) -> [Item] {
-        var pets = [Item]()
-        
-        for number in 0...total {
-            let k = Int(arc4random_uniform(6))
-            pets.append(.pet(.init(
-                id: String(number),
-                name: k < 2 ? "Ruti" : k < 5 ? "Gregoria" : "Doli",
-                age: k,
-                gender: .male,
-                size: .medium,
-                breed: "Girl",
-                imagesUrls: [],
-                type: .cat,
-                address: .BajaCaliforniaSur,
-                isLiked: k < 3 ? false : true
-            )))
-        }
-        
-        return pets
-    }
+
+//    func generatePet(total: Int) -> [Item] {
+//        var pets = [Item]()
+//
+//        for number in 0...total {
+//            let k = Int(arc4random_uniform(6))
+//            pets.append(.pet(.init(
+//                id: String(number),
+//                name: k < 2 ? "Ruti" : k < 5 ? "Gregoria" : "Doli",
+//                age: k,
+//                gender: .male,
+//                size: .medium,
+//                breed: "Girl",
+//                imagesUrls: [],
+//                type: .cat,
+//                address: .BajaCaliforniaSur,
+//                isLiked: k < 3 ? false : true
+//            )))
+//        }
+//
+//        return pets
+//    }
     
     //MARK: - CollectionView layout
 //   We have the sectionProvider prop just in case
@@ -88,7 +84,6 @@ final class AddPetContentViewController: UIViewController {
 
             switch section {
             case .pets:
-                print("dogs section")
                 return .createPetsLayout()
             }
             
@@ -140,29 +135,17 @@ final class AddPetContentViewController: UIViewController {
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-        currentSnapData  = [.init(key: .pets, values: generatePet(total: 5))]
-//        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
-        
         snapshot = Snapshot()
-        snapshot.appendSections(currentSnapData.map {
+        
+        snapshot.appendSections(snapData.map {
             print(": section=> \($0.key)")
             return $0.key
         })
-//        snapshot.appendSections(snapData.map {
-//            print(": section=> \($0.key)")
-//            return $0.key
-//        })
         
-        print("currentSnapData: => \(currentSnapData)")
-//        print("currentSnapData: => \(snapData)")
-        
-        for datum in currentSnapData {
+        for datum in snapData {
             snapshot.appendItems(datum.values, toSection: datum.key)
         }
-//        for datum in snapData {
-//            snapshot.appendItems(datum.values, toSection: datum.key)
-//        }
-//        print("snapshot en updateSnapshot(): => \(snapshot)")
+        
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
 }

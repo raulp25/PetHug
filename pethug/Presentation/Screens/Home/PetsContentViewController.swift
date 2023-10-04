@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Firebase
 protocol PetsContentViewControllerDelegate: AnyObject {
 //    func didTap(recipient: Pet)
 //    func didTap(_:  Any)
@@ -72,7 +73,8 @@ final class PetsContentViewController: UIViewController {
                 imagesUrls: [],
                 type: .cat,
                 address: .BajaCaliforniaSur,
-                isLiked: k < 3 ? false : true
+                isLiked: k < 3 ? false : true,
+                timestamp: Timestamp(date: Date())
             )))
         }
         

@@ -19,7 +19,8 @@ extension Pet: DomainMapper {
             imagesUrls: imagesUrls,
             type: type,
             address: address,
-            isLiked: isLiked
+            isLiked: isLiked,
+            timestamp: timestamp
         )
     }
 }
@@ -55,7 +56,8 @@ extension Pet: FirebaseMapper {
             imagesUrls: imagesUrls,
             type: type.rawValue,
             address: address.rawValue,
-            isLiked: false
+            isLiked: false,
+            timestamp: timestamp
         )
 
     }
@@ -73,7 +75,8 @@ extension PetModel: ObjectLiteralMapper {
             "imagesUrls": imagesUrls,
             "type": type,
             "address": address,
-            "isLiked": isLiked
+            "isLiked": isLiked,
+            "timestamp": timestamp
         ]
     }
 }

@@ -402,3 +402,79 @@ import Foundation
 ////        }
 //
 //}
+
+///~~~~~~~~~~~~~~~~~~~~~~~
+///Deecode from Firebase or other source
+
+///Both approaches work decoding with the data(as: ) function or
+///custom encoding to json and decoding with decoder init.
+/// Swift is able to recognize the types after decoding with both approaches
+/// trough pattern matching
+//func fetchPets(fetchCollection path: String) async throws -> [Pet] {
+//    ///Usar mapper para transformar los docs
+//    let snapshot = try await db.collection(path).getDocuments()
+//    let docs = snapshot.documents
+//
+//    var pets = [Pet]()
+//    for doc in docs {
+//        let mappedPet = try doc.data(as: Pet.self)
+//
+//        pets.append(mappedPet)
+//    }
+//    for doc in docs {
+//            let petModelData: [String: Any] = [
+//                "id": "3323-ews3",
+//                "name": "Joanna Camacho",
+//                "age": 22,
+//                "gender": "female",
+//                "size": "small",
+//                "breed": "Dachshund",
+//                "imagesUrls": ["firebase.com/ImageExampleMyCousin"],
+//                "type": "dog",
+//                "address": "Sinaloa",
+//                "isLiked": false
+//            ]
+//            let m = petModelData
+//            if let jsonData = try? JSONSerialization.data(withJSONObject: m, options: []) {
+//                let pet = try? JSONDecoder().decode(Pet.self, from: jsonData)
+//                print("data firebase niga PET IN CUSTOM DECODER firebase JSONDATA: => \(jsonData)")
+//                if let pet = pet {
+//                    pets.append(pet)
+//                    print("data firebase niga PET IN CUSTOM DECODER firebase fn: => \(pet.address)")
+//                }
+//
+//            }
+        
+//            let petModelData: [String: Any] = [
+//                "id": "3323-ews3",
+//                "name": "Joanna Camacho",
+//                "age": 22,
+//                "gender": "female",
+//                "size": "small",
+//                "breed": "Dachshund",
+//                "imagesUrls": ["firebase.com/ImageExampleMyCousin"],
+//                "type": "dog",
+//                "address": "Sinaloa",
+//                "isLiked": false
+//            ]
+//
+//            if let jsonData = try? JSONSerialization.data(withJSONObject: petModelData, options: []) {
+//                let pet = try? JSONDecoder().decode(Pet.self, from: jsonData)
+//
+//                print("data firebase niga PET IN CUSTOM DECODER: => \(pet!.address)")
+//
+//                pets.append(pet!)
+//            }
+//
+    
+//
+//            if let jsonData = try? JSONSerialization.data(withJSONObject: doc.data(), options: []) {
+//                let pet = try? JSONDecoder().decode(Pet.self, from: jsonData)
+//                if let pet = pet {
+//                    pets.append(pet)
+//                }
+//            }
+//    }
+//
+//    return pets
+//}

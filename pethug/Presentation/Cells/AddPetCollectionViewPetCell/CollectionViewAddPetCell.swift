@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol AddPetContentDelegate: AnyObject {
     func didTap(_ pet: AddPetContentViewController.Item)
@@ -14,6 +15,28 @@ protocol AddPetContentDelegate: AnyObject {
 final class AddPetControllerCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private components
+    private let screenButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        button.showsMenuAsPrimaryAction = true
+        button.menu = UIMenu(
+            title: "",
+            image: nil,
+            options: .destructive ,
+            preferredElementSize: .medium,
+            children: [
+                UIAction(title: "Editar", image: UIImage(systemName: "pencil"), handler: { (_) in
+                    
+                }),
+                UIAction(title: "Eliminar", image: UIImage(systemName: "trash"), attributes: .destructive, handler: { (_) in
+                print("CLICKED DELETE MF Jonna: =>")
+                    
+                })
+            ]
+        )
+        return button
+    }()
+    
     let petImage: UIImageView = {
        let iv = UIImageView()
         let k = Int(arc4random_uniform(6))
@@ -65,12 +88,16 @@ final class AddPetControllerCollectionViewCell: UICollectionViewCell {
         let dummyView = UIView()
         dummyView.backgroundColor = .systemPink.withAlphaComponent(0.5)
         
+        addSubview(screenButton)
+        bringSubviewToFront(screenButton)
         
         addSubview(petImage)
         sendSubviewToBack(petImage)
         
         addSubview(name)
         addSubview(address)
+        
+        screenButton.fillSuperview()
         
         petImage.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
         petImage.setHeight(frame.height / 2.6 * 2)
@@ -83,9 +110,15 @@ final class AddPetControllerCollectionViewCell: UICollectionViewCell {
     private var work: DispatchWorkItem?
     
     private func configureCellUI(with viewModel: PetCellViewModel) {
-         work = DispatchWorkItem(block: {
-             self.petImage.image = UIImage(named: viewModel.petImage)
-        })
+        work = DispatchWorkItem(block: {
+            Task {
+                self.petImage.sd_setImage(with: URL(string: viewModel.petImage))
+            }
+       })
+        
+//         work = DispatchWorkItem(block: {
+//             self.petImage.image = UIImage(named: viewModel.petImage)
+//        })
         
         let randomNumber = CGFloat(Int(arc4random_uniform(2)))
         DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber, execute: work!)

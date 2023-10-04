@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 final class NewPetContentViewController: UIViewController {
     //MARK: - Private components
@@ -22,6 +23,7 @@ final class NewPetContentViewController: UIViewController {
             print("cambio currentsnap data checar")
         }
     }
+    private var cancellables = Set<AnyCancellable>()
 //    var snapData: [SnapData] {
 //        didSet {
 ////            updateSnapShot()
@@ -48,6 +50,18 @@ final class NewPetContentViewController: UIViewController {
         collectionView.dragInteractionEnabled = false
         configureDataSource()
         updateSnapShot()
+        
+        viewModel.stateSubject
+            .handleThreadsOperator()
+            .sink { [weak self] state in
+                switch state {
+                case .success:
+                    self?.dismiss(animated: true)
+                default:
+                    print("error")
+                }
+                
+            }.store(in: &cancellables)
     }
     
     
@@ -91,9 +105,9 @@ final class NewPetContentViewController: UIViewController {
         let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
 
         let intOne:CGFloat = 10, intTwo: CGFloat = 150
-        print(":UIScreen.main.bounds.height intone => \(UIScreen.main.bounds.height)")
-        print(" (textFieldBottomY + intOne)  => \((textFieldBottomY + intOne)), > keyboardTopY ): \(keyboardTopY)")
-        print(" (textFieldBottomY + intOne) > keyboardTopY ): => \((textFieldBottomY + intOne) > keyboardTopY )")
+//        print(":UIScreen.main.bounds.height intone => \(UIScreen.main.bounds.height)")
+//        print(" (textFieldBottomY + intOne)  => \((textFieldBottomY + intOne)), > keyboardTopY ): \(keyboardTopY)")
+//        print(" (textFieldBottomY + intOne) > keyboardTopY ): => \((textFieldBottomY + intOne) > keyboardTopY )")
         if (textFieldBottomY + intOne) > keyboardTopY {
             let textBoxY = convertedTextFieldFrame.origin.y
             let newFrameY = (textBoxY - keyboardTopY / 2) * -1
@@ -344,19 +358,19 @@ final class NewPetContentViewController: UIViewController {
         
         let breedMockVM = NewPetBreed(currentBreed: "Golden Retriever")
         
-        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imagesUrls: [], type: .dog, address: .QuintanaRoo, isLiked: true)
-        switch (typeMockVM.type, pet1.type) {
-        case (.dog, .dog):
-            print("son iguales qwe DOG: =>")
-        case (.cat, .cat):
-            print("extra ///.2: =>")
-        case (.bird, .bird):
-            print("extra ///.2: =>")
-        case (.rabbit, .rabbit):
-            print("extra ///.2: =>")
-        default:
-            print("extra ///.2: =>")
-        }
+//        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imagesUrls: [], type: .dog, address: .QuintanaRoo, isLiked: true)
+//        switch (typeMockVM.type, pet1.type) {
+//        case (.dog, .dog):
+//            print("son iguales qwe DOG: =>")
+//        case (.cat, .cat):
+//            print("extra ///.2: =>")
+//        case (.bird, .bird):
+//            print("extra ///.2: =>")
+//        case (.rabbit, .rabbit):
+//            print("extra ///.2: =>")
+//        default:
+//            print("extra ///.2: =>")
+//        }
         
 //        if typeMockVM.type == .dog(.goldenRetriever) {
 //            print("son iguales qwe: => \(typeMockVM.type == .dog(.goldenRetriever))")

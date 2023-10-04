@@ -95,7 +95,7 @@ final class AddPetViewController: UIViewController {
 //            .init(key: .pets, values: data.map { .pet($0) })
 //        ]
         let snapData: [AddPetContentViewController.SnapData] = [
-//            .init(key: .pets, values: data.map { .pet($0) })
+            .init(key: .pets, values: data.map { .pet($0) })
         ]
         
         if contentStateVC.shownViewController == contentVc {

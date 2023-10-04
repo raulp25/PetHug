@@ -7,6 +7,7 @@
 
 
 import FirebaseFirestoreSwift
+import Firebase
 import UIKit
 
 
@@ -22,6 +23,7 @@ struct PetModel: Codable {
     let type: String
     let address: String
     var isLiked: Bool
+    var timestamp: Timestamp
     
     init(
         id: String,
@@ -33,7 +35,8 @@ struct PetModel: Codable {
         imagesUrls: [String],
         type: String,
         address: String,
-        isLiked: Bool
+        isLiked: Bool,
+        timestamp: Timestamp
     ) {
         self.id = id
         self.name = name
@@ -45,5 +48,6 @@ struct PetModel: Codable {
         self.type = type
         self.address = address
         self.isLiked = isLiked
+        self.timestamp = timestamp
     }
 }

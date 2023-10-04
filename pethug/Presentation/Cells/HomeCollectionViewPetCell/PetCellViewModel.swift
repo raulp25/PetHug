@@ -12,7 +12,7 @@ final class PetCellViewModel {
     var pet: Pet
     
     var petImage: String {
-        pet.age < 1 ? "sal" : "pr\(pet.age)"
+        pet.imagesUrls.isEmpty ? "" : pet.imagesUrls.first!
     }
     
     var heartImage: String {

@@ -6,10 +6,21 @@
 //
 
 import Foundation
+import Firebase
 
 class Pet: Codable, Hashable {
     static func == (lhs: Pet, rhs: Pet) -> Bool {
-        return lhs.id == rhs.id
+        (
+            lhs.id         == rhs.id         &&
+            lhs.name       == rhs.name       &&
+            lhs.age        == rhs.age        &&
+            lhs.gender     == rhs.gender     &&
+            lhs.size       == rhs.size       &&
+            lhs.breed      == rhs.breed      &&
+            lhs.imagesUrls == rhs.imagesUrls &&
+            lhs.type       == rhs.type       &&
+            lhs.address    == rhs.address
+        )
     }
     
     func hash(into hasher: inout Hasher) {
@@ -26,6 +37,7 @@ class Pet: Codable, Hashable {
     let type: PetType
     let address: State
     var isLiked: Bool
+    let timestamp: Timestamp
     
     init(
         id: String,
@@ -37,7 +49,8 @@ class Pet: Codable, Hashable {
         imagesUrls: [String],
         type: PetType = .dog,
         address: State = .MexicoCity,
-        isLiked: Bool
+        isLiked: Bool,
+        timestamp: Timestamp
     ) {
         self.id = id
         self.name = name
@@ -49,6 +62,7 @@ class Pet: Codable, Hashable {
         self.type = type
         self.address = address
         self.isLiked = isLiked
+        self.timestamp = timestamp
     }
     
     required init(from decoder: Decoder) throws {
@@ -60,7 +74,8 @@ class Pet: Codable, Hashable {
             self.breed = try container.decode(String.self, forKey: .breed)
             self.imagesUrls = try container.decode([String].self, forKey: .imagesUrls)
             self.isLiked = try container.decode(Bool.self, forKey: .isLiked)
-            
+            self.timestamp = try container.decode(Timestamp.self, forKey: .timestamp)
+        
             let typeString = try container.decode(String.self, forKey: .type)
             if let petType = PetType(rawValue: typeString) {
                 self.type = petType
@@ -170,81 +185,3 @@ enum RabbitBreed: String, Codable {
 }
 
 
-
-
-    
-//
-//class Pet: Codable, Hashable {
-//    static func == (lhs: Pet, rhs: Pet) -> Bool {
-//        return lhs.id == rhs.id
-//    }
-//
-//    func hash(into hasher: inout Hasher) {
-//           hasher.combine(id)
-//       }
-//
-//    let id: String
-//    let name: String
-//    let age: Int
-//    let gender: Gender
-//    let size: Size
-//    let breed: String
-//    let imagesUrls: [String]
-//    let type: PetType
-//    let address: State
-//    var isLiked: Bool
-//
-//    init(
-//        id: String,
-//        name: String,
-//        age: Int,
-//        gender: Gender = .female,
-//        size: Size = .medium,
-//        breed: String,
-//        imagesUrls: [String],
-//        type: PetType = .dog,
-//        address: State = .MexicoCity,
-//        isLiked: Bool
-//    ) {
-//        self.id = id
-//        self.name = name
-//        self.age = age
-//        self.gender = gender
-//        self.size = size
-//        self.breed = breed
-//        self.imagesUrls = imagesUrls
-//        self.type = type
-//        self.address = address
-//        self.isLiked = isLiked
-//    }
-//
-//    required init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//
-//        // Initialize properties as optional
-//        self.id = try container.decode(String.self, forKey: .id)
-//        self.name = try container.decode(String.self, forKey: .name)
-//        self.age = try container.decode(Int.self, forKey: .age)
-//        self.breed = try container.decode(String.self, forKey: .breed)
-//        self.imagesUrls = try container.decode([String].self, forKey: .imagesUrls)
-//        self.isLiked = try container.decode(Bool.self, forKey: .isLiked)
-//        self.gender = try container.decodeIfPresent(Gender.self, forKey: .gender) ?? .female
-//        self.size = try container.decodeIfPresent(Size.self, forKey: .size) ?? .medium
-//
-//        // Decode 'type' as a String and convert to PetType
-//        let typeString = try container.decode(String.self, forKey: .type)
-//        if let petType = PetType(rawValue: typeString) {
-//            self.type = petType
-//        } else {
-//            throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid type value")
-//        }
-//
-//        // Decode 'address' as a String and convert to State
-//        let addressString = try container.decode(String.self, forKey: .address)
-//        if let address = State(rawValue: addressString) {
-//            self.address = address
-//        } else {
-//            throw DecodingError.dataCorruptedError(forKey: .address, in: container, debugDescription: "Invalid address value")
-//        }
-//    }
-//}
