@@ -186,6 +186,24 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
         //
         guard let item = currentConfiguration.viewModel else { return }
+        if item.type != nil {
+            switch item.type {
+            case .dog:
+                dogCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                dogCheckMarkButton.tintColor = .systemOrange
+            case .cat:
+                catCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                catCheckMarkButton.tintColor = .systemOrange
+            case .bird:
+                birdCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                birdCheckMarkButton.tintColor = .systemOrange
+            case .rabbit:
+                rabbitCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                rabbitCheckMarkButton.tintColor = .systemOrange
+            case .none:
+                print("")
+            }
+        }
         //        nameLabel.text = item.name
         //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)

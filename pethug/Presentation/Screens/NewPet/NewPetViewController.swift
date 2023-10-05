@@ -10,7 +10,13 @@ import UIKit
 final class NewPetViewController: UIViewController {
     
     // MARK: - Private components
-    private let contentVC = NewPetContentViewController()
+    private lazy var contentVC = NewPetContentViewController(
+                                viewModel: NewPetViewModel(
+                                    imageService: ImageService(),
+                                    createPetUseCase: CreatePet.composeCreatePetUC(),
+                                    updatePetUseCase: UpdatePet.composeUpdatePetUC(),
+                                    pet: self.pet
+                                ))
     
     private lazy var xmarkImageContainer: UIView = {
        let uv = UIView(withAutolayout: true)
@@ -47,7 +53,7 @@ final class NewPetViewController: UIViewController {
     
     // MARK: - Internal properties
     weak var coordinator: NewPetCoordinator?
-    
+    var pet: Pet?
     //    init(viewModel: NewMessageViewModel) {
     //        self.viewModel = viewModel
     //        super.init(nibName: nil, bundle: nil)

@@ -80,6 +80,8 @@
 		C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */; };
 		C44DFD402AC639B20045DD7A /* NewPetUploadCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */; };
 		C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */; };
+		C451930C2ACE7C4A00B80926 /* UpdatePetUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451930B2ACE7C4A00B80926 /* UpdatePetUC.swift */; };
+		C45193102ACE8B0E00B80926 /* FetchUserPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */; };
 		C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* PetsError.swift */; };
 		C467578B2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578A2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift */; };
 		C467578D2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */; };
@@ -119,6 +121,8 @@
 		C48D9B4F2AC49E3B002EDA90 /* NewPetNameCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B4E2AC49E3B002EDA90 /* NewPetNameCellContentView.swift */; };
 		C48D9B542AC4CA3F002EDA90 /* NewPetGalleryListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B532AC4CA3F002EDA90 /* NewPetGalleryListCellConfiguration.swift */; };
 		C48D9B562AC4CB16002EDA90 /* NewPetGalleryCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B552AC4CB16002EDA90 /* NewPetGalleryCellContentView.swift */; };
+		C49440872ACD34C10042A1DA /* DeletePetUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49440862ACD34C10042A1DA /* DeletePetUC.swift */; };
+		C49440892ACD3ABF0042A1DA /* AddPetContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49440882ACD3ABF0042A1DA /* AddPetContentViewModel.swift */; };
 		C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */; };
 		C4A95C3D2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A95C3C2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift */; };
 		C4A95C3F2AC8BE33002781E2 /* NewPetBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A95C3E2AC8BE33002781E2 /* NewPetBreedCellContentView.swift */; };
@@ -243,6 +247,8 @@
 		C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadListCellConfiguration.swift; sourceTree = "<group>"; };
 		C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadCellContentView.swift; sourceTree = "<group>"; };
 		C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummySectionHeader.swift; sourceTree = "<group>"; };
+		C451930B2ACE7C4A00B80926 /* UpdatePetUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePetUC.swift; sourceTree = "<group>"; };
+		C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserPetsUC.swift; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* PetsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsError.swift; sourceTree = "<group>"; };
 		C467578A2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPetGalleryContentViewController+Types.swift"; sourceTree = "<group>"; };
 		C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoControllerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -282,6 +288,8 @@
 		C48D9B4E2AC49E3B002EDA90 /* NewPetNameCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetNameCellContentView.swift; sourceTree = "<group>"; };
 		C48D9B532AC4CA3F002EDA90 /* NewPetGalleryListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetGalleryListCellConfiguration.swift; sourceTree = "<group>"; };
 		C48D9B552AC4CB16002EDA90 /* NewPetGalleryCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetGalleryCellContentView.swift; sourceTree = "<group>"; };
+		C49440862ACD34C10042A1DA /* DeletePetUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePetUC.swift; sourceTree = "<group>"; };
+		C49440882ACD3ABF0042A1DA /* AddPetContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetContentViewModel.swift; sourceTree = "<group>"; };
 		C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponser+Extensions.swift"; sourceTree = "<group>"; };
 		C4A95C3C2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetBreedListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4A95C3E2AC8BE33002781E2 /* NewPetBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetBreedCellContentView.swift; sourceTree = "<group>"; };
@@ -754,6 +762,9 @@
 			children = (
 				C476E2BD2ABA96C40014DEA4 /* FetchPetsUC.swift */,
 				C4F7DFC92ACC8407000D5F76 /* CreatePetUC.swift */,
+				C451930B2ACE7C4A00B80926 /* UpdatePetUC.swift */,
+				C49440862ACD34C10042A1DA /* DeletePetUC.swift */,
+				C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */,
 			);
 			path = Pets;
 			sourceTree = "<group>";
@@ -763,6 +774,7 @@
 			children = (
 				C4779BDD2AC38DC100E3A16F /* AddPetViewModel.swift */,
 				C4779BDF2AC38E3B00E3A16F /* AddPetViewModel+Types.swift */,
+				C49440882ACD3ABF0042A1DA /* AddPetContentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1242,6 +1254,7 @@
 				C43261D62AC222B900B70ACA /* AddPetTabCoordinator.swift in Sources */,
 				C4779BE82AC3A7F100E3A16F /* AddPetContentViewController+Types.swift in Sources */,
 				C42616F12AB28296006925DB /* AuthButton.swift in Sources */,
+				C49440892ACD3ABF0042A1DA /* AddPetContentViewModel.swift in Sources */,
 				C44820142AB538DC00E72BD2 /* DomainMapperProtocol.swift in Sources */,
 				C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */,
 				C42616E92AB27B37006925DB /* AuthPublisher.swift in Sources */,
@@ -1276,6 +1289,7 @@
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
 				C483EB9F2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
+				C45193102ACE8B0E00B80926 /* FetchUserPetsUC.swift in Sources */,
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
 				C48D9B4F2AC49E3B002EDA90 /* NewPetNameCellContentView.swift in Sources */,
 				C42616DD2AB277C4006925DB /* ValidatorType.swift in Sources */,
@@ -1378,7 +1392,9 @@
 				C48D9B562AC4CB16002EDA90 /* NewPetGalleryCellContentView.swift in Sources */,
 				C483EBA22AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift in Sources */,
 				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
+				C451930C2ACE7C4A00B80926 /* UpdatePetUC.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,
+				C49440872ACD34C10042A1DA /* DeletePetUC.swift in Sources */,
 				C448200E2AB5335500E72BD2 /* UserService.swift in Sources */,
 				C4779BF22AC3C92000E3A16F /* NewPetContentViewController+Types.swift in Sources */,
 				C435314E2AB966750070D7EE /* ContentStateViewController.swift in Sources */,

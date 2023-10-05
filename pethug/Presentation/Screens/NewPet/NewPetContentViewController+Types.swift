@@ -29,19 +29,19 @@ extension NewPetContentViewController {
     }
     
     enum Item: Hashable {
-        case name
-        case gallery
-        case type
-        case breed
-        case gender
-        case size
-        case age
-        case activity
-        case social
-        case affection
-        case info
-        case address
-        case end
+        case name(NewPetName)
+        case gallery(NewPetGallery)
+        case type(NewPetType)
+        case breed(NewPetBreed)
+        case gender(NewPetGender)
+        case size(NewPetSize)
+        case age(NewPetAge)
+        case activity(NewPetActivity)
+        case social(NewPetSocial)
+        case affection(NewPetAffection)
+        case info(NewPetInfo)
+        case address(NewPetAddress)
+        case end(NewPetUpload)
     }
     
     struct SnapData {

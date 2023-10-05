@@ -11,6 +11,7 @@ import FirebaseFirestore
 
 protocol AddPetNavigatable: AnyObject {
     func startAddPetFlow()
+    func startEditPetFlow(pet: Pet)
 }
 
 final class AddPetViewModel {
@@ -18,7 +19,7 @@ final class AddPetViewModel {
     weak var navigation: AddPetNavigatable?
     var state = CurrentValueSubject<State,Never>(.loading)
     
-//    var fetchPetsUseCase
+    //    var fetchPetsUseCase
     
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
@@ -26,17 +27,12 @@ final class AddPetViewModel {
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
     private var pets: [Pet] = []
     
-    private let fetchPetsUC: DefaultFetchPetsUC
+    private let fetchUserPetsUC: DefaultFetchUserPetsUC
     
     ///Change to FetchUserPetsUC
-    init(fetchPetsUC: DefaultFetchPetsUC) {
-        self.fetchPetsUC = fetchPetsUC
+    init(fetchUserPetsUC: DefaultFetchUserPetsUC) {
+        self.fetchUserPetsUC = fetchUserPetsUC
         observeState()
-//        fetchPets(collection: .getPath(for: .dogs))
-        ///Mock pet, do not uncomment
-//        createMockPet()
-        
-//        fetchPet()
     }
     
     deinit {
@@ -44,11 +40,11 @@ final class AddPetViewModel {
     }
     
     //MARK: - Private methods
-     func fetchPets(collection: String) {
+    func fetchPets(collection: String) {
         Task {
             state.send(.loading)
             do {
-                let data = try await fetchPetsUC.execute(fetchCollection: .getPath(for: .dogs))
+                let data = try await fetchUserPetsUC.execute()
                 petsSubject.send(data)
             } catch {
                 state.send(.error(.default(error)))
@@ -60,97 +56,18 @@ final class AddPetViewModel {
     private func observeState() {
         petsSubject
             .sink { completion in
-            switch completion {
-            case .finished:
-                break
-            case .failure(let err):
-                print("Error retreiving pets: => \(err)")
-            }
-        } receiveValue: { [weak self] pets in
-            self?.pets.append(contentsOf: pets)
-            self?.state.send(.loaded(pets))
-        }.store(in: &subscriptions)
-
-    }
-    
-    
-//    private func createMockPet() {
-//        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: .male, size: .large, breed: "labrador", imagesUrls: [], type: .dog, address: .MexicoCity, isLiked: false)
-//        let db = Firestore.firestore()
-//        Task {
-//            do {
-//                try db.collection(.getPath(for: .dogs)).document(pet.id).setData(from: pet)
-//            } catch {
-//                
-//            }
-//        }
-//    }
-    
-    
-    
-//    private func createMockPet() {
-//        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: "f", size: "xl", breed: "labrador", imageUrl: "km", type: .dog(.goldenRetriever))
-//        let data = pet.toObjectLiteral()
-//        let db = Firestore.firestore()
-//        Task {
-//            do {
-//
-//                print("creating mock pet: => \(pet)")
-//                let encoder = JSONEncoder()
-//                      let data2 = try encoder.encode(pet)
-//
-//                if let petDictionary = try JSONSerialization.jsonObject(with: data2, options: []) as? [String: Any] {
-//                    print(": mock pet dictionary => \(petDictionary)")
-////                    try await db.collection(.getPath(for: .dogs)).document(pet.id).setData(petDictionary)
-//                    ///Instead of enconding manually we use setData(from: [our data structure])
-//                    try db.collection(.getPath(for: .dogs)).document(pet.id).setData(from: pet)
-//                    print("data en fetch pets(): => \(data)")
-//                }
-//
-//            } catch {
-//
-//            }
-//        }
-//    }
-    
-//    private func fetchPet() {
-//        let db = Firestore.firestore()
-//
-//        db.collection(.getPath(for: .dogs)).document("332-alpha").getDocument { (document, error) in
-//            if let document = document, document.exists {
-//                do {
-//                    if let data = document.data() {
-//                        let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
-//                        let decoder = JSONDecoder()
-//                        let pet = try decoder.decode(Pet.self, from: jsonData)
-//                        print("Fetched pet: => \(pet)")
-//                    }
-//                } catch {
-//                    print("Error decoding pet: \(error)")
-//                }
-//            } else {
-//                print("Document does not exist")
-//            }
-//        }
-//    }
-
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let err):
+                    print("Error retreiving pets: => \(err)")
+                }
+            } receiveValue: { [weak self] pets in
+                self?.pets.append(contentsOf: pets)
+                self?.state.send(.loaded(pets))
+            }.store(in: &subscriptions)
+        
+    }   
 }
-
-
-//Request manager swft mrvl
-//protocol DataParser {
-//    func parse<T: Decodable>(data: Data) throws -> T
-//}
-//
-//class DefaultDataParser: DataParser {
-//    private var jsonDecoder: JSONDecoder
-//    init(jsonDecoder: JSONDecoder = JSONDecoder()) {
-//        self.jsonDecoder = jsonDecoder
-//    }
-//    func parse<T: Decodable>(data: Data) throws -> T {
-//        return try jsonDecoder.decode(T.self, from: data)
-//    }
-//}
-
 
 

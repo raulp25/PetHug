@@ -12,13 +12,17 @@ extension Pet: DomainMapper {
         return Pet(
             id: id,
             name: name,
-            age: age,
             gender: gender,
             size: size,
             breed: breed,
             imagesUrls: imagesUrls,
             type: type,
+            age: age,
+            activityLevel: activityLevel,
+            socialLevel: socialLevel,
+            affectionLevel: affectionLevel,
             address: address,
+            info: info,
             isLiked: isLiked,
             timestamp: timestamp
         )
@@ -30,14 +34,19 @@ extension Pet: ObjectLiteralMapper {
         return [
             "id": id,
             "name": name,
-            "age": age,
             "gender": gender,
             "size": size,
             "breed": breed,
             "imagesUrls": imagesUrls,
             "type": type,
+            "age": age,
+            "activityLevel": activityLevel,
+            "socialLevel": socialLevel,
+            "affectionLevel": affectionLevel,
             "address": address,
-            "isLiked": isLiked
+            "info": info,
+            "isLiked": isLiked,
+            "timestamp": timestamp
         ]
     }
 }
@@ -50,12 +59,16 @@ extension Pet: FirebaseMapper {
             id: id,
             name: name,
             age: age,
-            gender: gender.rawValue,
-            size: size.rawValue,
+            gender: gender?.rawValue,
+            size: size?.rawValue,
             breed: breed,
             imagesUrls: imagesUrls,
             type: type.rawValue,
             address: address.rawValue,
+            activityLevel: activityLevel,
+            socialLevel: socialLevel,
+            affectionLevel: affectionLevel,
+            info: info,
             isLiked: false,
             timestamp: timestamp
         )
@@ -68,13 +81,17 @@ extension PetModel: ObjectLiteralMapper {
         return [
             "id": id,
             "name": name,
-            "age": age,
             "gender": gender,
             "size": size,
             "breed": breed,
             "imagesUrls": imagesUrls,
             "type": type,
+            "age": age,
+            "activityLevel": activityLevel,
+            "socialLevel": socialLevel,
+            "affectionLevel": affectionLevel,
             "address": address,
+            "info": info,
             "isLiked": isLiked,
             "timestamp": timestamp
         ]

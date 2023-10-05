@@ -9,15 +9,15 @@ import UIKit
 
 final class NewPetCoordinator: NavCoordinator {
     // MARK: - Properties
-    ///Siempre hay que ir pasando el parent rootView a los nuevos coordinators
     var childCoordinators = [Coordinator]()
     var rootViewController: UINavigationController = .init()
     weak var parentCoordinator: AddPetTabCoordinator?
-//    private let viewModel = NewMessageViewModel()
+    var pet: Pet?
 
     // MARK: - LifeCycle
     func start() {
         let vc = NewPetViewController()
+        vc.pet = pet
         vc.coordinator = self
         
         vc.modalPresentationStyle = .fullScreen

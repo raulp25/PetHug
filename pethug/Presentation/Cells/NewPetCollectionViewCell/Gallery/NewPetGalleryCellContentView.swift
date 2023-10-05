@@ -103,11 +103,23 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
 //
         guard let item = currentConfiguration.viewModel else { return }
-//        nameLabel.text = item.name
-//        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-//        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-//
-//        imageView.configure(with: item.profileImageUrlString)
+        
+        if !item.imagesToEdit.isEmpty {
+            item.getImagetImagesSequentially(stringUrlArray: item.imagesToEdit) { [weak self] images in
+                if !images.isEmpty {
+                    if let gallerySectionIndex = self?.currentSnapData.firstIndex(where: { $0.key == .gallery }) {
+                        self?.currentSnapData[gallerySectionIndex].values.append(contentsOf: images.map({ .image($0) }))
+                        self?.images.append(contentsOf: images)
+                        
+                        self?.snapshot = self?.dataSource.snapshot()
+                        self?.snapshot.appendItems((self?.currentSnapData[gallerySectionIndex].values)!, toSection: .gallery)
+                        DispatchQueue.main.async {
+                            self?.dataSource.apply((self?.snapshot)!, animatingDifferences: false)
+                        }
+                    }
+                }
+            }
+        }
     }
     
     private func setup() {
@@ -348,36 +360,32 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
         
         guard let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) else { return }
         
-        let dispatchGroup = DispatchGroup()
-        
-        snapshot = dataSource.snapshot()
-        
-        for result in results {
-            dispatchGroup.enter()
-            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
-                if let error = error {
-                    print("error loading image object: => \(error)")
+        func downloadNextImage(index: Int) {
+            if index >= results.count {
+                DispatchQueue.main.async {[weak self] in
+                    self?.dataSource.apply((self?.snapshot)!, animatingDifferences: true)
                 }
+            } else {
+                let image = results[index]
                 
-                if let image = object as? UIImage {
-                    self?.currentSnapData[gallerySectionIndex].values.append(.image(image))
-                    self?.images.append(image)
+                image.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+                    if let error = error {
+                        print("error loading image object: => \(error)")
+                        downloadNextImage(index: index + 1)
+                    }
                     
-                    self?.snapshot.appendItems((self?.currentSnapData[gallerySectionIndex].values)!, toSection: .gallery)
-                    dispatchGroup.leave()
-                } else {
-                    dispatchGroup.leave()
+                    if let image = object as? UIImage {
+                        self?.currentSnapData[gallerySectionIndex].values.append(.image(image))
+                        self?.images.append(image)
+                        
+                        self?.snapshot.appendItems((self?.currentSnapData[gallerySectionIndex].values)!, toSection: .gallery)
+                        downloadNextImage(index: index + 1)
+                    }
                 }
-                
             }
         }
         
-        dispatchGroup.notify(queue: .main) {
-            
-            DispatchQueue.main.async {[weak self] in
-                self?.dataSource.apply((self?.snapshot)!, animatingDifferences: true)
-            }
-        }
+        downloadNextImage(index: 0)
         
     }
 }

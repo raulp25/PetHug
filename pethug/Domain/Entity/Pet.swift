@@ -26,55 +26,91 @@ class Pet: Codable, Hashable {
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    
+    ///Using data(as Pet.self) cant be because it wont recongize nil values
+    ///change it tomorrow
     let id: String
     let name: String
-    let age: Int
-    let gender: Gender
-    let size: Size
+    let gender: Gender?
     let breed: String
     let imagesUrls: [String]
     let type: PetType
+    let size: Size?
+    let age: Int
+    let activityLevel: Int
+    let socialLevel: Int
+    let affectionLevel: Int
     let address: State
+    let info: String
     var isLiked: Bool
     let timestamp: Timestamp
     
     init(
         id: String,
         name: String,
-        age: Int,
-        gender: Gender = .female,
-        size: Size = .medium,
+        gender: Gender?,
+        size: Size? = nil,
         breed: String,
         imagesUrls: [String],
-        type: PetType = .dog,
-        address: State = .MexicoCity,
+        type: PetType,
+        age: Int,
+        activityLevel: Int,
+        socialLevel: Int,
+        affectionLevel: Int,
+        address: State,
+        info: String,
         isLiked: Bool,
         timestamp: Timestamp
     ) {
         self.id = id
         self.name = name
-        self.age = age
         self.gender = gender
         self.size = size
         self.breed = breed
         self.imagesUrls = imagesUrls
         self.type = type
+        self.age = age
+        self.activityLevel = activityLevel
+        self.socialLevel = socialLevel
+        self.affectionLevel = affectionLevel
         self.address = address
+        self.info = info
         self.isLiked = isLiked
         self.timestamp = timestamp
     }
     
+    //Cant decode Timestamp and null values at the same time so this is the solution
+    init(dictionary: [String: Any]) {
+        self.id             = dictionary["id"]             as? String ?? ""
+        self.name           = dictionary["name"]           as? String ?? ""
+        self.gender         = Gender.fromString(dictionary["gender"] as? String)
+        self.size           = Size.fromString(dictionary["size"] as? String)
+        self.breed          = dictionary["breed"]          as? String ?? ""
+        self.imagesUrls     = dictionary["imagesUrls"]     as? [String] ?? []
+        self.type           = PetType.fromString(dictionary["type"] as! String)
+        self.age            = dictionary["age"]            as? Int ?? 0
+        self.activityLevel  = dictionary["activityLevel"]  as? Int ?? 0
+        self.socialLevel    = dictionary["socialLevel"]    as? Int ?? 0
+        self.affectionLevel = dictionary["affectionLevel"] as? Int ?? 0
+        self.address        = State.fromString(dictionary["address"] as! String)
+        self.info           = dictionary["info"]           as? String ?? ""
+        self.isLiked        = dictionary["isLiked"]        as? Bool ?? false
+        self.timestamp      = dictionary["timestamp"]      as? Timestamp ?? Timestamp(date: Date())
+    }
+    //Became useless, delete it at the end of project
     required init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
         
-            self.id = try container.decode(String.self, forKey: .id)
-            self.name = try container.decode(String.self, forKey: .name)
-            self.age = try container.decode(Int.self, forKey: .age)
-            self.breed = try container.decode(String.self, forKey: .breed)
-            self.imagesUrls = try container.decode([String].self, forKey: .imagesUrls)
-            self.isLiked = try container.decode(Bool.self, forKey: .isLiked)
-            self.timestamp = try container.decode(Timestamp.self, forKey: .timestamp)
+            self.id             = try container.decode(String.self,    forKey: .id)
+            self.name           = try container.decode(String.self,    forKey: .name)
+            self.breed          = try container.decode(String.self,    forKey: .breed)
+            self.imagesUrls     = try container.decode([String].self,  forKey: .imagesUrls)
+            self.age            = try container.decode(Int.self,       forKey: .age)
+            self.activityLevel  = try container.decode(Int.self,       forKey: .activityLevel)
+            self.socialLevel    = try container.decode(Int.self,       forKey: .socialLevel)
+            self.affectionLevel = try container.decode(Int.self,       forKey: .affectionLevel)
+            self.info           = try container.decode(String.self,    forKey: .info)
+            self.isLiked        = try container.decode(Bool.self,      forKey: .isLiked)
+            self.timestamp      = try container.decode(Timestamp.self, forKey: .timestamp)
         
             let typeString = try container.decode(String.self, forKey: .type)
             if let petType = PetType(rawValue: typeString) {
@@ -103,6 +139,7 @@ class Pet: Codable, Hashable {
             } else {
                 throw DecodingError.dataCorruptedError(forKey: .address, in: container, debugDescription: "Invalid address value")
             }
+        
         }
 }
 
@@ -112,17 +149,46 @@ extension Pet {
         case cat
         case bird
         case rabbit
+        
+        
+        var getPath: String {
+            switch self {
+            case .dog:
+                return .getPath(for: .dogs)
+            case .cat:
+                return .getPath(for: .cats)
+            case .bird:
+                return .getPath(for: .birds)
+            case .rabbit:
+                return .getPath(for: .rabbits)
+            }
+            
+        }
+        
+        static func fromString(_ typeString: String) -> PetType {
+            return PetType(rawValue: typeString.lowercased()) ?? .rabbit
+        }
     }
     
     enum Gender: String, Codable, Hashable {
         case male
         case female
+        
+        static func fromString(_ typeString: String?) -> Gender? {
+            guard let typeString = typeString else { return nil }
+            return Gender(rawValue: typeString.lowercased()) ?? .female
+        }
     }
     
     enum Size: String, Codable, Hashable {
         case small
         case medium
         case large
+        
+        static func fromString(_ typeString: String?) -> Size? {
+            guard let typeString = typeString else { return nil }
+            return Size(rawValue: typeString.lowercased()) ?? .small
+        }
     }
     
     enum State: String, Codable, Hashable, CaseIterable {
@@ -157,8 +223,14 @@ extension Pet {
         case Tlaxcala 
         case Veracruz 
         case Yucatan 
-        case Zacatecas 
+        case Zacatecas
+        
+        static func fromString(_ typeString: String) -> State {
+            return State(rawValue: typeString.lowercased()) ?? .Queretaro
+        }
     }
+    
+    
 }
 
 

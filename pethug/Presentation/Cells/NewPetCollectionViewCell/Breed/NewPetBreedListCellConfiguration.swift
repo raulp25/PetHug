@@ -15,7 +15,8 @@ struct NewPetBreed: Hashable {
     static func == (lhs: NewPetBreed, rhs: NewPetBreed) -> Bool {
         (
             lhs.id == rhs.id &&
-            lhs.currentBreed == rhs.currentBreed
+            lhs.currentBreed == rhs.currentBreed &&
+            lhs.petType == rhs.petType
         )
     }
     var id = UUID().uuidString

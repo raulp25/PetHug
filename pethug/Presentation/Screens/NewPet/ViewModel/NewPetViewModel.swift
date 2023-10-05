@@ -12,12 +12,44 @@ import Combine
 class NewPetViewModel {
     //MARK: - Private properties
     private let imageService: ImageServiceProtocol
-    private let useCase: DefaultCreatePetUC
+    private let createPetUseCase: DefaultCreatePetUC
+    private let updatePetUseCase: DefaultUpdatePetUC
     
-    init(imageService: ImageServiceProtocol, useCase: DefaultCreatePetUC) {
+    //MARK: - Internal Properties
+    private var pet: Pet?
+    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC) {
         self.imageService = imageService
-        self.useCase = useCase
+        self.createPetUseCase = createPetUseCase
+        self.updatePetUseCase = updatePetUseCase
         observeValidation()
+        
+//        mockDecodePetModel()
+    }
+    
+    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, pet: Pet? = nil) {
+        print("recibio pet en newpet view model 444 : => \(String(describing: pet?.imagesUrls))")
+        self.imageService = imageService
+        self.createPetUseCase = createPetUseCase
+        self.updatePetUseCase = updatePetUseCase
+        self.pet = pet
+        self.isEdit = true
+        observeValidation()
+//        let imagesArr = getImages(stringUrlArray: pet?.imagesUrls ?? [])
+        self.imagesToEditState = pet?.imagesUrls ?? []
+        
+        self.nameState = pet?.name
+        self.galleryState = []
+        self.typeState = pet?.type
+        self.breedsState = pet?.breed
+        self.genderState = pet?.gender
+        self.sizeState = pet?.size
+        self.ageState = pet?.age
+        self.activityState = pet?.activityLevel
+        self.socialState = pet?.socialLevel
+        self.affectionState = pet?.affectionLevel
+        self.addressState = pet?.address
+        self.infoState = pet?.info
+        
 //        mockDecodePetModel()
     }
     
@@ -62,6 +94,8 @@ class NewPetViewModel {
     @Published var addressState:  Pet.State? = nil
     @Published var infoState:     String? = nil
     
+    var imagesToEditState: [String] = []
+    var isEdit = false
     var isValidSubject = CurrentValueSubject<Bool, Never>(false)
     var stateSubject = PassthroughSubject<LoadingState, Never>()
     
@@ -136,6 +170,9 @@ class NewPetViewModel {
 //        print("affection level en viewmodel: => 666 \(affection)")
 //        print("address level en viewmodel: => 666 \(address)")
 //        print("info level en viewmodel: => 666 \(info)")
+//        print("gender en viewmodel: => 666 \(gender)")
+        
+//       gender and size props are optional
         if name == nil      ||
            gallery.isEmpty  ||
            type == nil      ||
@@ -158,47 +195,30 @@ class NewPetViewModel {
         stateSubject.send(.loading)
         
         do {
-            
             var imagesUrls = [String]()
             
-            try await withThrowingTaskGroup(of: String.self, body: { group in
-                
-                for image in galleryState {
-                    
-                    group.addTask { try await self.imageService.uploadImage(image: image, path: .getStoragePath(for: .petProfile)) ?? "" }
-                    
-//                    let imageUrl = try await imageService.uploadImage(image: image, path: .getStoragePath(for: .petProfile))
-                    
-//                    if let imageUrl = imageUrl {
-//                        imagesUrls.append(imageUrl)
-//                    }
-                    
-                    for try await image in group {
-                        if !image.isEmpty {
-                            imagesUrls.append(image)
-                        }
-                    }
-                    
-                }
-                
-            })
+            await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
             
             let pet = Pet(
                 id: UUID().uuidString,
                 name: nameState!,
-                age: ageState!,
-                gender: genderState!,
-                size: sizeState!,
+                gender: genderState,
+                size: sizeState,
                 breed: breedsState!,
                 imagesUrls: imagesUrls,
                 type: typeState!,
+                age: ageState!,
+                activityLevel: activityState!,
+                socialLevel: socialState!,
+                affectionLevel: affectionState!,
                 address: addressState!,
+                info: infoState!,
                 isLiked: false,
                 timestamp: Timestamp(date: Date())
             )
             
             
-            let _ = try await createPet(pet: pet)
+            let _ = try await executeCreatePet(pet: pet)
             
             stateSubject.send(.success)
             
@@ -208,31 +228,78 @@ class NewPetViewModel {
         
     }
     
-    private func createPet(pet: Pet) async throws -> Bool{
-        guard let path = getPath() else {
-            stateSubject.send(.error(.someThingWentWrong))
-            return false
+    private func executeCreatePet(pet: Pet) async throws -> Bool{
+        let path = pet.type.getPath
+        
+        return try await createPetUseCase.execute(collection: path, data: pet)
+    }
+    
+    func updatePet() async {
+        
+        stateSubject.send(.loading)
+        
+        do {
+            var imagesUrls = [String]()
+            
+            await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
+            guard let currentPet = pet else { return }
+            let pet = Pet(
+                id: currentPet.id,
+                name: nameState!,
+                gender: genderState,
+                size: sizeState,
+                breed: breedsState!,
+                imagesUrls: imagesUrls,
+                type: typeState!,
+                age: ageState!,
+                activityLevel: activityState!,
+                socialLevel: socialState!,
+                affectionLevel: affectionState!,
+                address: addressState!,
+                info: infoState!,
+                isLiked: currentPet.isLiked,
+                timestamp: currentPet.timestamp
+            )
+            
+            
+            let _ = try await executeUpdatePet(pet: pet)
+            
+            imageService.deleteImages(imagesUrl: currentPet.imagesUrls)
+            
+            stateSubject.send(.success)
+            
+        } catch {
+            stateSubject.send(.error(.default(error)))
         }
         
-        return try await useCase.execute(collection: path, data: pet)
+    }
+    
+    private func executeUpdatePet(pet: Pet) async throws -> Bool{
+        let path = pet.type.getPath
+        
+        return try await updatePetUseCase.execute(collection: path, data: pet)
     }
     
     
-    func getPath() -> String? {
-        switch typeState {
-        case .dog:
-            return .getPath(for: .dogs)
-        case .cat:
-            return .getPath(for: .cats)
-        case .bird:
-            return .getPath(for: .birds)
-        case .rabbit:
-            return .getPath(for: .rabbits)
-        case .none:
-            print("no path")
-            return nil
+    func uploadNextImage(index: Int, imagesUrls: inout [String]) async {
+        if index >= galleryState.count {
+            // end of recursive iteration
+        } else {
+            let image = galleryState[index]
+            
+            do {
+                let imageUrl = try await imageService.uploadImage(image: image, path: .getStoragePath(for: .petProfile))
+                if let  imageUrl = imageUrl {
+                    imagesUrls.append(imageUrl)
+                }
+                await uploadNextImage(index: index + 1, imagesUrls: &imagesUrls)
+                
+            } catch {
+                
+            }
         }
     }
+    
 }
 
 

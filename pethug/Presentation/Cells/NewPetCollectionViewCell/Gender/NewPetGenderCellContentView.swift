@@ -143,6 +143,19 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
         //
         guard let item = currentConfiguration.viewModel else { return }
+        
+        if item.gender != nil {
+            switch item.gender {
+            case .male:
+                maleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                maleCheckMarkButton.tintColor = .systemOrange
+            case .female:
+                femaleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                femaleCheckMarkButton.tintColor = .systemOrange
+            case .none:
+                print("")
+            }
+        }
         //        nameLabel.text = item.name
         //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
@@ -168,66 +181,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         }
     }
     
-    
-    //    enum CurrentChecked: String {
-    //        case dog
-    //        case cat
-    //        case bird
-    //        case rabbit
-    //
-    //    }
-    //    var currentButton: CurrentChecked? = nil
-    
-    //    @objc func didTapCheckMark(_ sender: UIButton) {
-    //        if sender == dogCheckMarkButton && currentButton == .dog {
-    //           sender.setImage(UIImage(systemName: "square"), for: .normal)
-    //           sender.tintColor = .black
-    //        } else if sender == dogCheckMarkButton {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = .dog
-    //        } else {
-    //            dogCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //            dogCheckMarkButton.tintColor = .black
-    //        }
-    //
-    //        if sender == catCheckMarkButton && currentButton == .cat {
-    //           sender.setImage(UIImage(systemName: "square"), for: .normal)
-    //           sender.tintColor = .black
-    //        } else if sender == catCheckMarkButton {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = .cat
-    //        } else {
-    //            catCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //            catCheckMarkButton.tintColor = .black
-    //        }
-    //
-    //        if sender == birdCheckMarkButton && currentButton == .bird {
-    //           sender.setImage(UIImage(systemName: "square"), for: .normal)
-    //           sender.tintColor = .black
-    //        } else if sender == birdCheckMarkButton {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = .bird
-    //        } else {
-    //            birdCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //            birdCheckMarkButton.tintColor = .black
-    //        }
-    //
-    //        if sender == rabbitCheckMarkButton && currentButton == .rabbit {
-    //           sender.setImage(UIImage(systemName: "square"), for: .normal)
-    //           sender.tintColor = .black
-    //        } else if sender == rabbitCheckMarkButton {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = .rabbit
-    //        } else {
-    //            rabbitCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //            rabbitCheckMarkButton.tintColor = .black
-    //        }
-    //    }
-    
     enum CurrentChecked: Int {
         case male = 1
         case female = 2
@@ -236,58 +189,11 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     
     var currentButton: CurrentChecked = .unset
     var buttons: [UIButton] = []
-    //    @objc func didTapCheckMark(_ sender: UIButton) {
-    //        print("sender tag: => \(sender.tag)")
-    //        print("CurrentChecked(rawValue: sender.tag) : => \(CurrentChecked(rawValue: sender.tag) )")
-    //        guard let checked = CurrentChecked(rawValue: sender.tag) else {
-    //            return
-    //        }
-    //
-    //        // Reset all buttons to "square"
-    //        dogCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //        catCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //        birdCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //        rabbitCheckMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-    //
-    //        // Reset all buttons to black color
-    //        dogCheckMarkButton.tintColor = .black
-    //        catCheckMarkButton.tintColor = .black
-    //        birdCheckMarkButton.tintColor = .black
-    //        rabbitCheckMarkButton.tintColor = .black
-    //
-    ////        if checked == currentButton {
-    ////            sender.setImage(UIImage(systemName: "square"), for: .normal)
-    ////            sender.tintColor = .black
-    ////            currentButton = nil
-    ////        } else {
-    //            sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-    //            sender.tintColor = .systemOrange
-    //            currentButton = checked
-    ////        }
-    //    }
     
     @objc func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else {
             return
         }
-        
-//        for button in buttons {
-//            if button == sender {
-//                button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-//                button.tintColor = .systemOrange
-//            } else {
-//                button.setImage(UIImage(systemName: "square"), for: .normal)
-//                button.tintColor = .black
-//            }
-//        }
-//
-//        if checked == currentButton {
-//            sender.setImage(UIImage(systemName: "square"), for: .normal)
-//            sender.tintColor = .black
-//            currentButton = nil
-//        } else {
-//            currentButton = checked
-//        }
         
         for button in buttons {
             if button == sender {
@@ -295,24 +201,25 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
                     button.setImage(UIImage(systemName: "square"), for: .normal)
                     button.tintColor = .black
                     currentButton = .unset
+                    currentConfiguration.viewModel?.delegate?.genderDidChange(type: nil)
                 } else {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
                     currentButton = checked
+                    
+                    switch checked {
+                    case .male:
+                        currentConfiguration.viewModel?.delegate?.genderDidChange(type: .male)
+                    case .female:
+                        currentConfiguration.viewModel?.delegate?.genderDidChange(type: .female)
+                    default:
+                        print(" ")
+                    }
                 }
             } else {
                 button.setImage(UIImage(systemName: "square"), for: .normal)
                 button.tintColor = .black
             }
-        }
-        
-        switch checked {
-        case .male:
-            currentConfiguration.viewModel?.delegate?.genderDidChange(type: .male)
-        case .female:
-            currentConfiguration.viewModel?.delegate?.genderDidChange(type: .female)
-        case .unset:
-            currentConfiguration.viewModel?.delegate?.genderDidChange(type: nil)
         }
     }
 }

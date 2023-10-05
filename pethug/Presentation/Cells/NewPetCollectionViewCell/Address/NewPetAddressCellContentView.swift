@@ -94,14 +94,9 @@ final class NewPetAddressCellContentView: UIView, UIContentView {
         }
 
         currentConfiguration = configuration
-//
+
         guard let item = currentConfiguration.viewModel else { return }
-//        nameLabel.text = item.name
         addressLabel.text = item.address?.rawValue ?? "Donde te ubicas?"
-//        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-//        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-//
-//        imageView.configure(with: item.profileImageUrlString)
     }
     
     

@@ -478,3 +478,195 @@ import Foundation
 //
 //    return pets
 //}
+///Trash but usefull for boilerplate on early stages of projects
+//    private func createMockPet() {
+//        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: .male, size: .large, breed: "labrador", imagesUrls: [], type: .dog, address: .MexicoCity, isLiked: false)
+//        let db = Firestore.firestore()
+//        Task {
+//            do {
+//                try db.collection(.getPath(for: .dogs)).document(pet.id).setData(from: pet)
+//            } catch {
+//
+//            }
+//        }
+//    }
+    
+    
+    
+//    private func createMockPet() {
+//        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: "f", size: "xl", breed: "labrador", imageUrl: "km", type: .dog(.goldenRetriever))
+//        let data = pet.toObjectLiteral()
+//        let db = Firestore.firestore()
+//        Task {
+//            do {
+//
+//                print("creating mock pet: => \(pet)")
+//                let encoder = JSONEncoder()
+//                      let data2 = try encoder.encode(pet)
+//
+//                if let petDictionary = try JSONSerialization.jsonObject(with: data2, options: []) as? [String: Any] {
+//                    print(": mock pet dictionary => \(petDictionary)")
+////                    try await db.collection(.getPath(for: .dogs)).document(pet.id).setData(petDictionary)
+//                    ///Instead of enconding manually we use setData(from: [our data structure])
+//                    try db.collection(.getPath(for: .dogs)).document(pet.id).setData(from: pet)
+//                    print("data en fetch pets(): => \(data)")
+//                }
+//
+//            } catch {
+//
+//            }
+//        }
+//    }
+    
+//    private func fetchPet() {
+//        let db = Firestore.firestore()
+//
+//        db.collection(.getPath(for: .dogs)).document("332-alpha").getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                do {
+//                    if let data = document.data() {
+//                        let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
+//                        let decoder = JSONDecoder()
+//                        let pet = try decoder.decode(Pet.self, from: jsonData)
+//                        print("Fetched pet: => \(pet)")
+//                    }
+//                } catch {
+//                    print("Error decoding pet: \(error)")
+//                }
+//            } else {
+//                print("Document does not exist")
+//            }
+//        }
+//    }
+
+//}
+
+
+///~~~==========================================================
+///CONCURRENCY
+
+///~~~~~~~~~~~~~~~~~~~~~~~
+////DOWNLOAD IMAGES FROM FIREBASE IN SEQUENCE Recursive approach // -DispatchGroup works for asyncrony but it wont respect the concurrency on items position
+///func getImages(stringUrlArray: [String], completion: @escaping([UIImage]) -> Void) {
+//if !imagesToEdit.isEmpty, let imageService = imageService {
+//    var images = [UIImage]()
+////
+////            let group = DispatchGroup()
+////
+////            for imageUrl in imagesToEdit {
+////                group.enter()
+////                imageService.downloadImage(url: imageUrl) { imageData in
+////                    print("image data adentro de for sera nil? cell registration: : => \(imageData)")
+////                    if let imageData = imageData,
+////                       let image = UIImage(data: imageData)
+////                    {
+////                        images.append(image)
+////                        group.leave()
+////                    }
+////                }
+////            }
+////
+////            group.notify(queue: .main) {
+////                completion(images)
+////            }
+//
+//    func downloadNextImage(index: Int) {
+//           if index >= stringUrlArray.count {
+//               // All downloads are complete, call the completion handler
+//               completion(images)
+//           } else {
+//               let imageUrl = stringUrlArray[index]
+//               imageService.downloadImage(url: imageUrl) { imageData in
+//                   if let imageData = imageData, let image = UIImage(data: imageData) {
+//                       images.append(image)
+//                   }
+//                   // Move on to the next image download
+//                   downloadNextImage(index: index + 1)
+//               }
+//           }
+//       }
+//
+//       // Start the sequential downloads with the first image
+//       downloadNextImage(index: 0)
+//
+//}
+//}
+//}
+
+///~~~~~~~~~~~~~~~~~~~~~~~
+///WithThrowingTaskGroup usef
+//
+/// func createPet() async {
+//
+//    stateSubject.send(.loading)
+//
+//    do {
+//        var imagesUrls = [String]()
+//
+//        try await withThrowingTaskGroup(of: String.self, body: { group in
+//
+//            for image in galleryState {
+//                group.addTask { try await self.imageService.uploadImage(image: image, path: .getStoragePath(for: .petProfile)) ?? "" }
+//
+////                    let imageUrl = try await imageService.uploadImage(image: image, path: .getStoragePath(for: .petProfile))
+//
+////                    if let imageUrl = imageUrl {
+////                        imagesUrls.append(imageUrl)
+////                    }
+//
+//                for try await image in group {
+//                    if !image.isEmpty {
+//                        imagesUrls.append(image)
+//                    }
+//                }
+//
+//            }
+//
+//        })
+//
+//        let pet = Pet(
+//            id: UUID().uuidString,
+//            name: nameState!,
+//            gender: genderState,
+//            size: sizeState,
+//            breed: breedsState!,
+//            imagesUrls: imagesUrls,
+//            type: typeState!,
+//            age: ageState!,
+//            activityLevel: activityState!,
+//            socialLevel: socialState!,
+//            affectionLevel: affectionState!,
+//            address: addressState!,
+//            info: infoState!,
+//            isLiked: false,
+//            timestamp: Timestamp(date: Date())
+//        )
+//
+//
+//        let _ = try await createPet(pet: pet)
+//
+//        stateSubject.send(.success)
+//
+//    } catch {
+//        stateSubject.send(.error(.default(error)))
+//    }
+
+
+///~~~==========================================================
+///PARSER ENCODE DECODE CODABLE
+
+///Custom parser class
+//Request manager swft mrvl
+//protocol DataParser {
+//    func parse<T: Decodable>(data: Data) throws -> T
+//}
+//
+//class DefaultDataParser: DataParser {
+//    private var jsonDecoder: JSONDecoder
+//    init(jsonDecoder: JSONDecoder = JSONDecoder()) {
+//        self.jsonDecoder = jsonDecoder
+//    }
+//    func parse<T: Decodable>(data: Data) throws -> T {
+//        return try jsonDecoder.decode(T.self, from: data)
+//    }
+//}

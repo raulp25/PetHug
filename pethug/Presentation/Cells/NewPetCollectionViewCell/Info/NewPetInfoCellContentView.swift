@@ -15,17 +15,16 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
-    
-    lazy var nameTextField: UITextField = {
-        let txtField = UITextField(frame: .zero)
-        txtField.textColor = .label
-        txtField.tintColor = .orange
-        txtField.textAlignment = .left
-        txtField.font = .systemFont(ofSize: 16, weight: .regular)
-        txtField.backgroundColor = .clear
-        txtField.delegate = self
-        txtField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        return txtField
+
+    lazy var textView: CustomTextView = {
+        let textView = CustomTextView()
+        textView.placeHolderText = "Añade información adicional"
+        textView.font = UIFont.systemFont(ofSize: 14)
+        textView.clipsToBounds = true
+        textView.tintColor = .systemOrange
+        
+        textView.delegate = self
+        return textView
     }()
     
     // MARK: - Properties
@@ -78,11 +77,11 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
         currentConfiguration = configuration
 //
         guard let item = currentConfiguration.viewModel else { return }
-//        nameLabel.text = item.name
-//        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-//        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-//
-//        imageView.configure(with: item.profileImageUrlString)
+        
+        if item.info != nil {
+            textView.text = item.info
+            textView.placeholderLabel.isHidden = true
+        }
     }
     
     
@@ -94,12 +93,6 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
     
     private func setup() {
         
-        let textView = CustomTextView()
-        textView.placeHolderText = "Añade información adicional"
-        textView.font = UIFont.systemFont(ofSize: 14)
-        textView.clipsToBounds = true
-        textView.delegate = self
-        textView.tintColor = .systemOrange
 //        tv.delegate = self
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
@@ -120,14 +113,6 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
     
 }
 
-extension NewPetInfoCellContentView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        nameTextField.resignFirstResponder()
-    }
-}
-
-
-
 protocol CustomTextViewDelegate: AnyObject {
     func textDidchange()
 }
@@ -141,7 +126,7 @@ class CustomTextView: UITextView {
     
     var delegate2: CustomTextViewDelegate?
     
-    private let placeholderLabel: UILabel = {
+     let placeholderLabel: UILabel = {
         let label = UILabel()
         label.textColor = .lightGray
         label.font = UIFont.systemFont(ofSize: 14)

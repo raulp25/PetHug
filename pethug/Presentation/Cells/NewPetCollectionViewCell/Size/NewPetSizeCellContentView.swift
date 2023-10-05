@@ -158,6 +158,21 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
         //
         guard let item = currentConfiguration.viewModel else { return }
+        if item.size != nil {
+            switch item.size {
+            case .small:
+                smallCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                smallCheckMarkButton.tintColor = .systemOrange
+            case .medium:
+                mediumCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                mediumCheckMarkButton.tintColor = .systemOrange
+            case .large:
+                largeCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                largeCheckMarkButton.tintColor = .systemOrange
+            case .none:
+                print("")
+            }
+        }
         //        nameLabel.text = item.name
         //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
         //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
@@ -204,26 +219,27 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
                     button.setImage(UIImage(systemName: "square"), for: .normal)
                     button.tintColor = .black
                     currentButton = .unset
+                    currentConfiguration.viewModel?.delegate?.sizeDidChange(size: nil)
                 } else {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
                     currentButton = checked
+                    
+                    switch checked {
+                    case .small:
+                        currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .small)
+                    case .medium:
+                        currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .medium)
+                    case .large:
+                        currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .large)
+                    default:
+                        print("")
+                    }
                 }
             } else {
                 button.setImage(UIImage(systemName: "square"), for: .normal)
                 button.tintColor = .black
             }
-        }
-        
-        switch checked {
-        case .small:
-            currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .small)
-        case .medium:
-            currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .medium)
-        case .large:
-            currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .large)
-        case .unset:
-            currentConfiguration.viewModel?.delegate?.sizeDidChange(size: nil)
         }
         
     }

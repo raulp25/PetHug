@@ -33,11 +33,7 @@ final class AddPetViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-//        render([""])
         bind()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-//            try! AuthService().signOut()
-//        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +43,6 @@ final class AddPetViewController: UIViewController {
     
     // MARK: - setup
     private func setup() {
-//        view.backgroundColor = customRGBColor(red: 111, green: 235, blue: 210)
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
@@ -102,9 +97,9 @@ final class AddPetViewController: UIViewController {
             contentVc?.snapData = snapData
         } else {
             contentVc = AddPetContentViewController(snapData: snapData)
+            contentVc?.delegate = self
             contentStateVC.transition(to: .render(contentVc!))
         }
-        
     }
     
 }
@@ -112,5 +107,10 @@ final class AddPetViewController: UIViewController {
 extension AddPetViewController: AddPetViewHeaderDelegate {
     func action() {
         viewModel.navigation?.startAddPetFlow()
+    }
+}
+extension AddPetViewController: AddPetContentViewControllerDelegate {
+    func didTapEdit(pet: Pet) {
+        viewModel.navigation?.startEditPetFlow(pet: pet)
     }
 }

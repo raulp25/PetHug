@@ -9,7 +9,7 @@ import FirebaseFirestoreSwift
 import UIKit
 
 struct UserModel {
-    @DocumentID var id: String? = UUID().uuidString
+    @DocumentID var id: String?
     let username: String
     let email: String
     let password: String

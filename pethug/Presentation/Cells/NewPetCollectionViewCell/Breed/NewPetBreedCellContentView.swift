@@ -98,7 +98,9 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
 //
         guard let item = currentConfiguration.viewModel else { return }
         containerView.isUserInteractionEnabled = item.petType != nil ? true : false
-//        breedLabel.text = item.breed != nil ? "Eliga el tipo de animal para continuar" : "Dachshund"
+        
+        ///TODO Logic for setting the breeds depending on the pet type
+        print("item pettype == nil ?: => \(item.petType)")
         breedLabel.text = item.petType == nil ?
             "Eliga un tipo de animal para continuar" :
                 item.currentBreed != nil ? item.currentBreed :

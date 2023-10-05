@@ -75,6 +75,7 @@ final class NewPetNameCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
 //
         guard let item = currentConfiguration.viewModel else { return }
+        nameTextField.text = item.name ?? ""
 //        print("item en celda: => \(item.formData.name)")
 //        nameLabel.text = item.name
 //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)

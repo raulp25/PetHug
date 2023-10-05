@@ -85,7 +85,6 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         let dummyView = UIView()
         dummyView.backgroundColor = .systemPink.withAlphaComponent(0.5)
         
-        
         addSubview(petImage)
         sendSubviewToBack(petImage)
         
@@ -95,16 +94,34 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         addSubview(name)
         addSubview(address)
         
-        petImage.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
+        petImage.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
         petImage.setHeight(frame.height / 2.6 * 2)
         
-        heartImageContainer.anchor(top: topAnchor, right: rightAnchor, paddingTop: 5, paddingRight: 5)
+        heartImageContainer.anchor(
+            top: topAnchor,
+            right: rightAnchor,
+            paddingTop: 5,
+            paddingRight: 5
+        )
         heartImageContainer.setDimensions(height: 24, width: 24)
-        
         heartImage.center(inView: heartImageContainer)
         
-        name.anchor(top: petImage.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 5)
-        address.anchor(top: name.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 5)
+        name.anchor(
+            top: petImage.bottomAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingTop: 5
+        )
+        address.anchor(
+            top: name.bottomAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingTop: 5
+        )
     }
     
     private var work: DispatchWorkItem?
@@ -115,7 +132,7 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         })
         
         let randomNumber = CGFloat(Int(arc4random_uniform(2)))
-        DispatchQueue.main.asyncAfter(deadline: .now() + randomNumber, execute: work!)
+        DispatchQueue.main.asyncAfter(deadline: .now(), execute: work!)
         
         heartImage.image = UIImage(systemName: viewModel.heartImage)
         name.text = viewModel.name

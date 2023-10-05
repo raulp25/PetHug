@@ -15,18 +15,47 @@ struct NewPetGallery: Hashable {
     static func == (lhs: NewPetGallery, rhs: NewPetGallery) -> Bool {
         (
             lhs.id == rhs.id &&
-            lhs.images == rhs.images
+            lhs.imagesToEdit == rhs.imagesToEdit
         )
     }
     var id = UUID().uuidString
-    var images: [String] = []
+    var imagesToEdit: [String] = []
+    var imageService: ImageService?
     weak var delegate: NewPetGalleryDelegate?
     weak var nagivagtion: NewPetContentViewController?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(images: [String] = []) {
-        self.images = images
+    init(imagesToEdit: [String] = [], imageService: ImageService? = nil) {
+        self.imagesToEdit = imagesToEdit
+        self.imageService = imageService
+    }
+    
+    func getImagetImagesSequentially(stringUrlArray: [String], completion: @escaping([UIImage]) -> Void) {
+        if !imagesToEdit.isEmpty, let imageService = imageService {
+            var images = [UIImage]()
+            
+            func downloadNextImage(index: Int) {
+                   if index >= stringUrlArray.count {
+                       // All downloads are complete, call the completion handler
+//                       completion(images)
+                   } else {
+                       let imageUrl = stringUrlArray[index]
+                       imageService.downloadImage(url: imageUrl) { imageData in
+                           if let imageData = imageData, let image = UIImage(data: imageData) {
+                               images.append(image)
+                               completion([image])
+                           }
+                           // Move on to the next image download
+                           downloadNextImage(index: index + 1)
+                       }
+                   }
+               }
+               
+               // Start the sequential downloads with the first image
+               downloadNextImage(index: 0)
+            
+        }
     }
 }
 

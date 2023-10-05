@@ -22,32 +22,10 @@ struct PetModel: Codable {
     let imagesUrls: [String]
     let type: String
     let address: String
+    let activityLevel: Int
+    let socialLevel: Int
+    let affectionLevel: Int
+    let info: String
     var isLiked: Bool
     var timestamp: Timestamp
-    
-    init(
-        id: String,
-        name: String,
-        age: Int,
-        gender: String?,
-        size: String?,
-        breed: String,
-        imagesUrls: [String],
-        type: String,
-        address: String,
-        isLiked: Bool,
-        timestamp: Timestamp
-    ) {
-        self.id = id
-        self.name = name
-        self.age = age
-        self.gender = gender
-        self.size = size
-        self.breed = breed
-        self.imagesUrls = imagesUrls
-        self.type = type
-        self.address = address
-        self.isLiked = isLiked
-        self.timestamp = timestamp
-    }
 }

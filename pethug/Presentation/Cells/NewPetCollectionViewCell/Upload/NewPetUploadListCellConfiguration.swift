@@ -21,6 +21,7 @@ class NewPetUpload: Hashable {
     var id = UUID().uuidString
     var isFormValid: CurrentValueSubject<Bool, Never>?
     var state: PassthroughSubject<NewPetViewModel.LoadingState, Never>?
+    var buttonText: String = "Subir"
     weak var delegate: NewPetUploadDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)

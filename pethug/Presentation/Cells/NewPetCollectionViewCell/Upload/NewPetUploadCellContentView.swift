@@ -10,6 +10,11 @@ import Combine
 
 final class NewPetUploadCellContentView: UIView, UIContentView {
     //MARK: - Private components
+    private let containerView: UIView = {
+        let uv = UIView(withAutolayout: true)
+        return uv
+    }()
+    
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Nombre del animal / Título"
@@ -67,8 +72,9 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
         }
 
         currentConfiguration = configuration
-//
+
         guard let item = currentConfiguration.viewModel else { return }
+        uploadBtn.setTitle(item.buttonText, for: .normal)
         uploadBtn.backgroundColor = customRGBColor(red: 255, green: 176, blue: 42)
         
         item.isFormValid?
@@ -94,20 +100,10 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
                     print("error uploading pet: => \(error.localizedDescription)")
                 }
             }).store(in: &cancellables)
-        
-//        layoutIfNeeded()
-//        nameLabel.text = item.name
-//        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-//        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-//
-//        imageView.configure(with: item.profileImageUrlString)
     }
     
     
-    let containerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        return uv
-    }()
+
     
     private func setup() {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)

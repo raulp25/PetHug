@@ -7,8 +7,7 @@
 
 import UIKit
 protocol AddPetContentViewControllerDelegate: AnyObject {
-//    func didTap(recipient: Pet)
-//    func didTap(_:  Any)
+    func didTapEdit(pet: Pet)
 }
 
 final class AddPetContentViewController: UIViewController {
@@ -18,8 +17,9 @@ final class AddPetContentViewController: UIViewController {
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    
+    private var viewModel = AddPetContentViewModel(deletePetUC: DeletePet.composeDeletePetUC())
     //MARK: - Internal properties
+    weak var delegate: AddPetContentViewControllerDelegate?
     var snapData: [SnapData] {
         didSet {
             updateSnapShot()
@@ -46,35 +46,23 @@ final class AddPetContentViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
 
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
+        collectionView.anchor(
+            top: view.topAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor
+        )
+        collectionView.contentInset = .init(
+            top: 20,
+            left: 0,
+            bottom: 50,
+            right: 0
+        )
         
         configureDataSource()
         updateSnapShot()
     }
 
-//    func generatePet(total: Int) -> [Item] {
-//        var pets = [Item]()
-//
-//        for number in 0...total {
-//            let k = Int(arc4random_uniform(6))
-//            pets.append(.pet(.init(
-//                id: String(number),
-//                name: k < 2 ? "Ruti" : k < 5 ? "Gregoria" : "Doli",
-//                age: k,
-//                gender: .male,
-//                size: .medium,
-//                breed: "Girl",
-//                imagesUrls: [],
-//                type: .cat,
-//                address: .BajaCaliforniaSur,
-//                isLiked: k < 3 ? false : true
-//            )))
-//        }
-//
-//        return pets
-//    }
-    
     //MARK: - CollectionView layout
 //   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
@@ -106,7 +94,7 @@ final class AddPetContentViewController: UIViewController {
 
         
         let petViewCellRegistration = UICollectionView.CellRegistration<AddPetControllerCollectionViewCell, Pet> { cell, _, model in
-            cell.configure(with: model)
+            cell.configure(with: model, delegate: self)
         }
         
         
@@ -151,7 +139,42 @@ final class AddPetContentViewController: UIViewController {
 }
 
 
-
+extension AddPetContentViewController: AddPetContentDelegate {
+    
+    func didTapEdit(pet item: Item) {
+        switch item{
+        case .pet(let pet):
+            delegate?.didTapEdit(pet: pet)
+        }
+    }
+    
+    
+    func didTapDelete(pet item: Item, pet id: String) {
+        switch item {
+            
+        case .pet(let pet):
+            let path = pet.type.getPath
+            
+            Task {
+                let result = await viewModel.deletePet(collection: path, id: id)
+                
+                if let sectionIndex = snapData.firstIndex(where: { $0.key == .pets }),
+                   let itemIndex = snapData[sectionIndex].values.firstIndex(where: { $0 == item }),
+                    result == true
+                {
+                    snapData[sectionIndex].values.remove(at: itemIndex)
+                    
+                    var snapshot = dataSource.snapshot()
+                    snapshot.deleteItems([item])
+                    
+                    DispatchQueue.main.async { [weak self] in
+                        self?.dataSource.apply(snapshot, animatingDifferences: true)
+                    }
+                }
+            }
+        }
+    }
+}
         
 
 

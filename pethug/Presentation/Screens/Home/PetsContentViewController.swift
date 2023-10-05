@@ -60,22 +60,27 @@ final class PetsContentViewController: UIViewController {
     
     func generatePet(total: Int) -> [Item] {
         var pets = [Item]()
-        
+        var counter = 0
         for number in 0...total {
             let k = Int(arc4random_uniform(6))
             pets.append(.pet(.init(
-                id: String(number),
-                name: k < 2 ? "Ruti" : k < 5 ? "Gregoria" : "Doli",
-                age: k,
+                id: "32de\(counter)",
+                name: "Laruent\(counter)",
                 gender: .female,
                 size: .small,
-                breed: "Girl",
-                imagesUrls: [],
-                type: .cat,
-                address: .BajaCaliforniaSur,
-                isLiked: k < 3 ? false : true,
+                breed: "Pomeranian\(counter)",
+                imagesUrls: ["firebase/fakeURL"],
+                type: .bird,
+                age: 5,
+                activityLevel: 8,
+                socialLevel: 8,
+                affectionLevel: 9,
+                address: .Campeche,
+                info: "Lets goy cowboys",
+                isLiked: false,
                 timestamp: Timestamp(date: Date())
             )))
+            counter += 1
         }
         
         return pets

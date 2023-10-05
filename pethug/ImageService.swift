@@ -23,12 +23,14 @@ protocol ImageServiceProtocol {
     /// - This function doesn't support async
     /// - Returns image with type ``Data`` or ``Nil``
     func downloadImage(url: String, completion: @escaping (Data?) -> Void)
+    
+    func deleteImages(imagesUrl: [String])
 }
 
 final class ImageService: ImageServiceProtocol {
 
     func uploadImage(image: UIImage, path: String) async throws -> String? {
-        guard let imageData = image.jpegData(compressionQuality: 0.78) else { return nil}
+        guard let imageData = image.jpegData(compressionQuality: 0.50) else { return nil}
         let filename = NSUUID().uuidString
         let ref = Storage.storage().reference(withPath: "/profile_images/\(filename)")
         
@@ -50,6 +52,29 @@ final class ImageService: ImageServiceProtocol {
             completion(dataImage!)
         }
     }
+    
+    
+    func deleteImages(imagesUrl: [String]) {
+        let storage = Storage.storage()
+        let dispatchGroup = DispatchGroup()
+        
+        for imageUrl in imagesUrl {
+            dispatchGroup.enter()
+            //Removes image from storage
+            let storageRef = storage.reference(forURL: imageUrl)
+            storageRef.delete { error in
+                if let error = error {
+                    print(error)
+                } else {
+                }
+                dispatchGroup.leave()
+            }
+        }
+    }
+    
 }
+
+
+
 
 
