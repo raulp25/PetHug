@@ -13,4 +13,5 @@ protocol PetRepository {
     func createPet(collection path: String, data: Pet) async throws -> Bool
     func updatePet(collection path: String, data: Pet) async throws -> Bool
     func deletePet(collection path: String, docId: String) async throws -> Bool
+    func deletePetFromRepeated(collection path: String, docId: String) async throws -> Bool
 }

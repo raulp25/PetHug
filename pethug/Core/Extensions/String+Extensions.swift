@@ -48,14 +48,18 @@ extension String {
         case users
         case dogs
         case cats
-        case rabbits
         case birds
+        case rabbits
     }
     
     enum StoragePaths: String {
         
-        case userProfile = "/profile_images/"
-        case petProfile = "/petProfile_images/"
+        case users = "/user_profile_images/"
+        case dogs = "/dog_profile_images/"
+        case cats = "/cat_profile_images/"
+        case birds = "/bird_profile_images/"
+        case rabbits = "/rabbit_profile_images/"
+        
     }
     
     static func getPath(for path: CollectionPath) -> String {
@@ -67,7 +71,7 @@ extension String {
     
     static func getStoragePath(for path: StoragePaths) -> String {
         switch path {
-        case .userProfile, .petProfile:
+        case .users, .dogs, .cats, .birds, .rabbits:
             return path.rawValue
         }
     }

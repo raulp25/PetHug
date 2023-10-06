@@ -15,7 +15,9 @@ protocol PetDataSource {
     func createPet(collection path: String, data: Pet) async throws -> Bool
     func updatePet(collection path: String, data: Pet) async throws -> Bool
     func deletePet(collection path: String, docId: String) async throws -> Bool
+    func deletePetFromRepeated(collection path: String, docId: String) async throws -> Bool
 }
+
 //Todo add fetchPets(for userId)
 final class DefaultPetDataSource: PetDataSource {
     let order = "timestamp"
@@ -65,7 +67,6 @@ final class DefaultPetDataSource: PetDataSource {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
         let dataModel = petFirebaseEntinty.toObjectLiteral()
-        
         try await db.collection(path)
                     .document(data.id)
                     .setData(dataModel)
@@ -89,7 +90,8 @@ final class DefaultPetDataSource: PetDataSource {
                     .setData(dataModel)
         
         try await db.collection("users")
-                    .document(uid).collection("pets")
+                    .document(uid)
+                    .collection("pets")
                     .document(data.id)
                     .setData(dataModel)
         return true
@@ -98,15 +100,19 @@ final class DefaultPetDataSource: PetDataSource {
     
     func deletePet(collection path: String, docId: String) async throws -> Bool {
         let uid = AuthService().uid
-        
-        try await db.collection(path)
-                    .document(docId)
-                    .delete()
-        
         try await db.collection("users")
                     .document(uid)
                     .collection("pets")
                     .document(docId).delete()
+        return true
+    }
+    
+    func deletePetFromRepeated(collection path: String, docId: String) async throws -> Bool {
+        let uid = AuthService().uid
+        
+        try await db.collection(path)
+                    .document(docId)
+                    .delete()
         return true
     }
 }

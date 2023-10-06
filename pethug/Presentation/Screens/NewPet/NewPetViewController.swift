@@ -15,6 +15,7 @@ final class NewPetViewController: UIViewController {
                                     imageService: ImageService(),
                                     createPetUseCase: CreatePet.composeCreatePetUC(),
                                     updatePetUseCase: UpdatePet.composeUpdatePetUC(),
+                                    deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC(),
                                     pet: self.pet
                                 ))
     

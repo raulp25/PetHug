@@ -312,13 +312,22 @@ extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
             if let sectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }),
                let itemIndex = currentSnapData[sectionIndex].values.firstIndex(where: { $0 == item })
             {
-                
+                print("itemindex 787: => \(itemIndex)")
+                print("currentSnapData[sectionIndex].values antes 787: => \(currentSnapData[sectionIndex].values.count)")
+                print("[images] antes 787: => \(currentSnapData[sectionIndex].values.count)")
+                print("/////////////////////////////////////////////////////////////////////")
                 // Remove the item from currentSnapData
                 currentSnapData[sectionIndex].values.remove(at: itemIndex)
                 images.remove(at: itemIndex - 1)
                 
-                var snapshot = dataSource.snapshot()
-                snapshot.deleteItems([item])
+//                var snapshot = dataSource.snapshot()
+//                snapshot.deleteItems([item])
+                print("currentSnapData[sectionIndex].value despues 787: => \(currentSnapData[sectionIndex].values.count)")
+                print("[images] despues 787: => \(currentSnapData[sectionIndex].values.count)")
+                print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")
+                var snapshot = Snapshot()
+                snapshot.appendSections([.gallery])
+                snapshot.appendItems(currentSnapData[sectionIndex].values)
                 dataSource.apply(snapshot, animatingDifferences: false)
             }
         }
@@ -359,6 +368,8 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
         currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: nil)
         
         guard let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) else { return }
+        
+        snapshot = dataSource.snapshot()
         
         func downloadNextImage(index: Int) {
             if index >= results.count {

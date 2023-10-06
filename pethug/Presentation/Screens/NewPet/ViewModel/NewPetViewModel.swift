@@ -14,41 +14,42 @@ class NewPetViewModel {
     private let imageService: ImageServiceProtocol
     private let createPetUseCase: DefaultCreatePetUC
     private let updatePetUseCase: DefaultUpdatePetUC
-    
+    private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
     //MARK: - Internal Properties
     private var pet: Pet?
-    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC) {
+    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC) {
         self.imageService = imageService
         self.createPetUseCase = createPetUseCase
         self.updatePetUseCase = updatePetUseCase
+        self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
         observeValidation()
         
 //        mockDecodePetModel()
     }
     
-    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, pet: Pet? = nil) {
+    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC, pet: Pet? = nil) {
         print("recibio pet en newpet view model 444 : => \(String(describing: pet?.imagesUrls))")
-        self.imageService = imageService
+        self.imageService     = imageService
         self.createPetUseCase = createPetUseCase
         self.updatePetUseCase = updatePetUseCase
+        self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
         self.pet = pet
-        self.isEdit = true
+        self.isEdit = pet != nil
         observeValidation()
 //        let imagesArr = getImages(stringUrlArray: pet?.imagesUrls ?? [])
         self.imagesToEditState = pet?.imagesUrls ?? []
-        
-        self.nameState = pet?.name
-        self.galleryState = []
-        self.typeState = pet?.type
-        self.breedsState = pet?.breed
-        self.genderState = pet?.gender
-        self.sizeState = pet?.size
-        self.ageState = pet?.age
-        self.activityState = pet?.activityLevel
-        self.socialState = pet?.socialLevel
+        self.nameState      = pet?.name
+        self.galleryState   = []
+        self.typeState      = pet?.type
+        self.breedsState    = pet?.breed
+        self.genderState    = pet?.gender
+        self.sizeState      = pet?.size
+        self.ageState       = pet?.age
+        self.activityState  = pet?.activityLevel
+        self.socialState    = pet?.socialLevel
         self.affectionState = pet?.affectionLevel
-        self.addressState = pet?.address
-        self.infoState = pet?.info
+        self.addressState   = pet?.address
+        self.infoState      = pet?.info
         
 //        mockDecodePetModel()
     }
@@ -162,6 +163,7 @@ class NewPetViewModel {
 //        print("name level en viewmodel: => 666 \(name)")
 //        print("gallery level en viewmodel: => 221 \(gallery)")
 //        print("gallery level is empty? en viewmodel: => 221 \(gallery.isEmpty)")
+//          print("gallery count en viewmodel: => 221 \(gallery.count)")
 //        print("type level en viewmodel: => 666 \(type)")
 //        print("breed level en viewmodel: => 666 \(breed)")
 //        print("age level en viewmodel: => 666 \(age)")
@@ -191,13 +193,13 @@ class NewPetViewModel {
     
     //MARK: - Upload new pet
     func createPet() async {
-        
+        print("emtra a createPet: => ")
         stateSubject.send(.loading)
         
         do {
             var imagesUrls = [String]()
             
-            await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
+           try await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
             
             let pet = Pet(
                 id: UUID().uuidString,
@@ -223,6 +225,7 @@ class NewPetViewModel {
             stateSubject.send(.success)
             
         } catch {
+            print("error en viewmodel 741: => ")
             stateSubject.send(.error(.default(error)))
         }
         
@@ -230,7 +233,7 @@ class NewPetViewModel {
     
     private func executeCreatePet(pet: Pet) async throws -> Bool{
         let path = pet.type.getPath
-        
+        print("entra a execute 741: =")
         return try await createPetUseCase.execute(collection: path, data: pet)
     }
     
@@ -241,7 +244,7 @@ class NewPetViewModel {
         do {
             var imagesUrls = [String]()
             
-            await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
+            try await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
             guard let currentPet = pet else { return }
             let pet = Pet(
                 id: currentPet.id,
@@ -261,12 +264,25 @@ class NewPetViewModel {
                 timestamp: currentPet.timestamp
             )
             
+            let dispatchGroup = DispatchGroup()
             
+            dispatchGroup.enter()
             let _ = try await executeUpdatePet(pet: pet)
+            dispatchGroup.leave()
             
+            if currentPet.type != pet.type {
+                dispatchGroup.enter()
+                try await deleteFromRepeated(collection: currentPet.type.getPath, id: pet.id)
+                dispatchGroup.leave()
+            }
+            
+            dispatchGroup.enter()
             imageService.deleteImages(imagesUrl: currentPet.imagesUrls)
+            dispatchGroup.leave()
             
-            stateSubject.send(.success)
+            dispatchGroup.notify(queue: .main){ [weak self] in
+                self?.stateSubject.send(.success)
+            }
             
         } catch {
             stateSubject.send(.error(.default(error)))
@@ -280,24 +296,27 @@ class NewPetViewModel {
         return try await updatePetUseCase.execute(collection: path, data: pet)
     }
     
-    
-    func uploadNextImage(index: Int, imagesUrls: inout [String]) async {
-        if index >= galleryState.count {
-            // end of recursive iteration
-        } else {
-            let image = galleryState[index]
-            
-            do {
-                let imageUrl = try await imageService.uploadImage(image: image, path: .getStoragePath(for: .petProfile))
-                if let  imageUrl = imageUrl {
-                    imagesUrls.append(imageUrl)
-                }
-                await uploadNextImage(index: index + 1, imagesUrls: &imagesUrls)
-                
-            } catch {
-                
-            }
+    //Recursively Upload images in sequence to respect the order in which the user selected the images
+    func uploadNextImage(index: Int, imagesUrls: inout [String]) async throws {
+        guard let typeState = typeState else { return }
+        let path = typeState.storagePath
+        
+        
+        guard index < galleryState.count else { return }
+        
+        let image = galleryState[index]
+        
+        let imageUrl = try await imageService.uploadImage(image: image, path: path)
+        if let  imageUrl = imageUrl {
+            imagesUrls.append(imageUrl)
         }
+        try await uploadNextImage(index: index + 1, imagesUrls: &imagesUrls)
+        
+        
+    }
+    //Used to delete pet from old collection when user changes its type, eg: change from pet -> to bird
+    func deleteFromRepeated(collection path: String, id: String) async throws {
+        let result = try await deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id)
     }
     
 }

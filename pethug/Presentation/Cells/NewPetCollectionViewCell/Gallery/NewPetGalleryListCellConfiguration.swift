@@ -38,13 +38,13 @@ struct NewPetGallery: Hashable {
             func downloadNextImage(index: Int) {
                    if index >= stringUrlArray.count {
                        // All downloads are complete, call the completion handler
-//                       completion(images)
+                       completion(images)
                    } else {
                        let imageUrl = stringUrlArray[index]
                        imageService.downloadImage(url: imageUrl) { imageData in
                            if let imageData = imageData, let image = UIImage(data: imageData) {
                                images.append(image)
-                               completion([image])
+//                               completion([image])
                            }
                            // Move on to the next image download
                            downloadNextImage(index: index + 1)

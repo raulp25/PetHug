@@ -41,4 +41,9 @@ final class DefaultPetRepository: PetRepository {
         return result
     }
     
+    func deletePetFromRepeated(collection path: String, docId: String) async throws -> Bool {
+        let result = try await petDataSource.deletePetFromRepeated(collection: path, docId: docId)
+        return result
+    }
+    
 }

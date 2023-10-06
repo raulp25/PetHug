@@ -149,18 +149,15 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
             case .male:
                 maleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                 maleCheckMarkButton.tintColor = .systemOrange
+                setInitialCurrentButton(button: maleCheckMarkButton)
             case .female:
                 femaleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                 femaleCheckMarkButton.tintColor = .systemOrange
+                setInitialCurrentButton(button: femaleCheckMarkButton)
             case .none:
                 print("")
             }
         }
-        //        nameLabel.text = item.name
-        //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-        //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-        //
-        //        imageView.configure(with: item.profileImageUrlString)
     }
     
     private func setup() {
@@ -222,5 +219,14 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
             }
         }
     }
+    
+    
+    //MARK: - Private Methods
+    func setInitialCurrentButton(button: UIButton) {
+        if let checked = CurrentChecked(rawValue: button.tag) {
+            currentButton = checked
+        }
+    }
+    
 }
 

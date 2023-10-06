@@ -162,7 +162,19 @@ extension Pet {
             case .rabbit:
                 return .getPath(for: .rabbits)
             }
-            
+        }
+        
+        var storagePath: String {
+            switch self {
+            case .dog:
+                return .getStoragePath(for: .dogs)
+            case .cat:
+                return .getStoragePath(for: .cats)
+            case .bird:
+                return .getStoragePath(for: .birds)
+            case .rabbit:
+                return .getStoragePath(for: .rabbits)
+            }
         }
         
         static func fromString(_ typeString: String) -> PetType {

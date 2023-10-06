@@ -32,7 +32,7 @@ final class ImageService: ImageServiceProtocol {
     func uploadImage(image: UIImage, path: String) async throws -> String? {
         guard let imageData = image.jpegData(compressionQuality: 0.50) else { return nil}
         let filename = NSUUID().uuidString
-        let ref = Storage.storage().reference(withPath: "/profile_images/\(filename)")
+        let ref = Storage.storage().reference(withPath: "\(path)\(filename)")
         
         _ = try await ref.putDataAsync(imageData)
         

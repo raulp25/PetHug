@@ -163,21 +163,19 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
             case .small:
                 smallCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                 smallCheckMarkButton.tintColor = .systemOrange
+                setInitialCurrentButton(button: smallCheckMarkButton)
             case .medium:
                 mediumCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                 mediumCheckMarkButton.tintColor = .systemOrange
+                setInitialCurrentButton(button: mediumCheckMarkButton)
             case .large:
                 largeCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                 largeCheckMarkButton.tintColor = .systemOrange
+                setInitialCurrentButton(button: largeCheckMarkButton)
             case .none:
                 print("")
             }
         }
-        //        nameLabel.text = item.name
-        //        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-        //        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-        //
-        //        imageView.configure(with: item.profileImageUrlString)
     }
     
     private func setup() {
@@ -242,6 +240,13 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
             }
         }
         
+    }
+    
+    //MARK: - Private Methods
+    func setInitialCurrentButton(button: UIButton) {
+        if let checked = CurrentChecked(rawValue: button.tag) {
+            currentButton = checked
+        }
     }
 }
 

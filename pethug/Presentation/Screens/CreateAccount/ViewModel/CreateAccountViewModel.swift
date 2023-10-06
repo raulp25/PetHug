@@ -48,7 +48,7 @@ struct CreateAccountViewModel {
             
             var imageUrl: String? = nil
             if let image = profileImage {
-                imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .userProfile))
+                imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users))
             }
             
             let uid = try await authService.createAccounWith(email: email, password: password)

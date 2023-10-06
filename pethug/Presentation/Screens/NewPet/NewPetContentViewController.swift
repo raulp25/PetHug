@@ -66,7 +66,7 @@ final class NewPetContentViewController: UIViewController {
                 case .success:
                     self?.dismiss(animated: true)
                 default:
-                    print("error")
+                    print("error in publisher state")
                 }
                 
             }.store(in: &cancellables)
@@ -264,7 +264,6 @@ final class NewPetContentViewController: UIViewController {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        
         let headerRegistration = UICollectionView.SupplementaryRegistration
             <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
             supplementaryView, string, indexPath in
@@ -272,84 +271,84 @@ final class NewPetContentViewController: UIViewController {
         }
 
         
-        let newPetNameViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetNameListCellConfiguration>, NewPetName> { cell, _, model in
+        let newPetNameViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetNameListCellConfiguration>, NewPetName> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }
         
-        let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { cell, _, model in
+        let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { [weak self] cell, _, model in
             print("model gallery cell registration: => \(model)")
             cell.viewModel = model
             cell.viewModel?.delegate = self
             cell.viewModel?.nagivagtion = self
         }
         
-        let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetTypeListCellConfiguration>, NewPetType> { cell, _, model in
+        let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetTypeListCellConfiguration>, NewPetType> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate  = self
-            cell.viewModel?.type = self.viewModel.typeState
+            cell.viewModel?.type = self?.viewModel.typeState
         }
         
-        let newPetBreedViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetBreedListCellConfiguration>, NewPetBreed> { cell, _, model in
+        let newPetBreedViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetBreedListCellConfiguration>, NewPetBreed> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.currentBreed = self.viewModel.breedsState   
-            cell.viewModel?.petType = self.viewModel.typeState
+            cell.viewModel?.currentBreed = self?.viewModel.breedsState
+            cell.viewModel?.petType = self?.viewModel.typeState
         }
         
-        let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGenderListCellConfiguration>, NewPetGender> { cell, _, model in
+        let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGenderListCellConfiguration>, NewPetGender> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.gender = self.viewModel.genderState
+            cell.viewModel?.gender = self?.viewModel.genderState
         }
         
-        let newPetSizeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSizeListCellConfiguration>, NewPetSize> { cell, _, model in
+        let newPetSizeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSizeListCellConfiguration>, NewPetSize> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.size = self.viewModel.sizeState
+            cell.viewModel?.size = self?.viewModel.sizeState
         }
         
-        let newPetAgeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAgeListCellConfiguration>, NewPetAge> { cell, _, model in
+        let newPetAgeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAgeListCellConfiguration>, NewPetAge> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.age = self.viewModel.ageState
+            cell.viewModel?.age = self?.viewModel.ageState
         }
         
-        let newPetActivityViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetActivityListCellConfiguration>, NewPetActivity> { cell, _, model in
+        let newPetActivityViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetActivityListCellConfiguration>, NewPetActivity> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.activityLevel = self.viewModel.activityState
+            cell.viewModel?.activityLevel = self?.viewModel.activityState
         }
         
-        let newPetSocialViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSocialListCellConfiguration>, NewPetSocial> { cell, _, model in
+        let newPetSocialViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSocialListCellConfiguration>, NewPetSocial> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.socialLevel = self.viewModel.socialState
+            cell.viewModel?.socialLevel = self?.viewModel.socialState
         }
         
-        let newPetAffectionViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAffectionListCellConfiguration>, NewPetAffection> { cell, _, model in
+        let newPetAffectionViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAffectionListCellConfiguration>, NewPetAffection> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.affectionLevel = self.viewModel.affectionState
+            cell.viewModel?.affectionLevel = self?.viewModel.affectionState
         }
         
-        let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { cell, _, model in
+        let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.address = self.viewModel.addressState
+            cell.viewModel?.address = self?.viewModel.addressState
         }
         
-        let newPetInfoViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetInfoListCellConfiguration>, NewPetInfo> { cell, _, model in
+        let newPetInfoViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetInfoListCellConfiguration>, NewPetInfo> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.info = self.viewModel.infoState
+            cell.viewModel?.info = self?.viewModel.infoState
         }
         
-        let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetUploadListCellConfiguration>, NewPetUpload> { cell, _, model in
+        let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetUploadListCellConfiguration>, NewPetUpload> { [weak self] cell, _, model in
             cell.viewModel = model
-            cell.viewModel?.buttonText = self.viewModel.imagesToEditState.isEmpty ? "Subir" : "Acutalizar"
-            cell.viewModel?.state = self.viewModel.stateSubject
-            cell.viewModel?.isFormValid = self.viewModel.isValidSubject
+            cell.viewModel?.buttonText = self?.viewModel.imagesToEditState.isEmpty ?? true ? "Subir" : "Acutalizar"
+            cell.viewModel?.state = self?.viewModel.stateSubject
+            cell.viewModel?.isFormValid = self?.viewModel.isValidSubject
             cell.viewModel?.delegate = self
         }
         
@@ -579,7 +578,7 @@ extension NewPetContentViewController: NewPetUploadDelegate {
     func didTapUpload() {
         Task {
             if viewModel.isEdit {
-                await viewModel.createPet()
+                await viewModel.updatePet()
             } else {
                 await viewModel.createPet()
             }

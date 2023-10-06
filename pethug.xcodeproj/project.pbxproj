@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C40AD7082AC60C0A003177E2 /* NewPetInfoListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40AD7072AC60C09003177E2 /* NewPetInfoListCellConfiguration.swift */; };
 		C40AD70A2AC60C83003177E2 /* NewPetInfoCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C40AD7092AC60C83003177E2 /* NewPetInfoCellContentView.swift */; };
+		C416E0162ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C416E0152ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift */; };
 		C418BBA52AC0A50600C31967 /* PetEntity+DomainMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418BBA42AC0A50600C31967 /* PetEntity+DomainMapper.swift */; };
 		C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418BBA72AC0BE5400C31967 /* PetCellViewModel.swift */; };
 		C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616D42AB274B4006925DB /* UIButton+Factory.swift */; };
@@ -176,6 +177,7 @@
 /* Begin PBXFileReference section */
 		C40AD7072AC60C09003177E2 /* NewPetInfoListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetInfoListCellConfiguration.swift; sourceTree = "<group>"; };
 		C40AD7092AC60C83003177E2 /* NewPetInfoCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetInfoCellContentView.swift; sourceTree = "<group>"; };
+		C416E0152ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePetFromRepeatedCollectionUC.swift; sourceTree = "<group>"; };
 		C418BBA42AC0A50600C31967 /* PetEntity+DomainMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetEntity+DomainMapper.swift"; sourceTree = "<group>"; };
 		C418BBA72AC0BE5400C31967 /* PetCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCellViewModel.swift; sourceTree = "<group>"; };
 		C42616D42AB274B4006925DB /* UIButton+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Factory.swift"; sourceTree = "<group>"; };
@@ -765,6 +767,7 @@
 				C451930B2ACE7C4A00B80926 /* UpdatePetUC.swift */,
 				C49440862ACD34C10042A1DA /* DeletePetUC.swift */,
 				C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */,
+				C416E0152ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift */,
 			);
 			path = Pets;
 			sourceTree = "<group>";
@@ -1295,6 +1298,7 @@
 				C42616DD2AB277C4006925DB /* ValidatorType.swift in Sources */,
 				C4F7DFDA2ACCA8E2000D5F76 /* NewPetActivityCellContentView.swift in Sources */,
 				C435314C2AB960A10070D7EE /* PetsViewController.swift in Sources */,
+				C416E0162ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift in Sources */,
 				C4E6544B2AC8F66A009E027F /* NewPetAddressListCellConfiguration.swift in Sources */,
 				C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */,
 				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
