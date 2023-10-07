@@ -193,7 +193,6 @@ class NewPetViewModel {
     
     //MARK: - Upload new pet
     func createPet() async {
-        print("emtra a createPet: => ")
         stateSubject.send(.loading)
         
         do {
@@ -225,7 +224,6 @@ class NewPetViewModel {
             stateSubject.send(.success)
             
         } catch {
-            print("error en viewmodel 741: => ")
             stateSubject.send(.error(.default(error)))
         }
         
@@ -233,7 +231,6 @@ class NewPetViewModel {
     
     private func executeCreatePet(pet: Pet) async throws -> Bool{
         let path = pet.type.getPath
-        print("entra a execute 741: =")
         return try await createPetUseCase.execute(collection: path, data: pet)
     }
     

@@ -66,7 +66,7 @@ final class NewPetContentViewController: UIViewController {
                 case .success:
                     self?.dismiss(animated: true)
                 default:
-                    print("error in publisher state")
+                    print("")
                 }
                 
             }.store(in: &cancellables)
