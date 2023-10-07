@@ -31,7 +31,7 @@ final class PetsViewModel {
     init(fetchPetsUC: DefaultFetchPetsUC) {
         self.fetchPetsUC = fetchPetsUC
         observeState()
-        fetchPets(collection: .getPath(for: .dogs))
+        fetchPets(collection: .getPath(for: .birds))
         ///Mock pet, do not uncomment
 //        createMockPet()
         
@@ -47,7 +47,7 @@ final class PetsViewModel {
         Task {
             state.send(.loading)
             do {
-                let data = try await fetchPetsUC.execute(fetchCollection: .getPath(for: .dogs))
+                let data = try await fetchPetsUC.execute(fetchCollection: collection)
                 petsSubject.send(data)
             } catch {
                 state.send(.error(.default(error)))

@@ -17,7 +17,7 @@ final class AddPetContentViewController: UIViewController {
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    private var viewModel = AddPetContentViewModel(deletePetUC: DeletePet.composeDeletePetUC())
+    private var viewModel = AddPetContentViewModel(deletePetUC: DeletePet.composeDeletePetUC(), deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC())
     //MARK: - Internal properties
     weak var delegate: AddPetContentViewControllerDelegate?
     var snapData: [SnapData] {

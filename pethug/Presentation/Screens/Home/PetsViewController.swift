@@ -95,16 +95,22 @@ final class PetsViewController: UIViewController {
 //            .init(key: .pets, values: data.map { .pet($0) })
 //        ]
         let snapData: [PetsContentViewController.SnapData] = [
-//            .init(key: .pets, values: data.map { .pet($0) })
+            .init(key: .pets, values: data.map { .pet($0) })
         ]
         
         if contentStateVC.shownViewController == contentVc {
             contentVc?.snapData = snapData
         } else {
             contentVc = PetsContentViewController(snapData: snapData)
+            contentVc?.delegate = self
             contentStateVC.transition(to: .render(contentVc!))
         }
-        
     }
     
+}
+
+extension PetsViewController: PetsContentViewControllerDelegate {
+    func didTap(pet: Pet) {
+        viewModel.navigation?.tapped(pet: pet)
+    }
 }

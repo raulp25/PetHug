@@ -6,23 +6,28 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol PetContentDelegate: AnyObject {
     func didTapLike(_ pet: PetsContentViewController.Item)
+    func didTapCell(pet: Pet)
 }
 
 final class PetControllerCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private components
-    let petImage: UIImageView = {
+    lazy private var petImage: UIImageView = {
        let iv = UIImageView()
         let k = Int(arc4random_uniform(6))
         iv.backgroundColor = customRGBColor(red: 0, green: 61, blue: 44)
         iv.clipsToBounds = true
-        iv.isUserInteractionEnabled = true
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 10 
         iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(tapGesture)
         return iv
     }()
     
@@ -128,11 +133,13 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     
     private func configureCellUI(with viewModel: PetCellViewModel) {
          work = DispatchWorkItem(block: {
+             
              self.petImage.image = UIImage(named: viewModel.petImage)
+             let url = URL(string: viewModel.petImage)
+             self.petImage.sd_setImage(with: url)
         })
         
-        let randomNumber = CGFloat(Int(arc4random_uniform(2)))
-        DispatchQueue.main.asyncAfter(deadline: .now(), execute: work!)
+        DispatchQueue.main.async(execute: work!)
         
         heartImage.image = UIImage(systemName: viewModel.heartImage)
         name.text = viewModel.name
@@ -150,8 +157,14 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Actions
-    @objc func didTapLike(_ sender: UITapGestureRecognizer) {
+    //MARK: - Private Actions
+    
+    @objc func didTapCell() {
+        guard let viewModel = viewModel else { return }
+        delegate?.didTapCell(pet: viewModel.pet)
+    }
+    
+    @objc private func didTapLike(_ sender: UITapGestureRecognizer) {
         guard let viewModel = viewModel else { return }
         viewModel.isLiked.toggle()
         heartImage.image = UIImage(systemName: viewModel.heartImage)

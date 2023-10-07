@@ -12,10 +12,11 @@ import FirebaseFirestore
 final class AddPetContentViewModel {
     //MARK: - Private Properties
     private let deletePetUC: DefaultDeletePetUC
-    
+    private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
     ///Change to FetchUserPetsUC
-    init(deletePetUC: DefaultDeletePetUC) {
+    init(deletePetUC: DefaultDeletePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC) {
         self.deletePetUC = deletePetUC
+        self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
     }
     
     deinit {
@@ -25,8 +26,12 @@ final class AddPetContentViewModel {
     //MARK: - Private methods
     func deletePet(collection path: String,  id: String) async -> Bool {
         do {
-            let result = try await deletePetUC.execute(collection: path, docId: id)
-            return result
+            await withThrowingTaskGroup(of: Void.self) { [unowned self] group in
+                group.addTask { let _ = try await self.deletePetUC.execute(collection: path, docId: id) }
+                group.addTask { let _ = try await self.deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id) }
+            }
+            
+            return true
         } catch {
             print("error deleting pet: => \(error.localizedDescription)")
             return false

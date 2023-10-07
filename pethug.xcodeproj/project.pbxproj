@@ -128,6 +128,8 @@
 		C4A95C3D2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A95C3C2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift */; };
 		C4A95C3F2AC8BE33002781E2 /* NewPetBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A95C3E2AC8BE33002781E2 /* NewPetBreedCellContentView.swift */; };
 		C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AB87712ACA082C0081451F /* NewPetViewModel.swift */; };
+		C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B9EB792AD203660040ACCE /* PetViewHeaderViewController.swift */; };
+		C4B9EB7C2AD2040D0040ACCE /* PetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */; };
 		C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */; };
 		C4C4950E2AC7A5A300CBBDE4 /* BreedPopupSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
@@ -296,6 +298,8 @@
 		C4A95C3C2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetBreedListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4A95C3E2AC8BE33002781E2 /* NewPetBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetBreedCellContentView.swift; sourceTree = "<group>"; };
 		C4AB87712ACA082C0081451F /* NewPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewModel.swift; sourceTree = "<group>"; };
+		C4B9EB792AD203660040ACCE /* PetViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewHeaderViewController.swift; sourceTree = "<group>"; };
+		C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetContentViewController.swift; sourceTree = "<group>"; };
 		C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPetCell.swift; sourceTree = "<group>"; };
 		C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedPopupSearch.swift; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -900,6 +904,15 @@
 			path = Breed;
 			sourceTree = "<group>";
 		};
+		C4B9EB782AD2033F0040ACCE /* Pet */ = {
+			isa = PBXGroup;
+			children = (
+				C4B9EB792AD203660040ACCE /* PetViewHeaderViewController.swift */,
+				C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */,
+			);
+			path = Pet;
+			sourceTree = "<group>";
+		};
 		C4BC4A262ABA1A020017428D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -984,6 +997,7 @@
 		C4CF74DF2AB22A8C00D69185 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C4B9EB782AD2033F0040ACCE /* Pet */,
 				C43531512AB96A420070D7EE /* Error */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
 				C4CF74EF2AB2504300D69185 /* Login */,
@@ -1262,6 +1276,7 @@
 				C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */,
 				C42616E92AB27B37006925DB /* AuthPublisher.swift in Sources */,
 				C4CF74E82AB22FD100D69185 /* UIView+Extensions.swift in Sources */,
+				C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */,
 				C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */,
 				C42616F52AB29DF4006925DB /* UILabel+Extensions.swift in Sources */,
 				C4779BE02AC38E3B00E3A16F /* AddPetViewModel+Types.swift in Sources */,
@@ -1341,6 +1356,7 @@
 				C42D3D9E2AB65FF200EBA1B7 /* InAppContainerRootViewController+State.swift in Sources */,
 				C43A5C732ACCE7A5007C8ECB /* PetModel.swift in Sources */,
 				C476E2C42ABA9A1A0014DEA4 /* PetDataSource.swift in Sources */,
+				C4B9EB7C2AD2040D0040ACCE /* PetContentViewController.swift in Sources */,
 				C4779BDB2AC38D5500E3A16F /* AddPetViewController.swift in Sources */,
 				C4F7DFCF2ACC9077000D5F76 /* NewPetAgeCellContentView.swift in Sources */,
 				C4F7DFDC2ACCA8E9000D5F76 /* NewPetSocialCellContentView.swift in Sources */,

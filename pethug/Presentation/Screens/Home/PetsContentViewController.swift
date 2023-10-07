@@ -8,7 +8,7 @@
 import UIKit
 import Firebase
 protocol PetsContentViewControllerDelegate: AnyObject {
-//    func didTap(recipient: Pet)
+    func didTap(pet: Pet)
 //    func didTap(_:  Any)
 }
 
@@ -31,6 +31,7 @@ final class PetsContentViewController: UIViewController {
 //            updateSnapShot()
         }
     }
+    weak var delegate: PetsContentViewControllerDelegate?
     
     init(snapData: [SnapData]) {
         self.snapData = snapData
@@ -58,33 +59,33 @@ final class PetsContentViewController: UIViewController {
         updateSnapShot()
     }
     
-    func generatePet(total: Int) -> [Item] {
-        var pets = [Item]()
-        var counter = 0
-        for number in 0...total {
-            let k = Int(arc4random_uniform(6))
-            pets.append(.pet(.init(
-                id: "32de\(counter)",
-                name: "Laruent\(counter)",
-                gender: .female,
-                size: .small,
-                breed: "Pomeranian\(counter)",
-                imagesUrls: ["firebase/fakeURL"],
-                type: .bird,
-                age: 5,
-                activityLevel: 8,
-                socialLevel: 8,
-                affectionLevel: 9,
-                address: .Campeche,
-                info: "Lets goy cowboys",
-                isLiked: false,
-                timestamp: Timestamp(date: Date())
-            )))
-            counter += 1
-        }
-        
-        return pets
-    }
+//    func generatePet(total: Int) -> [Item] {
+//        var pets = [Item]()
+//        var counter = 0
+//        for number in 0...total {
+//            let k = Int(arc4random_uniform(6))
+//            pets.append(.pet(.init(
+//                id: "32de\(counter)",
+//                name: "Laruent\(counter)",
+//                gender: .female,
+//                size: .small,
+//                breed: "Pomeranian\(counter)",
+//                imagesUrls: ["firebase/fakeURL"],
+//                type: .bird,
+//                age: 5,
+//                activityLevel: 8,
+//                socialLevel: 8,
+//                affectionLevel: 9,
+//                address: .Campeche,
+//                info: "Lets goy cowboys",
+//                isLiked: false,
+//                timestamp: Timestamp(date: Date())
+//            )))
+//            counter += 1
+//        }
+//
+//        return pets
+//    }
     
     //MARK: - CollectionView layout
 //   We have the sectionProvider prop just in case
@@ -146,11 +147,11 @@ final class PetsContentViewController: UIViewController {
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
+//        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
         snapshot = Snapshot()
-        snapshot.appendSections(currentSnapData.map {
+        snapshot.appendSections(snapData.map {
             print(": section=> \($0.key)")
             return $0.key
         })
@@ -159,15 +160,17 @@ final class PetsContentViewController: UIViewController {
 //            return $0.key
 //        })
         
-        print("currentSnapData: => \(currentSnapData)")
+//        print("currentSnapData: => \(currentSnapData)")
 //        print("currentSnapData: => \(snapData)")
         
-        for datum in currentSnapData {
-            snapshot.appendItems(datum.values, toSection: datum.key)
-        }
-//        for datum in snapData {
+//        for datum in currentSnapData {
 //            snapshot.appendItems(datum.values, toSection: datum.key)
 //        }
+        
+        for datum in snapData {
+            snapshot.appendItems(datum.values, toSection: datum.key)
+        }
+        
 //        print("snapshot en updateSnapshot(): => \(snapshot)")
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
@@ -175,6 +178,10 @@ final class PetsContentViewController: UIViewController {
 
 
 extension PetsContentViewController: PetContentDelegate {
+    func didTapCell(pet: Pet) {
+        delegate?.didTap(pet: pet)
+    }
+    
     func didTapLike(_ pet: PetsContentViewController.Item) {
         guard let indexPath = self.dataSource.indexPath(for: pet) else { return }
 //        self.currentSnapData[indexPath.section].values.remove(at: indexPath.row)
@@ -182,7 +189,7 @@ extension PetsContentViewController: PetContentDelegate {
     }
 }
 
-        
+
 
 
 

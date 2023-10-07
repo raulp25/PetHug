@@ -24,7 +24,7 @@ final class AddPetControllerCollectionViewCell: UICollectionViewCell {
             title: "",
             image: nil,
             options: .destructive ,
-            preferredElementSize: .medium,
+            preferredElementSize: .large,
             children: [
                 UIAction(
                     title: "Editar",
