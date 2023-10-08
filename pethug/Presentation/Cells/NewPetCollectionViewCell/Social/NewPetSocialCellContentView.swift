@@ -16,6 +16,7 @@ final class NewPetSocialCellContentView: UIView, UIContentView {
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
+    
     private let containerView: UIView = {
         let uv = UIView(withAutolayout: true)
         return uv

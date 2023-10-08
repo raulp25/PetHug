@@ -152,4 +152,131 @@ extension NSCollectionLayoutSection {
         section.orthogonalScrollingBehavior = .continuous
         return section
     }
+    
 }
+
+
+extension NSCollectionLayoutSection {
+    
+    static func createPetLayout(for section: PetSections) -> NSCollectionLayoutSection {
+//        let headerSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1.0),
+//            heightDimension: .estimated(50) // Adjust the height as needed
+//        )
+//
+//        let spacingheader = CGFloat(-24)
+//
+//        let header = NSCollectionLayoutBoundarySupplementaryItem(
+//            layoutSize: headerSize,
+//            elementKind: UICollectionView.elementKindSectionHeader,
+//            alignment: .top,
+//            absoluteOffset: .init(x: 0, y: spacingheader)
+//        )
+//
+
+//        let itemSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1),
+//            heightDimension: .fractionalHeight(1.0)
+//        )
+//        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+//
+//        let groupSize = NSCollectionLayoutSize(
+//            widthDimension: .fractionalWidth(1.0),
+//            heightDimension: .estimated(250)
+//        )
+        
+//                let group = NSCollectionLayoutGroup.horizontal(
+//                    layoutSize: groupSize,
+//                    repeatingSubitem: item,
+//                    count: 2
+//                )
+//        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 2)
+//
+//        let spacing = CGFloat(40)
+//        group.interItemSpacing = .fixed(spacing)
+////                group.contentInsets = .init(top: 0, leading: 30, bottom: 0, trailing: 30)
+//
+//        let section = NSCollectionLayoutSection(group: group)
+//        section.interGroupSpacing = spacing
+//        section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 30, bottom: 0, trailing: 30)
+        
+//        section.boundarySupplementaryItems = [header]
+        
+        // Define item size
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
+
+        // Create item
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+
+        // Define group size for the first section
+        let firstSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(350))
+        let firstSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: firstSectionGroupSize, subitems: [item])
+
+        // Define group size for the second section
+        let seeconditemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(80))
+        let seeconditem = NSCollectionLayoutItem(layoutSize: seeconditemSize)
+        let secondSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(80))
+        let secondSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: secondSectionGroupSize, subitems: [seeconditem])
+
+        // Define group size for the third section
+        let thirdSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(175))
+        let thirdSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: thirdSectionGroupSize, subitems: [item])
+
+        
+//        let spacing = CGFloat(40)
+//        thirdSectionGroup.interItemSpacing = .fixed(spacing)
+
+        // Define group size for the fourth section
+        let fourthSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+        let fourthSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: fourthSectionGroupSize, subitems: [item])
+
+        // Define group size for the fifth section
+        let fifthSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(500))
+        let fifthSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: fifthSectionGroupSize, subitems: [item])
+        
+        let sixthSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(500))
+        let sixthSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: sixthSectionGroupSize, subitems: [item])
+
+        // Create sections
+        switch section {
+        case .gallery:
+            let firstSection = NSCollectionLayoutSection(group: firstSectionGroup)
+            firstSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            firstSection.orthogonalScrollingBehavior = .paging
+            return firstSection
+        case .nameLocation:
+            let secondSection = NSCollectionLayoutSection(group: secondSectionGroup)
+//            secondSection.interGroupSpacing = spacing
+            secondSection.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 30, bottom: 0, trailing: 30)
+            return secondSection
+        case .info:
+            let thirdSection = NSCollectionLayoutSection(group: thirdSectionGroup)
+            thirdSection.interGroupSpacing = 10
+            thirdSection.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 30, bottom: 0, trailing: 30)
+            return thirdSection
+        case .description:
+            let fourthSection = NSCollectionLayoutSection(group: fourthSectionGroup)
+            fourthSection.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 30, bottom: 0, trailing: 30)
+            return fourthSection
+        case .medical:
+            let fifthSection = NSCollectionLayoutSection(group: fifthSectionGroup)
+            fifthSection.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 30, bottom: 0, trailing: 30)
+            return fifthSection
+        case .social:
+            let sixthSection = NSCollectionLayoutSection(group: sixthSectionGroup)
+            sixthSection.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 30, bottom: 0, trailing: 30)
+            return sixthSection
+        }
+        
+    }
+    
+    enum PetSections: Int {
+        case gallery = 1
+        case nameLocation = 2
+        case info = 3
+        case description = 4
+        case medical = 5
+        case social = 6
+    }
+}
+

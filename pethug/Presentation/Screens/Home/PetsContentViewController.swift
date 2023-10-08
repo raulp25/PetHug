@@ -21,16 +21,10 @@ final class PetsContentViewController: UIViewController {
     private var snapshot: Snapshot!
     
     //MARK: - Internal properties
-    private var currentSnapData = [SnapData]() {
-        didSet {
-            print("cambio currentsnap data checar")
-        }
-    }
-    var snapData: [SnapData] {
-        didSet {
-//            updateSnapShot()
-        }
-    }
+    private var currentSnapData = [SnapData]()
+    
+    var snapData: [SnapData]
+
     weak var delegate: PetsContentViewControllerDelegate?
     
     init(snapData: [SnapData]) {
