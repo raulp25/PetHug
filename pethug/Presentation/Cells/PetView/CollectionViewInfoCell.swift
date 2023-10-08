@@ -62,7 +62,7 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         case .male:
             genderBadgeIcon = "m.square"
         case .female:
-            genderBadgeIcon = "h.square"
+            genderBadgeIcon = "f.square"
         case .none:
             genderBadgeIcon = "circle.slash"
         }
@@ -112,26 +112,62 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         addSubview(hStackFirstRow)
         addSubview(hStackSecondRow)
         
-        hStackFirstRow.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 0)
+        hStackFirstRow.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingTop: 0
+        )
         hStackFirstRow.setHeight(60)
         
-        hStackSecondRow.anchor(top: hStackFirstRow.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 15)
+        hStackSecondRow.anchor(
+            top: hStackFirstRow.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 20
+        )
         hStackSecondRow.setHeight(60)
         
         for  badge in firstStackBadges {
-            hStackFirstRow.addArrangedSubview(badge)
-            badge.anchor(top: hStackFirstRow.topAnchor, bottom: hStackFirstRow.bottomAnchor)
             badge.layer.cornerRadius = 10
+            
+            hStackFirstRow.addArrangedSubview(badge)
+            badge.anchor(
+                top: hStackFirstRow.topAnchor,
+                bottom: hStackFirstRow.bottomAnchor
+            )
         }
         
         for badge in secondStackBadges {
-            hStackSecondRow.addArrangedSubview(badge)
-            badge.anchor(top: hStackSecondRow.topAnchor, bottom: hStackSecondRow.bottomAnchor)
             badge.layer.cornerRadius = 10
+            
+            hStackSecondRow.addArrangedSubview(badge)
+            badge.anchor(
+                top: hStackSecondRow.topAnchor,
+                bottom: hStackSecondRow.bottomAnchor
+            )
         }
     }
     
+    private func clearBadges() {
+        ageBadge?.removeFromSuperview()
+        genderBadge?.removeFromSuperview()
+        sizeBadge?.removeFromSuperview()
+        activityBadge?.removeFromSuperview()
+        socialBadge?.removeFromSuperview()
+        affectionBadge?.removeFromSuperview()
+        
+        ageBadge = nil
+        genderBadge = nil
+        sizeBadge = nil
+        activityBadge = nil
+        socialBadge = nil
+        affectionBadge = nil
+    }
+    
     override func prepareForReuse() {
+        clearBadges()
     }
     
     required init?(coder: NSCoder) {

@@ -36,6 +36,7 @@ final class PetContentViewController: UIViewController {
         configureDataSource()
         updateSnapShot()
         
+        
     }
     
     //MARK: - CollectionView layout
@@ -78,6 +79,13 @@ final class PetContentViewController: UIViewController {
             cell.configure(with: model)
         }
         
+        let descriptionCellRegistration = UICollectionView.CellRegistration<PetViewDescriptionCollectionViewCell, String> { cell, _, model in
+            cell.configure(with: model)
+        }
+        
+        let medicalCellRegistration = UICollectionView.CellRegistration<PetViewDescriptionCollectionViewCell, String> { cell, _, model in
+            cell.configure(with: model)
+        }
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
@@ -89,7 +97,7 @@ final class PetContentViewController: UIViewController {
             case let  .info(data):
                 return collectionView.dequeueConfiguredReusableCell(using: infoCellRegistration, for: indexPath, item: data)
             case let  .description(description):
-                return collectionView.dequeueConfiguredReusableCell(using: galleryCellRegistration, for: indexPath, item: "url")
+                return collectionView.dequeueConfiguredReusableCell(using: descriptionCellRegistration, for: indexPath, item: description)
             case let  .medical(info):
                 return collectionView.dequeueConfiguredReusableCell(using: galleryCellRegistration, for: indexPath, item: "rl")
             case let  .social(info):
@@ -101,13 +109,10 @@ final class PetContentViewController: UIViewController {
     
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-//        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
-        
         snapshot = Snapshot()
         snapshot.appendSections(snapData.map {
             return $0.key
         })
-        
         
         for datum in snapData {
             snapshot.appendItems(datum.values, toSection: datum.key)

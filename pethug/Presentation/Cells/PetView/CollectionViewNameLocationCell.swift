@@ -49,24 +49,34 @@ final class PetViewNameLocationCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-//        backgroundColor = customRGBColor(red: 58, green: 91, blue: 144)
         addSubview(nameLabel)
         addSubview(breedLabel)
         addSubview(addressLabel)
         
-        nameLabel.centerX(inView: self, topAnchor: topAnchor)
+        nameLabel.centerX(
+            inView: self,
+            topAnchor: topAnchor
+        )
         
-        breedLabel.anchor(top: nameLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 5)
-        breedLabel.setWidth(frame.width - 10)
+        breedLabel.anchor(
+            top: nameLabel.bottomAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingTop: 5
+        )
         
-        addressLabel.anchor(top: breedLabel.bottomAnchor, left: leftAnchor, right: rightAnchor, paddingTop: 5)
-        addressLabel.setWidth(frame.width - 10)
+        addressLabel.anchor(
+            top: breedLabel.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 5
+        )
     }
     
     private var work: DispatchWorkItem?
     
     private func configureCellUI(with nameLocationData: NameLocationData) {
-//        nameLabel.text = nameLocationData.name
         nameLabel.text = nameLocationData.name
         breedLabel.text = nameLocationData.breed
         addressLabel.text = nameLocationData.address

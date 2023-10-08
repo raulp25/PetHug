@@ -36,6 +36,7 @@ extension HomeTabCoordinator: PetsNavigatable {
             .init(key: .medical,      values: [.medical(.init(internalDeworming: true, externalDeworming: false, microchip: true, sterilized: false, vaccinated: true))]),
             .init(key: .social,       values: [.social(.init(maleDogFriendly: true, femaleDogFriendly: true, maleCatFriendly: false, femaleCatFriendly: false))])
         ])
+        vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
 }

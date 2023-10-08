@@ -219,16 +219,20 @@ extension NSCollectionLayoutSection {
         let secondSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: secondSectionGroupSize, subitems: [seeconditem])
 
         // Define group size for the third section
-        let thirdSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(175))
-        let thirdSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: thirdSectionGroupSize, subitems: [item])
+        let thirdItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+        let thirdItem = NSCollectionLayoutItem(layoutSize: thirdItemSize)
+        let thirdSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+        let thirdSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: thirdSectionGroupSize, subitems: [thirdItem])
 
         
 //        let spacing = CGFloat(40)
 //        thirdSectionGroup.interItemSpacing = .fixed(spacing)
 
         // Define group size for the fourth section
+        let fourthItemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
+        let fourthItem = NSCollectionLayoutItem(layoutSize: fourthItemSize)
         let fourthSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(100))
-        let fourthSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: fourthSectionGroupSize, subitems: [item])
+        let fourthSectionGroup = NSCollectionLayoutGroup.horizontal(layoutSize: fourthSectionGroupSize, subitems: [fourthItem])
 
         // Define group size for the fifth section
         let fifthSectionGroupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(500))

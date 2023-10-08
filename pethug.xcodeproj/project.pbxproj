@@ -137,6 +137,8 @@
 		C4B9EB7C2AD2040D0040ACCE /* PetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */; };
 		C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */; };
 		C4C4950E2AC7A5A300CBBDE4 /* BreedPopupSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */; };
+		C4CB96A32AD3491E00E5C338 /* CollectionViewDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */; };
+		C4CB96A52AD351FA00E5C338 /* CollectionViewMedicalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB96A42AD351FA00E5C338 /* CollectionViewMedicalCell.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
 		C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */; };
 		C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */; };
@@ -312,6 +314,8 @@
 		C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetContentViewController.swift; sourceTree = "<group>"; };
 		C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPetCell.swift; sourceTree = "<group>"; };
 		C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedPopupSearch.swift; sourceTree = "<group>"; };
+		C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDescriptionCell.swift; sourceTree = "<group>"; };
+		C4CB96A42AD351FA00E5C338 /* CollectionViewMedicalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewMedicalCell.swift; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		C4CF74D42AB226CD00D69185 /* CoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorProtocol.swift; sourceTree = "<group>"; };
 		C4CF74D62AB226F100D69185 /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
@@ -519,6 +523,8 @@
 				C43FAF922AD22A9A00A437C3 /* CollectionViewGalleryCell.swift */,
 				C43FAF942AD2382800A437C3 /* CollectionViewNameLocationCell.swift */,
 				C43FAF962AD2472300A437C3 /* CollectionViewInfoCell.swift */,
+				C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */,
+				C4CB96A42AD351FA00E5C338 /* CollectionViewMedicalCell.swift */,
 			);
 			path = PetView;
 			sourceTree = "<group>";
@@ -1310,6 +1316,7 @@
 				C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */,
 				C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */,
 				C42616F52AB29DF4006925DB /* UILabel+Extensions.swift in Sources */,
+				C4CB96A32AD3491E00E5C338 /* CollectionViewDescriptionCell.swift in Sources */,
 				C4779BE02AC38E3B00E3A16F /* AddPetViewModel+Types.swift in Sources */,
 				C4E654502AC8FECA009E027F /* AddressPopupSearch.swift in Sources */,
 				C42616E52AB27944006925DB /* String+Extensions.swift in Sources */,
@@ -1409,6 +1416,7 @@
 				C448201F2AB5401600E72BD2 /* UserRepository.swift in Sources */,
 				C4CF74F82AB25A9500D69185 /* AuthTextField+Types.swift in Sources */,
 				C426D2622AB66F8800BFA357 /* ChildTabCoordinatorProtocol.swift in Sources */,
+				C4CB96A52AD351FA00E5C338 /* CollectionViewMedicalCell.swift in Sources */,
 				C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */,
 				C42616D72AB27508006925DB /* IncreaseTapAreaButton.swift in Sources */,
 				C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */,
