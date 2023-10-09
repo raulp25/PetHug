@@ -37,11 +37,6 @@ final class PetViewImageCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-        let dummyView = UIView()
-        dummyView.backgroundColor = .systemPink.withAlphaComponent(0.5)
-        
-//        addSubview(dummyView)
-//        dummyView.fillSuperview()
         
         addSubview(petImage)
 

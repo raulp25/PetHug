@@ -48,7 +48,6 @@ final class PetsViewController: UIViewController {
     
     // MARK: - setup
     private func setup() {
-//        view.backgroundColor = customRGBColor(red: 111, green: 235, blue: 210)
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
@@ -66,7 +65,7 @@ final class PetsViewController: UIViewController {
                     60 :
                         75
         )
-        
+        headerView.delegate = self
         add(contentStateVC)
         contentStateVC.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
     }
@@ -91,9 +90,6 @@ final class PetsViewController: UIViewController {
     
     //MARK: - Private methods
     private func render(_ data: [Pet]) {
-//        let snapData: [PetsContentViewController.SnapData] = [
-//            .init(key: .pets, values: data.map { .pet($0) })
-//        ]
         let snapData: [PetsContentViewController.SnapData] = [
             .init(key: .pets, values: data.map { .pet($0) })
         ]
@@ -107,6 +103,12 @@ final class PetsViewController: UIViewController {
         }
     }
     
+}
+
+extension PetsViewController: PetsViewHeaderDelegate {
+    func didTapFilter() {
+        viewModel.navigation?.tappedFilter()
+    }
 }
 
 extension PetsViewController: PetsContentViewControllerDelegate {

@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 
-final class PetViewGalleryCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate {
+final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     private let pageControl = UIPageControl()
@@ -31,7 +31,6 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell, UICollection
     }
     
     //MARK: - Internal properties
-    weak var parentViewController: UIViewController?
     var images: [String]  = []{
         didSet{
             snapData = [.init(key: .image, values: images.map({ .image($0) }))]
@@ -111,21 +110,9 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell, UICollection
     
     //MARK: - Setup
     func configureUI() {
-        
+
         addSubview(collectionView)
         addSubview(pageControl)
-        
-        pageControl.numberOfPages = images.count
-        
-        pageControl.direction = .topToBottom
-        pageControl.currentPageIndicatorTintColor = .orange
-        
-        pageControl.anchor(
-            top: topAnchor,
-            right: rightAnchor,
-            paddingTop: 60,
-            paddingRight: 5
-        )
         
         collectionView.anchor(
             top: topAnchor,
@@ -134,22 +121,20 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell, UICollection
             right: rightAnchor
         )
         
-        collectionView.delegate = self
-    }
-    
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print(": => llamado did end decelerating")
+        pageControl.numberOfPages = images.count
+        pageControl.direction = .topToBottom
+        pageControl.currentPageIndicatorTintColor = .orange
+        pageControl.pageIndicatorTintColor = .orange.withAlphaComponent(0.5)
+        
+        pageControl.transform = CGAffineTransform(scaleX: 1.04, y: 1.04)
+        
+        pageControl.anchor(
+            top: topAnchor,
+            right: rightAnchor,
+            paddingTop: 60,
+            paddingRight: 5
+        )
     }
     
 }
 
-
-//
-//extension PetViewGalleryCollectionViewCell: UICollectionViewDelegate {
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        print(": => llamado did end decelerating")
-//        let width = scrollView.frame.width
-//        currentPage = Int(scrollView.contentOffset.x / width)
-//    }
-//}

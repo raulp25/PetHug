@@ -8,8 +8,10 @@
 import Foundation
 import Combine
 import FirebaseFirestore
+
 protocol PetsNavigatable: AnyObject {
     func tapped(pet: Pet)
+    func tappedFilter()
 }
 
 final class PetsViewModel {

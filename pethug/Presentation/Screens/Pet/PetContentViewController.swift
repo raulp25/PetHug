@@ -7,11 +7,7 @@
 
 import UIKit
 
-final class PetContentViewController: UIViewController, UICollectionViewDelegate{
-    
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print(": => llamado did end decelerating")
-    }
+final class PetContentViewController: UIViewController {
     //MARK: - Private components
     private let headerView = PetViewHeaderViewController()
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
@@ -74,7 +70,6 @@ final class PetContentViewController: UIViewController, UICollectionViewDelegate
         
         let galleryCellRegistration = UICollectionView.CellRegistration<PetViewGalleryCollectionViewCell, [String]> { cell, _, model in
             cell.images = model
-            cell.parentViewController = self
         }
         
         let nameLocationCellRegistration = UICollectionView.CellRegistration<PetViewNameLocationCollectionViewCell, NameLocationData> { cell, _, model in
@@ -158,8 +153,6 @@ final class PetContentViewController: UIViewController, UICollectionViewDelegate
             bottom: view.bottomAnchor,
             right: view.rightAnchor
         )
-        
-        collectionView.delegate = self
     }
 }
 

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol PetsViewHeaderDelegate: AnyObject {
-    func action()
+    func didTapFilter()
 }
 
 final class PetsViewHeaderViewController: UIViewController {
@@ -39,7 +39,7 @@ final class PetsViewHeaderViewController: UIViewController {
         return label
     }()
     
-    private let filterImageView: UIImageView = {
+    private lazy var filterImageView: UIImageView = {
        let iv = UIImageView()
         iv.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
         iv.tintColor = customRGBColor(red: 55, green: 55, blue: 55)
@@ -47,7 +47,9 @@ final class PetsViewHeaderViewController: UIViewController {
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapFilter))
         iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(tapGesture)
         return iv
     }()
     
@@ -59,7 +61,12 @@ final class PetsViewHeaderViewController: UIViewController {
         setup()
     }
     
+    //MARK: - Private actions
+    @objc private func didTapFilter() {
+        delegate?.didTapFilter()
+    }
     
+    //MARK: - Setup
     func setup() {
         let paddingTop: CGFloat = 15
         let sidePadding: CGFloat = 25
