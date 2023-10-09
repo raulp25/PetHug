@@ -83,7 +83,11 @@ final class PetContentViewController: UIViewController {
             cell.configure(with: model)
         }
         
-        let medicalCellRegistration = UICollectionView.CellRegistration<PetViewDescriptionCollectionViewCell, String> { cell, _, model in
+        let medicalCellRegistration = UICollectionView.CellRegistration<PetViewMedicalCollectionViewCell, MedicalInfo> { cell, _, model in
+            cell.configure(with: model)
+        }
+        
+        let socialCellRegistration = UICollectionView.CellRegistration<PetViewSocialCollectionViewCell, SocialInfo> { cell, _, model in
             cell.configure(with: model)
         }
         
@@ -99,9 +103,9 @@ final class PetContentViewController: UIViewController {
             case let  .description(description):
                 return collectionView.dequeueConfiguredReusableCell(using: descriptionCellRegistration, for: indexPath, item: description)
             case let  .medical(info):
-                return collectionView.dequeueConfiguredReusableCell(using: galleryCellRegistration, for: indexPath, item: "rl")
+                return collectionView.dequeueConfiguredReusableCell(using: medicalCellRegistration, for: indexPath, item: info)
             case let  .social(info):
-                return collectionView.dequeueConfiguredReusableCell(using: galleryCellRegistration, for: indexPath, item: "ifno")
+                return collectionView.dequeueConfiguredReusableCell(using: socialCellRegistration, for: indexPath, item: info)
             }
             
         })
@@ -139,7 +143,12 @@ final class PetContentViewController: UIViewController {
         )
         
         view.addSubview(collectionView)
-        collectionView.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.safeAreaLayoutGuide.bottomAnchor, right: view.rightAnchor)
+        collectionView.anchor(
+            top: headerView.view.bottomAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor
+        )
     }
 }
 

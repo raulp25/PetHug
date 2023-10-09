@@ -50,9 +50,10 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         configureConstraints()
     }
     
-    override init(frame: CGRect = .zero) {
-        super.init(frame: frame)
+    override func prepareForReuse() {
+        clearComponents()
     }
+    
     
     private var work: DispatchWorkItem?
         
@@ -150,7 +151,7 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         }
     }
     
-    private func clearBadges() {
+    private func clearComponents() {
         ageBadge?.removeFromSuperview()
         genderBadge?.removeFromSuperview()
         sizeBadge?.removeFromSuperview()
@@ -164,14 +165,6 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         activityBadge = nil
         socialBadge = nil
         affectionBadge = nil
-    }
-    
-    override func prepareForReuse() {
-        clearBadges()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 
 }

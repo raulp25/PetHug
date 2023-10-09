@@ -10,101 +10,108 @@ import UIKit
 class PetViewMedicalCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private components
-    
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Tamańo (No obligatorio)"
+        label.text = "Se entrega"
         label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
     
     private lazy var vStack: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [hStackSmall, hStackMedium, hStackLarge])
+        let stack: UIStackView = .init()
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.alignment = .fill
+        stack.spacing = 15
         stack.translatesAutoresizingMaskIntoConstraints = true
         return stack
     }()
     
-    private lazy var hStackSmall: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [smallLabel, smallCheckMarkButton])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .equalSpacing
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    private var internalDeworming: TextCheckbox? = nil
+    private var externalDeworming: TextCheckbox? = nil
+    private var microchip: TextCheckbox? = nil
+    private var sterilized: TextCheckbox? = nil
+    private var vaccinated: TextCheckbox? = nil
     
-    private let smallLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Pequeńo"
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
-        return label
-    }()
+    //MARK: - LifeCycle
+    func configure(with medicalInfo: MedicalInfo) {
+        configureCellUI(with: medicalInfo)
+        configureConstraints()
+    }
     
-    lazy private var smallCheckMarkButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "square"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tintColor = .black
-        button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        return button
-    }()
+    override func prepareForReuse() {
+        clearComponents()
+    }
     
-    private lazy var hStackMedium: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [mediumLabel, mediumCheckMarkButton])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .equalSpacing
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+    private func configureCellUI(with medicalInfo: MedicalInfo) {
+        internalDeworming = TextCheckbox(
+                                titleText: "Desparasitación Interna",
+                                isChecked: medicalInfo.internalDeworming
+                            )
+        externalDeworming = TextCheckbox(
+                                titleText: "Desparasitación Externa",
+                                isChecked: medicalInfo.externalDeworming
+                            )
+        microchip = TextCheckbox(
+                        titleText: "Microchip",
+                        isChecked: medicalInfo.microchip
+                    )
+        sterilized = TextCheckbox(
+                        titleText: "Esterilizado",
+                        isChecked: medicalInfo.sterilized
+                    )
+        vaccinated = TextCheckbox(
+                        titleText: "Vacunas",
+                        isChecked: medicalInfo.vaccinated
+                    )
+        
+        let textCheckBoxes = [
+            internalDeworming,
+            externalDeworming,
+            microchip,
+            sterilized,
+            vaccinated
+        ]
+        
+        for textCheckbox in textCheckBoxes {
+            if let textCheckbox = textCheckbox {
+                vStack.addArrangedSubview(textCheckbox)
+            }
+            
+        }
+    }
     
-    private let mediumLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Medio"
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
-        return label
-    }()
-    lazy private var mediumCheckMarkButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "square"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tintColor = .black
-        button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        return button
-    }()
+    private func configureConstraints() {
+        addSubview(titleLabel)
+        addSubview(vStack)
+        
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor
+        )
+        
+        vStack.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 10
+        )
+    }
     
-    private lazy var hStackLarge: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [largeLabel, largeCheckMarkButton])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .equalSpacing
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    private let largeLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Grande"
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
-        return label
-    }()
-    lazy private var largeCheckMarkButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setImage(UIImage(systemName: "square"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFill
-        button.tintColor = .black
-        button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        return button
-    }()
-    
-    @objc private func didTapCheckMark(_ sender: UIButton) {
+    private func clearComponents() {
+        internalDeworming?.removeFromSuperview()
+        externalDeworming?.removeFromSuperview()
+        microchip?.removeFromSuperview()
+        sterilized?.removeFromSuperview()
+        vaccinated?.removeFromSuperview()
+        
+        internalDeworming = nil
+        externalDeworming = nil
+        microchip = nil
+        sterilized = nil
+        vaccinated = nil
     }
     
 }

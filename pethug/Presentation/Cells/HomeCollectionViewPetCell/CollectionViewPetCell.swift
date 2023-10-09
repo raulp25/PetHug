@@ -33,13 +33,23 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     
     private lazy var heartImageContainer: UIView = {
        let uv = UIView(withAutolayout: true)
-        uv.backgroundColor = customRGBColor(red: 240, green: 245, blue: 246)
         uv.layer.cornerRadius = 7
         uv.isUserInteractionEnabled = true
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLike))
         uv.addGestureRecognizer(tapGesture)
         return uv
     }()
+    
+    let blurView: UIVisualEffectView = {
+        let vv = UIVisualEffectView()
+        vv.clipsToBounds = true
+        vv.layer.cornerRadius = 7
+        vv.translatesAutoresizingMaskIntoConstraints = false
+        vv.backgroundColor = customRGBColor(red: 240, green: 245, blue: 246, alpha: 0.4)
+       return vv
+    }()
+    
+    let blurEffect  = UIBlurEffect(style: .regular)
     
     private let heartImage: UIImageView = {
        let iv = UIImageView()
@@ -94,6 +104,7 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         sendSubviewToBack(petImage)
         
         addSubview(heartImageContainer)
+        heartImageContainer.addSubview(blurView)
         heartImageContainer.addSubview(heartImage)
         
         addSubview(name)
@@ -113,7 +124,14 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
             paddingRight: 5
         )
         heartImageContainer.setDimensions(height: 24, width: 24)
-        heartImage.center(inView: heartImageContainer)
+        heartImageContainer.bringSubviewToFront(heartImage)
+        
+        blurView.fillSuperview()
+        blurView.effect = blurEffect
+        
+        heartImage.center(
+            inView: heartImageContainer
+        )
         
         name.anchor(
             top: petImage.bottomAnchor,

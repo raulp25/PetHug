@@ -30,16 +30,8 @@ class DummySectionHeader: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = .clear
-        layer.borderColor = customRGBColor(red: 243, green: 243, blue: 243).cgColor
-        layer.borderWidth = 3
-        layer.cornerRadius = 10
         addSubview(titleLabel)
         titleLabel.center(inView: self)
-        
-//        addSubview(titleLabel2)
-//        titleLabel2.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10)
     }
 
     @available(*, unavailable) required init?(coder _: NSCoder) {

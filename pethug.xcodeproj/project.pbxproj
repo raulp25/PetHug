@@ -111,6 +111,8 @@
 		C4779BF02AC3BADE00E3A16F /* NewPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */; };
 		C4779BF22AC3C92000E3A16F /* NewPetContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BF12AC3C92000E3A16F /* NewPetContentViewController+Types.swift */; };
 		C4779BF42AC3C97E00E3A16F /* NewPetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */; };
+		C480DBC12AD369AE005F707C /* TextCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC02AD369AE005F707C /* TextCheckbox.swift */; };
+		C480DBC32AD37219005F707C /* CollectionViewSocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
@@ -288,6 +290,8 @@
 		C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewController.swift; sourceTree = "<group>"; };
 		C4779BF12AC3C92000E3A16F /* NewPetContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPetContentViewController+Types.swift"; sourceTree = "<group>"; };
 		C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetContentViewController.swift; sourceTree = "<group>"; };
+		C480DBC02AD369AE005F707C /* TextCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCheckbox.swift; sourceTree = "<group>"; };
+		C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSocialCell.swift; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
@@ -525,6 +529,7 @@
 				C43FAF962AD2472300A437C3 /* CollectionViewInfoCell.swift */,
 				C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */,
 				C4CB96A42AD351FA00E5C338 /* CollectionViewMedicalCell.swift */,
+				C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */,
 			);
 			path = PetView;
 			sourceTree = "<group>";
@@ -840,6 +845,14 @@
 			path = NewPet;
 			sourceTree = "<group>";
 		};
+		C480DBBF2AD3698F005F707C /* TextCheckbox */ = {
+			isa = PBXGroup;
+			children = (
+				C480DBC02AD369AE005F707C /* TextCheckbox.swift */,
+			);
+			path = TextCheckbox;
+			sourceTree = "<group>";
+		};
 		C482908B2AB391AE00DE6227 /* CreateAccount */ = {
 			isa = PBXGroup;
 			children = (
@@ -1068,6 +1081,7 @@
 		C4CF74F42AB2599B00D69185 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C480DBBF2AD3698F005F707C /* TextCheckbox */,
 				C43FAF982AD257E900A437C3 /* Badge */,
 				C4C4950C2AC7A58C00CBBDE4 /* BreedPopupSearch */,
 				C4E6544E2AC8FE2A009E027F /* AddressPopupSearch */,
@@ -1354,6 +1368,7 @@
 				C435314C2AB960A10070D7EE /* PetsViewController.swift in Sources */,
 				C416E0162ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift in Sources */,
 				C4E6544B2AC8F66A009E027F /* NewPetAddressListCellConfiguration.swift in Sources */,
+				C480DBC32AD37219005F707C /* CollectionViewSocialCell.swift in Sources */,
 				C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */,
 				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
 				C426D26B2AB671AD00BFA357 /* SettingsViewController.swift in Sources */,
@@ -1430,6 +1445,7 @@
 				C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */,
 				C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */,
 				C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */,
+				C480DBC12AD369AE005F707C /* TextCheckbox.swift in Sources */,
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C4F7DFC72ACC7F76000D5F76 /* NewPetViewModel+Types.swift in Sources */,
 				C476E2C22ABA99D30014DEA4 /* DefaultPetRepository.swift in Sources */,

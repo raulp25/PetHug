@@ -21,6 +21,7 @@ class PetViewDescriptionCollectionViewCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.numberOfLines = 0
+        label.textAlignment = .justified
         return label
     }()
     
