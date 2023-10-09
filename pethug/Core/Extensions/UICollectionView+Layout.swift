@@ -206,6 +206,11 @@ extension NSCollectionLayoutSection {
         case .gallery:
             let firstSection = NSCollectionLayoutSection(group: firstSectionGroup)
             firstSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            
+            return firstSection
+        case .galleryImage:
+            let firstSection = NSCollectionLayoutSection(group: firstSectionGroup)
+            firstSection.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             firstSection.orthogonalScrollingBehavior = .paging
             
             return firstSection
@@ -239,13 +244,14 @@ extension NSCollectionLayoutSection {
         
     }
     
-    enum PetSections: Int {
-        case gallery = 1
-        case nameLocation = 2
-        case info = 3
-        case description = 4
-        case medical = 5
-        case social = 6
+    enum PetSections {
+        case gallery
+        case galleryImage
+        case nameLocation
+        case info
+        case description
+        case medical
+        case social
     }
 }
 

@@ -11,7 +11,7 @@ final class PetContentViewController: UIViewController {
     //MARK: - Private components
     private let headerView = PetViewHeaderViewController()
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
-    //// Poner el pageController en la view y anclar a derecha top y con el padding top que resulte mejor 
+
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
@@ -38,6 +38,7 @@ final class PetContentViewController: UIViewController {
         
         
     }
+
     
     //MARK: - CollectionView layout
     func createLayout() -> UICollectionViewCompositionalLayout {
@@ -67,8 +68,8 @@ final class PetContentViewController: UIViewController {
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
         
-        let galleryCellRegistration = UICollectionView.CellRegistration<PetViewGalleryCollectionViewCell, String> { cell, _, model in
-            cell.configure(with: model)
+        let galleryCellRegistration = UICollectionView.CellRegistration<PetViewGalleryCollectionViewCell, [String]> { cell, _, model in
+            cell.images = model
         }
         
         let nameLocationCellRegistration = UICollectionView.CellRegistration<PetViewNameLocationCollectionViewCell, NameLocationData> { cell, _, model in
@@ -94,7 +95,7 @@ final class PetContentViewController: UIViewController {
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
-            case let  .image(url):
+            case let  .images(url):
                 return collectionView.dequeueConfiguredReusableCell(using: galleryCellRegistration, for: indexPath, item: url)
             case let  .nameLocation(data):
                 return collectionView.dequeueConfiguredReusableCell(using: nameLocationCellRegistration, for: indexPath, item: data)
@@ -125,10 +126,14 @@ final class PetContentViewController: UIViewController {
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
     
+    
+    
     //MARK: - Setup
     func configureUI() {
         
         add(headerView)
+        view.addSubview(collectionView)
+        
         headerView.view.setHeight(70)
         headerView.view.anchor(
             top: view.topAnchor,
@@ -142,7 +147,6 @@ final class PetContentViewController: UIViewController {
                 75
         )
         
-        view.addSubview(collectionView)
         collectionView.anchor(
             top: headerView.view.bottomAnchor,
             left: view.leftAnchor,

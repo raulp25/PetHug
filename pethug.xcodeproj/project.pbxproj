@@ -113,6 +113,8 @@
 		C4779BF42AC3C97E00E3A16F /* NewPetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */; };
 		C480DBC12AD369AE005F707C /* TextCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC02AD369AE005F707C /* TextCheckbox.swift */; };
 		C480DBC32AD37219005F707C /* CollectionViewSocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */; };
+		C480DBC62AD3985F005F707C /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC52AD3985F005F707C /* CollectionViewImageCell.swift */; };
+		C480DBC82AD398C9005F707C /* CollectionViewGalleryCell+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC72AD398C9005F707C /* CollectionViewGalleryCell+Types.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
@@ -292,6 +294,8 @@
 		C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetContentViewController.swift; sourceTree = "<group>"; };
 		C480DBC02AD369AE005F707C /* TextCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCheckbox.swift; sourceTree = "<group>"; };
 		C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSocialCell.swift; sourceTree = "<group>"; };
+		C480DBC52AD3985F005F707C /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
+		C480DBC72AD398C9005F707C /* CollectionViewGalleryCell+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionViewGalleryCell+Types.swift"; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
@@ -524,7 +528,7 @@
 		C43FAF912AD229FA00A437C3 /* PetView */ = {
 			isa = PBXGroup;
 			children = (
-				C43FAF922AD22A9A00A437C3 /* CollectionViewGalleryCell.swift */,
+				C480DBC42AD39841005F707C /* GalleryCell */,
 				C43FAF942AD2382800A437C3 /* CollectionViewNameLocationCell.swift */,
 				C43FAF962AD2472300A437C3 /* CollectionViewInfoCell.swift */,
 				C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */,
@@ -851,6 +855,16 @@
 				C480DBC02AD369AE005F707C /* TextCheckbox.swift */,
 			);
 			path = TextCheckbox;
+			sourceTree = "<group>";
+		};
+		C480DBC42AD39841005F707C /* GalleryCell */ = {
+			isa = PBXGroup;
+			children = (
+				C43FAF922AD22A9A00A437C3 /* CollectionViewGalleryCell.swift */,
+				C480DBC52AD3985F005F707C /* CollectionViewImageCell.swift */,
+				C480DBC72AD398C9005F707C /* CollectionViewGalleryCell+Types.swift */,
+			);
+			path = GalleryCell;
 			sourceTree = "<group>";
 		};
 		C482908B2AB391AE00DE6227 /* CreateAccount */ = {
@@ -1320,6 +1334,7 @@
 				C426D2642AB66FC600BFA357 /* InAppCoordinator+TabBar.swift in Sources */,
 				C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */,
 				C43261D62AC222B900B70ACA /* AddPetTabCoordinator.swift in Sources */,
+				C480DBC82AD398C9005F707C /* CollectionViewGalleryCell+Types.swift in Sources */,
 				C4779BE82AC3A7F100E3A16F /* AddPetContentViewController+Types.swift in Sources */,
 				C42616F12AB28296006925DB /* AuthButton.swift in Sources */,
 				C49440892ACD3ABF0042A1DA /* AddPetContentViewModel.swift in Sources */,
@@ -1329,6 +1344,7 @@
 				C4CF74E82AB22FD100D69185 /* UIView+Extensions.swift in Sources */,
 				C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */,
 				C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */,
+				C480DBC62AD3985F005F707C /* CollectionViewImageCell.swift in Sources */,
 				C42616F52AB29DF4006925DB /* UILabel+Extensions.swift in Sources */,
 				C4CB96A32AD3491E00E5C338 /* CollectionViewDescriptionCell.swift in Sources */,
 				C4779BE02AC38E3B00E3A16F /* AddPetViewModel+Types.swift in Sources */,

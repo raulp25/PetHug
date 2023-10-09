@@ -29,7 +29,7 @@ extension HomeTabCoordinator: PetsNavigatable {
 //    case medical
 //    case social
         let vc = PetContentViewController(snapData: [
-            .init(key: .gallery,      values: pet.imagesUrls.map({ .image($0) })),
+            .init(key: .gallery,      values: [.images(pet.imagesUrls.map({ $0 }))]),
             .init(key: .nameLocation, values: [.nameLocation(.init(name: pet.name, breed: pet.breed, address: pet.address.rawValue))]),
             .init(key: .info,         values: [.info(.init(age: pet.age, gender: pet.gender, size: pet.size, activityLevel: pet.activityLevel, socialLevel: pet.socialLevel, affectionLevel: pet.affectionLevel))]),
             .init(key: .description,  values: [.description(pet.info)]),

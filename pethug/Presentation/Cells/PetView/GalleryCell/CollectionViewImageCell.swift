@@ -1,15 +1,15 @@
 //
-//  CollectionViewGalleryCell.swift
+//  CollectionViewImageCell.swift
 //  pethug
 //
-//  Created by Raul Pena on 07/10/23.
+//  Created by Raul Pena on 08/10/23.
 //
 
 import UIKit
 import SDWebImage
 
 
-final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
+final class PetViewImageCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private components
     lazy private var petImage: UIImageView = {
@@ -56,6 +56,7 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     private var work: DispatchWorkItem?
     
     private func configureCellUI(with url: String) {
+        print("url ein image 123: => \(url)")
          work = DispatchWorkItem(block: {
              let url = URL(string: url)
              self.petImage.sd_setImage(with: url)
@@ -79,4 +80,5 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
 //    }
 
 }
+
 

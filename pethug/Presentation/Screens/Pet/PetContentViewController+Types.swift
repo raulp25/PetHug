@@ -22,7 +22,7 @@ extension PetContentViewController {
     }
     
     enum Item: Hashable {
-        case image(String)
+        case images([String])
         case nameLocation(NameLocationData)
         case info(InfoData)
         case description(String)

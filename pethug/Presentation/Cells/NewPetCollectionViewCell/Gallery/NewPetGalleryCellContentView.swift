@@ -184,21 +184,6 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     private func updateSnapShot(animated: Bool = true) {
         currentSnapData  = [.init(key: .gallery, values: [
             .image(UIImage(systemName: "pencil")!)
-//            .image(UIImage(named: "pr1")!),
-//            .image(UIImage(named: "pr2")!),
-//            .image(UIImage(named: "pr3")!),
-//            .image(UIImage(named: "pr4")!),
-//            .image(UIImage(named: "pr5")!),
-//            .image(UIImage(named: "pr6")!),
-//            .image(UIImage(named: "pr7")!),
-//            .image(UIImage(named: "pr8")!),
-//            .image(UIImage(named: "pr9")!),
-//            .image(UIImage(named: "pr10")!),
-//            .image(UIImage(named: "sal")!),
-//            .image(UIImage(named: "bull")!),
-//            .image(UIImage(named: "dog1")!),
-//            .image(UIImage(named: "dog3")!),
-//            .image(UIImage(named: "orange")!),
         ])]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
