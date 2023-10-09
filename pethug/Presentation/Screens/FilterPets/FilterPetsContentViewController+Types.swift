@@ -1,45 +1,33 @@
 //
-//  NewPetContentViewController+Types.swift
+//  FilterPetsContentViewController+Types.swift
 //  pethug
 //
-//  Created by Raul Pena on 26/09/23.
+//  Created by Raul Pena on 09/10/23.
 //
 
 import UIKit
 
 //MARK: - Types
-extension NewPetContentViewController {
+extension FilterPetsContentViewController {
     typealias DataSource = UICollectionViewDiffableDataSource<Section, Item>
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
     
     enum Section: Int {
-        case name
-        case gallery
         case type
         case breed
         case gender
         case size
         case age
-        case activity
-        case social
-        case affection
-        case info
         case address
         case end
     }
     
     enum Item: Hashable {
-        case name(NewPetName)
-        case gallery(NewPetGallery)
-        case type(NewPetType)
-        case breed(NewPetBreed)
+        case type(FilterPetsType)
+        case breed(FilterPetsBreed)
         case gender(NewPetGender)
         case size(NewPetSize)
         case age(NewPetAge)
-        case activity(NewPetActivity)
-        case social(NewPetSocial)
-        case affection(NewPetAffection)
-        case info(NewPetInfo)
         case address(NewPetAddress)
         case end(NewPetUpload)
     }
@@ -49,4 +37,3 @@ extension NewPetContentViewController {
         var values: [Item]
     }
 }
-

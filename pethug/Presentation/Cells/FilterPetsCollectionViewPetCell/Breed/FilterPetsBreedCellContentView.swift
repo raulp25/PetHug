@@ -1,13 +1,13 @@
 //
-//  NewPetBreedCellContentView.swift
+//  FilterPetsBreedCellContentView.swift
 //  pethug
 //
-//  Created by Raul Pena on 30/09/23.
+//  Created by Raul Pena on 09/10/23.
 //
 
 import UIKit
 
-final class NewPetBreedCellContentView: UIView, UIContentView {
+final class FilterPetsBreedCellContentView: UIView, UIContentView {
     
     private let titleLabel: UILabel = {
        let label = UILabel()
@@ -50,12 +50,12 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
 
     
     // MARK: - Properties
-    private var currentConfiguration: NewPetBreedListCellConfiguration!
+    private var currentConfiguration: FilterPetsBreedListCellConfiguration!
     var configuration: UIContentConfiguration {
         get {
             currentConfiguration
         } set {
-            guard let newConfiguration = newValue as? NewPetBreedListCellConfiguration else {
+            guard let newConfiguration = newValue as? FilterPetsBreedListCellConfiguration else {
                 return
             }
 
@@ -64,7 +64,7 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
     }
     
     // MARK: - LifeCycle
-    init(configuration: NewPetBreedListCellConfiguration) {
+    init(configuration: FilterPetsBreedListCellConfiguration) {
         super.init(frame: .zero)
         // create the content view UI
         setup()
@@ -88,7 +88,7 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Functions
-    private func apply(configuration: NewPetBreedListCellConfiguration) {
+    private func apply(configuration: FilterPetsBreedListCellConfiguration) {
         print("currentConfiguration != configuration 552: => \(currentConfiguration != configuration)")
         guard currentConfiguration != configuration else {
             return
@@ -112,7 +112,9 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
 //        imageView.configure(with: item.profileImageUrlString)
     }
     
+    
 
+    
     private func setup() {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         addSubview(titleLabel)
@@ -132,6 +134,11 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
         breedLabel.centerY(inView: containerView)
         breedLabel.anchor(left: containerView.leftAnchor, right: chevronImageView.leftAnchor, paddingLeft: 10)
     }
+    
+    
+    
 }
+
+
 
 

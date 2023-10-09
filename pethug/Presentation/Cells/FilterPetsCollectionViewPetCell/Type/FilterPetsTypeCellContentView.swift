@@ -1,13 +1,13 @@
 //
-//  NewPetTypeCellContentView.swift
+//  File.swift
 //  pethug
 //
-//  Created by Raul Pena on 27/09/23.
+//  Created by Raul Pena on 09/10/23.
 //
 
 import UIKit
 
-final class NewPetTypeCellContentView: UIView, UIContentView {
+final class FilterPetsTypeCellContentView: UIView, UIContentView {
     //MARK: - Private components
     private let headerLabel: UILabel = {
        let label = UILabel()
@@ -141,12 +141,12 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
     //MARK: - Internal properties
     
     // MARK: - Properties
-    private var currentConfiguration: NewPetTypeListCellConfiguration!
+    private var currentConfiguration: FilterPetsTypeListCellConfiguration!
     var configuration: UIContentConfiguration {
         get {
             currentConfiguration
         } set {
-            guard let newConfiguration = newValue as? NewPetTypeListCellConfiguration else {
+            guard let newConfiguration = newValue as? FilterPetsTypeListCellConfiguration else {
                 return
             }
             
@@ -157,7 +157,7 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
     let containerView = UIView()
     
     // MARK: - LifeCycle
-    init(configuration: NewPetTypeListCellConfiguration) {
+    init(configuration: FilterPetsTypeListCellConfiguration) {
         super.init(frame: .zero)
         buttons = [dogCheckMarkButton, catCheckMarkButton, birdCheckMarkButton, rabbitCheckMarkButton]
         for (index, button) in buttons.enumerated() {
@@ -181,7 +181,7 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Functions
-    private func apply(configuration: NewPetTypeListCellConfiguration) {
+    private func apply(configuration: FilterPetsTypeListCellConfiguration) {
         guard currentConfiguration != configuration else {
             return
         }
@@ -285,4 +285,5 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         }
     }
 }
+
 

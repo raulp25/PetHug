@@ -25,7 +25,7 @@ final class NewPetCoordinator: NavCoordinator {
     }
 
     deinit {
-        print("✅ Deinit NewMessageCoordinator")
+        print("✅ Deinit NewPetCoordinator")
     }
 }
 

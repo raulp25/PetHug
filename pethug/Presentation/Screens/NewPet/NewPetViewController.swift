@@ -69,8 +69,9 @@ final class NewPetViewController: UIViewController {
         view.addSubview(xmarkImageContainer)
         xmarkImageContainer.addSubview(xmarkImageView)
         view.addSubview(titleLabel)
-        titleLabel.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         add(contentVC)
+        
+        titleLabel.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         
         xmarkImageContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingLeft: 15)
         xmarkImageContainer.setDimensions(height: 30, width: 30)

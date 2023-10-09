@@ -10,7 +10,6 @@ import UIKit
 final class ContentStateViewController: UIViewController {
     private var state: State?
     var shownViewController: UIViewController?
-    let headerView = PetsViewHeaderViewController()
     override func viewDidLoad() {
         super.viewDidLoad()
         if state == nil {

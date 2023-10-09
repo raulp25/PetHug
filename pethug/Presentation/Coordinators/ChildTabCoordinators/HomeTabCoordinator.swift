@@ -23,6 +23,14 @@ final class HomeTabCoordinator: ChildTabCoordinator {
 }
 
 extension HomeTabCoordinator: PetsNavigatable {
+    func tappedFilter() {
+        let child = FilterPetsCoordinator()
+        child.parentCoordinator = self
+        childCoordinators.append(child)
+        child.start()
+    }
+    
+    
     func tapped(pet: Pet) {
         let vc = PetContentViewController(snapData: [
             .init(

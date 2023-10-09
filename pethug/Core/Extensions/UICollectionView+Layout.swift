@@ -28,6 +28,7 @@ extension UICollectionLayoutListConfiguration {
         } else {
             // Fallback on earlier versions
         }
+
         listConfiguration.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         return listConfiguration
     }
