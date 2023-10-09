@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 
-final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
+final class PetViewGalleryCollectionViewCell: UICollectionViewCell, UICollectionViewDelegate {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     private let pageControl = UIPageControl()
@@ -17,16 +17,21 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    
-    //MARK: - Internal properties
-    var snapData: [SnapData] = []{
+    private var snapData: [SnapData] = []{
         didSet {
             configureUI()
             configureDataSource()
             updateSnapShot()
         }
     }
+    private var currentPage = 0 {
+        didSet {
+            pageControl.currentPage = currentPage
+        }
+    }
     
+    //MARK: - Internal properties
+    weak var parentViewController: UIViewController?
     var images: [String]  = []{
         didSet{
             snapData = [.init(key: .image, values: images.map({ .image($0) }))]
@@ -55,8 +60,17 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
             
             switch section {
             case .image:
-                print("dogs section")
-                return .createPetLayout(for: .galleryImage)
+                let section: NSCollectionLayoutSection = .createPetLayout(for: .galleryImage)
+                
+                section.visibleItemsInvalidationHandler = { [weak self] visibleItems, point, environment in
+                    let currentPage = visibleItems.last?.indexPath.row
+                    
+                    if let currentPage = currentPage{
+                        self?.currentPage = currentPage
+                    }
+                }
+
+                return section
             }
         }
         return layout
@@ -119,8 +133,23 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
             bottom: bottomAnchor,
             right: rightAnchor
         )
+        
+        collectionView.delegate = self
     }
+    
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        print(": => llamado did end decelerating")
+    }
+    
 }
 
 
-
+//
+//extension PetViewGalleryCollectionViewCell: UICollectionViewDelegate {
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        print(": => llamado did end decelerating")
+//        let width = scrollView.frame.width
+//        currentPage = Int(scrollView.contentOffset.x / width)
+//    }
+//}
