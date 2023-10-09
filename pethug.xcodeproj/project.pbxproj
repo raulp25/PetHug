@@ -147,6 +147,16 @@
 		C4A95C3D2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A95C3C2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift */; };
 		C4A95C3F2AC8BE33002781E2 /* NewPetBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A95C3E2AC8BE33002781E2 /* NewPetBreedCellContentView.swift */; };
 		C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AB87712ACA082C0081451F /* NewPetViewModel.swift */; };
+		C4B1BD102AD4BCAC003311EB /* FilterPetsGenderListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD0F2AD4BCAC003311EB /* FilterPetsGenderListCellConfiguration.swift */; };
+		C4B1BD122AD4BD1E003311EB /* FilterPetsGenderCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD112AD4BD1E003311EB /* FilterPetsGenderCellContentView.swift */; };
+		C4B1BD152AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD142AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift */; };
+		C4B1BD172AD4BEFF003311EB /* FilterPetsSizeCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD162AD4BEFF003311EB /* FilterPetsSizeCellContentView.swift */; };
+		C4B1BD1A2AD4BFA7003311EB /* FilterPetsAgeListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD192AD4BFA7003311EB /* FilterPetsAgeListCellConfiguration.swift */; };
+		C4B1BD1C2AD4BFFD003311EB /* FilterPetsAgeCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD1B2AD4BFFD003311EB /* FilterPetsAgeCellContentView.swift */; };
+		C4B1BD1F2AD4C088003311EB /* FilterPetsAddressListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD1E2AD4C088003311EB /* FilterPetsAddressListCellConfiguration.swift */; };
+		C4B1BD212AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD202AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift */; };
+		C4B1BD242AD4C19C003311EB /* FilterPetsSendListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD232AD4C19C003311EB /* FilterPetsSendListCellConfiguration.swift */; };
+		C4B1BD262AD4C1F3003311EB /* FilterPetsSendCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD252AD4C1F3003311EB /* FilterPetsSendCellContentView.swift */; };
 		C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B9EB792AD203660040ACCE /* PetViewHeaderViewController.swift */; };
 		C4B9EB7C2AD2040D0040ACCE /* PetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */; };
 		C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */; };
@@ -338,6 +348,16 @@
 		C4A95C3C2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetBreedListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4A95C3E2AC8BE33002781E2 /* NewPetBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetBreedCellContentView.swift; sourceTree = "<group>"; };
 		C4AB87712ACA082C0081451F /* NewPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewModel.swift; sourceTree = "<group>"; };
+		C4B1BD0F2AD4BCAC003311EB /* FilterPetsGenderListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsGenderListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4B1BD112AD4BD1E003311EB /* FilterPetsGenderCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsGenderCellContentView.swift; sourceTree = "<group>"; };
+		C4B1BD142AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsSizeListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4B1BD162AD4BEFF003311EB /* FilterPetsSizeCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsSizeCellContentView.swift; sourceTree = "<group>"; };
+		C4B1BD192AD4BFA7003311EB /* FilterPetsAgeListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsAgeListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4B1BD1B2AD4BFFD003311EB /* FilterPetsAgeCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsAgeCellContentView.swift; sourceTree = "<group>"; };
+		C4B1BD1E2AD4C088003311EB /* FilterPetsAddressListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsAddressListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4B1BD202AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsAddressCellContentView.swift; sourceTree = "<group>"; };
+		C4B1BD232AD4C19C003311EB /* FilterPetsSendListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsSendListCellConfiguration.swift; sourceTree = "<group>"; };
+		C4B1BD252AD4C1F3003311EB /* FilterPetsSendCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsSendCellContentView.swift; sourceTree = "<group>"; };
 		C4B9EB792AD203660040ACCE /* PetViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewHeaderViewController.swift; sourceTree = "<group>"; };
 		C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetContentViewController.swift; sourceTree = "<group>"; };
 		C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPetCell.swift; sourceTree = "<group>"; };
@@ -445,6 +465,11 @@
 		C41E8E662AD4A21E0065DEFC /* FilterPetsCollectionViewPetCell */ = {
 			isa = PBXGroup;
 			children = (
+				C4B1BD222AD4C180003311EB /* Send */,
+				C4B1BD1D2AD4C076003311EB /* Address */,
+				C4B1BD182AD4BF94003311EB /* Age */,
+				C4B1BD132AD4BE6A003311EB /* Size */,
+				C4B1BD0E2AD4BCA1003311EB /* Gender */,
 				C41E8E6C2AD4A3970065DEFC /* Breed */,
 				C41E8E672AD4A2780065DEFC /* Type */,
 			);
@@ -1032,6 +1057,51 @@
 			path = Breed;
 			sourceTree = "<group>";
 		};
+		C4B1BD0E2AD4BCA1003311EB /* Gender */ = {
+			isa = PBXGroup;
+			children = (
+				C4B1BD0F2AD4BCAC003311EB /* FilterPetsGenderListCellConfiguration.swift */,
+				C4B1BD112AD4BD1E003311EB /* FilterPetsGenderCellContentView.swift */,
+			);
+			path = Gender;
+			sourceTree = "<group>";
+		};
+		C4B1BD132AD4BE6A003311EB /* Size */ = {
+			isa = PBXGroup;
+			children = (
+				C4B1BD142AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift */,
+				C4B1BD162AD4BEFF003311EB /* FilterPetsSizeCellContentView.swift */,
+			);
+			path = Size;
+			sourceTree = "<group>";
+		};
+		C4B1BD182AD4BF94003311EB /* Age */ = {
+			isa = PBXGroup;
+			children = (
+				C4B1BD192AD4BFA7003311EB /* FilterPetsAgeListCellConfiguration.swift */,
+				C4B1BD1B2AD4BFFD003311EB /* FilterPetsAgeCellContentView.swift */,
+			);
+			path = Age;
+			sourceTree = "<group>";
+		};
+		C4B1BD1D2AD4C076003311EB /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				C4B1BD1E2AD4C088003311EB /* FilterPetsAddressListCellConfiguration.swift */,
+				C4B1BD202AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		C4B1BD222AD4C180003311EB /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				C4B1BD232AD4C19C003311EB /* FilterPetsSendListCellConfiguration.swift */,
+				C4B1BD252AD4C1F3003311EB /* FilterPetsSendCellContentView.swift */,
+			);
+			path = Send;
+			sourceTree = "<group>";
+		};
 		C4B9EB782AD2033F0040ACCE /* Pet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1412,6 +1482,7 @@
 				C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */,
 				C42616E92AB27B37006925DB /* AuthPublisher.swift in Sources */,
 				C4CF74E82AB22FD100D69185 /* UIView+Extensions.swift in Sources */,
+				C4B1BD152AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift in Sources */,
 				C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */,
 				C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */,
 				C480DBC62AD3985F005F707C /* CollectionViewImageCell.swift in Sources */,
@@ -1457,6 +1528,7 @@
 				C435314C2AB960A10070D7EE /* PetsViewController.swift in Sources */,
 				C416E0162ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift in Sources */,
 				C41E8E622AD46EF20065DEFC /* FilterPetsViewModel+Types.swift in Sources */,
+				C4B1BD1F2AD4C088003311EB /* FilterPetsAddressListCellConfiguration.swift in Sources */,
 				C4E6544B2AC8F66A009E027F /* NewPetAddressListCellConfiguration.swift in Sources */,
 				C480DBC32AD37219005F707C /* CollectionViewSocialCell.swift in Sources */,
 				C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */,
@@ -1478,6 +1550,7 @@
 				C4F7DFD42ACCA8C2000D5F76 /* NewPetActivityListCellConfiguration.swift in Sources */,
 				C4CF74F62AB259A800D69185 /* AuthTextField.swift in Sources */,
 				C4A95C3F2AC8BE33002781E2 /* NewPetBreedCellContentView.swift in Sources */,
+				C4B1BD102AD4BCAC003311EB /* FilterPetsGenderListCellConfiguration.swift in Sources */,
 				C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */,
 				C467578B2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift in Sources */,
 				C44820222AB5424900E72BD2 /* UserDataSource.swift in Sources */,
@@ -1501,6 +1574,7 @@
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
 				C426D2682AB6713A00BFA357 /* SettingsCoordinator.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,
+				C4B1BD1C2AD4BFFD003311EB /* FilterPetsAgeCellContentView.swift in Sources */,
 				C41E8E6E2AD4A3C90065DEFC /* FilterPetsBreedListCellConfiguration.swift in Sources */,
 				C42D3D9E2AB65FF200EBA1B7 /* InAppContainerRootViewController+State.swift in Sources */,
 				C43A5C732ACCE7A5007C8ECB /* PetModel.swift in Sources */,
@@ -1513,16 +1587,19 @@
 				C4F7DFD82ACCA8D4000D5F76 /* NewPetAffectionListCellConfiguration.swift in Sources */,
 				C445F16A2AB1581F00053BE7 /* Publishers+Extensions.swift in Sources */,
 				C4F7DFCA2ACC8407000D5F76 /* CreatePetUC.swift in Sources */,
+				C4B1BD1A2AD4BFA7003311EB /* FilterPetsAgeListCellConfiguration.swift in Sources */,
 				C4779BDE2AC38DC100E3A16F /* AddPetViewModel.swift in Sources */,
 				C41E8E582AD468DC0065DEFC /* FilterPetsCoordinator.swift in Sources */,
 				C448200C2AB5271B00E72BD2 /* ImageService.swift in Sources */,
 				C467578D2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift in Sources */,
+				C4B1BD172AD4BEFF003311EB /* FilterPetsSizeCellContentView.swift in Sources */,
 				C4CF74FC2AB25AF300D69185 /* AuthTextField+States.swift in Sources */,
 				C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */,
 				C4EF85232ACB99DC0088A53A /* EditGalleryImagePageSheetView.swift in Sources */,
 				C42D3D992AB65EB100EBA1B7 /* InAppCoordinator.swift in Sources */,
 				C4CF74DE2AB2291600D69185 /* StateCoordinatorProtocol.swift in Sources */,
 				C448201F2AB5401600E72BD2 /* UserRepository.swift in Sources */,
+				C4B1BD242AD4C19C003311EB /* FilterPetsSendListCellConfiguration.swift in Sources */,
 				C4CF74F82AB25A9500D69185 /* AuthTextField+Types.swift in Sources */,
 				C41E8E602AD46EE50065DEFC /* FilterPetsViewModel.swift in Sources */,
 				C426D2622AB66F8800BFA357 /* ChildTabCoordinatorProtocol.swift in Sources */,
@@ -1539,8 +1616,10 @@
 				C435315B2AB9845D0070D7EE /* Pet.swift in Sources */,
 				C4F7DFDE2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift in Sources */,
 				C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */,
+				C4B1BD262AD4C1F3003311EB /* FilterPetsSendCellContentView.swift in Sources */,
 				C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */,
 				C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */,
+				C4B1BD122AD4BD1E003311EB /* FilterPetsGenderCellContentView.swift in Sources */,
 				C480DBC12AD369AE005F707C /* TextCheckbox.swift in Sources */,
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C4F7DFC72ACC7F76000D5F76 /* NewPetViewModel+Types.swift in Sources */,
@@ -1571,6 +1650,7 @@
 				C451930C2ACE7C4A00B80926 /* UpdatePetUC.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,
 				C49440872ACD34C10042A1DA /* DeletePetUC.swift in Sources */,
+				C4B1BD212AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift in Sources */,
 				C448200E2AB5335500E72BD2 /* UserService.swift in Sources */,
 				C4779BF22AC3C92000E3A16F /* NewPetContentViewController+Types.swift in Sources */,
 				C435314E2AB966750070D7EE /* ContentStateViewController.swift in Sources */,

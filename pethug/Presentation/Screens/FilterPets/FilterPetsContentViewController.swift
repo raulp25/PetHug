@@ -26,17 +26,14 @@ final class FilterPetsContentViewController: UIViewController {
     }
     private var cancellables = Set<AnyCancellable>()
     
-    //MARK: - Internal Properties
-    weak var coordinator: FilterPetsCoordinator?
     
     //MARK: - LifeCycle
-    deinit {
-        print("✅ Deinit PetsContentViewController")
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         tabBarController?.tabBar.isHidden = true
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         add(headerView)
@@ -76,6 +73,15 @@ final class FilterPetsContentViewController: UIViewController {
                 }
 
             }.store(in: &cancellables)
+    }
+    
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
+    
+    deinit {
+        print("✅ Deinit PetsContentViewController")
     }
     
     
@@ -128,7 +134,7 @@ final class FilterPetsContentViewController: UIViewController {
                 UIScreen.main.bounds.size.height <= 870 ?
                     UIScreen.main.bounds.height / 0.86:
                         UIScreen.main.bounds.size.height <= 926 ?
-            UIScreen.main.bounds.height / 3.0:
+            UIScreen.main.bounds.height / 2.5:
                                 UIScreen.main.bounds.height / 1.1
             
             collectionView.setContentOffset(CGPoint(x: 0, y:  height), animated: true)
@@ -257,32 +263,32 @@ final class FilterPetsContentViewController: UIViewController {
             cell.viewModel?.petType = self?.viewModel.typeState
         }
         
-        let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGenderListCellConfiguration>, NewPetGender> { [weak self] cell, _, model in
+        let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsGenderListCellConfiguration>, FilterPetsGender> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
             cell.viewModel?.gender = self?.viewModel.genderState
         }
         
-        let newPetSizeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSizeListCellConfiguration>, NewPetSize> { [weak self] cell, _, model in
+        let newPetSizeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsSizeListCellConfiguration>, FilterPetsSize> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
             cell.viewModel?.size = self?.viewModel.sizeState
         }
         
-        let newPetAgeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAgeListCellConfiguration>, NewPetAge> { [weak self] cell, _, model in
+        let newPetAgeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsAgeListCellConfiguration>, FilterPetsAge> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
             cell.viewModel?.age = self?.viewModel.ageState
         }
         
-        let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { [weak self] cell, _, model in
+        let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsAddressListCellConfiguration>, FilterPetsAddress> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
             cell.viewModel?.address = self?.viewModel.addressState
         }
         
         
-        let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetUploadListCellConfiguration>, NewPetUpload> { [weak self] cell, _, model in
+        let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsSendListCellConfiguration>, FilterPetsSend> { [weak self] cell, _, model in
             cell.viewModel = model
 //            cell.viewModel?.buttonText = self?.viewModel.imagesToEditState.isEmpty ?? true ? "Subir" : "Acutalizar"
 //            cell.viewModel?.state = self?.viewModel.stateSubject
@@ -394,7 +400,7 @@ final class FilterPetsContentViewController: UIViewController {
 
 extension FilterPetsContentViewController: FilterPetsViewHeaderDelegate {
     func didTapIcon() {
-        coordinator?.parentCoordinator?.rootViewController.popViewController(animated: true)
+        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -412,27 +418,27 @@ extension FilterPetsContentViewController: FilterPetsTypeDelegate {
     }
 }
 
-extension FilterPetsContentViewController: NewPetGenderDelegate {
+extension FilterPetsContentViewController: FilterPetsGenderDelegate {
     func genderDidChange(type: Pet.Gender?) {
         viewModel.genderState = type
     }
 }
 
-extension FilterPetsContentViewController: NewPetSizeDelegate {
+extension FilterPetsContentViewController: FilterPetsSizeDelegate {
     func sizeDidChange(size: Pet.Size?) {
         viewModel.sizeState = size
     }
 }
 
-extension FilterPetsContentViewController: NewPetAgeDelegate {
+extension FilterPetsContentViewController: FilterPetsAgeDelegate {
     func ageChanged(age: Int?) {
         viewModel.ageState = age
     }
 }
 
 
-extension FilterPetsContentViewController: NewPetUploadDelegate {
-    func didTapUpload() {
+extension FilterPetsContentViewController: FilterPetsSendDelegate {
+    func didTapSend() {
 //        Task {
 //            if viewModel.isEdit {
 //                await viewModel.updatePet()
@@ -551,7 +557,7 @@ extension FilterPetsContentViewController: AddressPopupSearchDelegate {
     }
 }
 
-extension FilterPetsContentViewController: NewPetAddressDelegate {
+extension FilterPetsContentViewController: FilterPetsAddressDelegate {
     func didTapAddressSelector() {
         let searchController = AddressPopupSearch()
         searchController.delegate = self

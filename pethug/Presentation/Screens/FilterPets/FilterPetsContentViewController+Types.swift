@@ -25,11 +25,11 @@ extension FilterPetsContentViewController {
     enum Item: Hashable {
         case type(FilterPetsType)
         case breed(FilterPetsBreed)
-        case gender(NewPetGender)
-        case size(NewPetSize)
-        case age(NewPetAge)
-        case address(NewPetAddress)
-        case end(NewPetUpload)
+        case gender(FilterPetsGender)
+        case size(FilterPetsSize)
+        case age(FilterPetsAge)
+        case address(FilterPetsAddress)
+        case end(FilterPetsSend)
     }
     
     struct SnapData {

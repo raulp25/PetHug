@@ -1,13 +1,13 @@
 //
-//  NewPetGenderCellContentView.swift
+//  FilterPetsGenderCellContentView.swift
 //  pethug
 //
-//  Created by Raul Pena on 28/09/23.
+//  Created by Raul Pena on 09/10/23.
 //
 
 import UIKit
 
-final class NewPetGenderCellContentView: UIView, UIContentView {
+final class FilterPetsGenderCellContentView: UIView, UIContentView {
     
     //MARK: - Private components
     
@@ -94,12 +94,12 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     //MARK: - Internal properties
     
     // MARK: - Properties
-    private var currentConfiguration: NewPetGenderListCellConfiguration!
+    private var currentConfiguration: FilterPetsGenderListCellConfiguration!
     var configuration: UIContentConfiguration {
         get {
             currentConfiguration
         } set {
-            guard let newConfiguration = newValue as? NewPetGenderListCellConfiguration else {
+            guard let newConfiguration = newValue as? FilterPetsGenderListCellConfiguration else {
                 return
             }
             
@@ -110,7 +110,7 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     let containerView = UIView()
     
     // MARK: - LifeCycle
-    init(configuration: NewPetGenderListCellConfiguration) {
+    init(configuration: FilterPetsGenderListCellConfiguration) {
         super.init(frame: .zero)
         buttons = [maleCheckMarkButton, femaleCheckMarkButton]
         for (index, button) in buttons.enumerated() {
@@ -134,7 +134,7 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Functions
-    private func apply(configuration: NewPetGenderListCellConfiguration) {
+    private func apply(configuration: FilterPetsGenderListCellConfiguration) {
         guard currentConfiguration != configuration else {
             return
         }
@@ -228,4 +228,5 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     }
     
 }
+
 

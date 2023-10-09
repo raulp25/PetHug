@@ -1,90 +1,106 @@
 //
-//  NewPetGenderCellContentView.swift
+//  FilterPetsSizeCellContentView.swift
 //  pethug
 //
-//  Created by Raul Pena on 28/09/23.
+//  Created by Raul Pena on 09/10/23.
 //
 
 import UIKit
 
-final class NewPetGenderCellContentView: UIView, UIContentView {
+final class FilterPetsSizeCellContentView: UIView, UIContentView {
     
     //MARK: - Private components
     
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Genero (No obligatorio)"
+        label.text = "Tamańo (No obligatorio)"
         label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
     
     private lazy var vStack: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [hStackMale, hStackFemale])
+        let stack: UIStackView = .init(arrangedSubviews: [hStackSmall, hStackMedium, hStackLarge])
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.alignment = .fill
-        //        stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = true
         return stack
     }()
     
-    private lazy var hStackMale: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [maleLabel, maleCheckMarkButton])
+    private lazy var hStackSmall: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [smallLabel, smallCheckMarkButton])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    //    checkmark.square
-    private let maleLabel: UILabel = {
+
+    private let smallLabel: UILabel = {
         let label = UILabel()
-        label.text = "Macho"
+        label.text = "Pequeńo"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
     
-    lazy private var maleCheckMarkButton: UIButton = {
+    lazy private var smallCheckMarkButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "square"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.dog.rawValue
         return button
     }()
     
-    private lazy var hStackFemale: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [femaleLabel, femaleCheckMarkButton])
+    private lazy var hStackMedium: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [mediumLabel, mediumCheckMarkButton])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
     
-    private let femaleLabel: UILabel = {
+    private let mediumLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hembra"
+        label.text = "Medio"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
-    lazy private var femaleCheckMarkButton: UIButton = {
+    lazy private var mediumCheckMarkButton: UIButton = {
         let button = UIButton(type: .system)
         button.setImage(UIImage(systemName: "square"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.cat.rawValue
+        return button
+    }()
+    
+    private lazy var hStackLarge: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [largeLabel, largeCheckMarkButton])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.distribution = .equalSpacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let largeLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Grande"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
+        return label
+    }()
+    lazy private var largeCheckMarkButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "square"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
         return button
     }()
     
@@ -94,12 +110,12 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     //MARK: - Internal properties
     
     // MARK: - Properties
-    private var currentConfiguration: NewPetGenderListCellConfiguration!
+    private var currentConfiguration: FilterPetsSizeListCellConfiguration!
     var configuration: UIContentConfiguration {
         get {
             currentConfiguration
         } set {
-            guard let newConfiguration = newValue as? NewPetGenderListCellConfiguration else {
+            guard let newConfiguration = newValue as? FilterPetsSizeListCellConfiguration else {
                 return
             }
             
@@ -110,9 +126,9 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     let containerView = UIView()
     
     // MARK: - LifeCycle
-    init(configuration: NewPetGenderListCellConfiguration) {
+    init(configuration: FilterPetsSizeListCellConfiguration) {
         super.init(frame: .zero)
-        buttons = [maleCheckMarkButton, femaleCheckMarkButton]
+        buttons = [smallCheckMarkButton, mediumCheckMarkButton, largeCheckMarkButton]
         for (index, button) in buttons.enumerated() {
             button.tag = index + 1
         }
@@ -134,7 +150,7 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Functions
-    private func apply(configuration: NewPetGenderListCellConfiguration) {
+    private func apply(configuration: FilterPetsSizeListCellConfiguration) {
         guard currentConfiguration != configuration else {
             return
         }
@@ -142,17 +158,20 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
         //
         guard let item = currentConfiguration.viewModel else { return }
-        
-        if item.gender != nil {
-            switch item.gender {
-            case .male:
-                maleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-                maleCheckMarkButton.tintColor = .systemOrange
-                setInitialCurrentButton(button: maleCheckMarkButton)
-            case .female:
-                femaleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-                femaleCheckMarkButton.tintColor = .systemOrange
-                setInitialCurrentButton(button: femaleCheckMarkButton)
+        if item.size != nil {
+            switch item.size {
+            case .small:
+                smallCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                smallCheckMarkButton.tintColor = .systemOrange
+                setInitialCurrentButton(button: smallCheckMarkButton)
+            case .medium:
+                mediumCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                mediumCheckMarkButton.tintColor = .systemOrange
+                setInitialCurrentButton(button: mediumCheckMarkButton)
+            case .large:
+                largeCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+                largeCheckMarkButton.tintColor = .systemOrange
+                setInitialCurrentButton(button: largeCheckMarkButton)
             case .none:
                 print("")
             }
@@ -170,17 +189,18 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         titleLabel.setHeight(16)
         
         vStack.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 20)
-        vStack.setHeight(75)
+        vStack.setHeight(105)
         
         for button in buttons {
             button.setHeight(height)
         }
     }
-    
+
     enum CurrentChecked: Int {
-        case male = 1
-        case female = 2
-        case unset = 3
+        case small = 1
+        case medium = 2
+        case large = 3
+        case unset = 4
     }
     
     var currentButton: CurrentChecked = .unset
@@ -197,19 +217,21 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
                     button.setImage(UIImage(systemName: "square"), for: .normal)
                     button.tintColor = .black
                     currentButton = .unset
-                    currentConfiguration.viewModel?.delegate?.genderDidChange(type: nil)
+                    currentConfiguration.viewModel?.delegate?.sizeDidChange(size: nil)
                 } else {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
                     currentButton = checked
                     
                     switch checked {
-                    case .male:
-                        currentConfiguration.viewModel?.delegate?.genderDidChange(type: .male)
-                    case .female:
-                        currentConfiguration.viewModel?.delegate?.genderDidChange(type: .female)
+                    case .small:
+                        currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .small)
+                    case .medium:
+                        currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .medium)
+                    case .large:
+                        currentConfiguration.viewModel?.delegate?.sizeDidChange(size: .large)
                     default:
-                        print(" ")
+                        print("")
                     }
                 }
             } else {
@@ -217,8 +239,8 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
                 button.tintColor = .black
             }
         }
+        
     }
-    
     
     //MARK: - Private Methods
     func setInitialCurrentButton(button: UIButton) {
@@ -226,6 +248,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
             currentButton = checked
         }
     }
-    
 }
+
 

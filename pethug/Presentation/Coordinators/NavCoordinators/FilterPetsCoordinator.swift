@@ -17,7 +17,6 @@ final class FilterPetsCoordinator: NavCoordinator {
     // MARK: - LifeCycle
     func start() {
         let vc = FilterPetsContentViewController()
-        vc.coordinator = self
         parentCoordinator?.rootViewController.pushViewController(vc, animated: true)
     }
 

@@ -1,17 +1,18 @@
 //
-//  NewPetSizeListCellConfiguration.swift
+//  FilterPetsSizeListCellConfiguration.swift
 //  pethug
 //
-//  Created by Raul Pena on 28/09/23.
+//  Created by Raul Pena on 09/10/23.
 //
+
 import UIKit
 
-protocol NewPetSizeDelegate: AnyObject {
+protocol FilterPetsSizeDelegate: AnyObject {
     func sizeDidChange(size: Pet.Size?)
 }
 
-struct NewPetSize: Hashable {
-    static func == (lhs: NewPetSize, rhs: NewPetSize) -> Bool {
+struct FilterPetsSize: Hashable {
+    static func == (lhs: FilterPetsSize, rhs: FilterPetsSize) -> Bool {
         (
             lhs.id == rhs.id &&
             lhs.size == rhs.size
@@ -19,7 +20,7 @@ struct NewPetSize: Hashable {
     }
     var id = UUID().uuidString
     var size: Pet.Size? = nil
-    weak var delegate: NewPetSizeDelegate?
+    weak var delegate: FilterPetsSizeDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
@@ -28,14 +29,14 @@ struct NewPetSize: Hashable {
     }
 }
 
-struct NewPetSizeListCellConfiguration: ContentConfigurable {
-    var viewModel: NewPetSize?
+struct FilterPetsSizeListCellConfiguration: ContentConfigurable {
+    var viewModel: FilterPetsSize?
 
     func makeContentView() -> UIView & UIContentView {
-        return NewPetSizeCellContentView(configuration: self)
+        return FilterPetsSizeCellContentView(configuration: self)
     }
 
-    func updated(for state: UIConfigurationState) -> NewPetSizeListCellConfiguration {
+    func updated(for state: UIConfigurationState) -> FilterPetsSizeListCellConfiguration {
         guard let state = state as? UICellConfigurationState else {
             return self
         }
@@ -48,5 +49,6 @@ struct NewPetSizeListCellConfiguration: ContentConfigurable {
         return updateConfiguration
     }
 }
+
 
 
