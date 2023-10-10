@@ -21,9 +21,11 @@ final class PetsContentViewController: UIViewController {
     private var snapshot: Snapshot!
     
     //MARK: - Internal properties
-    private var currentSnapData = [SnapData]()
-    
-    var snapData: [SnapData]
+    var snapData: [SnapData] {
+        didSet {
+            updateSnapShot(animated: false)
+        }
+    }
 
     weak var delegate: PetsContentViewControllerDelegate?
     
@@ -39,6 +41,7 @@ final class PetsContentViewController: UIViewController {
     deinit {
         print("✅ Deinit PetsContentViewController")
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

@@ -78,6 +78,7 @@ final class FilterPetsContentViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     deinit {

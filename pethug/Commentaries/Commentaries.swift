@@ -22,6 +22,7 @@ import Foundation
 //        }
 //
 //        var snapshot = dataSource.snapshot()
+//        var snapshot = dataSource.snapshot()
 //        snapshot.reloadItems([pet])
 //        dataSource.apply(snapshot, animatingDifferences: false)
 //    }
@@ -982,3 +983,56 @@ import Foundation
 //}
 //
 //
+
+///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///
+///Recursive register fireStorage objects
+///
+///
+/// func uploadNextImage(index: Int) async throws {
+
+//
+//guard index < 60 else { print(": => FINISHED REGISTERING DOGS YEAH"); return }
+//
+//let url = index % 2 == 0 ?  "https://firebasestorage.googleapis.com:443/v0/b/pethug-8ad19.appspot.com/o/bird_profile_images%2FC9E00B6A-6211-4CD1-ADDD-7FC54A11D4E1?alt=media&token=5dc67013-bc9a-4882-b59c-888b6149b7e4" : "https://firebasestorage.googleapis.com:443/v0/b/pethug-8ad19.appspot.com/o/bird_profile_images%2FCDDE875F-758D-4CB4-8B5E-129CB5BCFB92?alt=media&token=e610245f-2ee9-4260-a4c8-57489fed1b9f"
+//
+//let pet: Pet = .init(
+//    id: UUID().uuidString,
+//    name: "SLR - \(index)",
+//    gender: .female,
+//    breed: index % 2 == 0 ? "Dachshund" : "Minitauro",
+//    imagesUrls: [url],
+//    type: .bird,
+//    age: 3,
+//    activityLevel: 6,
+//    socialLevel: 7,
+//    affectionLevel: 8,
+//    address: index % 2 == 0 ? .BajaCaliforniaSur : .Campeche,
+//    info: "Test dog for pagination firebase",
+//    isLiked: index % 2 == 0 ?  true : false,
+//    timestamp: Timestamp(date: Date())
+//)
+//
+//let res = try await createPet(data: pet)
+//
+//try await uploadNextImage(index: index + 1)
+//}
+//
+//
+//
+//func createPet(collection path: String = "birds", data: Pet) async throws -> Bool {
+//let uid = AuthService().uid
+//let petFirebaseEntinty = data.toFirebaseEntity()
+//let dataModel = petFirebaseEntinty.toObjectLiteral()
+//try await db.collection(path)
+//            .document(data.id)
+//            .setData(dataModel)
+//
+//try await db.collection("users")
+//            .document(uid)
+//            .collection("pets")
+//            .document(data.id)
+//            .setData(dataModel)
+//return true
+//
+//}

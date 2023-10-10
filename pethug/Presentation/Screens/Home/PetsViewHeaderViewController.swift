@@ -70,7 +70,7 @@ final class PetsViewHeaderViewController: UIViewController {
     func setup() {
         let paddingTop: CGFloat = 15
         let sidePadding: CGFloat = 25
-        view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
         
         view.addSubview(logoImageView)
         view.addSubview(titleLabel)

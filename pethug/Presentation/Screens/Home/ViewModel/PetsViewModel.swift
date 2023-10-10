@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 import FirebaseFirestore
-
+import Firebase
 protocol PetsNavigatable: AnyObject {
     func tapped(pet: Pet)
     func tappedFilter()
@@ -45,17 +45,65 @@ final class PetsViewModel {
     }
     
     //MARK: - Private methods
+//    private func fetchPets(collection: String) {
+//        Task {
+//            state.send(.loading)
+//            do {
+//                let data = try await fetchPetsUC.execute(fetchCollection: collection)
+//
+//                petsSubject.send(data)
+//            } catch {
+//                state.send(.error(.default(error)))
+//            }
+//        }
+//    }
+    
+    var query: Query!
+    var documents = [QueryDocumentSnapshot]()
+    let db = Firestore.firestore()
+    var petsArr = [Pet]() {
+        didSet {
+            print(" dide pets array added pet: => \(petsArr)")
+        }
+    }
+    
     private func fetchPets(collection: String) {
         Task {
             state.send(.loading)
             do {
-                let data = try await fetchPetsUC.execute(fetchCollection: collection)
-                petsSubject.send(data)
+                let order = "timestamp"
+                
+                if query == nil {
+                    query = db.collection("birds").order(by: order, descending: false).limit(to: 10)
+                } else {
+                    query = query.start(afterDocument: documents.last!)
+                }
+                
+                
+                let snapshotDocs = try await self.query.getDocuments()
+                
+                let docs = snapshotDocs.documents
+                
+                for doc in docs {
+                    let dictionary = doc.data()
+                    let pet = Pet(dictionary: dictionary)
+                    petsArr.append(pet)
+                    self.documents += [doc]
+                }
+                
+                
+                petsSubject.send(petsArr)
+//                if petsArr.count < 30 {
+//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
+//                        self.fetchPets(collection: "birds")
+//                    })
+//                }
             } catch {
                 state.send(.error(.default(error)))
             }
         }
     }
+    
     
     // MARK: - Private observers
     private func observeState() {

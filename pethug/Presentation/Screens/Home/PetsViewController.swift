@@ -45,10 +45,6 @@ final class PetsViewController: UIViewController {
 //        })
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        tabBarController?.tabBar.isHidden = false
-    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -58,7 +54,7 @@ final class PetsViewController: UIViewController {
     
     // MARK: - setup
     private func setup() {
-        view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
         view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
         
