@@ -50,8 +50,19 @@ final class PetsContentViewController: UIViewController {
         view.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView)
 
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
-        collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
+        collectionView.anchor(
+            top: view.topAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor
+        )
+        
+        collectionView.contentInset = .init(
+            top: 20,
+            left: 0,
+            bottom: 50,
+            right: 0
+        )
         collectionView.delegate = self
         
         configureDataSource()

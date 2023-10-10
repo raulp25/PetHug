@@ -23,9 +23,9 @@ final class PetsViewModel {
     
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
-    
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
     private var pets: [Pet] = []
+    private var isFetching = false
     
     private let fetchPetsUC: DefaultFetchPetsUC
     
@@ -34,83 +34,11 @@ final class PetsViewModel {
         self.fetchPetsUC = fetchPetsUC
         observeState()
         fetchPets(collection: .getPath(for: .birds))
-        ///Mock pet, do not uncomment
-//        createMockPet()
-        
-//        fetchPet()
     }
     
     deinit {
         print("✅ Deinit PetsViewModel")
     }
-    
-    //MARK: - Private methods
-//    private func fetchPets(collection: String) {
-//        Task {
-//            state.send(.loading)
-//            do {
-//                let data = try await fetchPetsUC.execute(fetchCollection: collection)
-//
-//                petsSubject.send(data)
-//            } catch {
-//                state.send(.error(.default(error)))
-//            }
-//        }
-//    }
-    
-    
-    var isFetching = false
-    var currentPetsCount =  0
-    let order = "timestamp"
-    
-    var query: Query!
-    var documents = [QueryDocumentSnapshot]()
-    let db = Firestore.firestore()
-    var petsArr = [Pet]()
-    
-    func fetchPets(collection path: String) {
-        guard !isFetching else { return }
-        
-        Task { [weak self] in
-            guard let self = self else { return }
-            isFetching = true
-            state.send(.loading)
-            
-            do {
-                if query == nil {
-                    query = db.collection(path)
-                              .order(by: order, descending: true)
-                              .limit(to: 10)
-                } else {
-                    query = query.start(afterDocument: documents.last!)
-                }
-                
-                
-                let snapshot = try await self.query.getDocuments()
-                
-                let docs = snapshot.documents
-                
-                for doc in docs {
-                    let dictionary = doc.data()
-                    let pet = Pet(dictionary: dictionary)
-                    petsArr.append(pet)
-                    documents.append(doc)
-                }
-                
-                if currentPetsCount != petsArr.count {
-                    currentPetsCount = petsArr.count
-                    petsSubject.send(petsArr)
-                }
-            
-            } catch {
-                state.send(.error(.default(error)))
-            }
-            
-            self.isFetching = false
-            
-        }
-    }
-    
     
     // MARK: - Private observers
     private func observeState() {
@@ -123,10 +51,31 @@ final class PetsViewModel {
                 print("Error retreiving pets: => \(err)")
             }
         } receiveValue: { [weak self] pets in
-            self?.pets.append(contentsOf: pets)
-            self?.state.send(.loaded(pets))
+            guard let self = self else { return }
+            self.pets.append(contentsOf: pets)
+            self.state.send(.loaded(self.pets))
         }.store(in: &subscriptions)
 
+    }
+    
+    //MARK: - Internal Methods
+    func fetchPets(collection: String) {
+        guard !isFetching else { return }
+        isFetching = true
+        
+        Task {
+            state.send(.loading)
+            do {
+                let data = try await fetchPetsUC.execute(fetchCollection: collection)
+                guard !data.isEmpty else { return }
+                petsSubject.send(data)
+                
+            } catch {
+                state.send(.error(.default(error)))
+            }
+            
+            isFetching = false
+        }
     }
     
     
