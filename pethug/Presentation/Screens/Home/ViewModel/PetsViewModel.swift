@@ -58,49 +58,56 @@ final class PetsViewModel {
 //        }
 //    }
     
+    
+    var isFetching = false
+    var currentPetsCount =  0
+    let order = "timestamp"
+    
     var query: Query!
     var documents = [QueryDocumentSnapshot]()
     let db = Firestore.firestore()
-    var petsArr = [Pet]() {
-        didSet {
-            print(" dide pets array added pet: => \(petsArr)")
-        }
-    }
+    var petsArr = [Pet]()
     
-    private func fetchPets(collection: String) {
-        Task {
+    func fetchPets(collection path: String) {
+        guard !isFetching else { return }
+        
+        Task { [weak self] in
+            guard let self = self else { return }
+            isFetching = true
             state.send(.loading)
+            
             do {
-                let order = "timestamp"
-                
                 if query == nil {
-                    query = db.collection("birds").order(by: order, descending: false).limit(to: 10)
+                    query = db.collection(path)
+                              .order(by: order, descending: true)
+                              .limit(to: 10)
                 } else {
                     query = query.start(afterDocument: documents.last!)
                 }
                 
                 
-                let snapshotDocs = try await self.query.getDocuments()
+                let snapshot = try await self.query.getDocuments()
                 
-                let docs = snapshotDocs.documents
+                let docs = snapshot.documents
                 
                 for doc in docs {
                     let dictionary = doc.data()
                     let pet = Pet(dictionary: dictionary)
                     petsArr.append(pet)
-                    self.documents += [doc]
+                    documents.append(doc)
                 }
                 
-                
-                petsSubject.send(petsArr)
-//                if petsArr.count < 30 {
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: {
-//                        self.fetchPets(collection: "birds")
-//                    })
-//                }
+                if currentPetsCount != petsArr.count {
+                    currentPetsCount = petsArr.count
+                    petsSubject.send(petsArr)
+                }
+            
             } catch {
                 state.send(.error(.default(error)))
             }
+            
+            self.isFetching = false
+            
         }
     }
     

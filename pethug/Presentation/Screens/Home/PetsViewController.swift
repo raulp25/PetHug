@@ -118,6 +118,10 @@ extension PetsViewController: PetsViewHeaderDelegate {
 }
 
 extension PetsViewController: PetsContentViewControllerDelegate {
+    func executeFetch() {
+        viewModel.fetchPets(collection: "birds")
+    }
+    
     func didTap(pet: Pet) {
         viewModel.navigation?.tapped(pet: pet)
     }

@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 protocol PetsContentViewControllerDelegate: AnyObject {
     func didTap(pet: Pet)
+    func executeFetch()
 //    func didTap(_:  Any)
 }
 
@@ -51,6 +52,7 @@ final class PetsContentViewController: UIViewController {
 
         collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
         collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
+        collectionView.delegate = self
         
         configureDataSource()
         updateSnapShot()
@@ -173,6 +175,22 @@ final class PetsContentViewController: UIViewController {
     }
 }
 
+extension PetsContentViewController: UICollectionViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        let bounds = scrollView.bounds
+        let size = scrollView.contentSize
+        let inset = scrollView.contentInset
+        let y: Float = Float(offset.y) + Float(bounds.size.height) - Float(inset.bottom)
+        let height: Float = Float(size.height)
+        let distance: Float = 10
+        
+        if y > height + distance {
+            print(":pasa el limite y \(y) > height + distance \(height + distance) ")
+            delegate?.executeFetch()
+        }
+    }
+}
 
 extension PetsContentViewController: PetContentDelegate {
     func didTapCell(pet: Pet) {
