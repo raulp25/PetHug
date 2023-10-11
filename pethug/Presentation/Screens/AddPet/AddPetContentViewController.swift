@@ -7,7 +7,9 @@
 
 import UIKit
 protocol AddPetContentViewControllerDelegate: AnyObject {
+    func executeFetch()
     func didTapEdit(pet: Pet)
+    func didTapDelete(collection path: String, id: String) async -> Bool
 }
 
 final class AddPetContentViewController: UIViewController {
@@ -17,7 +19,6 @@ final class AddPetContentViewController: UIViewController {
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    private var viewModel = AddPetContentViewModel(deletePetUC: DeletePet.composeDeletePetUC(), deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC())
     //MARK: - Internal properties
     weak var delegate: AddPetContentViewControllerDelegate?
     var snapData: [SnapData] {
@@ -58,7 +59,7 @@ final class AddPetContentViewController: UIViewController {
             bottom: 50,
             right: 0
         )
-        
+        collectionView.delegate = self
         configureDataSource()
         updateSnapShot()
     }
@@ -139,6 +140,24 @@ final class AddPetContentViewController: UIViewController {
 }
 
 
+extension AddPetContentViewController: UICollectionViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset
+        let bounds = scrollView.bounds
+        let size = scrollView.contentSize
+        let inset = scrollView.contentInset
+        let y: Float = Float(offset.y) + Float(bounds.size.height) - Float(inset.bottom)
+        let height: Float = Float(size.height)
+        let distance: Float = 10
+        
+        if y > height + distance {
+            print(":pasa el limite y \(y) > height + distance \(height + distance) ")
+            delegate?.executeFetch()
+        }
+    }
+}
+
+
 extension AddPetContentViewController: AddPetContentDelegate {
     
     func didTapEdit(pet item: Item) {
@@ -150,13 +169,15 @@ extension AddPetContentViewController: AddPetContentDelegate {
     
     
     func didTapDelete(pet item: Item, pet id: String) {
+        guard let delegate = delegate else { return }
         switch item {
             
         case .pet(let pet):
             let path = pet.type.getPath
             
             Task {
-                let result = await viewModel.deletePet(collection: path, id: id)
+                let result = await delegate.didTapDelete(collection: path, id: id)
+//                let result = await viewModel.deletePet(collection: path, id: id)
                 
                 if let sectionIndex = snapData.firstIndex(where: { $0.key == .pets }),
                    let itemIndex = snapData[sectionIndex].values.firstIndex(where: { $0 == item }),

@@ -16,7 +16,7 @@ protocol PetDataSource {
     var order: String { get set }
     
     func fetchPets(fetchCollection path: String) async throws -> [Pet]
-    func fetchUserPets() async throws -> [Pet]
+    func fetchUserPets(with resetPagination: Bool) async throws -> [Pet]
     func createPet(collection path: String, data: Pet) async throws -> Bool
     func updatePet(collection path: String, data: Pet) async throws -> Bool
     func deletePet(collection path: String, docId: String) async throws -> Bool
@@ -56,8 +56,12 @@ final class DefaultPetDataSource: PetDataSource {
         return pets
     }
     
-    func fetchUserPets() async throws -> [Pet] {
+    func fetchUserPets(with resetPagination: Bool = false) async throws -> [Pet] {
         let uid = AuthService().uid
+        
+        if resetPagination {
+            query = nil
+        }
         
         if query == nil {
             query = db.collection("users")

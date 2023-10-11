@@ -22,34 +22,69 @@ final class AddPetViewModel {
     //    var fetchPetsUseCase
     
     //MARK: - Private Properties
-    private var subscriptions = Set<AnyCancellable>()
+    private let fetchUserPetsUC: DefaultFetchUserPetsUC
+    private let deletePetUC: DefaultDeletePetUC
+    private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
     
+    private var subscriptions = Set<AnyCancellable>()
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
     private var pets: [Pet] = []
-    
-    private let fetchUserPetsUC: DefaultFetchUserPetsUC
+    private var isFetching = false
     
     ///Change to FetchUserPetsUC
-    init(fetchUserPetsUC: DefaultFetchUserPetsUC) {
+    init(
+        fetchUserPetsUC: DefaultFetchUserPetsUC,
+        deletePetUC: DefaultDeletePetUC,
+        deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
+    ) {
         self.fetchUserPetsUC = fetchUserPetsUC
+        self.deletePetUC = deletePetUC
+        self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
+        
         observeState()
+        fetchUserPets()
     }
     
     deinit {
         print("✅ Deinit PetsViewModel")
     }
     
-    //MARK: - Private methods
-    func fetchPets(collection: String) {
+    //MARK: - Internal Methods
+    func fetchUserPets(resetPagination: Bool = false) {
+        guard !isFetching else { return }
+        if resetPagination {
+            pets = []
+        }
+        isFetching = true
+        
         Task {
             state.send(.loading)
             do {
-                let data = try await fetchUserPetsUC.execute()
+                let data = try await fetchUserPetsUC.execute(with: resetPagination)
+                guard !data.isEmpty else { return }
                 petsSubject.send(data)
+                
             } catch {
                 state.send(.error(.default(error)))
             }
+            
+            isFetching = false
         }
+    }
+    
+    
+    func deletePet(collection path: String,  id: String) async -> Bool {
+        await withThrowingTaskGroup(of: Void.self) { [unowned self] group in
+            group.addTask { let _ = try await self.deletePetUC.execute(collection: path, docId: id) }
+            group.addTask { let _ = try await self.deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id) }
+        }
+        
+        if let index = pets.firstIndex(where: { $0.id == id }) {
+            pets.remove(at: index)
+        }
+        //Check if we refactor this function to not return bool
+        //since everything is handled by firebase
+        return true
     }
     
     // MARK: - Private observers
@@ -63,8 +98,9 @@ final class AddPetViewModel {
                     print("Error retreiving pets: => \(err)")
                 }
             } receiveValue: { [weak self] pets in
-                self?.pets.append(contentsOf: pets)
-                self?.state.send(.loaded(pets))
+                guard let self = self else { return }
+                self.pets.append(contentsOf: pets)
+                self.state.send(.loaded(self.pets))
             }.store(in: &subscriptions)
         
     }   

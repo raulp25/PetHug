@@ -8,7 +8,7 @@
 import Foundation
 //MARK: - Protocol
 protocol FetchUserPetsUC {
-    func execute() async throws -> [Pet]
+    func execute(with resetPagination: Bool) async throws -> [Pet]
 }
 
 
@@ -20,8 +20,8 @@ final class DefaultFetchUserPetsUC: FetchUserPetsUC {
         self.petRepository = petRepository
     }
     
-    func execute() async throws -> [Pet] {
-        let pets = try await petRepository.fetchUserPets()
+    func execute(with resetPagination: Bool = false) async throws -> [Pet] {
+        let pets = try await petRepository.fetchUserPets(with: resetPagination)
         
         return pets
     }

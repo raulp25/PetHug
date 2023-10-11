@@ -36,11 +36,6 @@ final class AddPetViewController: UIViewController {
         bind()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        viewModel.fetchPets(collection: .getPath(for: .dogs))
-    }
-    
     // MARK: - setup
     private func setup() {
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
@@ -110,7 +105,14 @@ extension AddPetViewController: AddPetViewHeaderDelegate {
     }
 }
 extension AddPetViewController: AddPetContentViewControllerDelegate {
+    func executeFetch() {
+        viewModel.fetchUserPets()
+    }
     func didTapEdit(pet: Pet) {
         viewModel.navigation?.startEditPetFlow(pet: pet)
+    }
+    func didTapDelete(collection path: String, id: String) async  -> Bool {
+            let result = await viewModel.deletePet(collection: path, id: id)
+            return result
     }
 }

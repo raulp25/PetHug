@@ -10,14 +10,18 @@ import UIKit
 final class NewPetViewController: UIViewController {
     
     // MARK: - Private components
-    private lazy var contentVC = NewPetContentViewController(
-                                viewModel: NewPetViewModel(
-                                    imageService: ImageService(),
-                                    createPetUseCase: CreatePet.composeCreatePetUC(),
-                                    updatePetUseCase: UpdatePet.composeUpdatePetUC(),
-                                    deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC(),
-                                    pet: self.pet
-                                ))
+    private lazy var contentVC: NewPetContentViewController = {
+        let vc =  NewPetContentViewController(
+                    viewModel: NewPetViewModel(
+                        imageService: ImageService(),
+                        createPetUseCase: CreatePet.composeCreatePetUC(),
+                        updatePetUseCase: UpdatePet.composeUpdatePetUC(),
+                        deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC(),
+                        pet: self.pet
+                   ))
+        vc.delegate = self
+        return vc
+    }()
     
     private lazy var xmarkImageContainer: UIView = {
        let uv = UIView(withAutolayout: true)
@@ -70,7 +74,7 @@ final class NewPetViewController: UIViewController {
         xmarkImageContainer.addSubview(xmarkImageView)
         view.addSubview(titleLabel)
         add(contentVC)
-        
+
         titleLabel.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         
         xmarkImageContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingLeft: 15)
@@ -89,4 +93,12 @@ final class NewPetViewController: UIViewController {
         dismiss(animated: true)
     }
     
+}
+
+
+extension NewPetViewController: NewPetContentDelegate {
+    func didEndUploading() {
+        print("ver si lo llamo KSMRL: => ")
+        coordinator?.parentCoordinator?.viewModel.fetchUserPets(resetPagination: true)
+    }
 }

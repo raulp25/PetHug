@@ -8,6 +8,10 @@
 import UIKit
 import Combine
 
+protocol NewPetContentDelegate: AnyObject {
+    func didEndUploading()
+}
+
 final class NewPetContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
@@ -30,6 +34,7 @@ final class NewPetContentViewController: UIViewController {
 //        }
 //    }
 //
+    weak var delegate: NewPetContentDelegate?
     init(viewModel: NewPetViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -64,6 +69,7 @@ final class NewPetContentViewController: UIViewController {
             .sink { [weak self] state in
                 switch state {
                 case .success:
+                    self?.delegate?.didEndUploading()
                     self?.dismiss(animated: true)
                 default:
                     print("")

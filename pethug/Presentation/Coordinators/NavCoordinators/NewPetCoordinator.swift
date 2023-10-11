@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class NewPetCoordinator: NavCoordinator {
+final class NewPetCoordinator: NSObject, NavCoordinator {
     // MARK: - Properties
     var childCoordinators = [Coordinator]()
     var rootViewController: UINavigationController = .init()
@@ -30,3 +30,4 @@ final class NewPetCoordinator: NavCoordinator {
 }
 
 
+  

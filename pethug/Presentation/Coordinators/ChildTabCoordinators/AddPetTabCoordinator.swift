@@ -7,15 +7,20 @@
 
 import UIKit
 
-final class AddPetTabCoordinator: ChildTabCoordinator {
+final class AddPetTabCoordinator: NSObject, ChildTabCoordinator {
     var childCoordinators: [NavCoordinator] = .init()
     
     var parentCoordinator: InAppCoordinator?
     
     var rootViewController: UINavigationController = .init()
     
+    var viewModel = AddPetViewModel(
+        fetchUserPetsUC: FetchUserPets.composeFetchUserPetsUC(),
+        deletePetUC: DeletePet.composeDeletePetUC(),
+        deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC()
+    )
+    
     func start() {
-        let viewModel = AddPetViewModel(fetchUserPetsUC: FetchUserPets.composeFetchUserPetsUC())
         viewModel.navigation = self
         let vc = AddPetViewController(viewModel: viewModel)
         rootViewController.pushViewController(vc, animated: true)

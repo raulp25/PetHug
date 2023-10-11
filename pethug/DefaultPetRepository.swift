@@ -20,8 +20,8 @@ final class DefaultPetRepository: PetRepository {
         return pets
     }
     
-    func fetchUserPets() async throws -> [Pet] {
-        let pets = try await petDataSource.fetchUserPets()
+    func fetchUserPets(with resetPagination: Bool = false) async throws -> [Pet] {
+        let pets = try await petDataSource.fetchUserPets(with: resetPagination)
         
         return pets
     }
