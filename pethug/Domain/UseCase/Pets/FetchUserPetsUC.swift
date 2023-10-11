@@ -20,7 +20,7 @@ final class DefaultFetchUserPetsUC: FetchUserPetsUC {
         self.petRepository = petRepository
     }
     
-    func execute(with resetPagination: Bool = false) async throws -> [Pet] {
+    func execute(with resetPagination: Bool) async throws -> [Pet] {
         let pets = try await petRepository.fetchUserPets(with: resetPagination)
         
         return pets

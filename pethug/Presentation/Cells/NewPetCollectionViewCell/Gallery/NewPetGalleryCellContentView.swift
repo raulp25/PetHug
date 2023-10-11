@@ -189,7 +189,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
         snapshot = Snapshot()
         snapshot.appendSections(currentSnapData.map {
-            print(": section=> \($0.key)")
+//            print(": section=> \($0.key)")
             return $0.key
         })
 //        snapshot.appendSections(snapData.map {

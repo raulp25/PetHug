@@ -56,11 +56,14 @@ final class DefaultPetDataSource: PetDataSource {
         return pets
     }
     
-    func fetchUserPets(with resetPagination: Bool = false) async throws -> [Pet] {
+    func fetchUserPets(with resetPagination: Bool) async throws -> [Pet] {
         let uid = AuthService().uid
+        
+        print(": reset pagination en datasource => \(resetPagination)")
         
         if resetPagination {
             query = nil
+            documents = []
         }
         
         if query == nil {

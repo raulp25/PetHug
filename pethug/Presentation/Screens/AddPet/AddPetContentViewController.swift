@@ -27,6 +27,17 @@ final class AddPetContentViewController: UIViewController {
         }
     }
     
+    var debounce = false {
+        didSet {
+            if debounce {
+                collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+                    self?.debounce = false
+                })
+            }
+        }
+    }
+    
     init(snapData: [SnapData]) {
         self.snapData = snapData
         super.init(nibName: nil, bundle: nil)
@@ -127,7 +138,7 @@ final class AddPetContentViewController: UIViewController {
         snapshot = Snapshot()
         
         snapshot.appendSections(snapData.map {
-            print(": section=> \($0.key)")
+//            print(": section=> \($0.key)")
             return $0.key
         })
         
@@ -136,12 +147,14 @@ final class AddPetContentViewController: UIViewController {
         }
         
         dataSource.apply(snapshot, animatingDifferences: animated)
+        
     }
 }
 
 
 extension AddPetContentViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        guard !debounce else { return }
         let offset = scrollView.contentOffset
         let bounds = scrollView.bounds
         let size = scrollView.contentSize
@@ -151,7 +164,7 @@ extension AddPetContentViewController: UICollectionViewDelegate {
         let distance: Float = 10
         
         if y > height + distance {
-            print(":pasa el limite y \(y) > height + distance \(height + distance) ")
+            print(":pasa el limite y \(y) > height + distance  900 \(height + distance) ")
             delegate?.executeFetch()
         }
     }

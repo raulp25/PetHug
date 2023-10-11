@@ -27,7 +27,7 @@ final class AddPetViewModel {
     private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
     
     private var subscriptions = Set<AnyCancellable>()
-    private let petsSubject = PassthroughSubject<[Pet], PetsError>()
+    private let petsSubject = PassthroughSubject<([Pet], Bool), PetsError>()
     private var pets: [Pet] = []
     private var isFetching = false
     
@@ -52,17 +52,26 @@ final class AddPetViewModel {
     //MARK: - Internal Methods
     func fetchUserPets(resetPagination: Bool = false) {
         guard !isFetching else { return }
+        
         if resetPagination {
+            
             pets = []
         }
+        
         isFetching = true
         
         Task {
             state.send(.loading)
             do {
                 let data = try await fetchUserPetsUC.execute(with: resetPagination)
-                guard !data.isEmpty else { return }
-                petsSubject.send(data)
+                
+                if !data.isEmpty {
+                    if resetPagination {
+                        petsSubject.send((data, true))
+                    } else {
+                        petsSubject.send((data, false))
+                    }
+                }
                 
             } catch {
                 state.send(.error(.default(error)))
@@ -97,10 +106,15 @@ final class AddPetViewModel {
                 case .failure(let err):
                     print("Error retreiving pets: => \(err)")
                 }
-            } receiveValue: { [weak self] pets in
+            } receiveValue: { [weak self] data in
                 guard let self = self else { return }
+                let (pets, debounce) = data
                 self.pets.append(contentsOf: pets)
-                self.state.send(.loaded(self.pets))
+                if debounce {
+                    self.state.send(.loadedEdited(self.pets))
+                } else {
+                    self.state.send(.loaded(self.pets))
+                }
             }.store(in: &subscriptions)
         
     }   

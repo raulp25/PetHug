@@ -70,6 +70,8 @@ final class AddPetViewController: UIViewController {
                 switch state {
                 case let .loaded(data):
                     self?.render(data)
+                case let .loadedEdited(data):
+                    self?.render(data, debounce: true)
                 case .loading:
                     break
                 case let .error(error):
@@ -80,7 +82,7 @@ final class AddPetViewController: UIViewController {
     }
     
     //MARK: - Private methods
-    private func render(_ data: [Pet]) {
+    private func render(_ data: [Pet], debounce: Bool = false) {
 //        let snapData: [PetsContentViewController.SnapData] = [
 //            .init(key: .pets, values: data.map { .pet($0) })
 //        ]
@@ -90,6 +92,7 @@ final class AddPetViewController: UIViewController {
         
         if contentStateVC.shownViewController == contentVc {
             contentVc?.snapData = snapData
+            contentVc?.debounce = debounce
         } else {
             contentVc = AddPetContentViewController(snapData: snapData)
             contentVc?.delegate = self

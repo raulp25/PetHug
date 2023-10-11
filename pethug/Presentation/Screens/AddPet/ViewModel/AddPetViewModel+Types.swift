@@ -28,6 +28,7 @@ extension AddPetViewModel {
         
         case loading
         case loaded([Pet])
+        case loadedEdited([Pet])
         case error(PetsError)
     }
     

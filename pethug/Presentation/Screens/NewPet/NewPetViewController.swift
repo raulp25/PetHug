@@ -98,7 +98,6 @@ final class NewPetViewController: UIViewController {
 
 extension NewPetViewController: NewPetContentDelegate {
     func didEndUploading() {
-        print("ver si lo llamo KSMRL: => ")
         coordinator?.parentCoordinator?.viewModel.fetchUserPets(resetPagination: true)
     }
 }
