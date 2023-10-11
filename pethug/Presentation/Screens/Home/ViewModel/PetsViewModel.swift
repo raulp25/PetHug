@@ -26,7 +26,7 @@ final class PetsViewModel {
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
     private var pets: [Pet] = []
     private var isFetching = false
-    
+    private var isFirstLoad = true
     private let fetchPetsUC: DefaultFetchPetsUC
     
     
@@ -67,8 +67,12 @@ final class PetsViewModel {
             state.send(.loading)
             do {
                 let data = try await fetchPetsUC.execute(fetchCollection: collection)
-                guard !data.isEmpty else { return }
-                petsSubject.send(data)
+                if !isFirstLoad && !data.isEmpty {
+                    petsSubject.send(data)
+                } else if isFirstLoad {
+                    petsSubject.send(data)
+                    isFirstLoad = false
+                }
                 
             } catch {
                 state.send(.error(.default(error)))

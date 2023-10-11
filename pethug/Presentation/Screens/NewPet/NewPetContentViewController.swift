@@ -70,14 +70,19 @@ final class NewPetContentViewController: UIViewController {
                 switch state {
                 case .success:
                     self?.delegate?.didEndUploading()
-                    self?.dismiss(animated: true)
+                    //Gives parent VC time to scrollTop collectionView
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 15, execute: {
+                        self?.dismiss(animated: true)
+                    })
+                case let.error(error):
+                    self?.alert(message: "Hubo un error, intenta nuevamente")
+                    print("error in NewPetContentView VC: => \(error.localizedDescription)")
                 default:
                     print("")
                 }
                 
             }.store(in: &cancellables)
     }
-    
     
     private func setupKeyboardHiding(){
         NotificationCenter.default.addObserver(
@@ -670,6 +675,29 @@ extension NewPetContentViewController: PopupSearchDelegate {
 
 
 //MARK: - Address search Delegate
+extension NewPetContentViewController: NewPetAddressDelegate {
+    func didTapAddressSelector() {
+        let searchController = AddressPopupSearch()
+        searchController.delegate = self
+        let dummyNavigator = UINavigationController(rootViewController: searchController)
+        dummyView.add(dummyNavigator)
+        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
+        dummyNavigator.view.layer.cornerRadius = 15
+        
+        add(dummyView)
+        dummyView.view.fillSuperview()
+        
+        dummyView.view.alpha = 0
+        self.view.bringSubviewToFront(dummyView.view)
+        self.collectionView.isUserInteractionEnabled = false
+        dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+            self.dummyView.view.alpha = 1
+        }
+        self.view.layoutIfNeeded()
+    }
+}
+
 extension NewPetContentViewController: AddressPopupSearchDelegate {
     func didSelectState(state: Pet.State) {
         UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
@@ -700,29 +728,6 @@ extension NewPetContentViewController: AddressPopupSearchDelegate {
             })
         }
         
-    }
-}
-
-extension NewPetContentViewController: NewPetAddressDelegate {
-    func didTapAddressSelector() {
-        let searchController = AddressPopupSearch()
-        searchController.delegate = self
-        let dummyNavigator = UINavigationController(rootViewController: searchController)
-        dummyView.add(dummyNavigator)
-        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
-        dummyNavigator.view.layer.cornerRadius = 15
-        
-        add(dummyView)
-        dummyView.view.fillSuperview()
-        
-        dummyView.view.alpha = 0
-        self.view.bringSubviewToFront(dummyView.view)
-        self.collectionView.isUserInteractionEnabled = false
-        dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 1
-        }
-        self.view.layoutIfNeeded()
     }
 }
 

@@ -88,7 +88,8 @@ final class PetsViewController: UIViewController {
                 case .loading:
                     break
                 case let .error(error):
-                    print(": => \(error.localizedDescription)")
+                    self?.alert(message: "Hubo un error, intenta nuevamente")
+                    print("error in Pets VC: => \(error.localizedDescription)")
                     break
                 }
             }.store(in: &subscriptions)

@@ -68,10 +68,8 @@ final class AddPetViewController: UIViewController {
             .handleThreadsOperator()
             .sink { [weak self] state in
                 switch state {
-                case let .loaded(data):
-                    self?.render(data)
-                case let .loadedEdited(data):
-                    self?.render(data, debounce: true)
+                case let .loaded(data, debounce):
+                    self?.render(data, debounce)
                 case .loading:
                     break
                 case let .error(error):
@@ -82,7 +80,7 @@ final class AddPetViewController: UIViewController {
     }
     
     //MARK: - Private methods
-    private func render(_ data: [Pet], debounce: Bool = false) {
+    private func render(_ data: [Pet], _ debounce: Bool = false) {
 //        let snapData: [PetsContentViewController.SnapData] = [
 //            .init(key: .pets, values: data.map { .pet($0) })
 //        ]

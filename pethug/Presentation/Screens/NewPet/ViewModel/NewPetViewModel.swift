@@ -7,6 +7,7 @@
 
 import UIKit
 import Firebase
+import FirebaseFirestore
 import Combine
 
 class NewPetViewModel {
@@ -24,7 +25,7 @@ class NewPetViewModel {
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
         observeValidation()
         
-//        mockDecodePetModel()
+        //        mockDecodePetModel()
     }
     
     init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC, pet: Pet? = nil) {
@@ -36,7 +37,10 @@ class NewPetViewModel {
         self.pet = pet
         self.isEdit = pet != nil
         observeValidation()
-//        let imagesArr = getImages(stringUrlArray: pet?.imagesUrls ?? [])
+//        Task {
+//            try await uploadNextImage(index: 0)
+//        }
+        //        let imagesArr = getImages(stringUrlArray: pet?.imagesUrls ?? [])
         self.imagesToEditState = pet?.imagesUrls ?? []
         self.nameState      = pet?.name
         self.galleryState   = []
@@ -51,12 +55,12 @@ class NewPetViewModel {
         self.addressState   = pet?.address
         self.infoState      = pet?.info
         
-//        mockDecodePetModel()
+        //        mockDecodePetModel()
     }
     
 //    func mockDecodePetModel() {
 //        print("corre mock pet model decode 789: => ")
-//        let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna Camacho", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
+//        //        let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna Camacho", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
 //
 //        let petModelData: [String: Any] = [
 //            "id": "3323-ews3",
@@ -101,16 +105,16 @@ class NewPetViewModel {
     var stateSubject = PassthroughSubject<LoadingState, Never>()
     
     func observeValidation() {
-            formValidationState.sink(receiveValue: { state in
-                switch state {
-                case .valid:
-                    self.isValidSubject.send(true)
-                    print("is valid 666")
-                case .invalid:
-                            print("is inValid 666")
-                    self.isValidSubject.send(false)
-                }
-            }).store(in: &cancellables)
+        formValidationState.sink(receiveValue: { state in
+            switch state {
+            case .valid:
+                self.isValidSubject.send(true)
+                print("is valid 666")
+            case .invalid:
+                print("is inValid 666")
+                self.isValidSubject.send(false)
+            }
+        }).store(in: &cancellables)
     }
     
     var formValidationState: AnyPublisher<State, Never> {
@@ -160,32 +164,32 @@ class NewPetViewModel {
         info: String?
     ) -> State{
         //gender and size are optional for the user
-//        print("name level en viewmodel: => 666 \(name)")
-//        print("gallery level en viewmodel: => 221 \(gallery)")
-//        print("gallery level is empty? en viewmodel: => 221 \(gallery.isEmpty)")
-//          print("gallery count en viewmodel: => 221 \(gallery.count)")
-//        print("type level en viewmodel: => 666 \(type)")
-//        print("breed level en viewmodel: => 666 \(breed)")
-//        print("age level en viewmodel: => 666 \(age)")
-//        print("activity level en viewmodel: => 221 \(activity)")
-//        print("social level en viewmodel: => 666 \(social)")
-//        print("affection level en viewmodel: => 666 \(affection)")
-//        print("address level en viewmodel: => 666 \(address)")
-//        print("info level en viewmodel: => 666 \(info)")
-//        print("gender en viewmodel: => 666 \(gender)")
+        //        print("name level en viewmodel: => 666 \(name)")
+        //        print("gallery level en viewmodel: => 221 \(gallery)")
+        //        print("gallery level is empty? en viewmodel: => 221 \(gallery.isEmpty)")
+        //          print("gallery count en viewmodel: => 221 \(gallery.count)")
+        //        print("type level en viewmodel: => 666 \(type)")
+        //        print("breed level en viewmodel: => 666 \(breed)")
+        //        print("age level en viewmodel: => 666 \(age)")
+        //        print("activity level en viewmodel: => 221 \(activity)")
+        //        print("social level en viewmodel: => 666 \(social)")
+        //        print("affection level en viewmodel: => 666 \(affection)")
+        //        print("address level en viewmodel: => 666 \(address)")
+        //        print("info level en viewmodel: => 666 \(info)")
+        //        print("gender en viewmodel: => 666 \(gender)")
         
-//       gender and size props are optional
+        //       gender and size props are optional
         if name == nil      ||
-           gallery.isEmpty  ||
-           type == nil      ||
-           breed == nil     ||
-           age == nil       ||
-           activity == nil  ||
-           social == nil    ||
-           affection == nil ||
-           address == nil   ||
-           info == nil {
-           return .invalid
+            gallery.isEmpty  ||
+            type == nil      ||
+            breed == nil     ||
+            age == nil       ||
+            activity == nil  ||
+            social == nil    ||
+            affection == nil ||
+            address == nil   ||
+            info == nil {
+            return .invalid
         }
         
         return .valid
@@ -198,7 +202,7 @@ class NewPetViewModel {
         do {
             var imagesUrls = [String]()
             
-           try await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
+            try await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
             
             let pet = Pet(
                 id: UUID().uuidString,
@@ -311,11 +315,19 @@ class NewPetViewModel {
         
         
     }
-    //Used to delete pet from old collection when user changes its type, eg: change from pet -> to bird
+    //Delete pet from old collection when user changes its type, eg: change from pet -> to bird
     func deleteFromRepeated(collection path: String, id: String) async throws {
-        let result = try await deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id)
+        _ = try await deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id)
     }
     
 }
+    
+    
+    
+    
+    
+    
+    
+
 
 

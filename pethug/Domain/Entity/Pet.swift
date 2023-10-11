@@ -238,7 +238,7 @@ extension Pet {
         case Zacatecas
         
         static func fromString(_ typeString: String) -> State {
-            return State(rawValue: typeString.lowercased()) ?? .Queretaro
+            return State(rawValue: typeString) ?? .Queretaro
         }
     }
     

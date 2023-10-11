@@ -29,13 +29,36 @@ final class DefaultPetDataSource: PetDataSource {
     internal var documents = [QueryDocumentSnapshot]()
     internal var order = "timestamp"
     
+    ///Filtros :
+    ///type    -> where normal
+    ///gender  -> where normal
+    ///age     -> greater or equal and less than or equal // si usamos age necesitamos o eliminar el order o cambiarlo por age en lugar de timestamp
+    ///con las demas condiciones no importa
+    ///size    -> where normal
+    ///address -> where normal
+    
     func fetchPets(fetchCollection path: String) async throws -> [Pet] {
         if query == nil {
-            query = db.collection(path)
-                      .order(by: order, descending: true)
-                      .limit(to: 10)
+//            query = db.collection(path)
+//                      .order(by: order, descending: true)
+//                      .limit(to: 10)
+//          query = db.collection(path)
+//                    .order(by: "age", descending: false)
+//                    .whereField("gender", isEqualTo: "male")
+//                    .whereField("age", isGreaterThanOrEqualTo: 2)
+//                    .whereField("age", isLessThanOrEqualTo: 5)
+//                    .limit(to: 10)
+            
+          query = db.collection(path)
+                    .order(by: order, descending: true)
+//                    .whereField("gender", isEqualTo: "male")
+//                    .whereField("address", isEqualTo: "Querétaro")
+//                    .whereField("size", isEqualTo: "medium")
+                    .limit(to: 10)
         } else {
-            query = query.start(afterDocument: documents.last!)
+            if !documents.isEmpty {
+                query = query.start(afterDocument: documents.last!)
+            }
         }
         
         
@@ -67,13 +90,21 @@ final class DefaultPetDataSource: PetDataSource {
         }
         
         if query == nil {
+//            query = db.collection("users")
+//                      .document(uid)
+//                      .collection("pets")
+//                      .whereField("address", isEqualTo: "Queretaro")
+//                      .limit(to: 10)
+            
             query = db.collection("users")
                       .document(uid)
                       .collection("pets")
                       .order(by: order, descending: true)
                       .limit(to: 10)
         } else {
-            query = query.start(afterDocument: documents.last!)
+            if !documents.isEmpty {
+                query = query.start(afterDocument: documents.last!)
+            }
         }
         
         

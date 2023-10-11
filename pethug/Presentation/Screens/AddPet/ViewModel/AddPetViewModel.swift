@@ -30,6 +30,7 @@ final class AddPetViewModel {
     private let petsSubject = PassthroughSubject<([Pet], Bool), PetsError>()
     private var pets: [Pet] = []
     private var isFetching = false
+    private var isFirstLoad = true
     
     ///Change to FetchUserPetsUC
     init(
@@ -65,12 +66,15 @@ final class AddPetViewModel {
             do {
                 let data = try await fetchUserPetsUC.execute(with: resetPagination)
                 
-                if !data.isEmpty {
+                if !isFirstLoad && !data.isEmpty {
                     if resetPagination {
                         petsSubject.send((data, true))
                     } else {
                         petsSubject.send((data, false))
                     }
+                } else if isFirstLoad {
+                    petsSubject.send((data, false))
+                    isFirstLoad = false
                 }
                 
             } catch {
@@ -110,11 +114,7 @@ final class AddPetViewModel {
                 guard let self = self else { return }
                 let (pets, debounce) = data
                 self.pets.append(contentsOf: pets)
-                if debounce {
-                    self.state.send(.loadedEdited(self.pets))
-                } else {
-                    self.state.send(.loaded(self.pets))
-                }
+                self.state.send(.loaded(self.pets, debounce))
             }.store(in: &subscriptions)
         
     }   

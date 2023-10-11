@@ -29,12 +29,7 @@ final class AddPetContentViewController: UIViewController {
     
     var debounce = false {
         didSet {
-            if debounce {
-                collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
-                    self?.debounce = false
-                })
-            }
+            scrollTopCollectionView()
         }
     }
     
@@ -149,12 +144,22 @@ final class AddPetContentViewController: UIViewController {
         dataSource.apply(snapshot, animatingDifferences: animated)
         
     }
+    
+    private func scrollTopCollectionView() {
+        guard debounce else { return }
+        collectionView.alpha = 0
+        collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
+        //Gives dataSource time to visually apply changes without user seeing the process
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
+            self?.collectionView.alpha = 1
+            self?.debounce = false
+        })
+    }
 }
 
 
 extension AddPetContentViewController: UICollectionViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard !debounce else { return }
         let offset = scrollView.contentOffset
         let bounds = scrollView.bounds
         let size = scrollView.contentSize
@@ -164,7 +169,6 @@ extension AddPetContentViewController: UICollectionViewDelegate {
         let distance: Float = 10
         
         if y > height + distance {
-            print(":pasa el limite y \(y) > height + distance  900 \(height + distance) ")
             delegate?.executeFetch()
         }
     }
@@ -190,11 +194,10 @@ extension AddPetContentViewController: AddPetContentDelegate {
             
             Task {
                 let result = await delegate.didTapDelete(collection: path, id: id)
-//                let result = await viewModel.deletePet(collection: path, id: id)
                 
                 if let sectionIndex = snapData.firstIndex(where: { $0.key == .pets }),
                    let itemIndex = snapData[sectionIndex].values.firstIndex(where: { $0 == item }),
-                    result == true
+                   result == true
                 {
                     snapData[sectionIndex].values.remove(at: itemIndex)
                     
