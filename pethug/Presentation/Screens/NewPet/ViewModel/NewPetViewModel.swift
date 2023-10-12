@@ -124,7 +124,8 @@ class NewPetViewModel {
             Publishers.CombineLatest4($ageState, $activityState, $socialState, $affectionState),
             Publishers.CombineLatest($addressState, $infoState)
         )
-        .map { nameGalleryType, breedGenderSize, petStats, addressInfo in
+        .map { [weak self] nameGalleryType, breedGenderSize, petStats, addressInfo in
+            guard let self = self else { return .invalid }
             let (name, gallery, type) = nameGalleryType
             let (breed, gender, size) = breedGenderSize
             let (age, activity, social, affection) = petStats

@@ -63,15 +63,51 @@ class FilterPetsViewModel {
 //        }
 //
 //    }
+//    @Published var typeState:     Pet.PetType? = nil
+//    @Published var genderState:   Pet.Gender?  = nil
+//    @Published var sizeState:     Pet.Size?    = nil
+//    @Published var ageRangeState: (Int, Int)?  = nil
+//    @Published var addressState:  Pet.State?   = nil
+//
+//    var stateSubject = PassthroughSubject<LoadingState, Never>()
+//
+//    func observeValidation() {
+//            formValues.sink(receiveValue: { [weak self] filterOptions in
+//                self?.stateSubject.send(.success(filterOptions))
+//            }).store(in: &cancellables)
+//    }
+//
+//    var formValues: AnyPublisher<FilterOptions, Never> {
+//        return Publishers.CombineLatest(
+//            Publishers.CombineLatest3($typeState, $ageRangeState, $addressState),
+//            Publishers.CombineLatest($genderState, $sizeState)
+//        )
+//        .map { nameGalleryType, breedGenderSize in
+//            let (type, ageRange, address) = nameGalleryType
+//            let (gender, size) = breedGenderSize
+//
+//            print("agerange changed: => \(ageRange)")
+//
+//            return FilterOptions(
+//                type: type,
+//                ageRange: ageRange,
+//                address: address,
+//                gender: gender,
+//                size: size
+//            )
+//
+//        }
+//        .eraseToAnyPublisher()
+//    }
     
     //MARK: - Form Validation
     private var cancellables = Set<AnyCancellable>()
     
     @Published var typeState:     Pet.PetType? = nil
-    @Published var genderState:   Pet.Gender? = nil
-    @Published var sizeState:     Pet.Size? = nil
-    @Published var ageState:      Int? = nil
-    @Published var addressState:  Pet.State? = nil
+    @Published var genderState:   Pet.Gender?  = nil
+    @Published var sizeState:     Pet.Size?    = nil
+    @Published var ageRangeState: (Int, Int)?  = nil
+    @Published var addressState:  Pet.State?   = nil
     
     var isValidSubject = CurrentValueSubject<Bool, Never>(false)
     var stateSubject = PassthroughSubject<LoadingState, Never>()
@@ -91,21 +127,23 @@ class FilterPetsViewModel {
     
     var formValidationState: AnyPublisher<State, Never> {
         return Publishers.CombineLatest(
-            Publishers.CombineLatest3($typeState, $ageState, $addressState),
+            Publishers.CombineLatest3($typeState, $ageRangeState, $addressState),
             Publishers.CombineLatest($genderState, $sizeState)
         )
-        .map { nameGalleryType, breedGenderSize in
-            let (type, age, address) = nameGalleryType
+        .map { [weak self] nameGalleryType, breedGenderSize in
+            guard let self = self else { return .invalid }
+            
+            let (type, ageRange, address) = nameGalleryType
             let (gender, size) = breedGenderSize
+            
             
             return self.validateForm(
                 type: type,
                 gender: gender,
                 size: size,
-                age: age,
+                ageRange: ageRange,
                 address: address
             )
-            
         }
         .eraseToAnyPublisher()
     }
@@ -114,7 +152,7 @@ class FilterPetsViewModel {
         type: Pet.PetType?,
         gender: Pet.Gender?,
         size: Pet.Size?,
-        age: Int?,
+        ageRange: (Int, Int)?,
         address: Pet.State?
     ) -> State{
         //gender and size are optional for the user
@@ -133,13 +171,16 @@ class FilterPetsViewModel {
 //        print("gender en viewmodel: => 666 \(gender)")
         
 //       gender and size props are optional
-        if type == nil      ||
-           age == nil       ||
-           address == nil {
-           return .invalid
+        
+        if type != nil     ||
+           gender != nil   ||
+           size != nil     ||
+           ageRange != nil ||
+           address != nil {
+            return .valid
         }
         
-        return .valid
+        return.invalid
     }
     
     

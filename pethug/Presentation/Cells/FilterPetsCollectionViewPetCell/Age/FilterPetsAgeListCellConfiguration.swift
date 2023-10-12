@@ -8,24 +8,23 @@
 import UIKit
 
 protocol FilterPetsAgeDelegate: AnyObject {
-    func ageChanged(age: Int?)
+    func ageChanged(ageRange: (Int, Int)?)
 }
 
 struct FilterPetsAge: Hashable {
     static func == (lhs: FilterPetsAge, rhs: FilterPetsAge) -> Bool {
         (
-            lhs.id == rhs.id &&
-            lhs.age == rhs.age
+            lhs.id == rhs.id 
         )
     }
     var id = UUID().uuidString
-    var age: Int?
+    var ageRange: (Int, Int)?
     weak var delegate: FilterPetsAgeDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(age: Int? = nil) {
-        self.age = age
+    init(ageRange: (Int, Int)? = nil) {
+        self.ageRange = ageRange
     }
 }
 

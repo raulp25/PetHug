@@ -16,7 +16,7 @@ extension FilterPetsContentViewController {
         case type
         case gender
         case size
-        case age
+        case ageRange
         case address
         case end
     }
@@ -25,7 +25,7 @@ extension FilterPetsContentViewController {
         case type(FilterPetsType)
         case gender(FilterPetsGender)
         case size(FilterPetsSize)
-        case age(FilterPetsAge)
+        case ageRange(FilterPetsAge)
         case address(FilterPetsAddress)
         case end(FilterPetsSend)
     }

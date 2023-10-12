@@ -13,8 +13,8 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
     
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Tamańo (No obligatorio)"
-        label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
+        label.text = "Tamańo"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()

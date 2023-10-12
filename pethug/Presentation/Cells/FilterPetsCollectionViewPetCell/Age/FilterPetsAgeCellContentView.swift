@@ -11,8 +11,8 @@ import MultiSlider
 final class FilterPetsAgeCellContentView: UIView, UIContentView {
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Edad (max 25 años)"
-        label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
+        label.text = "Edad (Años)"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
@@ -21,42 +21,10 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         return uv
     }()
     
-    private lazy var stackContainerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        uv.backgroundColor = .white
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openKeyboard))
-        uv.isUserInteractionEnabled = true
-        uv.addGestureRecognizer(tapGesture)
-        return uv
-    }()
-    
-    private lazy var hStackAge: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [ageTextField, ageLabel])
-        stack.backgroundColor = .white
-        stack.axis = .horizontal
-        stack.alignment = .center
-//        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    private lazy var ageTextField: UITextField = {
-        let txtField = UITextField(frame: .zero)
-        txtField.keyboardType = .numberPad
-        txtField.textColor = .label
-        txtField.tintColor = .orange
-        txtField.textAlignment = .left
-        txtField.font = .systemFont(ofSize: 16, weight: .regular)
-        txtField.backgroundColor = .clear
-        txtField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        return txtField
-    }()
-    
     private let ageLabel: UILabel = {
        let label = UILabel()
-        label.text = "años"
-        label.font = UIFont.systemFont(ofSize: 14.3, weight: .medium)
+        label.text = "Edad elegida: 0 - 25 años"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
@@ -64,17 +32,16 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
     private lazy var slider: MultiSlider = {
         let horizontalMultiSlider = MultiSlider()
         horizontalMultiSlider.orientation = .horizontal
-        horizontalMultiSlider.outerTrackColor = .blue
+        horizontalMultiSlider.outerTrackColor = customRGBColor(red: 210, green: 210, blue: 210)
         horizontalMultiSlider.tintColor = .orange
         horizontalMultiSlider.valueLabelPosition = .top
         horizontalMultiSlider.trackWidth = 5
         horizontalMultiSlider.showsThumbImageShadow = true
         horizontalMultiSlider.valueLabelAlternatePosition = false
         horizontalMultiSlider.valueLabelPosition = .bottom
-        horizontalMultiSlider.thumbImage = UIImage(systemName: "circle.fill")
         horizontalMultiSlider.keepsDistanceBetweenThumbs = false
         horizontalMultiSlider.valueLabelFormatter.positiveSuffix = ""
-        horizontalMultiSlider.valueLabelFont = UIFont.systemFont(ofSize: 12, weight: .light, width: .expanded)
+        horizontalMultiSlider.valueLabelFont = UIFont.systemFont(ofSize: 11, weight: .light, width: .expanded)
         
         horizontalMultiSlider.minimumValue = 0
         horizontalMultiSlider.maximumValue = 25
@@ -86,10 +53,6 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         return horizontalMultiSlider
     }()
     
-    @objc func sliderChanged(slider: MultiSlider) {
-        print("thumb \(slider.draggedThumbIndex) moved")
-        print("now thumbs are at \(slider.value)") // e.g., [1.0, 4.5, 5.0]
-    }
     
     // MARK: - ContentView Config
     private var currentConfiguration: FilterPetsAgeListCellConfiguration!
@@ -120,42 +83,12 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Private actions
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        guard let text = textField.text, let number = Int(text) else {
-            currentConfiguration.viewModel?.delegate?.ageChanged(age: nil)
-            textField.text = ""
-            return
-            
-        }
-        
-        if text.count > 1 && text.hasPrefix("0") {
-            let text = String(text.dropFirst())
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.ageChanged(age: Int(text))
-            
-        }
-        
-        if number > 25 {
-            let text = "25"
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.ageChanged(age: Int(text))
-        }
-        
-        if number < 0 {
-            let text = "0"
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.ageChanged(age: Int(text))
-        }
-        
-        if number >= 0 && number <= 10 {
-            currentConfiguration.viewModel?.delegate?.ageChanged(age: number)
-        }
-
-
-    }
-    
-    @objc private func openKeyboard() {
-        ageTextField.becomeFirstResponder()
+    @objc func sliderChanged(slider: MultiSlider) {
+        print("thumb \(slider.draggedThumbIndex) moved")
+        print("now thumbs are at \(slider.value)") // e.g., [1.0, 5.0]
+        let vals: [CGFloat] = slider.value
+        currentConfiguration.viewModel?.delegate?.ageChanged(ageRange: (Int(vals[0]), Int(vals[1])))
+        ageLabel.text = "Edad elegida: \(Int(vals[0])) - \(Int(vals[1])) años"
     }
     
     
@@ -165,7 +98,6 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         
         currentConfiguration = configuration
         guard let item = currentConfiguration.viewModel else { return }
-        ageTextField.text = item.age != nil ? String(item.age!) : ""
     }
     
     
@@ -174,24 +106,33 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         
         addSubview(titleLabel)
         addSubview(containerView)
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
-        
         containerView.addSubview(slider)
+        addSubview(ageLabel)
         
-        containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 45)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
+        
+        containerView.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingTop: 20
+        )
         containerView.setHeight(40)
         
         slider.fillSuperview()
+        
+        ageLabel.anchor(
+            top: containerView.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 45,
+            paddingBottom: 30
+        )
     }
     
 }
-
-extension FilterPetsAgeCellContentView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        ageTextField.resignFirstResponder()
-    }
-}
-
-
-
-

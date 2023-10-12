@@ -9,14 +9,6 @@ import UIKit
 
 final class NewPetTypeCellContentView: UIView, UIContentView {
     //MARK: - Private components
-    private let headerLabel: UILabel = {
-       let label = UILabel()
-        label.text = "Especificaciones"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
-        return label
-    }()
-    
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Tipo de animal"
@@ -213,21 +205,14 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
     private func setup() {
         let height = CGFloat(30)
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
-        
-        addSubview(headerLabel)
         addSubview(titleLabel)
         addSubview(vStack)
         
-        headerLabel.centerX(
-            inView: self,
-            topAnchor: topAnchor
-        )
-        
         titleLabel.anchor(
-            top: headerLabel.bottomAnchor,
+            top: topAnchor,
             left: leftAnchor,
             right: rightAnchor,
-            paddingTop: 20
+            paddingTop: 0
         )
         titleLabel.setHeight(16)
         

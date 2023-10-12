@@ -204,7 +204,7 @@ final class FilterPetsContentViewController: UIViewController {
                 section.contentInsets.trailing = sideInsets
                 
                 return section
-            case .age:
+            case .ageRange:
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
                 section.contentInsets.bottom = 30
                 section.contentInsets.leading = sideInsets
@@ -265,7 +265,6 @@ final class FilterPetsContentViewController: UIViewController {
         let newPetAgeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsAgeListCellConfiguration>, FilterPetsAge> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.age = self?.viewModel.ageState
         }
         
         let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsAddressListCellConfiguration>, FilterPetsAddress> { [weak self] cell, _, model in
@@ -279,7 +278,6 @@ final class FilterPetsContentViewController: UIViewController {
             cell.viewModel = model
 //            cell.viewModel?.buttonText = self?.viewModel.imagesToEditState.isEmpty ?? true ? "Subir" : "Acutalizar"
 //            cell.viewModel?.state = self?.viewModel.stateSubject
-            cell.viewModel?.isFormValid = self?.viewModel.isValidSubject
             cell.viewModel?.delegate = self
         }
         
@@ -339,7 +337,7 @@ final class FilterPetsContentViewController: UIViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: newPetGenderViewCellRegistration, for: indexPath, item: genderVM)
             case .size(let sizeVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetSizeViewCellRegistration, for: indexPath, item: sizeVM)
-            case .age(let ageVM):
+            case .ageRange(let ageVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetAgeViewCellRegistration, for: indexPath, item: ageVM)
             case .address(let addressVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetAddressViewCellRegistration, for: indexPath, item: addressVM)
@@ -360,7 +358,7 @@ final class FilterPetsContentViewController: UIViewController {
             
             .init(key: .size,      values: [.size(.init(size: viewModel.sizeState))]),
             
-            .init(key: .age,       values: [.age(.init(age: viewModel.ageState))]),
+            .init(key: .ageRange,  values: [.ageRange(.init(ageRange: viewModel.ageRangeState))]),
             
             .init(key: .address,   values: [.address(.init(address: viewModel.addressState))]),
             
@@ -409,8 +407,8 @@ extension FilterPetsContentViewController: FilterPetsSizeDelegate {
 }
 
 extension FilterPetsContentViewController: FilterPetsAgeDelegate {
-    func ageChanged(age: Int?) {
-        viewModel.ageState = age
+    func ageChanged(ageRange: (Int, Int)?) {
+        viewModel.ageRangeState = ageRange
     }
 }
 
