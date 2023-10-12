@@ -190,13 +190,6 @@ final class FilterPetsContentViewController: UIViewController {
                 section.contentInsets.trailing = sideInsets
                 
                 return section
-            case .breed:
-                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
-                section.contentInsets.bottom = 30
-                section.contentInsets.leading = sideInsets
-                section.contentInsets.trailing = sideInsets
-                
-                return section
             case .gender:
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
                 section.contentInsets.bottom = 30
@@ -255,13 +248,6 @@ final class FilterPetsContentViewController: UIViewController {
             cell.viewModel = model
             cell.viewModel?.delegate  = self
             cell.viewModel?.type = self?.viewModel.typeState
-        }
-        
-        let newPetBreedViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsBreedListCellConfiguration>, FilterPetsBreed> { [weak self] cell, _, model in
-            cell.viewModel = model
-            cell.viewModel?.delegate = self
-            cell.viewModel?.currentBreed = self?.viewModel.breedsState
-            cell.viewModel?.petType = self?.viewModel.typeState
         }
         
         let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsGenderListCellConfiguration>, FilterPetsGender> { [weak self] cell, _, model in
@@ -349,8 +335,6 @@ final class FilterPetsContentViewController: UIViewController {
             switch model {
             case .type(let typeVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetTypeViewCellRegistration, for: indexPath, item: typeVM)
-            case .breed(let breedVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetBreedViewCellRegistration, for: indexPath, item: breedVM)
             case .gender(let genderVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetGenderViewCellRegistration, for: indexPath, item: genderVM)
             case .size(let sizeVM):
@@ -371,8 +355,6 @@ final class FilterPetsContentViewController: UIViewController {
     private func updateSnapShot(animated: Bool = true) {
         snapData  = [
             .init(key: .type,      values: [.type(.init(type: viewModel.typeState))]),
-            
-            .init(key: .breed,     values: [.breed(.init(currentBreed: viewModel.breedsState))]),
             
             .init(key: .gender,    values: [.gender(.init(gender: viewModel.genderState))]),
             
@@ -410,12 +392,7 @@ extension FilterPetsContentViewController: FilterPetsTypeDelegate {
     func typeDidChange(type: Pet.PetType) {
         if viewModel.typeState != type {
             viewModel.typeState = type
-            viewModel.breedsState = nil
         }
-        
-        var snapshot = dataSource.snapshot()
-        snapshot.reloadSections([.breed])
-        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 
@@ -462,68 +439,6 @@ extension FilterPetsContentViewController: UICollectionViewDelegate {
     
 }
         
-extension FilterPetsContentViewController: FilterPetsBreedDelegate {
-    func didTapBreedSelector() {
-        let searchController = BreedPopupSearch()
-        searchController.delegate = self
-        searchController.breedsForType = viewModel.typeState
-        let dummyNavigator = UINavigationController(rootViewController: searchController)
-        dummyView.add(dummyNavigator)
-        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
-        dummyNavigator.view.layer.cornerRadius = 15
-        
-        add(dummyView)
-        dummyView.view.fillSuperview()
-
-        dummyView.view.alpha = 0
-        self.view.bringSubviewToFront(dummyView.view)
-        self.collectionView.isUserInteractionEnabled = false
-        dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
-        
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 1
-        }
-        self.view.layoutIfNeeded()
-        
-    }
-}
-
-//MARK: - Breed search Delegate
-extension FilterPetsContentViewController: PopupSearchDelegate {
-    
-    func didSelectBreed(breed: String) {
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 0
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.dummyView.remove()
-                self.collectionView.isUserInteractionEnabled = true
-                self.view.layoutIfNeeded()
-            })
-        }
-        
-        viewModel.breedsState = breed
-        
-        var snapshot = dataSource.snapshot()
-        snapshot.reloadSections([.breed])
-        dataSource.apply(snapshot, animatingDifferences: false)
-    }
-    
-    func didTapCancell() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
-            self.dummyView.view.alpha = 0
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-                self.dummyView.remove()
-                self.collectionView.isUserInteractionEnabled = true
-                self.view.layoutIfNeeded()
-            })
-        }
-        
-    }
-}
-
-
 //MARK: - Address search Delegate
 extension FilterPetsContentViewController: AddressPopupSearchDelegate {
     func didSelectState(state: Pet.State) {

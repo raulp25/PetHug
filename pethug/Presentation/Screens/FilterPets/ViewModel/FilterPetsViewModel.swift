@@ -68,7 +68,6 @@ class FilterPetsViewModel {
     private var cancellables = Set<AnyCancellable>()
     
     @Published var typeState:     Pet.PetType? = nil
-    @Published var breedsState:   String? = nil
     @Published var genderState:   Pet.Gender? = nil
     @Published var sizeState:     Pet.Size? = nil
     @Published var ageState:      Int? = nil
@@ -93,15 +92,14 @@ class FilterPetsViewModel {
     var formValidationState: AnyPublisher<State, Never> {
         return Publishers.CombineLatest(
             Publishers.CombineLatest3($typeState, $ageState, $addressState),
-            Publishers.CombineLatest3($breedsState, $genderState, $sizeState)
+            Publishers.CombineLatest($genderState, $sizeState)
         )
         .map { nameGalleryType, breedGenderSize in
             let (type, age, address) = nameGalleryType
-            let (breed, gender, size) = breedGenderSize
+            let (gender, size) = breedGenderSize
             
             return self.validateForm(
                 type: type,
-                breed: breed,
                 gender: gender,
                 size: size,
                 age: age,
@@ -114,7 +112,6 @@ class FilterPetsViewModel {
     
     func validateForm(
         type: Pet.PetType?,
-        breed: String?,
         gender: Pet.Gender?,
         size: Pet.Size?,
         age: Int?,
@@ -137,7 +134,6 @@ class FilterPetsViewModel {
         
 //       gender and size props are optional
         if type == nil      ||
-           breed == nil     ||
            age == nil       ||
            address == nil {
            return .invalid

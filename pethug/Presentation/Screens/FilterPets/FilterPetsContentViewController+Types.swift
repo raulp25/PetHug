@@ -14,7 +14,6 @@ extension FilterPetsContentViewController {
     
     enum Section: Int {
         case type
-        case breed
         case gender
         case size
         case age
@@ -24,7 +23,6 @@ extension FilterPetsContentViewController {
     
     enum Item: Hashable {
         case type(FilterPetsType)
-        case breed(FilterPetsBreed)
         case gender(FilterPetsGender)
         case size(FilterPetsSize)
         case age(FilterPetsAge)
