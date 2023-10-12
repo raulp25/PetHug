@@ -20,8 +20,6 @@
 		C41E8E642AD489970065DEFC /* FilterPetsViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E632AD489970065DEFC /* FilterPetsViewHeaderViewController.swift */; };
 		C41E8E692AD4A2970065DEFC /* FilterPetsTypeListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E682AD4A2970065DEFC /* FilterPetsTypeListCellConfiguration.swift */; };
 		C41E8E6B2AD4A2CC0065DEFC /* FilterPetsTypeCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E6A2AD4A2CC0065DEFC /* FilterPetsTypeCellContentView.swift */; };
-		C41E8E6E2AD4A3C90065DEFC /* FilterPetsBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E6D2AD4A3C90065DEFC /* FilterPetsBreedListCellConfiguration.swift */; };
-		C41E8E702AD4A4BF0065DEFC /* FilterPetsBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E6F2AD4A4BF0065DEFC /* FilterPetsBreedCellContentView.swift */; };
 		C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616D42AB274B4006925DB /* UIButton+Factory.swift */; };
 		C42616D72AB27508006925DB /* IncreaseTapAreaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616D62AB27508006925DB /* IncreaseTapAreaButton.swift */; };
 		C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616D82AB276CA006925DB /* UITextField+Extensions.swift */; };
@@ -221,8 +219,6 @@
 		C41E8E632AD489970065DEFC /* FilterPetsViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsViewHeaderViewController.swift; sourceTree = "<group>"; };
 		C41E8E682AD4A2970065DEFC /* FilterPetsTypeListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsTypeListCellConfiguration.swift; sourceTree = "<group>"; };
 		C41E8E6A2AD4A2CC0065DEFC /* FilterPetsTypeCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsTypeCellContentView.swift; sourceTree = "<group>"; };
-		C41E8E6D2AD4A3C90065DEFC /* FilterPetsBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsBreedListCellConfiguration.swift; sourceTree = "<group>"; };
-		C41E8E6F2AD4A4BF0065DEFC /* FilterPetsBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsBreedCellContentView.swift; sourceTree = "<group>"; };
 		C42616D42AB274B4006925DB /* UIButton+Factory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Factory.swift"; sourceTree = "<group>"; };
 		C42616D62AB27508006925DB /* IncreaseTapAreaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IncreaseTapAreaButton.swift; sourceTree = "<group>"; };
 		C42616D82AB276CA006925DB /* UITextField+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extensions.swift"; sourceTree = "<group>"; };
@@ -470,7 +466,6 @@
 				C4B1BD182AD4BF94003311EB /* Age */,
 				C4B1BD132AD4BE6A003311EB /* Size */,
 				C4B1BD0E2AD4BCA1003311EB /* Gender */,
-				C41E8E6C2AD4A3970065DEFC /* Breed */,
 				C41E8E672AD4A2780065DEFC /* Type */,
 			);
 			path = FilterPetsCollectionViewPetCell;
@@ -483,15 +478,6 @@
 				C41E8E6A2AD4A2CC0065DEFC /* FilterPetsTypeCellContentView.swift */,
 			);
 			path = Type;
-			sourceTree = "<group>";
-		};
-		C41E8E6C2AD4A3970065DEFC /* Breed */ = {
-			isa = PBXGroup;
-			children = (
-				C41E8E6D2AD4A3C90065DEFC /* FilterPetsBreedListCellConfiguration.swift */,
-				C41E8E6F2AD4A4BF0065DEFC /* FilterPetsBreedCellContentView.swift */,
-			);
-			path = Breed;
 			sourceTree = "<group>";
 		};
 		C42616D32AB274A1006925DB /* Factories */ = {
@@ -1539,7 +1525,6 @@
 				C483EBA42AC55C11005E8BE2 /* NewPetSizeCellContentView.swift in Sources */,
 				C418BBA52AC0A50600C31967 /* PetEntity+DomainMapper.swift in Sources */,
 				C44820242AB5438000E72BD2 /* Paths.swift in Sources */,
-				C41E8E702AD4A4BF0065DEFC /* FilterPetsBreedCellContentView.swift in Sources */,
 				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
 				C48D9B462AC49BBB002EDA90 /* ListCollectionViewCell.swift in Sources */,
 				C48D9B4D2AC49DE9002EDA90 /* NameCellViewModel.swift in Sources */,
@@ -1575,7 +1560,6 @@
 				C426D2682AB6713A00BFA357 /* SettingsCoordinator.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,
 				C4B1BD1C2AD4BFFD003311EB /* FilterPetsAgeCellContentView.swift in Sources */,
-				C41E8E6E2AD4A3C90065DEFC /* FilterPetsBreedListCellConfiguration.swift in Sources */,
 				C42D3D9E2AB65FF200EBA1B7 /* InAppContainerRootViewController+State.swift in Sources */,
 				C43A5C732ACCE7A5007C8ECB /* PetModel.swift in Sources */,
 				C476E2C42ABA9A1A0014DEA4 /* PetDataSource.swift in Sources */,
