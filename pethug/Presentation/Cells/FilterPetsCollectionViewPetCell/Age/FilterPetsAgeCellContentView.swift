@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MultiSlider
 
 final class FilterPetsAgeCellContentView: UIView, UIContentView {
     private let titleLabel: UILabel = {
@@ -60,7 +61,37 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         return label
     }()
     
-    // MARK: - Properties
+    private lazy var slider: MultiSlider = {
+        let horizontalMultiSlider = MultiSlider()
+        horizontalMultiSlider.orientation = .horizontal
+        horizontalMultiSlider.outerTrackColor = .blue
+        horizontalMultiSlider.tintColor = .orange
+        horizontalMultiSlider.valueLabelPosition = .top
+        horizontalMultiSlider.trackWidth = 5
+        horizontalMultiSlider.showsThumbImageShadow = true
+        horizontalMultiSlider.valueLabelAlternatePosition = false
+        horizontalMultiSlider.valueLabelPosition = .bottom
+        horizontalMultiSlider.thumbImage = UIImage(systemName: "circle.fill")
+        horizontalMultiSlider.keepsDistanceBetweenThumbs = false
+        horizontalMultiSlider.valueLabelFormatter.positiveSuffix = ""
+        horizontalMultiSlider.valueLabelFont = UIFont.systemFont(ofSize: 12, weight: .light, width: .expanded)
+        
+        horizontalMultiSlider.minimumValue = 0
+        horizontalMultiSlider.maximumValue = 25
+        horizontalMultiSlider.value = [0, 25]
+        horizontalMultiSlider.snapValues = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
+        
+        horizontalMultiSlider.addTarget(self, action: #selector(sliderChanged), for: .valueChanged)
+        
+        return horizontalMultiSlider
+    }()
+    
+    @objc func sliderChanged(slider: MultiSlider) {
+        print("thumb \(slider.draggedThumbIndex) moved")
+        print("now thumbs are at \(slider.value)") // e.g., [1.0, 4.5, 5.0]
+    }
+    
+    // MARK: - ContentView Config
     private var currentConfiguration: FilterPetsAgeListCellConfiguration!
     var configuration: UIContentConfiguration {
         get {
@@ -128,7 +159,7 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
     }
     
     
-    // MARK: - Functions
+    // MARK: - Setup
     private func apply(configuration: FilterPetsAgeListCellConfiguration) {
         guard currentConfiguration != configuration else { return }
         
@@ -145,17 +176,12 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         addSubview(containerView)
         titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
         
-        containerView.addSubview(stackContainerView)
-        stackContainerView.addSubview(hStackAge)
-        containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 30)
+        containerView.addSubview(slider)
+        
+        containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 45)
         containerView.setHeight(40)
-        stackContainerView.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, paddingLeft: 0)
-        stackContainerView.setWidth(80)
-        stackContainerView.layer.cornerRadius = 10
         
-        hStackAge.anchor(top: stackContainerView.topAnchor, left: stackContainerView.leftAnchor, bottom: stackContainerView.bottomAnchor, right: stackContainerView.rightAnchor, paddingLeft: 10, paddingRight: 10)
-        
-        
+        slider.fillSuperview()
     }
     
 }

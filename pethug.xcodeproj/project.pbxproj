@@ -100,6 +100,7 @@
 		C467578B2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578A2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift */; };
 		C467578D2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */; };
 		C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578E2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift */; };
+		C4680D0B2AD778A2003ABD3E /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = C4680D0A2AD778A2003ABD3E /* MultiSlider */; };
 		C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */; };
 		C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B62ABA827E0014DEA4 /* PetsViewModel.swift */; };
 		C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B82ABA82FB0014DEA4 /* PetsViewModel+Types.swift */; };
@@ -410,6 +411,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C42D3D8C2AB6356900EBA1B7 /* FirebaseAuth in Frameworks */,
+				C4680D0B2AD778A2003ABD3E /* MultiSlider in Frameworks */,
 				C42D3D922AB6356900EBA1B7 /* FirebaseStorage in Frameworks */,
 				C42D3D8E2AB6356900EBA1B7 /* FirebaseFirestore in Frameworks */,
 				C42D3D902AB6356900EBA1B7 /* FirebaseFirestoreSwift in Frameworks */,
@@ -1396,6 +1398,7 @@
 				C42D3D8F2AB6356900EBA1B7 /* FirebaseFirestoreSwift */,
 				C42D3D912AB6356900EBA1B7 /* FirebaseStorage */,
 				C43A5C752ACD117E007C8ECB /* SDWebImage */,
+				C4680D0A2AD778A2003ABD3E /* MultiSlider */,
 			);
 			productName = pethug;
 			productReference = C445F1162AB1391A00053BE7 /* pethug.app */;
@@ -1428,6 +1431,7 @@
 			packageReferences = (
 				C42D3D8A2AB6356900EBA1B7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				C43A5C742ACD117E007C8ECB /* XCRemoteSwiftPackageReference "SDWebImage" */,
+				C4680D092AD778A2003ABD3E /* XCRemoteSwiftPackageReference "MultiSlider" */,
 			);
 			productRefGroup = C445F1172AB1391A00053BE7 /* Products */;
 			projectDirPath = "";
@@ -1872,6 +1876,14 @@
 				minimumVersion = 5.0.0;
 			};
 		};
+		C4680D092AD778A2003ABD3E /* XCRemoteSwiftPackageReference "MultiSlider" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/yonat/MultiSlider";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1899,6 +1911,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = C43A5C742ACD117E007C8ECB /* XCRemoteSwiftPackageReference "SDWebImage" */;
 			productName = SDWebImage;
+		};
+		C4680D0A2AD778A2003ABD3E /* MultiSlider */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C4680D092AD778A2003ABD3E /* XCRemoteSwiftPackageReference "MultiSlider" */;
+			productName = MultiSlider;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
