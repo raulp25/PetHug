@@ -9,7 +9,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>pethug</string>
+	<string>com.slr.pethugin</string>
 	<key>PROJECT_ID</key>
 	<string>pethug-8ad19</string>
 	<key>STORAGE_BUCKET</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:283610468797:ios:c2697bbc9c6d7970ea42d4</string>
+	<string>1:283610468797:ios:3df4c9383b1d3f02ea42d4</string>
 </dict>
 </plist>

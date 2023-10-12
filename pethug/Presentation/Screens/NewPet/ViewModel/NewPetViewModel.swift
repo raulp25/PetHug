@@ -36,7 +36,7 @@ class NewPetViewModel {
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
         self.pet = pet
         self.isEdit = pet != nil
-        print("recibe el pet en newpetviewmodel - images urls 421: => \(pet?.imagesUrls)")
+//        print("recibe el pet en newpetviewmodel - images urls 421: => \(pet?.imagesUrls)")
         observeValidation()
 //        Task {
 //            try await uploadNextImage(index: 0)

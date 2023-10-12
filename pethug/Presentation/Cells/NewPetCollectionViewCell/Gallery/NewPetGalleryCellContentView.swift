@@ -106,7 +106,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
         if !item.imagesToEdit.isEmpty {
             item.getImagetImagesSequentially(stringUrlArray: item.imagesToEdit) { [weak self] images in
-                print("images ya descargadas como [UIIMAGE] en formulario gallery 421: => \(images)")
+//                print("images ya descargadas como [UIIMAGE] en formulario gallery 421: => \(images)")
                 if !images.isEmpty {
                     if let gallerySectionIndex = self?.currentSnapData.firstIndex(where: { $0.key == .gallery }) {
                         self?.currentSnapData[gallerySectionIndex].values.append(contentsOf: images.map({ .image($0) }))

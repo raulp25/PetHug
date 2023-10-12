@@ -136,7 +136,13 @@ final class AddPetControllerCollectionViewCell: UICollectionViewCell {
     
     private func configureCellUI(with viewModel: PetCellViewModel) {
         work = DispatchWorkItem(block: {
-            self.petImage.sd_setImage(with: URL(string: viewModel.petImage))
+            let imageDownloader = ImageService()
+            imageDownloader.downloadImage(url: viewModel.petImage) { image in
+                if let image = image {
+                    self.petImage.image = UIImage(data: image)
+                }
+            }
+//            self.petImage.sd_setImage(with: URL(string: viewModel.petImage))
        })
         
         DispatchQueue.main.asyncAfter(deadline: .now(), execute: work!)

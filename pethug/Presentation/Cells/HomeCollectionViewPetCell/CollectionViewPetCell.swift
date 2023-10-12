@@ -147,14 +147,19 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         )
     }
     
-    private var work: DispatchWorkItem?
+    private var work: DispatchWorkItem? 
     
     private func configureCellUI(with viewModel: PetCellViewModel) {
          work = DispatchWorkItem(block: {
-             
-             self.petImage.image = UIImage(named: viewModel.petImage)
-             let url = URL(string: viewModel.petImage)
-             self.petImage.sd_setImage(with: url)
+             let imageDownloader = ImageService()
+             imageDownloader.downloadImage(url: viewModel.petImage) { image in
+                 if let image = image {
+                     self.petImage.image = UIImage(data: image)
+                 }
+             }
+//             self.petImage.image = UIImage(named: viewModel.petImage)
+//             let url = URL(string: viewModel.petImage)
+//             self.petImage.sd_setImage(with: url)
         })
         
         DispatchQueue.main.async(execute: work!)
