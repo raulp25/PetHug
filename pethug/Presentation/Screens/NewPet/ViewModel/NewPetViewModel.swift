@@ -36,6 +36,7 @@ class NewPetViewModel {
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
         self.pet = pet
         self.isEdit = pet != nil
+        print("recibe el pet en newpetviewmodel - images urls 421: => \(pet?.imagesUrls)")
         observeValidation()
 //        Task {
 //            try await uploadNextImage(index: 0)
@@ -116,7 +117,7 @@ class NewPetViewModel {
             }
         }).store(in: &cancellables)
     }
-    
+    ///Agregar de nuevo las variables de isValidSubject  y stateSubject al send button
     var formValidationState: AnyPublisher<State, Never> {
         return Publishers.CombineLatest4(
             Publishers.CombineLatest3($nameState, $galleryState, $typeState),

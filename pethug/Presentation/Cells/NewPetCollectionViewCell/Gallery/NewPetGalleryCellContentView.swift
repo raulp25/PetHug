@@ -106,6 +106,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
         if !item.imagesToEdit.isEmpty {
             item.getImagetImagesSequentially(stringUrlArray: item.imagesToEdit) { [weak self] images in
+                print("images ya descargadas como [UIIMAGE] en formulario gallery 421: => \(images)")
                 if !images.isEmpty {
                     if let gallerySectionIndex = self?.currentSnapData.firstIndex(where: { $0.key == .gallery }) {
                         self?.currentSnapData[gallerySectionIndex].values.append(contentsOf: images.map({ .image($0) }))
@@ -233,7 +234,7 @@ extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
             sheet.preferredCornerRadius = 20
         }
         
-        currentConfiguration.viewModel?.nagivagtion?.present(nav, animated: true, completion: nil)
+        currentConfiguration.viewModel?.navigation?.present(nav, animated: true, completion: nil)
     }
 }
 
@@ -244,8 +245,8 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
         picker.sourceType = .camera
         picker.allowsEditing = true
         picker.delegate = self
-        currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: {
-            self.currentConfiguration.viewModel?.nagivagtion?.present(picker, animated: true)
+        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: {
+            self.currentConfiguration.viewModel?.navigation?.present(picker, animated: true)
         })
     }
     
@@ -255,8 +256,8 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
         
         let phPicker = PHPickerViewController(configuration: config)
         phPicker.delegate = self
-        currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: {
-            self.currentConfiguration.viewModel?.nagivagtion?.present(phPicker, animated: true)
+        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: {
+            self.currentConfiguration.viewModel?.navigation?.present(phPicker, animated: true)
         })
     }
 }
@@ -284,7 +285,7 @@ extension NewPetGalleryCellContentView: GalleryCellDelegate {
             sheet.preferredCornerRadius = 20
         }
         
-        currentConfiguration.viewModel?.nagivagtion?.present(nav, animated: true, completion: nil)
+        currentConfiguration.viewModel?.navigation?.present(nav, animated: true, completion: nil)
                
     }
 }
@@ -350,7 +351,7 @@ extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavig
 ///MARK: - PHPicker Gallery Delegate
 extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        currentConfiguration.viewModel?.nagivagtion?.dismiss(animated: true, completion: nil)
+        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: nil)
         
         guard let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) else { return }
         

@@ -291,7 +291,7 @@ final class NewPetContentViewController: UIViewController {
             print("model gallery cell registration: => \(model)")
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.nagivagtion = self
+            cell.viewModel?.navigation = self
         }
         
         let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetTypeListCellConfiguration>, NewPetType> { [weak self] cell, _, model in

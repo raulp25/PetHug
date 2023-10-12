@@ -22,7 +22,7 @@ struct NewPetGallery: Hashable {
     var imagesToEdit: [String] = []
     var imageService: ImageService?
     weak var delegate: NewPetGalleryDelegate?
-    weak var nagivagtion: NewPetContentViewController?
+    weak var navigation: NewPetContentViewController?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }

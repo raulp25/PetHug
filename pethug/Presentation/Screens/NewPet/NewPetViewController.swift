@@ -10,18 +10,28 @@ import UIKit
 final class NewPetViewController: UIViewController {
     
     // MARK: - Private components
-    private lazy var contentVC: NewPetContentViewController = {
-        let vc =  NewPetContentViewController(
-                    viewModel: NewPetViewModel(
-                        imageService: ImageService(),
-                        createPetUseCase: CreatePet.composeCreatePetUC(),
-                        updatePetUseCase: UpdatePet.composeUpdatePetUC(),
-                        deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC(),
-                        pet: self.pet
-                   ))
-        vc.delegate = self
-        return vc
-    }()
+//    private lazy var contentVC: NewPetContentViewController = {
+//        let vc =  NewPetContentViewController(
+//                    viewModel: NewPetViewModel(
+//                        imageService: ImageService(),
+//                        createPetUseCase: CreatePet.composeCreatePetUC(),
+//                        updatePetUseCase: UpdatePet.composeUpdatePetUC(),
+//                        deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC(),
+//                        pet: self.pet
+//                   ))
+//        vc.delegate = self
+//        return vc
+//    }()
+    
+    private lazy var contentVC =  NewPetContentViewController(
+                                    viewModel: NewPetViewModel(
+                                        imageService: ImageService(),
+                                        createPetUseCase: CreatePet.composeCreatePetUC(),
+                                        updatePetUseCase: UpdatePet.composeUpdatePetUC(),
+                                        deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC(),
+                                        pet: self.pet
+                                   ))
+    
     
     private lazy var xmarkImageContainer: UIView = {
        let uv = UIView(withAutolayout: true)
@@ -74,7 +84,7 @@ final class NewPetViewController: UIViewController {
         xmarkImageContainer.addSubview(xmarkImageView)
         view.addSubview(titleLabel)
         add(contentVC)
-
+        
         titleLabel.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
         
         xmarkImageContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingLeft: 15)
@@ -84,9 +94,14 @@ final class NewPetViewController: UIViewController {
         
         contentVC.view.anchor(top: xmarkImageContainer.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20)
         
+        setupDelegates()
+        
     }
-    
-    
+
+    private func setupDelegates() {
+        contentVC.delegate = self
+    }
+
     //MARK: - Actions
     @objc func didTapXmark() {
         print("clicked xmark: => ")
