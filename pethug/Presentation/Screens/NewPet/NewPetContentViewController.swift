@@ -71,7 +71,7 @@ final class NewPetContentViewController: UIViewController {
                 case .success:
                     self?.delegate?.didEndUploading()
                     //Gives parent VC time to scrollTop collectionView
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 15, execute: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                         self?.dismiss(animated: true)
                     })
                 case let.error(error):

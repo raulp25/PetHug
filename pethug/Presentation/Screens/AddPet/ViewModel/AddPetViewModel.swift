@@ -32,7 +32,7 @@ final class AddPetViewModel {
     private var isFetching = false
     private var isFirstLoad = true
     
-    ///Change to FetchUserPetsUC
+    //MARK: - Init
     init(
         fetchUserPetsUC: DefaultFetchUserPetsUC,
         deletePetUC: DefaultDeletePetUC,
@@ -48,56 +48,6 @@ final class AddPetViewModel {
     
     deinit {
         print("✅ Deinit PetsViewModel")
-    }
-    
-    //MARK: - Internal Methods
-    func fetchUserPets(resetPagination: Bool = false) {
-        guard !isFetching else { return }
-        
-        if resetPagination {
-            
-            pets = []
-        }
-        
-        isFetching = true
-        
-        Task {
-            state.send(.loading)
-            do {
-                let data = try await fetchUserPetsUC.execute(with: resetPagination)
-                
-                if !isFirstLoad && !data.isEmpty {
-                    if resetPagination {
-                        petsSubject.send((data, true))
-                    } else {
-                        petsSubject.send((data, false))
-                    }
-                } else if isFirstLoad {
-                    petsSubject.send((data, false))
-                    isFirstLoad = false
-                }
-                
-            } catch {
-                state.send(.error(.default(error)))
-            }
-            
-            isFetching = false
-        }
-    }
-    
-    
-    func deletePet(collection path: String,  id: String) async -> Bool {
-        await withThrowingTaskGroup(of: Void.self) { [unowned self] group in
-            group.addTask { let _ = try await self.deletePetUC.execute(collection: path, docId: id) }
-            group.addTask { let _ = try await self.deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id) }
-        }
-        
-        if let index = pets.firstIndex(where: { $0.id == id }) {
-            pets.remove(at: index)
-        }
-        //Check if we refactor this function to not return bool
-        //since everything is handled by firebase
-        return true
     }
     
     // MARK: - Private observers
@@ -117,7 +67,64 @@ final class AddPetViewModel {
                 self.state.send(.loaded(self.pets, debounce))
             }.store(in: &subscriptions)
         
-    }   
+    }
+    
+    //MARK: - Internal Methods
+    func fetchUserPets(resetPagination: Bool = false) {
+        guard !isFetching else { return }
+        
+        if resetPagination {
+            resetPets()
+        }
+        
+        isFetching = true
+        
+        state.send(.loading)
+        
+        Task {
+            do {
+                let data = try await fetchUserPetsUC.execute(with: resetPagination)
+                handleFetchedPets(data, resetPagination: resetPagination)
+            } catch {
+                handleFetchError(error)
+            }
+            
+            isFetching = false
+        }
+    }
+    
+    func deletePet(collection path: String,  id: String) async -> Bool {
+        await withThrowingTaskGroup(of: Void.self) { [unowned self] group in
+            group.addTask { let _ = try await self.deletePetUC.execute(collection: path, docId: id) }
+            group.addTask { let _ = try await self.deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id) }
+        }
+        
+        if let index = pets.firstIndex(where: { $0.id == id }) {
+            pets.remove(at: index)
+        }
+        //Check if we refactor this function to not return bool
+        //since everything is handled by firebase
+        return true
+    }
+    
+    //MARK: - Private methods
+    private func resetPets() {
+        pets = []
+    }
+
+    private func handleFetchedPets(_ data: [Pet], resetPagination: Bool) {
+        if !isFirstLoad && !data.isEmpty {
+            let debounce = resetPagination ? true : false
+            petsSubject.send((data, debounce))
+        } else if isFirstLoad {
+            petsSubject.send((data, false))
+            isFirstLoad = false
+        }
+    }
+
+    private func handleFetchError(_ error: Error) {
+        state.send(.error(.default(error)))
+    }
 }
 
 
