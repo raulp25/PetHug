@@ -9,7 +9,7 @@ import UIKit
 
 protocol FilterSearchAddressDelegate: AnyObject {
 //    func textViewdDidChange(text: String)
-    func didTapCell(state: Pet.FilterState)
+    func didTapCell(state: FilterState)
 }
 
 

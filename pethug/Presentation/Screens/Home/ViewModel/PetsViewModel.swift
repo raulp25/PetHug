@@ -82,6 +82,10 @@ final class PetsViewModel {
         }
     }
     
+    func fetchPetsWithFilter(options: String) {
+        
+    }
+    
     
 //    private func createMockPet() {
 //        let pet: Pet = .init(id: "552-omega", name: "Doli", age: 4, gender: .female, size: .large, breed: "labrador", imagesUrls: [], type: .dog, address: .NuevoLeon, isLiked: false)

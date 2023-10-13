@@ -183,6 +183,7 @@ final class FilterPetsAddressCellContentView: UIView, UIContentView {
             bottom: bottomAnchor,
             right: rightAnchor,
             paddingTop: 10,
+            paddingLeft: 10,
             paddingBottom: 20
         )
         

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FilterAddressPopupSearchDelegate: AnyObject {
-    func didSelectState(state: Pet.FilterState)
+    func didSelectState(state: FilterState)
     func didTapCancellSearchAddress()
 }
 
@@ -187,7 +187,7 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
     func generateStates() -> [Item] {
         var searchAddresses = [Item]()
 
-        for state in Pet.FilterState.allCases {
+        for state in FilterState.allCases {
             let searchAddress = FilterSearchAddress(address: state.rawValue)
             searchAddress.state = state
             searchAddresses.append(.state(searchAddress))
@@ -253,7 +253,7 @@ extension FilterAddressPopupSearch {
 
 
 extension FilterAddressPopupSearch: FilterSearchAddressDelegate {
-    func didTapCell(state: Pet.FilterState) {
+    func didTapCell(state: FilterState) {
         saveKey(for: state.rawValue)
         delegate?.didSelectState(state: state)
     }

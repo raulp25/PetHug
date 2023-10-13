@@ -12,7 +12,7 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
     private let headerLabel: UILabel = {
        let label = UILabel()
         label.text = "Especificaciones"
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()

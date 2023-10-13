@@ -21,12 +21,12 @@ struct FilterPetsAddress: Hashable {
         )
     }
     var id = UUID().uuidString
-    var address: Pet.FilterState?
+    var address: FilterState?
     weak var delegate: FilterPetsAddressDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(address: Pet.FilterState?) {
+    init(address: FilterState?) {
         self.address = address
     }
 }

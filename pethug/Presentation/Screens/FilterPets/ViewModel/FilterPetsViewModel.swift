@@ -103,11 +103,11 @@ class FilterPetsViewModel {
     //MARK: - Form Validation
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var typeState:     Pet.FilterType? = nil
-    @Published var genderState:   Pet.FilterGender?  = nil
-    @Published var sizeState:     Pet.FilterSize?    = nil
+    @Published var typeState:     FilterType? = nil
+    @Published var genderState:   FilterGender?  = nil
+    @Published var sizeState:     FilterSize?    = nil
     @Published var ageRangeState: (Int, Int)?  = nil
-    @Published var addressState:  Pet.FilterState?   = nil
+    @Published var addressState:  FilterState?   = nil
     
     var isValidSubject = CurrentValueSubject<Bool, Never>(false)
     var stateSubject = PassthroughSubject<LoadingState, Never>()
@@ -149,11 +149,11 @@ class FilterPetsViewModel {
     }
     
     func validateForm(
-        type: Pet.FilterType?,
-        gender: Pet.FilterGender?,
-        size: Pet.FilterSize?,
+        type: FilterType?,
+        gender: FilterGender?,
+        size: FilterSize?,
         ageRange: (Int, Int)?,
-        address: Pet.FilterState?
+        address: FilterState?
     ) -> State{
         //gender and size are optional for the user
 //        print("name level en viewmodel: => 666 \(name)")

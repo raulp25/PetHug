@@ -31,7 +31,7 @@ class FilterSearchAddress: Hashable {
         lhs.id == rhs.id
     }
     var id = UUID().uuidString
-    var state: Pet.FilterState?
+    var state: FilterState?
     var address: String?
     weak var delegate: FilterSearchAddressDelegate?
     func hash(into hasher: inout Hasher) {

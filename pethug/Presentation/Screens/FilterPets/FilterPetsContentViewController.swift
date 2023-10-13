@@ -386,7 +386,7 @@ extension FilterPetsContentViewController: FilterPetsViewHeaderDelegate {
 
 
 extension FilterPetsContentViewController: FilterPetsTypeDelegate {
-    func typeDidChange(type: Pet.FilterType) {
+    func typeDidChange(type: FilterType) {
         if viewModel.typeState != type {
             viewModel.typeState = type
         }
@@ -394,13 +394,13 @@ extension FilterPetsContentViewController: FilterPetsTypeDelegate {
 }
 
 extension FilterPetsContentViewController: FilterPetsGenderDelegate {
-    func genderDidChange(type: Pet.FilterGender?) {
+    func genderDidChange(type: FilterGender?) {
         viewModel.genderState = type
     }
 }
 
 extension FilterPetsContentViewController: FilterPetsSizeDelegate {
-    func sizeDidChange(size: Pet.FilterSize?) {
+    func sizeDidChange(size: FilterSize?) {
         viewModel.sizeState = size
     }
 }
@@ -469,7 +469,7 @@ extension FilterPetsContentViewController: FilterPetsAddressDelegate {
 }
 
 extension FilterPetsContentViewController: FilterAddressPopupSearchDelegate {
-    func didSelectState(state: Pet.FilterState) {
+    func didSelectState(state: FilterState) {
         UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
             self.dummyView.view.alpha = 0
             

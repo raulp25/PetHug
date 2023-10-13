@@ -20,7 +20,7 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
         btn.backgroundColor = .clear
         btn.setTitle("Limpiar campos", for: .normal)
         btn.tintColor = .black.withAlphaComponent(0.8)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .light)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 11, weight: .light)
         btn.addTarget(self, action: #selector(upload), for: .touchUpInside)
         return btn
     }()
@@ -31,7 +31,7 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = customRGBColor(red: 255, green: 176, blue: 42)
-        btn.layer.cornerRadius = 10
+        btn.layer.cornerRadius = 12
         btn.addTarget(self, action: #selector(upload), for: .touchUpInside)
         return btn
     }()
@@ -106,7 +106,7 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
             right: rightAnchor,
             paddingBottom: 10
         )
-        containerView.setHeight(35)
+        containerView.setHeight(40)
         
         cleanFieldsBtn.anchor(
             top: containerView.topAnchor,
@@ -119,7 +119,7 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
             left: cleanFieldsBtn.rightAnchor,
             bottom: containerView.bottomAnchor,
             right: containerView.rightAnchor,
-            paddingLeft: 20
+            paddingLeft: 30
         )
         
         cleanFieldsBtn.setContentHuggingPriority(.defaultHigh, for: .horizontal)
