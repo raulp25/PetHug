@@ -26,12 +26,38 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
     }()
     
     private lazy var vStack: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [hStackDog, hStackCat, hStackBird, hStackRabbit])
+        let stack: UIStackView = .init(arrangedSubviews: [hStackAll, hStackDog, hStackCat, hStackBird, hStackRabbit])
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.alignment = .fill
         stack.translatesAutoresizingMaskIntoConstraints = true
         return stack
+    }()
+    
+    private lazy var hStackAll: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [allLabel, allCheckMarkButton])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.distribution = .equalSpacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let allLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Todos"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
+        return label
+    }()
+    
+    lazy private var allCheckMarkButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "square"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
+        return button
     }()
     
     private lazy var hStackDog: UIStackView = {
@@ -42,6 +68,7 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
+    
     
     private let dogLabel: UILabel = {
         let label = UILabel()
@@ -136,7 +163,7 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
     }()
     
     //MARK: - Private properties
-    
+    private let typeKey = FilterKeys.filterType.rawValue
     
     //MARK: - Internal properties
     
@@ -159,7 +186,7 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
     // MARK: - LifeCycle
     init(configuration: FilterPetsTypeListCellConfiguration) {
         super.init(frame: .zero)
-        buttons = [dogCheckMarkButton, catCheckMarkButton, birdCheckMarkButton, rabbitCheckMarkButton]
+        buttons = [allCheckMarkButton, dogCheckMarkButton, catCheckMarkButton, birdCheckMarkButton, rabbitCheckMarkButton]
         for (index, button) in buttons.enumerated() {
             button.tag = index + 1
         }
@@ -189,24 +216,8 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
         //
         guard let item = currentConfiguration.viewModel else { return }
-        if item.type != nil {
-            switch item.type {
-            case .dog:
-                dogCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-                dogCheckMarkButton.tintColor = .systemOrange
-            case .cat:
-                catCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-                catCheckMarkButton.tintColor = .systemOrange
-            case .bird:
-                birdCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-                birdCheckMarkButton.tintColor = .systemOrange
-            case .rabbit:
-                rabbitCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-                rabbitCheckMarkButton.tintColor = .systemOrange
-            case .none:
-                print("")
-            }
-        }
+        
+        updateUIBasedOnUserDefaults()
 
     }
     
@@ -229,7 +240,6 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
             right: rightAnchor,
             paddingTop: 30
         )
-        titleLabel.setHeight(16)
         
         vStack.anchor(
             top: titleLabel.bottomAnchor,
@@ -239,41 +249,86 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
             paddingTop: 5,
             paddingBottom: 20
         )
-        vStack.setHeight(150)
+        vStack.setHeight(187.5)
         
         for button in buttons {
             button.setHeight(height)
         }
     }
-    
-    enum CurrentChecked: Int {
-        case dog = 1
-        case cat = 2
-        case bird = 3
-        case rabbit = 4
+    //MARK: - Private actions
+    private enum CurrentChecked: Int {
+        case all = 1
+        case dog = 2
+        case cat = 3
+        case bird = 4
+        case rabbit = 5
     }
     
-    var currentButton: CurrentChecked? = nil
-    var buttons: [UIButton] = []
+    private var buttons: [UIButton] = []
     
-    @objc func didTapCheckMark(_ sender: UIButton) {
-        guard let checked = CurrentChecked(rawValue: sender.tag) else {
-            return
-        }
+    @objc private func didTapCheckMark(_ sender: UIButton) {
+        guard let checked = CurrentChecked(rawValue: sender.tag) else { return }
         
+        updateButtonUIForSender(sender: sender, checked: checked)
+        updateViewModel(checked: checked)
+        saveKey(checked: checked)
+    }
+    
+    
+    
+    //MARK: - Private methods
+    private func updateUIBasedOnUserDefaults() {
+        if let savedCheckedRawValue = UserDefaults.standard.value(forKey: typeKey) as? Int {
+            if let savedChecked = CurrentChecked(rawValue: savedCheckedRawValue) {
+                updateButtonUIForCheckedState(savedChecked)
+            }
+        } else {
+            setAllCheckedAndSave()
+        }
+    }
+    
+    private func updateButtonUIForCheckedState(_ checked: CurrentChecked) {
+        switch checked {
+        case .all:
+            allCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            allCheckMarkButton.tintColor = .systemOrange
+        case .dog:
+            dogCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            dogCheckMarkButton.tintColor = .systemOrange
+        case .cat:
+            catCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            catCheckMarkButton.tintColor = .systemOrange
+        case .bird:
+            birdCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            birdCheckMarkButton.tintColor = .systemOrange
+        case .rabbit:
+            rabbitCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            rabbitCheckMarkButton.tintColor = .systemOrange
+        }
+    }
+    
+    private func setAllCheckedAndSave() {
+        saveKey(checked: .all)
+        updateButtonUIForCheckedState(.all)
+    }
+    
+    private func updateButtonUIForSender(sender: UIButton, checked: CurrentChecked) {
         for button in buttons {
             if button == sender {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
-                    currentButton = checked
             } else {
                 button.setImage(UIImage(systemName: "square"), for: .normal)
                 button.tintColor = .black
-                currentButton = checked
+
             }
         }
-        
+    }
+    
+    private func updateViewModel(checked: CurrentChecked) {
         switch checked {
+        case .all:
+            currentConfiguration.viewModel?.delegate?.typeDidChange(type: .all)
         case .dog:
             currentConfiguration.viewModel?.delegate?.typeDidChange(type: .dog)
         case .cat:
@@ -283,6 +338,10 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
         case .rabbit:
             currentConfiguration.viewModel?.delegate?.typeDidChange(type: .rabbit)
         }
+    }
+    
+    private func saveKey(checked: CurrentChecked) {
+        UserDefaults.standard.set(checked.rawValue, forKey: typeKey)
     }
 }
 

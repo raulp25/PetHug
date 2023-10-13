@@ -84,8 +84,6 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
     
     // MARK: - Private actions
     @objc func sliderChanged(slider: MultiSlider) {
-        print("thumb \(slider.draggedThumbIndex) moved")
-        print("now thumbs are at \(slider.value)") // e.g., [1.0, 5.0]
         let vals: [CGFloat] = slider.value
         currentConfiguration.viewModel?.delegate?.ageChanged(ageRange: (Int(vals[0]), Int(vals[1])))
         ageLabel.text = "Edad elegida: \(Int(vals[0])) - \(Int(vals[1])) años"

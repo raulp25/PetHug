@@ -15,17 +15,23 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
         return uv
     }()
     
-    private let titleLabel: UILabel = {
-       let label = UILabel()
-        label.text = "Nombre del animal / Título"
-        label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
-        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
-        return label
+    private lazy var cleanFieldsBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.backgroundColor = .clear
+        btn.setTitle("Limpiar campos", for: .normal)
+        btn.tintColor = .black.withAlphaComponent(0.8)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 10, weight: .light)
+        btn.addTarget(self, action: #selector(upload), for: .touchUpInside)
+        return btn
     }()
     
-    private lazy var uploadBtn: AuthButton = {
-        let btn = AuthButton(viewModel: .init(title: "Subir"))
+    private lazy var uploadBtn: UIButton = {
+        let btn = UIButton(type: .system)
+        btn.setTitle("Filtrar", for: .normal)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 12, weight: .medium)
+        btn.setTitleColor(.white, for: .normal)
         btn.backgroundColor = customRGBColor(red: 255, green: 176, blue: 42)
+        btn.layer.cornerRadius = 10
         btn.addTarget(self, action: #selector(upload), for: .touchUpInside)
         return btn
     }()
@@ -61,7 +67,7 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
     // MARK: - Private actions
     @objc private func upload() {
         print(":clicked upload button => ")
-        currentConfiguration.viewModel?.delegate?.didTapSend()
+//        currentConfiguration.viewModel?.delegate?.didTapSend()
     }
     
     
@@ -74,22 +80,51 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
         currentConfiguration = configuration
 
         guard let item = currentConfiguration.viewModel else { return }
-        uploadBtn.setTitle(item.buttonText, for: .normal)
-        uploadBtn.backgroundColor = customRGBColor(red: 255, green: 176, blue: 42)
+        
+        item.isFormValid?
+            .handleThreadsOperator()
+            .sink(receiveValue: { [weak self] isValid in
+                self?.uploadBtn.backgroundColor = isValid ?
+                customRGBColor(red: 255, green: 176, blue: 42) :
+                customRGBColor(red: 250, green: 219, blue: 165, alpha: 1)
+                
+                self?.uploadBtn.isEnabled = isValid
+            }).store(in: &cancellables)
     }
     
-    
-
     
     private func setup() {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         addSubview(containerView)
+        containerView.addSubview(cleanFieldsBtn)
         containerView.addSubview(uploadBtn)
+
+        containerView.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingBottom: 10
+        )
+        containerView.setHeight(35)
         
-        containerView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingBottom: 10)
-        containerView.setHeight(45)
+        cleanFieldsBtn.anchor(
+            top: containerView.topAnchor,
+            left: containerView.leftAnchor,
+            bottom: containerView.bottomAnchor
+        )
         
-        uploadBtn.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor)
+        uploadBtn.anchor(
+            top: containerView.topAnchor,
+            left: cleanFieldsBtn.rightAnchor,
+            bottom: containerView.bottomAnchor,
+            right: containerView.rightAnchor,
+            paddingLeft: 20
+        )
+        
+        cleanFieldsBtn.setContentHuggingPriority(.defaultHigh, for: .horizontal)
+        uploadBtn.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
+        
     }
 
 

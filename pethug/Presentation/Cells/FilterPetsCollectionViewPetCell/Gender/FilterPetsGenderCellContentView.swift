@@ -20,13 +20,39 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
     }()
     
     private lazy var vStack: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [hStackMale, hStackFemale])
+        let stack: UIStackView = .init(arrangedSubviews: [hStackAll, hStackMale, hStackFemale])
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.alignment = .fill
         //        stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = true
         return stack
+    }()
+    
+    private lazy var hStackAll: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [allLabel, allCheckMarkButton])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.distribution = .equalSpacing
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    private let allLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Todos"
+        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
+        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
+        return label
+    }()
+    
+    lazy private var allCheckMarkButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setImage(UIImage(systemName: "square"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
+        return button
     }()
     
     private lazy var hStackMale: UIStackView = {
@@ -89,7 +115,7 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
     }()
     
     //MARK: - Private properties
-    
+    private let genderKey = FilterKeys.filterGender.rawValue
     
     //MARK: - Internal properties
     
@@ -107,12 +133,11 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         }
     }
     
-    let containerView = UIView()
     
     // MARK: - LifeCycle
     init(configuration: FilterPetsGenderListCellConfiguration) {
         super.init(frame: .zero)
-        buttons = [maleCheckMarkButton, femaleCheckMarkButton]
+        buttons = [allCheckMarkButton, maleCheckMarkButton, femaleCheckMarkButton]
         for (index, button) in buttons.enumerated() {
             button.tag = index + 1
         }
@@ -143,20 +168,8 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         //
         guard let item = currentConfiguration.viewModel else { return }
         
-        if item.gender != nil {
-            switch item.gender {
-            case .male:
-                maleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-                maleCheckMarkButton.tintColor = .systemOrange
-                setInitialCurrentButton(button: maleCheckMarkButton)
-            case .female:
-                femaleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-                femaleCheckMarkButton.tintColor = .systemOrange
-                setInitialCurrentButton(button: femaleCheckMarkButton)
-            case .none:
-                print("")
-            }
-        }
+        updateUIBasedOnUserDefaults()
+
     }
     
     private func setup() {
@@ -166,65 +179,103 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         addSubview(titleLabel)
         addSubview(vStack)
         
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
-        titleLabel.setHeight(16)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
         
-        vStack.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 20)
-        vStack.setHeight(75)
+        vStack.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 5,
+            paddingBottom: 20
+        )
+        vStack.setHeight(112.5)
         
         for button in buttons {
             button.setHeight(height)
         }
     }
     
-    enum CurrentChecked: Int {
-        case male = 1
-        case female = 2
-        case unset = 3
+    //MARK: - Private actions
+   private enum CurrentChecked: Int {
+        case all = 1
+        case male = 2
+        case female = 3
     }
     
-    var currentButton: CurrentChecked = .unset
-    var buttons: [UIButton] = []
+    private var buttons: [UIButton] = []
     
-    @objc func didTapCheckMark(_ sender: UIButton) {
+    @objc private func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else {
             return
         }
         
+        updateButtonUIForSender(sender: sender, checked: checked)
+        updateViewModel(checked: checked)
+        saveKey(checked: checked)
+    }
+    
+    
+    //MARK: - Private methods
+    private func updateUIBasedOnUserDefaults() {
+        if let savedCheckedRawValue = UserDefaults.standard.value(forKey: genderKey) as? Int {
+            if let savedChecked = CurrentChecked(rawValue: savedCheckedRawValue) {
+                updateButtonUIForCheckedState(savedChecked)
+            }
+        } else {
+            setAllCheckedAndSave()
+        }
+    }
+    
+    private func updateButtonUIForCheckedState(_ checked: CurrentChecked) {
+        switch checked {
+        case .all:
+            allCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            allCheckMarkButton.tintColor = .systemOrange
+        case .male:
+            maleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            maleCheckMarkButton.tintColor = .systemOrange
+        case .female:
+            femaleCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            femaleCheckMarkButton.tintColor = .systemOrange
+        }
+    }
+    
+    private func setAllCheckedAndSave() {
+        saveKey(checked: .all)
+        updateButtonUIForCheckedState(.all)
+    }
+    
+    private func updateButtonUIForSender(sender: UIButton, checked: CurrentChecked) {
         for button in buttons {
             if button == sender {
-                if checked == currentButton {
-                    button.setImage(UIImage(systemName: "square"), for: .normal)
-                    button.tintColor = .black
-                    currentButton = .unset
-                    currentConfiguration.viewModel?.delegate?.genderDidChange(type: nil)
-                } else {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
-                    currentButton = checked
-                    
-                    switch checked {
-                    case .male:
-                        currentConfiguration.viewModel?.delegate?.genderDidChange(type: .male)
-                    case .female:
-                        currentConfiguration.viewModel?.delegate?.genderDidChange(type: .female)
-                    default:
-                        print(" ")
-                    }
-                }
             } else {
                 button.setImage(UIImage(systemName: "square"), for: .normal)
                 button.tintColor = .black
             }
         }
+        
     }
     
-    
-    //MARK: - Private Methods
-    func setInitialCurrentButton(button: UIButton) {
-        if let checked = CurrentChecked(rawValue: button.tag) {
-            currentButton = checked
+    private func updateViewModel(checked: CurrentChecked) {
+        switch checked {
+        case .all:
+            currentConfiguration.viewModel?.delegate?.genderDidChange(type: .all)
+        case .male:
+            currentConfiguration.viewModel?.delegate?.genderDidChange(type: .male)
+        case .female:
+            currentConfiguration.viewModel?.delegate?.genderDidChange(type: .female)
         }
+    }
+    
+    private func saveKey(checked: CurrentChecked) {
+        UserDefaults.standard.set(checked.rawValue, forKey: genderKey)
     }
     
 }

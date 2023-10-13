@@ -10,6 +10,7 @@ import UIKit
 protocol FilterPetsAddressDelegate: AnyObject {
 //    func textViewdDidChange(text: String)
     func didTapAddressSelector()
+    func didTapAllCountry()
 }
 
 struct FilterPetsAddress: Hashable {
@@ -20,12 +21,12 @@ struct FilterPetsAddress: Hashable {
         )
     }
     var id = UUID().uuidString
-    var address: Pet.State?
+    var address: Pet.FilterState?
     weak var delegate: FilterPetsAddressDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(address: Pet.State?) {
+    init(address: Pet.FilterState?) {
         self.address = address
     }
 }

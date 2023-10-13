@@ -238,7 +238,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         case rabbit = 4
     }
     
-    var currentButton: CurrentChecked? = nil
     var buttons: [UIButton] = []
     
     @objc func didTapCheckMark(_ sender: UIButton) {
@@ -250,11 +249,9 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
             if button == sender {
                     button.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
                     button.tintColor = .systemOrange
-                    currentButton = checked
             } else {
                 button.setImage(UIImage(systemName: "square"), for: .normal)
                 button.tintColor = .black
-                currentButton = checked
             }
         }
         

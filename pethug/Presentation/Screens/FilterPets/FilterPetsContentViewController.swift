@@ -276,8 +276,7 @@ final class FilterPetsContentViewController: UIViewController {
         
         let newPetUploadViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsSendListCellConfiguration>, FilterPetsSend> { [weak self] cell, _, model in
             cell.viewModel = model
-//            cell.viewModel?.buttonText = self?.viewModel.imagesToEditState.isEmpty ?? true ? "Subir" : "Acutalizar"
-//            cell.viewModel?.state = self?.viewModel.stateSubject
+            cell.viewModel?.isFormValid = self?.viewModel.isValidSubject
             cell.viewModel?.delegate = self
         }
         
@@ -387,7 +386,7 @@ extension FilterPetsContentViewController: FilterPetsViewHeaderDelegate {
 
 
 extension FilterPetsContentViewController: FilterPetsTypeDelegate {
-    func typeDidChange(type: Pet.PetType) {
+    func typeDidChange(type: Pet.FilterType) {
         if viewModel.typeState != type {
             viewModel.typeState = type
         }
@@ -395,13 +394,13 @@ extension FilterPetsContentViewController: FilterPetsTypeDelegate {
 }
 
 extension FilterPetsContentViewController: FilterPetsGenderDelegate {
-    func genderDidChange(type: Pet.Gender?) {
+    func genderDidChange(type: Pet.FilterGender?) {
         viewModel.genderState = type
     }
 }
 
 extension FilterPetsContentViewController: FilterPetsSizeDelegate {
-    func sizeDidChange(size: Pet.Size?) {
+    func sizeDidChange(size: Pet.FilterSize?) {
         viewModel.sizeState = size
     }
 }
@@ -438,8 +437,39 @@ extension FilterPetsContentViewController: UICollectionViewDelegate {
 }
         
 //MARK: - Address search Delegate
-extension FilterPetsContentViewController: AddressPopupSearchDelegate {
-    func didSelectState(state: Pet.State) {
+extension FilterPetsContentViewController: FilterPetsAddressDelegate {
+    func didTapAddressSelector() {
+        let searchController = FilterAddressPopupSearch()
+        searchController.delegate = self
+        let dummyNavigator = UINavigationController(rootViewController: searchController)
+        dummyView.add(dummyNavigator)
+        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
+        dummyNavigator.view.layer.cornerRadius = 15
+        
+        add(dummyView)
+        dummyView.view.fillSuperview()
+        
+        dummyView.view.alpha = 0
+        self.view.bringSubviewToFront(dummyView.view)
+        self.collectionView.isUserInteractionEnabled = false
+        dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+            self.dummyView.view.alpha = 1
+        }
+        self.view.layoutIfNeeded()
+    }
+    
+    func didTapAllCountry() {
+        viewModel.addressState = .AllCountry
+        
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections([.address])
+        dataSource.apply(snapshot, animatingDifferences: false)
+    }
+}
+
+extension FilterPetsContentViewController: FilterAddressPopupSearchDelegate {
+    func didSelectState(state: Pet.FilterState) {
         UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
             self.dummyView.view.alpha = 0
             
@@ -449,6 +479,8 @@ extension FilterPetsContentViewController: AddressPopupSearchDelegate {
                 self.view.layoutIfNeeded()
             })
         }
+        
+        
         
         viewModel.addressState = state
         
@@ -471,28 +503,7 @@ extension FilterPetsContentViewController: AddressPopupSearchDelegate {
     }
 }
 
-extension FilterPetsContentViewController: FilterPetsAddressDelegate {
-    func didTapAddressSelector() {
-        let searchController = AddressPopupSearch()
-        searchController.delegate = self
-        let dummyNavigator = UINavigationController(rootViewController: searchController)
-        dummyView.add(dummyNavigator)
-        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
-        dummyNavigator.view.layer.cornerRadius = 15
-        
-        add(dummyView)
-        dummyView.view.fillSuperview()
-        
-        dummyView.view.alpha = 0
-        self.view.bringSubviewToFront(dummyView.view)
-        self.collectionView.isUserInteractionEnabled = false
-        dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 1
-        }
-        self.view.layoutIfNeeded()
-    }
-}
+
 
 
 

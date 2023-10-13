@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FilterPetsGenderDelegate: AnyObject {
-    func genderDidChange(type: Pet.Gender?)
+    func genderDidChange(type: Pet.FilterGender?)
 }
 
 struct FilterPetsGender: Hashable {
@@ -19,12 +19,12 @@ struct FilterPetsGender: Hashable {
         )
     }
     var id = UUID().uuidString
-    var gender: Pet.Gender? = nil
+    var gender: Pet.FilterGender? = nil
     weak var delegate: FilterPetsGenderDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(gender: Pet.Gender? = nil) {
+    init(gender: Pet.FilterGender? = nil) {
         self.gender = gender
     }
 }

@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FilterPetsTypeDelegate: AnyObject {
-    func typeDidChange(type: Pet.PetType)
+    func typeDidChange(type: Pet.FilterType)
 }
 
 struct FilterPetsType: Hashable {
@@ -19,12 +19,12 @@ struct FilterPetsType: Hashable {
         )
     }
     var id = UUID().uuidString
-    var type: Pet.PetType? = nil
+    var type: Pet.FilterType? = nil
     weak var delegate: FilterPetsTypeDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(type: Pet.PetType? = nil) {
+    init(type: Pet.FilterType? = nil) {
         self.type = type
     }
 }

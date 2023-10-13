@@ -19,6 +19,7 @@ class FilterPetsSend: Hashable {
         )
     }
     var id = UUID().uuidString
+    var isFormValid: CurrentValueSubject<Bool, Never>?
     var buttonText: String = "Filtrar"
     weak var delegate: FilterPetsSendDelegate?
     func hash(into hasher: inout Hasher) {

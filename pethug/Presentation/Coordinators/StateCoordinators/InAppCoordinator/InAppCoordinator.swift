@@ -41,6 +41,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         rootViewController.addChild(sideMenuVC)
 
         setupGestures()
+        resetUserDefaultsKeys()
     }
 
     func startChildTabCoordinator(with tab: TabBar) {
@@ -96,6 +97,12 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
             let tabVC = coordinator.rootViewController.viewControllers.first
             tabVC!.view.addGestureRecognizer(pan)
             pan.delegate = tabVC as? any UIGestureRecognizerDelegate
+        }
+    }
+    
+    private func resetUserDefaultsKeys() {
+        for key in FilterKeys.allCases {
+            UserDefaults.standard.removeObject(forKey: key.rawValue)
         }
     }
 

@@ -102,6 +102,11 @@
 		C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578E2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift */; };
 		C4680D0B2AD778A2003ABD3E /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = C4680D0A2AD778A2003ABD3E /* MultiSlider */; };
 		C4685C0F2AD87F68003366F2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4685C0E2AD87F68003366F2 /* GoogleService-Info.plist */; };
+		C475540A2AD8CD4B008AA12F /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47554092AD8CD4B008AA12F /* Keys.swift */; };
+		C475540D2AD8E24E008AA12F /* FilterAddressPopupSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C475540C2AD8E24E008AA12F /* FilterAddressPopupSearch.swift */; };
+		C475540F2AD8E259008AA12F /* FilterAddressPopupSearchViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C475540E2AD8E259008AA12F /* FilterAddressPopupSearchViewController+Types.swift */; };
+		C47554122AD8E3BA008AA12F /* FilterSearchAddressListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47554112AD8E3BA008AA12F /* FilterSearchAddressListCellConfiguration.swift */; };
+		C47554142AD8E401008AA12F /* FilterSearchAddressCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47554132AD8E401008AA12F /* FilterSearchAddressCellContentView.swift */; };
 		C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */; };
 		C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B62ABA827E0014DEA4 /* PetsViewModel.swift */; };
 		C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C476E2B82ABA82FB0014DEA4 /* PetsViewModel+Types.swift */; };
@@ -301,6 +306,11 @@
 		C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoControllerCollectionViewCell.swift; sourceTree = "<group>"; };
 		C467578E2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryControllerCollectionViewCell.swift; sourceTree = "<group>"; };
 		C4685C0E2AD87F68003366F2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C47554092AD8CD4B008AA12F /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
+		C475540C2AD8E24E008AA12F /* FilterAddressPopupSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAddressPopupSearch.swift; sourceTree = "<group>"; };
+		C475540E2AD8E259008AA12F /* FilterAddressPopupSearchViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterAddressPopupSearchViewController+Types.swift"; sourceTree = "<group>"; };
+		C47554112AD8E3BA008AA12F /* FilterSearchAddressListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSearchAddressListCellConfiguration.swift; sourceTree = "<group>"; };
+		C47554132AD8E401008AA12F /* FilterSearchAddressCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSearchAddressCellContentView.swift; sourceTree = "<group>"; };
 		C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewHeaderViewController.swift; sourceTree = "<group>"; };
 		C476E2B62ABA827E0014DEA4 /* PetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewModel.swift; sourceTree = "<group>"; };
 		C476E2B82ABA82FB0014DEA4 /* PetsViewModel+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetsViewModel+Types.swift"; sourceTree = "<group>"; };
@@ -463,6 +473,7 @@
 		C41E8E662AD4A21E0065DEFC /* FilterPetsCollectionViewPetCell */ = {
 			isa = PBXGroup;
 			children = (
+				C47554102AD8E3A6008AA12F /* SearchAdress */,
 				C4B1BD222AD4C180003311EB /* Send */,
 				C4B1BD1D2AD4C076003311EB /* Address */,
 				C4B1BD182AD4BF94003311EB /* Age */,
@@ -861,6 +872,32 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		C47554082AD8CD38008AA12F /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				C47554092AD8CD4B008AA12F /* Keys.swift */,
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
+		C475540B2AD8E229008AA12F /* FilterAddressPopupSearch */ = {
+			isa = PBXGroup;
+			children = (
+				C475540C2AD8E24E008AA12F /* FilterAddressPopupSearch.swift */,
+				C475540E2AD8E259008AA12F /* FilterAddressPopupSearchViewController+Types.swift */,
+			);
+			path = FilterAddressPopupSearch;
+			sourceTree = "<group>";
+		};
+		C47554102AD8E3A6008AA12F /* SearchAdress */ = {
+			isa = PBXGroup;
+			children = (
+				C47554112AD8E3BA008AA12F /* FilterSearchAddressListCellConfiguration.swift */,
+				C47554132AD8E401008AA12F /* FilterSearchAddressCellContentView.swift */,
+			);
+			path = SearchAdress;
+			sourceTree = "<group>";
+		};
 		C476E2B52ABA82730014DEA4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1223,6 +1260,7 @@
 		C4CF74F42AB2599B00D69185 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C475540B2AD8E229008AA12F /* FilterAddressPopupSearch */,
 				C480DBBF2AD3698F005F707C /* TextCheckbox */,
 				C43FAF982AD257E900A437C3 /* Badge */,
 				C4C4950C2AC7A58C00CBBDE4 /* BreedPopupSearch */,
@@ -1250,6 +1288,7 @@
 		C4CF75002AB25C1900D69185 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C47554082AD8CD38008AA12F /* UserDefaults */,
 				C44820252AB5478000E72BD2 /* Firebase */,
 				C46338232AB2CE41000AF2F6 /* Errors */,
 				C42616E62AB27ACD006925DB /* Publishers */,
@@ -1471,6 +1510,7 @@
 				C44820142AB538DC00E72BD2 /* DomainMapperProtocol.swift in Sources */,
 				C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */,
 				C42616E92AB27B37006925DB /* AuthPublisher.swift in Sources */,
+				C47554122AD8E3BA008AA12F /* FilterSearchAddressListCellConfiguration.swift in Sources */,
 				C4CF74E82AB22FD100D69185 /* UIView+Extensions.swift in Sources */,
 				C4B1BD152AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift in Sources */,
 				C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */,
@@ -1481,6 +1521,7 @@
 				C4779BE02AC38E3B00E3A16F /* AddPetViewModel+Types.swift in Sources */,
 				C4E654502AC8FECA009E027F /* AddressPopupSearch.swift in Sources */,
 				C42616E52AB27944006925DB /* String+Extensions.swift in Sources */,
+				C475540D2AD8E24E008AA12F /* FilterAddressPopupSearch.swift in Sources */,
 				C40AD7082AC60C0A003177E2 /* NewPetInfoListCellConfiguration.swift in Sources */,
 				C4E6544D2AC8F6DB009E027F /* NewPetAddressCellContentView.swift in Sources */,
 				C43531502AB969D20070D7EE /* LoadingViewController.swift in Sources */,
@@ -1556,6 +1597,7 @@
 				C42616EB2AB27BC4006925DB /* UIViewController+Extensions.swift in Sources */,
 				C4779BE22AC3A34D00E3A16F /* NewPetCoordinator.swift in Sources */,
 				C43531532AB96BFC0070D7EE /* ErrorViewController.swift in Sources */,
+				C475540F2AD8E259008AA12F /* FilterAddressPopupSearchViewController+Types.swift in Sources */,
 				C41E8E692AD4A2970065DEFC /* FilterPetsTypeListCellConfiguration.swift in Sources */,
 				C42A584D2AC1258A00A6FFBF /* Commentaries.swift in Sources */,
 				C4F7DFD62ACCA8CA000D5F76 /* NewPetSocialListCellConfiguration.swift in Sources */,
@@ -1598,6 +1640,7 @@
 				C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */,
 				C4E654462AC8E834009E027F /* SearchBreedListCellConfiguration.swift in Sources */,
 				C43FAF902AD21AE500A437C3 /* PetContentViewController+Types.swift in Sources */,
+				C475540A2AD8CD4B008AA12F /* Keys.swift in Sources */,
 				C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */,
 				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,
 				C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */,
@@ -1634,6 +1677,7 @@
 				C48D9B482AC49BCC002EDA90 /* ContentConfigurable.swift in Sources */,
 				C48D9B562AC4CB16002EDA90 /* NewPetGalleryCellContentView.swift in Sources */,
 				C483EBA22AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift in Sources */,
+				C47554142AD8E401008AA12F /* FilterSearchAddressCellContentView.swift in Sources */,
 				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
 				C451930C2ACE7C4A00B80926 /* UpdatePetUC.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,

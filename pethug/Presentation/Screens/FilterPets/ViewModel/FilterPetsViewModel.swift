@@ -103,11 +103,11 @@ class FilterPetsViewModel {
     //MARK: - Form Validation
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var typeState:     Pet.PetType? = nil
-    @Published var genderState:   Pet.Gender?  = nil
-    @Published var sizeState:     Pet.Size?    = nil
+    @Published var typeState:     Pet.FilterType? = nil
+    @Published var genderState:   Pet.FilterGender?  = nil
+    @Published var sizeState:     Pet.FilterSize?    = nil
     @Published var ageRangeState: (Int, Int)?  = nil
-    @Published var addressState:  Pet.State?   = nil
+    @Published var addressState:  Pet.FilterState?   = nil
     
     var isValidSubject = CurrentValueSubject<Bool, Never>(false)
     var stateSubject = PassthroughSubject<LoadingState, Never>()
@@ -149,11 +149,11 @@ class FilterPetsViewModel {
     }
     
     func validateForm(
-        type: Pet.PetType?,
-        gender: Pet.Gender?,
-        size: Pet.Size?,
+        type: Pet.FilterType?,
+        gender: Pet.FilterGender?,
+        size: Pet.FilterSize?,
         ageRange: (Int, Int)?,
-        address: Pet.State?
+        address: Pet.FilterState?
     ) -> State{
         //gender and size are optional for the user
 //        print("name level en viewmodel: => 666 \(name)")
@@ -172,12 +172,17 @@ class FilterPetsViewModel {
         
 //       gender and size props are optional
         
-        if type != nil     ||
-           gender != nil   ||
-           size != nil     ||
-           ageRange != nil ||
+        if type   != .all && type   != nil ||
+           gender != .all && gender != nil ||
+           size   != .all && size   != nil ||
            address != nil {
             return .valid
+        }
+        
+        if let ageRange = ageRange,
+               ageRange.0 != 0 ||
+               ageRange.1 != 25 {
+                return .valid
         }
         
         return.invalid
