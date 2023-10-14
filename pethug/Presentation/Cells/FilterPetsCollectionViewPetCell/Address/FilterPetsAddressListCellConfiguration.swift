@@ -26,7 +26,7 @@ struct FilterPetsAddress: Hashable {
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(address: FilterState?) {
+    init(address: FilterState? = nil) {
         self.address = address
     }
 }

@@ -19,12 +19,12 @@ struct FilterPetsType: Hashable {
         )
     }
     var id = UUID().uuidString
-    var type: FilterType? = nil
+    var type: FilterType
     weak var delegate: FilterPetsTypeDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(type: FilterType? = nil) {
+    init(type: FilterType = .all) {
         self.type = type
     }
 }

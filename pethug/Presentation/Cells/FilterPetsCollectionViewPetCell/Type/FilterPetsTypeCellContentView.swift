@@ -163,6 +163,23 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
     }()
     
     //MARK: - Private properties
+    private enum CurrentChecked: Int {
+        case all = 1
+        case dog = 2
+        case cat = 3
+        case bird = 4
+        case rabbit = 5
+    }
+    private lazy var buttons: [UIButton] = {
+        let buttons = [
+            allCheckMarkButton,
+            dogCheckMarkButton,
+            catCheckMarkButton,
+            birdCheckMarkButton,
+            rabbitCheckMarkButton
+        ]
+        return buttons
+    }()
     private let typeKey = FilterKeys.filterType.rawValue
     
     //MARK: - Internal properties
@@ -186,10 +203,6 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
     // MARK: - LifeCycle
     init(configuration: FilterPetsTypeListCellConfiguration) {
         super.init(frame: .zero)
-        buttons = [allCheckMarkButton, dogCheckMarkButton, catCheckMarkButton, birdCheckMarkButton, rabbitCheckMarkButton]
-        for (index, button) in buttons.enumerated() {
-            button.tag = index + 1
-        }
         // create the content view UI
         setup()
         
@@ -214,10 +227,11 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
         }
         
         currentConfiguration = configuration
-        //
+        
         guard let item = currentConfiguration.viewModel else { return }
         
-        updateUIBasedOnUserDefaults()
+        resetButtonsUI()
+        updateButtonUIForTypeState(item.type)
 
     }
     
@@ -251,44 +265,30 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
         )
         vStack.setHeight(187.5)
         
+        for (index, button) in buttons.enumerated() {
+            button.tag = index + 1
+        }
+        
+        
         for button in buttons {
             button.setHeight(height)
         }
     }
+    
+    
     //MARK: - Private actions
-    private enum CurrentChecked: Int {
-        case all = 1
-        case dog = 2
-        case cat = 3
-        case bird = 4
-        case rabbit = 5
-    }
-    
-    private var buttons: [UIButton] = []
-    
     @objc private func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else { return }
         
         updateButtonUIForSender(sender: sender, checked: checked)
         updateViewModel(checked: checked)
-        saveKey(checked: checked)
     }
     
     
     
     //MARK: - Private methods
-    private func updateUIBasedOnUserDefaults() {
-        if let savedCheckedRawValue = UserDefaults.standard.value(forKey: typeKey) as? Int {
-            if let savedChecked = CurrentChecked(rawValue: savedCheckedRawValue) {
-                updateButtonUIForCheckedState(savedChecked)
-            }
-        } else {
-            setAllCheckedAndSave()
-        }
-    }
-    
-    private func updateButtonUIForCheckedState(_ checked: CurrentChecked) {
-        switch checked {
+    private func updateButtonUIForTypeState(_ type: FilterType) {
+        switch type {
         case .all:
             allCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             allCheckMarkButton.tintColor = .systemOrange
@@ -305,11 +305,6 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
             rabbitCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             rabbitCheckMarkButton.tintColor = .systemOrange
         }
-    }
-    
-    private func setAllCheckedAndSave() {
-        saveKey(checked: .all)
-        updateButtonUIForCheckedState(.all)
     }
     
     private func updateButtonUIForSender(sender: UIButton, checked: CurrentChecked) {
@@ -340,8 +335,11 @@ final class FilterPetsTypeCellContentView: UIView, UIContentView {
         }
     }
     
-    private func saveKey(checked: CurrentChecked) {
-        UserDefaults.standard.set(checked.rawValue, forKey: typeKey)
+    private func resetButtonsUI() {
+        for button in buttons {
+            button.setImage(UIImage(systemName: "square"), for: .normal)
+            button.tintColor = .black
+        }
     }
 }
 

@@ -21,7 +21,7 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
         btn.setTitle("Limpiar campos", for: .normal)
         btn.tintColor = .black.withAlphaComponent(0.8)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 11, weight: .light)
-        btn.addTarget(self, action: #selector(upload), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(resetFields), for: .touchUpInside)
         return btn
     }()
     
@@ -65,11 +65,15 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Private actions
+    @objc private func resetFields() {
+        print(":clicked upload button => ")
+        currentConfiguration.viewModel?.delegate?.didTapResetFields()
+    }
+    
     @objc private func upload() {
         print(":clicked upload button => ")
         currentConfiguration.viewModel?.delegate?.didTapSend()
     }
-    
     
     // MARK: - Functions
     private func apply(configuration: FilterPetsSendListCellConfiguration) {

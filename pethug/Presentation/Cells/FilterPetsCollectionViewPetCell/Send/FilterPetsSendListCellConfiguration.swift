@@ -9,6 +9,7 @@ import UIKit
 import Combine
 protocol FilterPetsSendDelegate: AnyObject {
     func didTapSend()
+    func didTapResetFields()
 }
 
 class FilterPetsSend: Hashable {

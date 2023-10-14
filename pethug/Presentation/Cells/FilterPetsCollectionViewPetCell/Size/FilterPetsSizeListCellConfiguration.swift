@@ -8,7 +8,7 @@
 import UIKit
 
 protocol FilterPetsSizeDelegate: AnyObject {
-    func sizeDidChange(size: FilterSize?)
+    func sizeDidChange(size: FilterSize)
 }
 
 struct FilterPetsSize: Hashable {
@@ -19,12 +19,12 @@ struct FilterPetsSize: Hashable {
         )
     }
     var id = UUID().uuidString
-    var size: FilterSize? = nil
+    var size: FilterSize
     weak var delegate: FilterPetsSizeDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
        }
-    init(size: FilterSize? = nil) {
+    init(size: FilterSize = .all) {
         self.size = size
     }
 }

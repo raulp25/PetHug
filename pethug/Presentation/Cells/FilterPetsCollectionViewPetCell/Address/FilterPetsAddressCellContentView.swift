@@ -83,8 +83,12 @@ final class FilterPetsAddressCellContentView: UIView, UIContentView {
     }()
     
     //MARK: - Private properties
+    private enum CurrentChecked: Int {
+        case all = 1
+        case state = 2
+    }
     private let addressKey = FilterKeys.filterAddress.rawValue
-    private let allCountries = "AllCountries"
+    private let allCountry = "AllCountry"
     // MARK: - Properties
     private var currentConfiguration: FilterPetsAddressListCellConfiguration!
     var configuration: UIContentConfiguration {
@@ -123,7 +127,7 @@ final class FilterPetsAddressCellContentView: UIView, UIContentView {
 
         guard let item = currentConfiguration.viewModel else { return }
         
-        updateUIBasedOnUserDefaults()
+        updateButtonUIForAddressState(item.address?.rawValue)
         
     }
     
@@ -191,15 +195,9 @@ final class FilterPetsAddressCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Private actions
-    private enum CurrentChecked: Int {
-        case all = 1
-        case state = 2
-    }
-    
     @objc private func didTapCheckMark(_ sender: UIButton) {
         sender.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
         sender.tintColor = .systemOrange
-        saveKey(for: allCountries)
         currentConfiguration.viewModel?.delegate?.didTapAllCountry()
     }
     
@@ -209,10 +207,9 @@ final class FilterPetsAddressCellContentView: UIView, UIContentView {
     }
     
     //MARK: - Private methods
-    private func updateUIBasedOnUserDefaults() {
-        let address = UserDefaults.standard.value(forKey: addressKey) as? String
+    private func updateButtonUIForAddressState(_ address: String?) {
         
-        if address == "AllCountries" {
+        if address == allCountry {
             allCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             allCheckMarkButton.tintColor = .systemOrange
         } else {
@@ -222,11 +219,6 @@ final class FilterPetsAddressCellContentView: UIView, UIContentView {
         }
         
     }
-    
-    private func saveKey(for country: String) {
-        UserDefaults.standard.set(country, forKey: addressKey)
-    }
-    
 }
 
 

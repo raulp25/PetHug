@@ -19,11 +19,7 @@ final class FilterPetsContentViewController: UIViewController {
     private var snapshot: Snapshot!
     private var viewModel: FilterPetsViewModel = FilterPetsViewModel()
     
-    private var snapData = [SnapData]() {
-        didSet {
-            print("cambio currentsnap data checar")
-        }
-    }
+    private var snapData = [SnapData]()
     private var cancellables = Set<AnyCancellable>()
     
     //MARK: - Internal properties
@@ -33,8 +29,6 @@ final class FilterPetsContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
-        tabBarController?.tabBar.isHidden = true
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
@@ -55,12 +49,18 @@ final class FilterPetsContentViewController: UIViewController {
         )
         headerView.delegate = self
         
-        collectionView.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
+        collectionView.anchor(
+            top: headerView.view.bottomAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor,
+            paddingLeft: 0,
+            paddingRight: 0
+        )
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.delegate = self
         
         hideKeyboardWhenTappedAround()
-        setupKeyboardHiding()
         configureDataSource()
         updateSnapShot()
         
@@ -77,97 +77,12 @@ final class FilterPetsContentViewController: UIViewController {
             }.store(in: &cancellables)
     }
     
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        tabBarController?.tabBar.isHidden = false
-    }
-    
     deinit {
         print("✅ Deinit PetsContentViewController")
     }
     
-    
-    private func setupKeyboardHiding(){
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillShow),
-            name: UIResponder.keyboardWillShowNotification,
-            object: nil
-        )
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(keyboardWillHide),
-            name: UIResponder.keyboardWillHideNotification,
-            object: nil
-        )
-    }
    
-    //MARK: - Private Actions
-    var keyboardY = CGFloat(0)
-    
-    @objc func keyboardWillShow(sender: NSNotification) {
-        print("keyboard will show lmr: => ")
-        guard let userInfo = sender.userInfo,
-              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
-              let currentTextField = UIResponder.currentFirst() as? UITextField
-        else {
-            return
-        }
-        
-        let keyboardTopY = keyboardFrame.cgRectValue.origin.y
-    
-        let convertedTextFieldFrame = view.convert(
-            currentTextField.frame,
-            from: currentTextField.superview
-        )
-        let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
-
-        let intOne:CGFloat = 10, intTwo: CGFloat = 150
-//        print(":UIScreen.main.bounds.height intone => \(UIScreen.main.bounds.height)")
-//        print(" (textFieldBottomY + intOne)  => \((textFieldBottomY + intOne)), > keyboardTopY ): \(keyboardTopY)")
-//        print(" (textFieldBottomY + intOne) > keyboardTopY ): => \((textFieldBottomY + intOne) > keyboardTopY )")
-        if (textFieldBottomY + intOne) > keyboardTopY {
-            let textBoxY = convertedTextFieldFrame.origin.y
-            let newFrameY = (textBoxY - keyboardTopY / 2) * -1
-            
-            let contentOffset = collectionView.contentOffset
-            let horizontalScrollPosition = contentOffset.y
-            let height =
-                UIScreen.main.bounds.size.height <= 870 ?
-                    UIScreen.main.bounds.height / 0.86:
-                        UIScreen.main.bounds.size.height <= 926 ?
-            UIScreen.main.bounds.height / 2.5:
-                                UIScreen.main.bounds.height / 1.1
-            
-            collectionView.setContentOffset(CGPoint(x: 0, y:  height), animated: true)
-            collectionView.isScrollEnabled = false
-        }
-        
-        if UIScreen.main.bounds.size.height <= 700 {
-            collectionView.setContentOffset(CGPoint(x: 0, y: UIScreen.main.bounds.size.height / 0.68), animated: true)
-            collectionView.isScrollEnabled = false
-        }
-    }
-    
-//
-    @objc func keyboardWillHide(sender: NSNotification) {
-        view.endEditing(true)
-        collectionView.isScrollEnabled = true
-        
-//      Check if sender is UITextView
-        guard let userInfo = sender.userInfo,
-              let _ = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
-              let _ = UIResponder.currentFirst() as? UITextView
-        else {
-            return
-        }
-        
-        if UIScreen.main.bounds.size.height <= 700 {
-            collectionView.setContentOffset(CGPoint(x: 0, y: (UIScreen.main.bounds.size.height / 0.68) - 160), animated: true)
-        }
-    }
-    
+    //MARK: - Private Actions}
     @objc func didTapXmark() {
         print("clicked xmark: => ")
         dismiss(animated: true)
@@ -247,24 +162,28 @@ final class FilterPetsContentViewController: UIViewController {
         }
         
         let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsTypeListCellConfiguration>, FilterPetsType> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.viewModel = model
             cell.viewModel?.delegate  = self
-            cell.viewModel?.type = self?.viewModel.typeState
+            cell.viewModel?.type = self.viewModel.typeState
         }
         
         let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsGenderListCellConfiguration>, FilterPetsGender> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.gender = self?.viewModel.genderState
+            cell.viewModel?.gender = self.viewModel.genderState
         }
         
         let newPetSizeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsSizeListCellConfiguration>, FilterPetsSize> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.viewModel = model
             cell.viewModel?.delegate = self
-            cell.viewModel?.size = self?.viewModel.sizeState
+            cell.viewModel?.size = self.viewModel.sizeState
         }
         
         let newPetAgeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsAgeListCellConfiguration>, FilterPetsAge> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }
@@ -281,53 +200,6 @@ final class FilterPetsContentViewController: UIViewController {
             cell.viewModel?.isFormValid = self?.viewModel.isValidSubject
             cell.viewModel?.delegate = self
         }
-        
-//        var nameMockVM = NewPetName(name: "Fernanda Sanchez")
-//        nameMockVM.delegate = self
-//
-//        let galleryMockVM = NewPetGallery(imagesToEdit: [])
-//
-//        let typeMockVM = NewPetType(type: .dog)
-//
-//        let breedMockVM = NewPetBreed(currentBreed: "Golden Retriever")
-        
-//        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imagesUrls: [], type: .dog, address: .QuintanaRoo, isLiked: true)
-//        switch (typeMockVM.type, pet1.type) {
-//        case (.dog, .dog):
-//            print("son iguales qwe DOG: =>")
-//        case (.cat, .cat):
-//            print("extra ///.2: =>")
-//        case (.bird, .bird):
-//            print("extra ///.2: =>")
-//        case (.rabbit, .rabbit):
-//            print("extra ///.2: =>")
-//        default:
-//            print("extra ///.2: =>")
-//        }
-        
-//        if typeMockVM.type == .dog(.goldenRetriever) {
-//            print("son iguales qwe: => \(typeMockVM.type == .dog(.goldenRetriever))")
-//        } else {
-//            print("no son iguales qwe")
-//        }
-//
-//        let genderMockVM = NewPetGender(gender: .none)
-//
-//        let sizeMockVM = NewPetSize()
-//
-//        let ageMockVM = NewPetAge(age: nil)
-//
-//        let activityMockVM = NewPetActivity(activityLevel: nil)
-//
-//        let socialMockVM = NewPetSocial(socialLevel: nil)
-//
-//        let affectionMockVM = NewPetAffection(affectionLevel: nil)
-//
-//        let addressMockVM = NewPetAddress(address: nil)
-//
-//        let infoMockVM = NewPetInfo(info: nil)
-//
-//        let uploadMockVM = NewPetUpload()
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
@@ -396,19 +268,23 @@ extension FilterPetsContentViewController: FilterPetsTypeDelegate {
 }
 
 extension FilterPetsContentViewController: FilterPetsGenderDelegate {
-    func genderDidChange(type: FilterGender?) {
-        viewModel.genderState = type
+    func genderDidChange(gender: FilterGender) {
+        if viewModel.genderState != gender {
+            viewModel.genderState = gender
+        }
     }
 }
 
 extension FilterPetsContentViewController: FilterPetsSizeDelegate {
-    func sizeDidChange(size: FilterSize?) {
-        viewModel.sizeState = size
+    func sizeDidChange(size: FilterSize) {
+        if viewModel.sizeState != size {
+            viewModel.sizeState = size
+        }
     }
 }
 
 extension FilterPetsContentViewController: FilterPetsAgeDelegate {
-    func ageChanged(ageRange: FilterAgeRange?) {
+    func ageChanged(ageRange: FilterAgeRange) {
         viewModel.ageRangeState = ageRange
     }
 }
@@ -419,6 +295,11 @@ extension FilterPetsContentViewController: FilterPetsSendDelegate {
         print("viewmodel.filteroptions 931: => \(viewModel.filterOptions)")
         navigationController?.popViewController(animated: true)
         coordinator?.viewModel.fetchPetsWithFilter(options: viewModel.filterOptions, resetFilterQueries: true)
+    }
+    
+    func didTapResetFields() {
+        viewModel.resetState()
+        updateSnapShot()
     }
 }
 

@@ -17,18 +17,13 @@ protocol PetsNavigatable: AnyObject {
 final class PetsViewModel {
     //MARK: - Internal Properties
     weak var navigation: PetsNavigatable?
-    var state = CurrentValueSubject<State,Never>(.error(.defaultCustom("")))
-    
-//    var fetchPetsUseCase
+    var state = PassthroughSubject<State,Never>()
     
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
-    private var pets: [Pet] = [] {
-        didSet {
-            print("pets changed: => \(pets)")
-        }
-    }
+    private var pets: [Pet] = []
+    
     private var isFetching = false
     private var isFirstLoad = true
     private let fetchPetsUC: DefaultFetchPetsUC
@@ -88,47 +83,104 @@ final class PetsViewModel {
         }
     }
     
+//    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
+//        filterMode = true
+//        if options != nil {
+//            filterOptions = options
+//        }
+//
+//        if resetFilterQueries {
+//            print("entra reset firstload: => \(resetFilterQueries)")
+//            isFirstLoad = true
+//            pets = []
+//        }
+//
+//        if isFirstLoad {
+//            state.send(.loading)
+//        }
+//
+//        print("filter options en fecthpets with filter 931: => \(filterOptions)")
+//        guard let filterOptions = filterOptions else { return }
+//        guard !isFetching else { return }
+//        isFetching = true
+//
+//        Task {
+//            do {
+//
+//                let data = try await filterPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
+//                if !isFirstLoad && !data.isEmpty {
+//                    print("no es firstload envia la dadta: => \(data)")
+//                    petsSubject.send(data)
+//
+//                } else if isFirstLoad {
+//                    isFirstLoad = false
+//                    petsSubject.send(data)
+//                }
+//
+//            } catch {
+//                state.send(.loaded([]))
+//                state.send(.error(.default(error)))
+//            }
+//
+//            isFetching = false
+//        }
+//    }
+    
+    //Coordinates the filter process
     func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
+        applyFilter(options: options, resetFilterQueries: resetFilterQueries)
+    }
+    
+    //Main logic for applying the filter
+    private func applyFilter(options: FilterOptions?, resetFilterQueries: Bool) {
         filterMode = true
         if options != nil {
             filterOptions = options
         }
         
         if resetFilterQueries {
-            print("entra reset firstload: => \(resetFilterQueries)")
-            isFirstLoad = true
-            pets = []
+            resetFilterData()
         }
         
         if isFirstLoad {
             state.send(.loading)
         }
         
-        print("filter options en fecthpets with filter 931: => \(filterOptions)")
         guard let filterOptions = filterOptions else { return }
         guard !isFetching else { return }
         isFetching = true
         
         Task {
             do {
-                
                 let data = try await filterPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
-                if !isFirstLoad && !data.isEmpty {
-                    print("no es firstload envia la dadta: => \(data)")
-                    petsSubject.send(data)
-                    
-                } else if isFirstLoad {
-                    isFirstLoad = false
-                    petsSubject.send(data)
-                }
-                
+                handleFilterResult(data)
             } catch {
-                state.send(.loaded([]))
-                state.send(.error(.default(error)))
+                handleFilterError(error)
             }
             
             isFetching = false
         }
+    }
+    //Resets the filter data and marks it as the first load when new filter options are applied.
+    private func resetFilterData() {
+        isFirstLoad = true //Indicates that a new search has begun with new filter options
+        pets = []
+    }
+    
+    //If not the first load and the results are not empty, send the data.
+    //Otherwise, if it's the first load with new filter options, mark isFirstLoad as false and send data whether is empty or not.
+    private func handleFilterResult(_ data: [Pet]) {
+        if !isFirstLoad && !data.isEmpty {
+            petsSubject.send(data)
+        } else if isFirstLoad {
+            isFirstLoad = false
+            petsSubject.send(data)
+        }
+    }
+    
+    private func handleFilterError(_ error: Error) {
+        state.send(.loaded([]))
+        state.send(.error(.default(error)))
     }
     
     func isFilterMode() -> Bool {

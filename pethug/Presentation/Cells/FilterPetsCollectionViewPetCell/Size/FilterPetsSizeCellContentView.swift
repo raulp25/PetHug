@@ -131,6 +131,21 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
     }()
     
     //MARK: - Private properties
+    private enum CurrentChecked: Int {
+        case all = 1
+        case small = 2
+        case medium = 3
+        case large = 4
+    }
+    private lazy var buttons: [UIButton] = {
+        let buttons = [
+            allCheckMarkButton,
+            smallCheckMarkButton,
+            mediumCheckMarkButton,
+            largeCheckMarkButton
+        ]
+        return buttons
+    }()
     private let sizeKey = FilterKeys.filterSize.rawValue
     
     //MARK: - Internal properties
@@ -154,10 +169,6 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
     // MARK: - LifeCycle
     init(configuration: FilterPetsSizeListCellConfiguration) {
         super.init(frame: .zero)
-        buttons = [allCheckMarkButton, smallCheckMarkButton, mediumCheckMarkButton, largeCheckMarkButton]
-        for (index, button) in buttons.enumerated() {
-            button.tag = index + 1
-        }
         // create the content view UI
         setup()
         
@@ -183,7 +194,10 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
         
         currentConfiguration = configuration
         
-        updateUIBasedOnUserDefaults()
+        guard let item = currentConfiguration.viewModel else { return }
+        
+        resetButtonsUI()
+        updateButtonUIForSizeState(item.size)
     }
     
     private func setup() {
@@ -209,41 +223,27 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
         )
         vStack.setHeight(150)
         
+        for (index, button) in buttons.enumerated() {
+            button.tag = index + 1
+        }
+        
         for button in buttons {
             button.setHeight(height)
         }
     }
 
-    enum CurrentChecked: Int {
-        case all = 1
-        case small = 2
-        case medium = 3
-        case large = 4
-    }
-    
-    var buttons: [UIButton] = []
-    
-    @objc func didTapCheckMark(_ sender: UIButton) {
+        
+    //MARK: - Private actions
+    @objc private func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else { return }
         
         updateButtonUIForSender(sender: sender, checked: checked)
         updateViewModel(checked: checked)
-        saveKey(checked: checked)
     }
     
     //MARK: - Private methods
-    private func updateUIBasedOnUserDefaults() {
-        if let savedCheckedRawValue = UserDefaults.standard.value(forKey: sizeKey) as? Int {
-            if let savedChecked = CurrentChecked(rawValue: savedCheckedRawValue) {
-                updateButtonUIForCheckedState(savedChecked)
-            }
-        } else {
-            setAllCheckedAndSave()
-        }
-    }
-    
-    private func updateButtonUIForCheckedState(_ checked: CurrentChecked) {
-        switch checked {
+    private func updateButtonUIForSizeState(_ size: FilterSize) {
+        switch size {
         case .all:
             allCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             allCheckMarkButton.tintColor = .systemOrange
@@ -257,11 +257,6 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
             largeCheckMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             largeCheckMarkButton.tintColor = .systemOrange
         }
-    }
-    
-    private func setAllCheckedAndSave() {
-        saveKey(checked: .all)
-        updateButtonUIForCheckedState(.all)
     }
     
     private func updateButtonUIForSender(sender: UIButton, checked: CurrentChecked) {
@@ -289,8 +284,11 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
         }
     }
     
-    private func saveKey(checked: CurrentChecked) {
-        UserDefaults.standard.set(checked.rawValue, forKey: sizeKey)
+    private func resetButtonsUI() {
+        for button in buttons {
+            button.setImage(UIImage(systemName: "square"), for: .normal)
+            button.tintColor = .black
+        }
     }
 }
 

@@ -71,8 +71,6 @@ final class PetsViewController: UIViewController {
         contentStateVC.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
     }
     
-    var llamadas = 0
-    
     //MARK: - Bind
     private func bind() {
         viewModel

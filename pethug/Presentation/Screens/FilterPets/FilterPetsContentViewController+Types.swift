@@ -94,10 +94,10 @@ enum FilterState: String, Codable, Hashable, CaseIterable {
 }
 
 struct FilterOptions: Codable {
-    let type: FilterType?
-    let gender: FilterGender?
-    let size: FilterSize?
-    let age: FilterAgeRange?
+    let type: FilterType
+    let gender: FilterGender
+    let size: FilterSize
+    let age: FilterAgeRange
     let address: FilterState?
     
     static func == (lhs: FilterOptions, rhs: FilterOptions) -> Bool {

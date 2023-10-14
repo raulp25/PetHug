@@ -541,6 +541,26 @@ import Foundation
 //    }
 
 //}
+///~~~~~~~~~~~~~~~~~~~~~~~
+///UserDefaults
+//private func updateUIBasedOnUserDefaults() {
+//    if let savedCheckedRawValue = UserDefaults.standard.value(forKey: typeKey) as? Int {
+//        if let savedChecked = CurrentChecked(rawValue: savedCheckedRawValue) {
+//            updateButtonUIForCheckedState(savedChecked)
+//        }
+//    } else {
+//        setAllCheckedAndSave()
+//    }
+//}
+
+//private func saveKey(checked: CurrentChecked) {
+//    UserDefaults.standard.set(checked.rawValue, forKey: typeKey)
+//}
+
+//private func setAllCheckedAndSave() {
+//    saveKey(checked: .all)
+//    updateButtonUIForCheckedState(.all)
+//}
 
 
 ///~~~==========================================================

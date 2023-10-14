@@ -96,6 +96,7 @@
 		C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */; };
 		C451930C2ACE7C4A00B80926 /* UpdatePetUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451930B2ACE7C4A00B80926 /* UpdatePetUC.swift */; };
 		C45193102ACE8B0E00B80926 /* FetchUserPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */; };
+		C454072D2ADB3BDE00790524 /* BuildQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C454072C2ADB3BDE00790524 /* BuildQuery.swift */; };
 		C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* PetsError.swift */; };
 		C467578B2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578A2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift */; };
 		C467578D2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */; };
@@ -302,6 +303,7 @@
 		C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummySectionHeader.swift; sourceTree = "<group>"; };
 		C451930B2ACE7C4A00B80926 /* UpdatePetUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePetUC.swift; sourceTree = "<group>"; };
 		C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserPetsUC.swift; sourceTree = "<group>"; };
+		C454072C2ADB3BDE00790524 /* BuildQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildQuery.swift; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* PetsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsError.swift; sourceTree = "<group>"; };
 		C467578A2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPetGalleryContentViewController+Types.swift"; sourceTree = "<group>"; };
 		C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoControllerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -842,6 +844,7 @@
 			isa = PBXGroup;
 			children = (
 				C44820232AB5438000E72BD2 /* Paths.swift */,
+				C454072C2ADB3BDE00790524 /* BuildQuery.swift */,
 			);
 			path = Firebase;
 			sourceTree = "<group>";
@@ -1528,6 +1531,7 @@
 				C40AD7082AC60C0A003177E2 /* NewPetInfoListCellConfiguration.swift in Sources */,
 				C4E6544D2AC8F6DB009E027F /* NewPetAddressCellContentView.swift in Sources */,
 				C43531502AB969D20070D7EE /* LoadingViewController.swift in Sources */,
+				C454072D2ADB3BDE00790524 /* BuildQuery.swift in Sources */,
 				C42616DF2AB277E4006925DB /* ValidatorFactory.swift in Sources */,
 				C4E654482AC8E8BA009E027F /* SearchBreedCellContentView.swift in Sources */,
 				C41E8E5D2AD46DAD0065DEFC /* FilterPetsContentViewController+Types.swift in Sources */,

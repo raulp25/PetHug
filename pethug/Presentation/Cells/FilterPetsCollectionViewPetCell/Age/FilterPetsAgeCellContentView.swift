@@ -53,6 +53,7 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         return horizontalMultiSlider
     }()
     
+    private var ageKey = FilterKeys.filterAgeRange.rawValue
     
     // MARK: - ContentView Config
     private var currentConfiguration: FilterPetsAgeListCellConfiguration!
@@ -76,6 +77,12 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
 
         // apply the configuration (set data to UI elements / define custom content view appearance)
         apply(configuration: configuration)
+        
+        if let savedCheckedRawValue = UserDefaults.standard.value(forKey: ageKey) as? FilterAgeRange {
+            slider.value = [CGFloat(savedCheckedRawValue.min), CGFloat(savedCheckedRawValue.max)]
+        } else {
+            
+        }
     }
     
     @available(*, unavailable) required init?(coder _: NSCoder) {
@@ -96,6 +103,8 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         
         currentConfiguration = configuration
         guard let item = currentConfiguration.viewModel else { return }
+        
+        slider.value = [CGFloat(item.ageRange.min), CGFloat(item.ageRange.max)]
     }
     
     
