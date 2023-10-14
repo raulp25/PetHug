@@ -37,12 +37,7 @@ final class PetsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-//        render([""])
         bind()
-//
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-//            try! AuthService().signOut()
-//        })
     }
     
     
@@ -76,6 +71,8 @@ final class PetsViewController: UIViewController {
         contentStateVC.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
     }
     
+    var llamadas = 0
+    
     //MARK: - Bind
     private func bind() {
         viewModel
@@ -86,7 +83,7 @@ final class PetsViewController: UIViewController {
                 case let .loaded(data):
                     self?.render(data)
                 case .loading:
-                    break
+                    self?.renderLoading()
                 case let .error(error):
                     self?.alert(message: "Hubo un error, intenta nuevamente")
                     print("error in Pets VC: => \(error.localizedDescription)")
@@ -100,7 +97,6 @@ final class PetsViewController: UIViewController {
         let snapData: [PetsContentViewController.SnapData] = [
             .init(key: .pets, values: data.map { .pet($0) })
         ]
-        
         if contentStateVC.shownViewController == contentVc {
             contentVc?.snapData = snapData
         } else {
@@ -108,6 +104,10 @@ final class PetsViewController: UIViewController {
             contentVc?.delegate = self
             contentStateVC.transition(to: .render(contentVc!))
         }
+    }
+    
+    private func renderLoading() {
+        contentStateVC.transition(to: .loading)
     }
     
 }
@@ -120,7 +120,11 @@ extension PetsViewController: PetsViewHeaderDelegate {
 
 extension PetsViewController: PetsContentViewControllerDelegate {
     func executeFetch() {
-        viewModel.fetchPets(collection: "birds")
+        if viewModel.isFilterMode() {
+            viewModel.fetchPetsWithFilter()
+        } else {
+            viewModel.fetchPets(collection: "birds")
+        }
     }
     
     func didTap(pet: Pet) {

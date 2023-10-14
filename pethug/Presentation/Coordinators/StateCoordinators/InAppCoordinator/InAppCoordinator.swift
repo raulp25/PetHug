@@ -104,6 +104,8 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         for key in FilterKeys.allCases {
             UserDefaults.standard.removeObject(forKey: key.rawValue)
         }
+        
+        
     }
 
     // MARK: - Private actions

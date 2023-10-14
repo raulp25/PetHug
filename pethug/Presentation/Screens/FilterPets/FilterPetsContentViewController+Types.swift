@@ -38,10 +38,10 @@ extension FilterPetsContentViewController {
 
 enum FilterType: String, Codable, Hashable {
     case all
-    case dog
-    case cat
-    case bird
-    case rabbit
+    case dog = "dpogs"
+    case cat = "cats"
+    case bird = "birds"
+    case rabbit = "rabbits"
 }
 
 enum FilterGender: String, Codable, Hashable {
@@ -93,9 +93,23 @@ enum FilterState: String, Codable, Hashable, CaseIterable {
     case Zacatecas
 }
 
-struct FilterOptions {
-    let type: Pet.PetType?
-    let gender: Pet.Gender?
-    let size: Pet.Size?
-    let address: Pet.State?
+struct FilterOptions: Codable {
+    let type: FilterType?
+    let gender: FilterGender?
+    let size: FilterSize?
+    let age: FilterAgeRange?
+    let address: FilterState?
+    
+    static func == (lhs: FilterOptions, rhs: FilterOptions) -> Bool {
+            return lhs.type    == rhs.type    &&
+                   lhs.gender  == rhs.gender  &&
+                   lhs.size    == rhs.size    &&
+                   lhs.age     == rhs.age     &&
+                   lhs.address == rhs.address
+        }
+}
+
+struct FilterAgeRange: Codable, Equatable {
+    let min: Int
+    let max: Int
 }

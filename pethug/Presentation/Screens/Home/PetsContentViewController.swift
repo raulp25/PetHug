@@ -157,32 +157,17 @@ final class PetsContentViewController: UIViewController {
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-//        currentSnapData  = [.init(key: .pets, values: generatePet(total: 60))]
-//        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
-        
         snapshot = Snapshot()
         snapshot.appendSections(snapData.map {
-//            print(": section=> \($0.key)")
             return $0.key
         })
-//        snapshot.appendSections(snapData.map {
-//            print(": section=> \($0.key)")
-//            return $0.key
-//        })
-        
-//        print("currentSnapData: => \(currentSnapData)")
-//        print("currentSnapData: => \(snapData)")
-        
-//        for datum in currentSnapData {
-//            snapshot.appendItems(datum.values, toSection: datum.key)
-//        }
-        
         for datum in snapData {
             snapshot.appendItems(datum.values, toSection: datum.key)
         }
         
-//        print("snapshot en updateSnapshot(): => \(snapshot)")
+
         dataSource.apply(snapshot, animatingDifferences: animated)
+        
     }
 }
 

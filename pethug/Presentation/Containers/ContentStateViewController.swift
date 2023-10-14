@@ -10,6 +10,7 @@ import UIKit
 final class ContentStateViewController: UIViewController {
     private var state: State?
     var shownViewController: UIViewController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         if state == nil {

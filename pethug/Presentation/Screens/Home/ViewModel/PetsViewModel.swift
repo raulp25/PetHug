@@ -17,21 +17,28 @@ protocol PetsNavigatable: AnyObject {
 final class PetsViewModel {
     //MARK: - Internal Properties
     weak var navigation: PetsNavigatable?
-    var state = CurrentValueSubject<State,Never>(.loading)
+    var state = CurrentValueSubject<State,Never>(.error(.defaultCustom("")))
     
 //    var fetchPetsUseCase
     
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
-    private var pets: [Pet] = []
+    private var pets: [Pet] = [] {
+        didSet {
+            print("pets changed: => \(pets)")
+        }
+    }
     private var isFetching = false
     private var isFirstLoad = true
     private let fetchPetsUC: DefaultFetchPetsUC
+    private let filterPetsUC: DefaultFilterPetsUC
+    private var filterOptions: FilterOptions? = nil
+    private var filterMode = false
     
-    
-    init(fetchPetsUC: DefaultFetchPetsUC) {
+    init(fetchPetsUC: DefaultFetchPetsUC, filterPetsUC: DefaultFilterPetsUC) {
         self.fetchPetsUC = fetchPetsUC
+        self.filterPetsUC = filterPetsUC
         observeState()
         fetchPets(collection: .getPath(for: .birds))
     }
@@ -64,7 +71,6 @@ final class PetsViewModel {
         isFetching = true
         
         Task {
-            state.send(.loading)
             do {
                 let data = try await fetchPetsUC.execute(fetchCollection: collection)
                 if !isFirstLoad && !data.isEmpty {
@@ -82,8 +88,51 @@ final class PetsViewModel {
         }
     }
     
-    func fetchPetsWithFilter(options: String) {
+    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
+        filterMode = true
+        if options != nil {
+            filterOptions = options
+        }
         
+        if resetFilterQueries {
+            print("entra reset firstload: => \(resetFilterQueries)")
+            isFirstLoad = true
+            pets = []
+        }
+        
+        if isFirstLoad {
+            state.send(.loading)
+        }
+        
+        print("filter options en fecthpets with filter 931: => \(filterOptions)")
+        guard let filterOptions = filterOptions else { return }
+        guard !isFetching else { return }
+        isFetching = true
+        
+        Task {
+            do {
+                
+                let data = try await filterPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
+                if !isFirstLoad && !data.isEmpty {
+                    print("no es firstload envia la dadta: => \(data)")
+                    petsSubject.send(data)
+                    
+                } else if isFirstLoad {
+                    isFirstLoad = false
+                    petsSubject.send(data)
+                }
+                
+            } catch {
+                state.send(.loaded([]))
+                state.send(.error(.default(error)))
+            }
+            
+            isFetching = false
+        }
+    }
+    
+    func isFilterMode() -> Bool {
+        return filterMode
     }
     
     

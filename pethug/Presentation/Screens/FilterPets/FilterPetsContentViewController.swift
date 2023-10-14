@@ -26,6 +26,8 @@ final class FilterPetsContentViewController: UIViewController {
     }
     private var cancellables = Set<AnyCancellable>()
     
+    //MARK: - Internal properties
+    weak var coordinator: HomeTabCoordinator?
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
@@ -406,7 +408,7 @@ extension FilterPetsContentViewController: FilterPetsSizeDelegate {
 }
 
 extension FilterPetsContentViewController: FilterPetsAgeDelegate {
-    func ageChanged(ageRange: (Int, Int)?) {
+    func ageChanged(ageRange: FilterAgeRange?) {
         viewModel.ageRangeState = ageRange
     }
 }
@@ -414,13 +416,9 @@ extension FilterPetsContentViewController: FilterPetsAgeDelegate {
 
 extension FilterPetsContentViewController: FilterPetsSendDelegate {
     func didTapSend() {
-//        Task {
-//            if viewModel.isEdit {
-//                await viewModel.updatePet()
-//            } else {
-//                await viewModel.createPet()
-//            }
-//        }
+        print("viewmodel.filteroptions 931: => \(viewModel.filterOptions)")
+        navigationController?.popViewController(animated: true)
+        coordinator?.viewModel.fetchPetsWithFilter(options: viewModel.filterOptions, resetFilterQueries: true)
     }
 }
 

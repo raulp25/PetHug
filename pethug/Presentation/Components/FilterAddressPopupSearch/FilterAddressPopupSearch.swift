@@ -188,6 +188,9 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
         var searchAddresses = [Item]()
 
         for state in FilterState.allCases {
+            if state == .AllCountry {
+                continue
+            }
             let searchAddress = FilterSearchAddress(address: state.rawValue)
             searchAddress.state = state
             searchAddresses.append(.state(searchAddress))

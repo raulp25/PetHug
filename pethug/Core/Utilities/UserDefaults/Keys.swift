@@ -13,4 +13,5 @@ enum FilterKeys: String, CaseIterable {
     case filterSize
     case filterAgeRange
     case filterAddress
+    case filterOptions
 }

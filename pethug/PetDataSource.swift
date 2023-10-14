@@ -17,6 +17,7 @@ protocol PetDataSource {
     
     func fetchPets(fetchCollection path: String) async throws -> [Pet]
     func fetchUserPets(with resetPagination: Bool) async throws -> [Pet]
+    func fetchPetsWithFilter(options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet]
     func createPet(collection path: String, data: Pet) async throws -> Bool
     func updatePet(collection path: String, data: Pet) async throws -> Bool
     func deletePet(collection path: String, docId: String) async throws -> Bool
@@ -51,7 +52,7 @@ final class DefaultPetDataSource: PetDataSource {
             
           query = db.collection(path)
                     .order(by: order, descending: true)
-//                    .whereField("gender", isEqualTo: "male")
+//                    .whereField("gender", isEqualTo: "female")
 //                    .whereField("address", isEqualTo: "Querétaro")
 //                    .whereField("size", isEqualTo: "medium")
                     .limit(to: 10)
@@ -82,13 +83,6 @@ final class DefaultPetDataSource: PetDataSource {
     func fetchUserPets(with resetPagination: Bool) async throws -> [Pet] {
         let uid = AuthService().uid
         
-        print(": reset pagination en datasource => \(resetPagination)")
-        
-        if resetPagination {
-            query = nil
-            documents = []
-        }
-        
         if query == nil {
 //            query = db.collection("users")
 //                      .document(uid)
@@ -116,6 +110,92 @@ final class DefaultPetDataSource: PetDataSource {
         
         for doc in docs {
             let dictionary = doc.data()
+            let pet = Pet(dictionary: dictionary)
+            pets.append(pet)
+            documents += [doc]
+            
+        }
+        
+        return pets
+    }
+    
+    func fetchPetsWithFilter(options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
+        if resetFilterQueries {
+            query = nil
+            documents = []
+        }
+        
+        if query == nil {
+            if let type = options.type,
+                   type != .all {
+                
+                query = db.collection(type.rawValue)
+                
+            } else {
+                query = db.collection("birds")
+            }
+            
+            if let age = options.age,
+                   age.min != 0 ||
+                   age.max != 25 {
+                
+                if age.min != 0 {
+                    query = query.whereField("age", isGreaterThanOrEqualTo: age.min)
+                }
+                
+                if age.max != 25 {
+                    query = query.whereField("age", isLessThanOrEqualTo: age.max)
+                }
+                
+                query = query.order(by: "age", descending: false)
+                
+            } else {
+                query = query.order(by: "timestamp", descending: true)
+            }
+            
+            
+            
+            if let gender = options.gender,
+                   gender != .all {
+                print("gender .rawvalue: => \(gender.rawValue)")
+                query = query.whereField("gender", isEqualTo: gender.rawValue)
+                
+            }
+            
+            if let size = options.size,
+                   size != .all {
+                
+                query = query.whereField("size", isEqualTo: size.rawValue)
+                
+            }
+            
+           
+            
+            if let address = options.address,
+                   address != .AllCountry {
+                
+                   query = query.whereField("address", isEqualTo: address.rawValue)
+            }
+            
+            query = query.limit(to: 10)
+            
+        } else if !documents.isEmpty {
+            
+            query = query.start(afterDocument: documents.last!)
+            
+        }
+        
+        let snapshot = try await query.getDocuments()
+        
+        let docs = snapshot.documents
+        
+        var pets = [Pet]()
+        
+        var docsId = [String]()
+        
+        for doc in docs {
+            let dictionary = doc.data()
+            docsId.append(doc.documentID)
             let pet = Pet(dictionary: dictionary)
             pets.append(pet)
             documents += [doc]

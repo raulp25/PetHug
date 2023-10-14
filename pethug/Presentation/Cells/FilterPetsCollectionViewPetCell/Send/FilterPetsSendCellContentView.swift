@@ -67,7 +67,7 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
     // MARK: - Private actions
     @objc private func upload() {
         print(":clicked upload button => ")
-//        currentConfiguration.viewModel?.delegate?.didTapSend()
+        currentConfiguration.viewModel?.delegate?.didTapSend()
     }
     
     

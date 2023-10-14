@@ -85,7 +85,7 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
     // MARK: - Private actions
     @objc func sliderChanged(slider: MultiSlider) {
         let vals: [CGFloat] = slider.value
-        currentConfiguration.viewModel?.delegate?.ageChanged(ageRange: (Int(vals[0]), Int(vals[1])))
+        currentConfiguration.viewModel?.delegate?.ageChanged(ageRange: .init(min: Int(vals[0]), max: Int(vals[1])))
         ageLabel.text = "Edad elegida: \(Int(vals[0])) - \(Int(vals[1])) años"
     }
     

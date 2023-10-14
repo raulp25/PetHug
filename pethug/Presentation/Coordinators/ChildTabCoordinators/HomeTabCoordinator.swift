@@ -14,7 +14,9 @@ final class HomeTabCoordinator: ChildTabCoordinator {
     
     var rootViewController: UINavigationController = .init()
     
-    let viewModel: PetsViewModel = .init(fetchPetsUC: FetchPets.composeFetchPetsUC())
+    let viewModel: PetsViewModel = .init(fetchPetsUC: FetchPets.composeFetchPetsUC(),
+                                         filterPetsUC: FilterPets.composeFilterPetsUC()
+                                    )
     
     func start() {
         viewModel.navigation = self
@@ -26,6 +28,7 @@ final class HomeTabCoordinator: ChildTabCoordinator {
 extension HomeTabCoordinator: PetsNavigatable {
     func tappedFilter() {
         let vc = FilterPetsContentViewController()
+        vc.coordinator = self
         rootViewController.pushViewController(vc, animated: true)
     }
     

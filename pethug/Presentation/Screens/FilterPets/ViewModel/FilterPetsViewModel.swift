@@ -13,6 +13,7 @@ class FilterPetsViewModel {
     //MARK: - Private properties
     //MARK: - Internal Properties
     
+    
     init() {
 //        self.imageService     = imageService
 //        self.createPetUseCase = createPetUseCase
@@ -20,7 +21,9 @@ class FilterPetsViewModel {
 //        self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
 //        self.pet = pet
 //        self.isEdit = pet != nil
+        setInitialValues()
         observeValidation()
+        
 //        let imagesArr = getImages(stringUrlArray: pet?.imagesUrls ?? [])
 //        self.imagesToEditState = pet?.imagesUrls ?? []
 //        self.nameState      = pet?.name
@@ -106,13 +109,17 @@ class FilterPetsViewModel {
     @Published var typeState:     FilterType? = nil
     @Published var genderState:   FilterGender?  = nil
     @Published var sizeState:     FilterSize?    = nil
-    @Published var ageRangeState: (Int, Int)?  = nil
+    @Published var ageRangeState: FilterAgeRange?  = nil
     @Published var addressState:  FilterState?   = nil
     
     var isValidSubject = CurrentValueSubject<Bool, Never>(false)
     var stateSubject = PassthroughSubject<LoadingState, Never>()
     
-    func observeValidation() {
+    var filterOptions: FilterOptions!
+    private var currentFilterOptions: FilterOptions? = nil
+    private var filterKey = "filterOptions"
+    
+    private func observeValidation() {
             formValidationState.sink(receiveValue: { state in
                 switch state {
                 case .valid:
@@ -125,7 +132,7 @@ class FilterPetsViewModel {
             }).store(in: &cancellables)
     }
     
-    var formValidationState: AnyPublisher<State, Never> {
+    private var formValidationState: AnyPublisher<State, Never> {
         return Publishers.CombineLatest(
             Publishers.CombineLatest3($typeState, $ageRangeState, $addressState),
             Publishers.CombineLatest($genderState, $sizeState)
@@ -135,8 +142,13 @@ class FilterPetsViewModel {
             
             let (type, ageRange, address) = nameGalleryType
             let (gender, size) = breedGenderSize
-            
-            
+            createFilterOptions(
+                type: type,
+                gender: gender,
+                size: size,
+                ageRange: ageRange,
+                address: address
+            )
             return self.validateForm(
                 type: type,
                 gender: gender,
@@ -148,11 +160,11 @@ class FilterPetsViewModel {
         .eraseToAnyPublisher()
     }
     
-    func validateForm(
+    private func validateForm(
         type: FilterType?,
         gender: FilterGender?,
         size: FilterSize?,
-        ageRange: (Int, Int)?,
+        ageRange: FilterAgeRange?,
         address: FilterState?
     ) -> State{
         //gender and size are optional for the user
@@ -160,7 +172,8 @@ class FilterPetsViewModel {
 //        print("gallery level en viewmodel: => 221 \(gallery)")
 //        print("gallery level is empty? en viewmodel: => 221 \(gallery.isEmpty)")
 //          print("gallery count en viewmodel: => 221 \(gallery.count)")
-//        print("type level en viewmodel: => 666 \(type)")
+        print("type level en viewmodel: => 931 \(type)")
+        print("type state level en viewmodel: => 931 931 \(typeState)")
 //        print("breed level en viewmodel: => 666 \(breed)")
 //        print("age level en viewmodel: => 666 \(age)")
 //        print("activity level en viewmodel: => 221 \(activity)")
@@ -172,6 +185,25 @@ class FilterPetsViewModel {
         
 //       gender and size props are optional
         
+        if let currentFilterOptions = currentFilterOptions {
+            let options = FilterOptions(
+                type: type,
+                gender: gender,
+                size: size,
+                age: ageRange,
+                address: address
+            )
+            
+            print("entra a currentFilterOptions == options: => \(currentFilterOptions == options)")
+            print("ns == opti currentFilterOptions : => \(currentFilterOptions)")
+            print(" ns == opti options: => \(options)")
+            
+            
+            if currentFilterOptions == options {
+                return .invalid
+            }
+        }
+        
         if type   != .all && type   != nil ||
            gender != .all && gender != nil ||
            size   != .all && size   != nil ||
@@ -180,12 +212,71 @@ class FilterPetsViewModel {
         }
         
         if let ageRange = ageRange,
-               ageRange.0 != 0 ||
-               ageRange.1 != 25 {
+               ageRange.min != 0 ||
+               ageRange.max != 25 {
                 return .valid
         }
         
         return.invalid
+    }
+    
+    
+    private func createFilterOptions(
+        type: FilterType?,
+        gender: FilterGender?,
+        size: FilterSize?,
+        ageRange: FilterAgeRange?,
+        address: FilterState?
+    ) {
+        let options = FilterOptions(
+                        type: type,
+                        gender: gender,
+                        size: size,
+                        age: ageRange,
+                        address: address
+                    )
+        filterOptions = options
+        saveFilterOptionsToUserDefaults(options: options)
+        print("optins cuand fomr is valid 931 \(options)")
+        print("filter optins = options cuand fomr is valid 931 \(filterOptions)")
+    }
+    
+    private func setInitialValues() {
+        if let savedFilterOptions = retrieveFilterOptionsFromUserDefaults() {
+            print("savedFilterOptions: => \(savedFilterOptions)")
+            currentFilterOptions = savedFilterOptions
+            
+            typeState     = savedFilterOptions.type
+            genderState   = savedFilterOptions.gender
+            sizeState     = savedFilterOptions.size
+            ageRangeState = savedFilterOptions.age
+            addressState  = savedFilterOptions.address
+        }
+    }
+    
+    private func saveFilterOptionsToUserDefaults(options: FilterOptions) {
+        do {
+            let encoder = JSONEncoder()
+            let encodedData = try encoder.encode(options)
+            UserDefaults.standard.set(encodedData, forKey: filterKey)
+            let retrievedaftersaved = retrieveFilterOptionsFromUserDefaults()
+            print("retrievedaftersaved: => \(retrievedaftersaved)")
+        } catch {
+            print("Error saving filter options to UserDefaults: \(error)")
+        }
+    }
+    
+    private func retrieveFilterOptionsFromUserDefaults() -> FilterOptions? {
+        if let encodedData = UserDefaults.standard.data(forKey: filterKey) {
+            do {
+                let decoder = JSONDecoder()
+                let options = try decoder.decode(FilterOptions.self, from: encodedData)
+                return options
+            } catch {
+                print("Error decoding filter options from UserDefaults: \(error)")
+            }
+        }
+        return nil
     }
     
     
