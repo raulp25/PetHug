@@ -7,9 +7,10 @@
 
 import UIKit
 import SDWebImage
-
+import FirebaseFirestore
 protocol PetContentDelegate: AnyObject {
-    func didTapLike(_ pet: Pet, completion: @escaping (Bool) -> Void) 
+    func didTapLike(_ pet: Pet, completion: @escaping (Bool) -> Void)
+    func didTapDislike(_ pet: Pet, completion: @escaping (Bool) -> Void)
     func didTapCell(pet: Pet)
 }
 
@@ -89,6 +90,7 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     
     //MARK: - LifeCycle
     func configure(with pet: Pet, delegate: PetContentDelegate? = nil) {
+        print("llama cellconfigure: => ")
         viewModel = .init(pet: pet)
         self.delegate = delegate
         guard viewModel != nil else { return }
@@ -148,13 +150,18 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     }
     
     private var work: DispatchWorkItem? 
-    
+    private var checkLikesWork: DispatchWorkItem?
+    private var db = Firestore.firestore()
     private func configureCellUI(with viewModel: PetCellViewModel) {
+        
+        
          work = DispatchWorkItem(block: {
              let imageDownloader = ImageService()
              imageDownloader.downloadImage(url: viewModel.petImage) { image in
                  if let image = image {
-                     self.petImage.image = UIImage(data: image)
+                     DispatchQueue.main.async {
+                         self.petImage.image = UIImage(data: image)
+                     }
                  }
              }
 //             self.petImage.image = UIImage(named: viewModel.petImage)
@@ -169,12 +176,40 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
             viewModel.isLiked = true
         }
         heartImage.image = UIImage(systemName: viewModel.heartImage)
+        
+        
+        checkLikesWork = DispatchWorkItem(block: {
+            print("ejecuta chelikes work: => ")
+            self.db.collection(viewModel.pet.type.getPath).document(viewModel.pet.id).getDocument { snapshot, error in
+                let doc = snapshot?.data()
+                guard let doc = doc else { return }
+                guard error != nil else { return }
+                if let arrayOfLikes = doc["likedByUsers"] as? [String] {
+                    if arrayOfLikes.contains(uid) {
+                        DispatchQueue.main.async {
+                            viewModel.isLiked = true
+                            self.heartImage.image = UIImage(systemName: "heart.fill")
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            viewModel.isLiked = false
+                            self.heartImage.image = UIImage(systemName: "heart")
+                        }
+                    }
+                }
+            }
+            
+            
+        })
+        
+        DispatchQueue.main.async(execute: checkLikesWork!)
         name.text = viewModel.name
         address.text = viewModel.address.rawValue
     }
     
     override func prepareForReuse() {
         work?.cancel()
+        checkLikesWork?.cancel()
         viewModel = nil
         petImage.image = nil
         
@@ -193,18 +228,45 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     @objc private func didTapLike(_ sender: UITapGestureRecognizer) {
         guard let viewModel = viewModel else { return }
         guard let delegate = delegate else { return }
-        viewModel.isLiked.toggle()
-        heartImage.image = UIImage(systemName: viewModel.heartImage)
+        print(":viewmodel isliked => \(viewModel.isLiked)")
+        
         heartImageContainer.isUserInteractionEnabled = false
-        delegate.didTapLike(viewModel.pet) { [weak self] success in
-            if !success {
-                viewModel.isLiked.toggle()
-                self?.heartImage.image = UIImage(systemName: viewModel.heartImage)
+        
+        if !viewModel.isLiked {
+            print(":viewmodel no es ta like entra condicion")
+            delegate.didTapLike(viewModel.pet) { [weak self] result in
+                print(":viewmodel no es ta like entra condicion RESULTADO \(result)")
+                if result == false {
+                    viewModel.isLiked.toggle()
+                    DispatchQueue.main.async {
+                        self?.heartImage.image = UIImage(systemName: viewModel.heartImage)
+                    }
+                }
+                DispatchQueue.main.async {
+                    self?.heartImageContainer.isUserInteractionEnabled = true
+                }
             }
-            
-            self?.heartImageContainer.isUserInteractionEnabled = true
         }
         
+        if viewModel.isLiked {
+            print(":viewmodel si esta like entra condicion")
+            
+            delegate.didTapDislike(viewModel.pet) { [weak self] result in
+                print(":viewmodel si esta like entra condicion RESULTADO \(result)")
+                if result == false {
+                    viewModel.isLiked.toggle()
+                    DispatchQueue.main.async {
+                        self?.heartImage.image = UIImage(systemName: viewModel.heartImage)
+                    }
+                }
+                DispatchQueue.main.async {
+                    self?.heartImageContainer.isUserInteractionEnabled = true
+                }
+            }
+        }
+        
+        viewModel.isLiked.toggle()
+        heartImage.image = UIImage(systemName: viewModel.heartImage)
     }
 
 }

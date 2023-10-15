@@ -17,4 +17,5 @@ protocol PetRepository {
     func deletePetFromRepeated(collection path: String, docId: String) async throws -> Bool
     
     func likePet(data: Pet) async throws
+    func dislikePet(data: Pet) async throws
 }

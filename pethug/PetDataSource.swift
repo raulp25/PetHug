@@ -24,6 +24,7 @@ protocol PetDataSource {
     func deletePetFromRepeated(collection path: String, docId: String) async throws -> Bool
     
     func likePet(data: Pet) async throws
+    func dislikePet(data: Pet) async throws
 }
 
 final class DefaultPetDataSource: PetDataSource {
@@ -149,17 +150,17 @@ final class DefaultPetDataSource: PetDataSource {
     func updatePet(collection path: String, data: Pet) async throws -> Bool {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
-        let dataModel = petFirebaseEntinty.toObjectLiteral()
+        let dataModel = petFirebaseEntinty.toObjectLiteralUpdate()
         
         try await db.collection(path)
                     .document(data.id)
-                    .setData(dataModel)
+                    .updateData(dataModel)
         
         try await db.collection("users")
                     .document(uid)
                     .collection("pets")
                     .document(data.id)
-                    .setData(dataModel)
+                    .updateData(dataModel)
         return true
         
     }
@@ -182,25 +183,25 @@ final class DefaultPetDataSource: PetDataSource {
     
     func likePet(data: Pet) async throws {
         
-        try await updateOwnersPetLikes(data: data)
+        try await updateOwnerPetLikes(data: data)
         
         try await addPetToUserLikedPets(data: data)
     }
     
-    func updateOwnersPetLikes(data: Pet) async throws {
+    func updateOwnerPetLikes(data: Pet) async throws {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
-        let dataModel = petFirebaseEntinty.toObjectLiteral()
-        print("datamodel-1 en updateOwnersPetLikes 919: => \(dataModel)")
+        let dataModel = petFirebaseEntinty.toObjectLiteralLiked()
+        
         try await db.collection(data.type.getPath)
                     .document(data.id)
-                    .setData(dataModel)
+                    .updateData(dataModel)
         
         try await db.collection("users")
             .document(data.owneruid)
                     .collection("pets")
                     .document(data.id)
-                    .setData(dataModel)
+                    .updateData(dataModel)
 
     }
     
@@ -208,13 +209,31 @@ final class DefaultPetDataSource: PetDataSource {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
         let dataModel = petFirebaseEntinty.toObjectLiteral()
-        print("datamodel-2 en updateOwnersPetLikes 919: => \(dataModel)")
+        
         try await db.collection("users")
                     .document(uid)
                     .collection("likedPets")
                     .document(data.id)
                     .setData(dataModel)
     }
+    
+    func dislikePet(data: Pet) async throws {
+        
+        try await updateOwnerPetLikes(data: data)
+        
+        try await removePetFromUserLikedPets(data: data)
+    }
+    
+    func removePetFromUserLikedPets(data: Pet) async throws {
+        let uid = AuthService().uid
+        
+        try await db.collection("users")
+                    .document(uid)
+                    .collection("likedPets")
+                    .document(data.id)
+                    .delete()
+    }
+    
 }
 
 

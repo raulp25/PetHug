@@ -10,6 +10,7 @@ import Firebase
 protocol PetsContentViewControllerDelegate: AnyObject {
     func didTap(pet: Pet)
     func didLike(pet: Pet, completion: @escaping (Bool) -> Void)
+    func didDislike(pet: Pet, completion: @escaping (Bool) -> Void)
     func executeFetch()
 //    func didTap(_:  Any)
 }
@@ -21,7 +22,7 @@ final class PetsContentViewController: UIViewController {
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
-    
+    private var isMounted = false
     //MARK: - Internal properties
     var snapData: [SnapData] {
         didSet {
@@ -68,6 +69,21 @@ final class PetsContentViewController: UIViewController {
         
         configureDataSource()
         updateSnapShot()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewwillappear called: =>")
+        if isMounted == false {
+            isMounted = true
+        } else{
+            print("isMounted: => \(isMounted)")
+            let ssnapData = snapData
+            snapData = ssnapData
+            updateSnapShot()
+        }
+        
+        
     }
     
 //    func generatePet(total: Int) -> [Item] {
@@ -129,6 +145,7 @@ final class PetsContentViewController: UIViewController {
 
         
         let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { cell, _, model in
+            print("llama cellregistration: =")
             cell.configure(with: model, delegate: self)
         }
         
@@ -196,17 +213,30 @@ extension PetsContentViewController: PetContentDelegate {
     
     func didTapLike(_ pet: Pet, completion: @escaping(Bool) -> Void) {
         if let delegate = delegate {
-            delegate.didLike(pet: pet, completion: { success in
-                if success {
-                 completion(true)
+            delegate.didLike(pet: pet, completion: { result in
+                if result == true {
+                    completion(true)
                 } else {
                     completion(false)
                 }
             })
         }
-
     }
-}
+    
+    func didTapDislike(_ pet: Pet, completion: @escaping (Bool) -> Void) {
+        if let delegate = delegate {
+            delegate.didDislike(pet: pet, completion: { result in
+                if result == true {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
+            })
+        }
+    }
+        
+    }
+
 
 
 

@@ -10,3 +10,13 @@ protocol ObjectLiteralMapper {
     associatedtype ObjectLiteral
     func toObjectLiteral() -> ObjectLiteral
 }
+
+protocol ObjectLiteralUpdateMapper {
+    associatedtype ObjectLiteralUpdate
+    func toObjectLiteralUpdate() -> ObjectLiteralUpdate
+}
+
+protocol ObjectLiteralLikedMapper {
+    associatedtype ObjectLiteralLiked
+    func toObjectLiteralLiked() -> ObjectLiteralLiked
+}

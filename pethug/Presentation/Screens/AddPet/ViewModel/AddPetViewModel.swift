@@ -84,7 +84,7 @@ final class AddPetViewModel {
         Task {
             do {
                 let data = try await fetchUserPetsUC.execute(with: resetPagination)
-                print("data obtenida despues de crear pet: => \(data)")
+//                print("data obtenida despues de crear pet: => \(data)")
                 handleFetchedPets(data, resetPagination: resetPagination)
             } catch {
                 handleFetchError(error)

@@ -16,7 +16,8 @@ final class HomeTabCoordinator: ChildTabCoordinator {
     
     let viewModel: PetsViewModel = .init(fetchPetsUC: FetchPets.composeFetchPetsUC(),
                                          filterPetsUC: FilterPets.composeFilterPetsUC(),
-                                         likedPetUC: LikePet.composeLikePetUC()
+                                         likedPetUC: LikePet.composeLikePetUC(),
+                                         dislikePetUC: DisLikePet.composeDisLikePetUC()
                                     )
     
     func start() {

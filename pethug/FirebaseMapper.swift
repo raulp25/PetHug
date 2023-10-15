@@ -12,3 +12,8 @@ protocol FirebaseMapper {
     func toFirebaseEntity() -> FirebaseModel
 }
 
+protocol FirebaseUpdatePetMapper {
+    associatedtype FirebaseUpdateModel
+    func toFirebaseUpdateEntity() -> FirebaseUpdateModel
+}
+

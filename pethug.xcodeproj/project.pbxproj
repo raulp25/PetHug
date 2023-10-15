@@ -170,6 +170,7 @@
 		C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */; };
 		C4BCFEBC2AD9CD020089A1A8 /* FilterPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFEBB2AD9CD020089A1A8 /* FilterPetsUC.swift */; };
 		C4C4950E2AC7A5A300CBBDE4 /* BreedPopupSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */; };
+		C4C872672ADC59BC007110E2 /* UpdatePetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872662ADC59BC007110E2 /* UpdatePetModel.swift */; };
 		C4CB96A32AD3491E00E5C338 /* CollectionViewDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */; };
 		C4CB96A52AD351FA00E5C338 /* CollectionViewMedicalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB96A42AD351FA00E5C338 /* CollectionViewMedicalCell.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
@@ -378,6 +379,7 @@
 		C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPetCell.swift; sourceTree = "<group>"; };
 		C4BCFEBB2AD9CD020089A1A8 /* FilterPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsUC.swift; sourceTree = "<group>"; };
 		C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedPopupSearch.swift; sourceTree = "<group>"; };
+		C4C872662ADC59BC007110E2 /* UpdatePetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePetModel.swift; sourceTree = "<group>"; };
 		C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDescriptionCell.swift; sourceTree = "<group>"; };
 		C4CB96A42AD351FA00E5C338 /* CollectionViewMedicalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewMedicalCell.swift; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -812,6 +814,7 @@
 			children = (
 				C44820102AB5376900E72BD2 /* UserModel.swift */,
 				C43A5C722ACCE7A5007C8ECB /* PetModel.swift */,
+				C4C872662ADC59BC007110E2 /* UpdatePetModel.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -1661,6 +1664,7 @@
 				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,
 				C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */,
 				C435315B2AB9845D0070D7EE /* Pet.swift in Sources */,
+				C4C872672ADC59BC007110E2 /* UpdatePetModel.swift in Sources */,
 				C4F7DFDE2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift in Sources */,
 				C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */,
 				C4B1BD262AD4C1F3003311EB /* FilterPetsSendCellContentView.swift in Sources */,

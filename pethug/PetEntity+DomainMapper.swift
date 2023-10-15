@@ -78,7 +78,6 @@ extension Pet: FirebaseMapper {
             owneruid: owneruid,
             likedByUsers: likedByUsers
         )
-
     }
 }
 
@@ -106,6 +105,33 @@ extension PetModel: ObjectLiteralMapper {
     }
 }
 
+extension PetModel: ObjectLiteralUpdateMapper {
+    func toObjectLiteralUpdate() -> [String: Any] {
+        return [
+            "id": id,
+            "name": name,
+            "gender": gender,
+            "size": size,
+            "breed": breed,
+            "imagesUrls": imagesUrls,
+            "type": type,
+            "age": age,
+            "activityLevel": activityLevel,
+            "socialLevel": socialLevel,
+            "affectionLevel": affectionLevel,
+            "address": address,
+            "info": info
+        ]
+    }
+}
+
+extension PetModel: ObjectLiteralLikedMapper {
+    func toObjectLiteralLiked() -> [String: Any] {
+        return [
+            "likedByUsers": likedByUsers
+        ]
+    }
+}
 
 
 

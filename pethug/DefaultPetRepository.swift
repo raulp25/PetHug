@@ -56,4 +56,8 @@ final class DefaultPetRepository: PetRepository {
             try await petDataSource.likePet(data: data)
     }
     
+    func dislikePet(data: Pet) async throws {
+            try await petDataSource.dislikePet(data: data)
+    }
+    
 }
