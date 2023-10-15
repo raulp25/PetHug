@@ -36,12 +36,9 @@ class NewPetViewModel {
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
         self.pet = pet
         self.isEdit = pet != nil
-//        print("recibe el pet en newpetviewmodel - images urls 421: => \(pet?.imagesUrls)")
+
         observeValidation()
-//        Task {
-//            try await uploadNextImage(index: 0)
-//        }
-        //        let imagesArr = getImages(stringUrlArray: pet?.imagesUrls ?? [])
+
         self.imagesToEditState = pet?.imagesUrls ?? []
         self.nameState      = pet?.name
         self.galleryState   = []
@@ -56,33 +53,9 @@ class NewPetViewModel {
         self.addressState   = pet?.address
         self.infoState      = pet?.info
         
-        //        mockDecodePetModel()
+
     }
     
-//    func mockDecodePetModel() {
-//        print("corre mock pet model decode 789: => ")
-//        //        let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna Camacho", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
-//
-//        let petModelData: [String: Any] = [
-//            "id": "3323-ews3",
-//            "name": "Joanna Camacho",
-//            "age": 22,
-//            "gender": "female",
-//            "size": "small",
-//            "breed": "Dachshund",
-//            "imagesUrls": ["firebase.com/ImageExampleMyCousin"],
-//            "type": "dog",
-//            "address": "Sinaloa",
-//            "isLiked": false
-//        ]
-//
-//        if let jsonData = try? JSONSerialization.data(withJSONObject: petModelData, options: []) {
-//            let pet = try? JSONDecoder().decode(Pet.self, from: jsonData)
-//
-//            print("data firebase niga PET IN CUSTOM DECODER: => \(pet?.address)")
-//        }
-//
-//    }
     
     //MARK: - Form Validation
     private var cancellables = Set<AnyCancellable>()
@@ -165,22 +138,7 @@ class NewPetViewModel {
         address: Pet.State?,
         info: String?
     ) -> State{
-        //gender and size are optional for the user
-        //        print("name level en viewmodel: => 666 \(name)")
-        //        print("gallery level en viewmodel: => 221 \(gallery)")
-        //        print("gallery level is empty? en viewmodel: => 221 \(gallery.isEmpty)")
-        //          print("gallery count en viewmodel: => 221 \(gallery.count)")
-        //        print("type level en viewmodel: => 666 \(type)")
-        //        print("breed level en viewmodel: => 666 \(breed)")
-        //        print("age level en viewmodel: => 666 \(age)")
-        //        print("activity level en viewmodel: => 221 \(activity)")
-        //        print("social level en viewmodel: => 666 \(social)")
-        //        print("affection level en viewmodel: => 666 \(affection)")
-        //        print("address level en viewmodel: => 666 \(address)")
-        //        print("info level en viewmodel: => 666 \(info)")
-        //        print("gender en viewmodel: => 666 \(gender)")
         
-        //       gender and size props are optional
         if name == nil      ||
             gallery.isEmpty  ||
             type == nil      ||
@@ -221,9 +179,10 @@ class NewPetViewModel {
                 address: addressState!,
                 info: infoState!,
                 isLiked: false,
-                timestamp: Timestamp(date: Date())
+                timestamp: Timestamp(date: Date()),
+                owneruid: AuthService().uid,
+                likedByUsers: []
             )
-            
             
             let _ = try await executeCreatePet(pet: pet)
             
@@ -264,7 +223,9 @@ class NewPetViewModel {
                 address: addressState!,
                 info: infoState!,
                 isLiked: currentPet.isLiked,
-                timestamp: currentPet.timestamp
+                timestamp: currentPet.timestamp,
+                owneruid: currentPet.owneruid,
+                likedByUsers: currentPet.likedByUsers
             )
             
             let dispatchGroup = DispatchGroup()

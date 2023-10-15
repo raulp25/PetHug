@@ -9,7 +9,7 @@ import UIKit
 import SDWebImage
 
 protocol PetContentDelegate: AnyObject {
-    func didTapLike(_ pet: PetsContentViewController.Item)
+    func didTapLike(_ pet: Pet, completion: @escaping (Bool) -> Void) 
     func didTapCell(pet: Pet)
 }
 
@@ -164,6 +164,10 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         
         DispatchQueue.main.async(execute: work!)
         
+        let uid = AuthService().uid
+        if viewModel.pet.likedByUsers.contains(uid) {
+            viewModel.isLiked = true
+        }
         heartImage.image = UIImage(systemName: viewModel.heartImage)
         name.text = viewModel.name
         address.text = viewModel.address.rawValue
@@ -181,7 +185,6 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: - Private Actions
-    
     @objc func didTapCell() {
         guard let viewModel = viewModel else { return }
         delegate?.didTapCell(pet: viewModel.pet)
@@ -189,8 +192,19 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     
     @objc private func didTapLike(_ sender: UITapGestureRecognizer) {
         guard let viewModel = viewModel else { return }
+        guard let delegate = delegate else { return }
         viewModel.isLiked.toggle()
         heartImage.image = UIImage(systemName: viewModel.heartImage)
+        heartImageContainer.isUserInteractionEnabled = false
+        delegate.didTapLike(viewModel.pet) { [weak self] success in
+            if !success {
+                viewModel.isLiked.toggle()
+                self?.heartImage.image = UIImage(systemName: viewModel.heartImage)
+            }
+            
+            self?.heartImageContainer.isUserInteractionEnabled = true
+        }
+        
     }
 
 }

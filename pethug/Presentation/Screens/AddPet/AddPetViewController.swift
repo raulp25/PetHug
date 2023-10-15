@@ -107,6 +107,8 @@ extension AddPetViewController: AddPetViewHeaderDelegate {
 }
 extension AddPetViewController: AddPetContentViewControllerDelegate {
     func executeFetch() {
+        
+        print("se llama execute fetch depsues de crear pet por el scroll cuando no debe: => ")
         viewModel.fetchUserPets()
     }
     func didTapEdit(pet: Pet) {

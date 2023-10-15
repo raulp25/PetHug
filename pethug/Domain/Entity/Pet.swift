@@ -43,6 +43,8 @@ class Pet: Codable, Hashable {
     let info: String
     var isLiked: Bool
     let timestamp: Timestamp
+    var owneruid: String
+    var likedByUsers: [String]
     
     init(
         id: String,
@@ -59,23 +61,27 @@ class Pet: Codable, Hashable {
         address: State,
         info: String,
         isLiked: Bool,
-        timestamp: Timestamp
+        timestamp: Timestamp,
+        owneruid: String,
+        likedByUsers: [String]
     ) {
-        self.id = id
-        self.name = name
-        self.gender = gender
-        self.size = size
-        self.breed = breed
-        self.imagesUrls = imagesUrls
-        self.type = type
-        self.age = age
-        self.activityLevel = activityLevel
-        self.socialLevel = socialLevel
+        self.id             = id
+        self.name           = name
+        self.gender         = gender
+        self.size           = size
+        self.breed          = breed
+        self.imagesUrls     = imagesUrls
+        self.type           = type
+        self.age            = age
+        self.activityLevel  = activityLevel
+        self.socialLevel    = socialLevel
         self.affectionLevel = affectionLevel
-        self.address = address
-        self.info = info
-        self.isLiked = isLiked
-        self.timestamp = timestamp
+        self.address        = address
+        self.info           = info
+        self.isLiked        = isLiked
+        self.timestamp      = timestamp
+        self.owneruid       = owneruid
+        self.likedByUsers   = likedByUsers
     }
     
     //Cant decode Timestamp and null values at the same time so this is the solution
@@ -95,6 +101,8 @@ class Pet: Codable, Hashable {
         self.info           = dictionary["info"]           as? String ?? ""
         self.isLiked        = dictionary["isLiked"]        as? Bool ?? false
         self.timestamp      = dictionary["timestamp"]      as? Timestamp ?? Timestamp(date: Date())
+        self.owneruid       = dictionary["owneruid"]       as? String ?? ""
+        self.likedByUsers   = dictionary["likedByUsers"]   as? [String] ?? []
     }
     //Became useless, delete it at the end of project
     required init(from decoder: Decoder) throws {
@@ -111,6 +119,8 @@ class Pet: Codable, Hashable {
             self.info           = try container.decode(String.self,    forKey: .info)
             self.isLiked        = try container.decode(Bool.self,      forKey: .isLiked)
             self.timestamp      = try container.decode(Timestamp.self, forKey: .timestamp)
+            self.owneruid       = try container.decode(String.self,    forKey: .owneruid)
+            self.likedByUsers   = try container.decode([String].self,    forKey: .likedByUsers)
         
             let typeString = try container.decode(String.self, forKey: .type)
             if let petType = PetType(rawValue: typeString) {

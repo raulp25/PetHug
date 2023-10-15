@@ -28,4 +28,6 @@ struct PetModel: Codable {
     let info: String
     var isLiked: Bool
     var timestamp: Timestamp
+    var owneruid: String
+    var likedByUsers: [String]
 }

@@ -128,4 +128,16 @@ extension PetsViewController: PetsContentViewControllerDelegate {
     func didTap(pet: Pet) {
         viewModel.navigation?.tapped(pet: pet)
     }
+    
+    func didLike(pet: Pet, completion: @escaping (Bool) -> Void) {
+        viewModel.likedPet(pet: pet) { success in
+            if success {
+                completion(true)
+            } else {
+                completion(false)
+            }
+        }
+        
+    }
+    
 }

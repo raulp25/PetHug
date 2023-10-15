@@ -24,7 +24,9 @@ extension Pet: DomainMapper {
             address: address,
             info: info,
             isLiked: isLiked,
-            timestamp: timestamp
+            timestamp: timestamp,
+            owneruid: owneruid,
+            likedByUsers: likedByUsers
         )
     }
 }
@@ -46,7 +48,9 @@ extension Pet: ObjectLiteralMapper {
             "address": address,
             "info": info,
             "isLiked": isLiked,
-            "timestamp": timestamp
+            "timestamp": timestamp,
+            "owneruid": owneruid,
+            "likedByUsers": likedByUsers
         ]
     }
 }
@@ -70,7 +74,9 @@ extension Pet: FirebaseMapper {
             affectionLevel: affectionLevel,
             info: info,
             isLiked: false,
-            timestamp: timestamp
+            timestamp: timestamp,
+            owneruid: owneruid,
+            likedByUsers: likedByUsers
         )
 
     }
@@ -93,7 +99,9 @@ extension PetModel: ObjectLiteralMapper {
             "address": address,
             "info": info,
             "isLiked": isLiked,
-            "timestamp": timestamp
+            "timestamp": timestamp,
+            "owneruid": owneruid,
+            "likedByUsers": likedByUsers
         ]
     }
 }

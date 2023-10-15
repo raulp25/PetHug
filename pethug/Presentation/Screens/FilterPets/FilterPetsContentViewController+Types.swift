@@ -38,7 +38,7 @@ extension FilterPetsContentViewController {
 
 enum FilterType: String, Codable, Hashable {
     case all
-    case dog = "dpogs"
+    case dog = "dogs"
     case cat = "cats"
     case bird = "birds"
     case rabbit = "rabbits"

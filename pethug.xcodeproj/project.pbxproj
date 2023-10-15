@@ -12,6 +12,8 @@
 		C416E0162ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C416E0152ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift */; };
 		C418BBA52AC0A50600C31967 /* PetEntity+DomainMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418BBA42AC0A50600C31967 /* PetEntity+DomainMapper.swift */; };
 		C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C418BBA72AC0BE5400C31967 /* PetCellViewModel.swift */; };
+		C41DE38D2ADB576600E653BA /* LikePetUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41DE38C2ADB576600E653BA /* LikePetUC.swift */; };
+		C41DE38F2ADB577400E653BA /* DislikePetUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41DE38E2ADB577400E653BA /* DislikePetUC.swift */; };
 		C41E8E582AD468DC0065DEFC /* FilterPetsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E572AD468DC0065DEFC /* FilterPetsCoordinator.swift */; };
 		C41E8E5B2AD46D720065DEFC /* FilterPetsContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E5A2AD46D720065DEFC /* FilterPetsContentViewController.swift */; };
 		C41E8E5D2AD46DAD0065DEFC /* FilterPetsContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41E8E5C2AD46DAD0065DEFC /* FilterPetsContentViewController+Types.swift */; };
@@ -219,6 +221,8 @@
 		C416E0152ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePetFromRepeatedCollectionUC.swift; sourceTree = "<group>"; };
 		C418BBA42AC0A50600C31967 /* PetEntity+DomainMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetEntity+DomainMapper.swift"; sourceTree = "<group>"; };
 		C418BBA72AC0BE5400C31967 /* PetCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetCellViewModel.swift; sourceTree = "<group>"; };
+		C41DE38C2ADB576600E653BA /* LikePetUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikePetUC.swift; sourceTree = "<group>"; };
+		C41DE38E2ADB577400E653BA /* DislikePetUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DislikePetUC.swift; sourceTree = "<group>"; };
 		C41E8E572AD468DC0065DEFC /* FilterPetsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsCoordinator.swift; sourceTree = "<group>"; };
 		C41E8E5A2AD46D720065DEFC /* FilterPetsContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsContentViewController.swift; sourceTree = "<group>"; };
 		C41E8E5C2AD46DAD0065DEFC /* FilterPetsContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterPetsContentViewController+Types.swift"; sourceTree = "<group>"; };
@@ -938,6 +942,8 @@
 				C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */,
 				C416E0152ACFA881007AE5C0 /* DeletePetFromRepeatedCollectionUC.swift */,
 				C4BCFEBB2AD9CD020089A1A8 /* FilterPetsUC.swift */,
+				C41DE38C2ADB576600E653BA /* LikePetUC.swift */,
+				C41DE38E2ADB577400E653BA /* DislikePetUC.swift */,
 			);
 			path = Pets;
 			sourceTree = "<group>";
@@ -1572,6 +1578,7 @@
 				C480DBC32AD37219005F707C /* CollectionViewSocialCell.swift in Sources */,
 				C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */,
 				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
+				C41DE38D2ADB576600E653BA /* LikePetUC.swift in Sources */,
 				C426D26B2AB671AD00BFA357 /* SettingsViewController.swift in Sources */,
 				C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */,
 				C4A95C3D2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift in Sources */,
@@ -1648,6 +1655,7 @@
 				C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */,
 				C4E654462AC8E834009E027F /* SearchBreedListCellConfiguration.swift in Sources */,
 				C43FAF902AD21AE500A437C3 /* PetContentViewController+Types.swift in Sources */,
+				C41DE38F2ADB577400E653BA /* DislikePetUC.swift in Sources */,
 				C475540A2AD8CD4B008AA12F /* Keys.swift in Sources */,
 				C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */,
 				C4CF74F32AB2506F00D69185 /* LoginViewModel.swift in Sources */,

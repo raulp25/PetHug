@@ -9,6 +9,7 @@ import UIKit
 import Firebase
 protocol PetsContentViewControllerDelegate: AnyObject {
     func didTap(pet: Pet)
+    func didLike(pet: Pet, completion: @escaping (Bool) -> Void)
     func executeFetch()
 //    func didTap(_:  Any)
 }
@@ -193,10 +194,17 @@ extension PetsContentViewController: PetContentDelegate {
         delegate?.didTap(pet: pet)
     }
     
-    func didTapLike(_ pet: PetsContentViewController.Item) {
-        guard let indexPath = self.dataSource.indexPath(for: pet) else { return }
-//        self.currentSnapData[indexPath.section].values.remove(at: indexPath.row)
-//        self.currentSnapData[indexPath.section].values.insert(pet, at: indexPath.row)
+    func didTapLike(_ pet: Pet, completion: @escaping(Bool) -> Void) {
+        if let delegate = delegate {
+            delegate.didLike(pet: pet, completion: { success in
+                if success {
+                 completion(true)
+                } else {
+                    completion(false)
+                }
+            })
+        }
+
     }
 }
 
