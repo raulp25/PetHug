@@ -36,7 +36,7 @@ extension HomeTabCoordinator: PetsNavigatable {
     func tappedFilter() {
         let vc = FilterPetsContentViewController()
         vc.coordinator = self
-        vc.hidesBottomBarWhenPushed = true 
+        vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
