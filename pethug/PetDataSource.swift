@@ -15,7 +15,7 @@ protocol PetDataSource {
     var documents: [QueryDocumentSnapshot] { get set }
     var order: String { get set }
     
-    func fetchPets(fetchCollection path: String) async throws -> [Pet]
+    func fetchPets(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet]
     func fetchUserPets(with resetPagination: Bool) async throws -> [Pet]
     func fetchPets(collection: String, withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet]
     func fetchFavoritePets() async throws -> [Pet]
@@ -35,7 +35,12 @@ final class DefaultPetDataSource: PetDataSource {
     internal var documents = [QueryDocumentSnapshot]()
     internal var order = "timestamp"
     
-    func fetchPets(fetchCollection path: String) async throws -> [Pet] {
+    func fetchPets(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet] {
+        if resetFilterQueries {
+            query = nil
+            documents = []
+        }
+        
         if query == nil {
             query = db.collection(path)
                       .order(by: order, descending: true)
@@ -69,6 +74,7 @@ final class DefaultPetDataSource: PetDataSource {
         
         if resetPagination {
             query = nil
+            documents = []
         }
         
         if query == nil {

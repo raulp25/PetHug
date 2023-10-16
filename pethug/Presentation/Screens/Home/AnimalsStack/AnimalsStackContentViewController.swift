@@ -42,6 +42,7 @@ final class AnimalsStackContentViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
+        uv.tag = 1
         return uv
     }()
     private lazy var catsBanner: Banner = {
@@ -49,6 +50,7 @@ final class AnimalsStackContentViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
+        uv.tag = 2
         return uv
     }()
     private lazy var birdsBanner: Banner = {
@@ -56,6 +58,7 @@ final class AnimalsStackContentViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
+        uv.tag = 3
         return uv
     }()
     private lazy var rabbitsBanner: Banner = {
@@ -63,6 +66,7 @@ final class AnimalsStackContentViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
+        uv.tag = 4
         return uv
     }()
     
@@ -75,8 +79,22 @@ final class AnimalsStackContentViewController: UIViewController {
     }
     
     //MARK: - Private actions
-    @objc private func didTapBanner(_ sender: Banner) {
-        print(":sender => \(sender)")
+    @objc private func didTapBanner(_ sender: UITapGestureRecognizer) {
+        if let banner = sender.view as? Banner {
+            switch banner.tag {
+            case 1:
+                delegate?.didTapDogsBanner()
+            case 2:
+                delegate?.didTapCatsBanner()
+            case 3:
+                delegate?.didTapBirdsBanner()
+            case 4:
+                delegate?.didTapRabbitsBanner()
+            default:
+                print("")
+            }
+            
+        }
 //        delegate?.didTapFilter()
     }
     

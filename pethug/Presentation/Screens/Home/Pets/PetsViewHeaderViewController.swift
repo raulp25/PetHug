@@ -9,27 +9,38 @@ import UIKit
 
 protocol PetsViewHeaderDelegate: AnyObject {
     func didTapFilter()
+    func didTapIcon()
 }
 
 final class PetsViewHeaderViewController: UIViewController {
     //MARK: - Private components
+//    private lazy var logoImageView: UIImageView = {
+//       let iv = UIImageView()
+//        iv.image = UIImage(named: "dog3")
+//        iv.tintColor = UIColor.systemPink.withAlphaComponent(0.7)
+//        iv.contentMode = .scaleAspectFill
+//        iv.clipsToBounds = true
+//        iv.translatesAutoresizingMaskIntoConstraints = false
+//
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapSingOut))
+//        iv.isUserInteractionEnabled = true
+//        iv.addGestureRecognizer(tapGesture)
+//        return iv
+//    }()
+    
     private lazy var logoImageView: UIImageView = {
        let iv = UIImageView()
-        iv.image = UIImage(named: "dog3")
-        iv.tintColor = UIColor.systemPink.withAlphaComponent(0.7)
+        iv.image = UIImage(systemName: "chevron.backward")
+        iv.tintColor = .black.withAlphaComponent(0.8)
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapSingOut))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapChevron))
         iv.isUserInteractionEnabled = true
         iv.addGestureRecognizer(tapGesture)
         return iv
     }()
-    
-    @objc private func didTapSingOut() {
-        try! AuthService().signOut()
-    }
     
     private let titleLabel: UILabel = {
        let label = UILabel()
@@ -62,6 +73,15 @@ final class PetsViewHeaderViewController: UIViewController {
     }
     
     //MARK: - Private actions
+//    @objc private func didTapSingOut() {
+//        try! AuthService().signOut()
+//    }
+    
+    
+    @objc private func didTapChevron() {
+        delegate?.didTapIcon()
+    }
+    
     @objc private func didTapFilter() {
         delegate?.didTapFilter()
     }
@@ -77,7 +97,7 @@ final class PetsViewHeaderViewController: UIViewController {
         view.addSubview(filterImageView)
         
         logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 0, paddingLeft: sidePadding)
-        logoImageView.setDimensions(height: 60, width: 60)
+        logoImageView.setDimensions(height: 20, width: 20)
         
         titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
         

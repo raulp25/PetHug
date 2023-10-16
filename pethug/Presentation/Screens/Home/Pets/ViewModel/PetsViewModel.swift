@@ -23,14 +23,17 @@ final class PetsViewModel {
     private var subscriptions = Set<AnyCancellable>()
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
     private var pets: [Pet] = []
-    
     private var isFetching = false
     private var isFirstLoad = true
     private let fetchPetsUC: DefaultFetchPetsUC
     private let filterPetsUC: DefaultFilterPetsUC
     private let likedPetUC: DefaultLikePetUC
     private let dislikedPetUC: DefaultDisLikePetUC
-    var collection: String!
+    var collection: String = .getPath(for: .dogs) {
+        didSet {
+            resetFilterData()
+        }
+    }
     private var filterOptions: FilterOptions? = nil
     private var filterMode = false
     
@@ -45,7 +48,6 @@ final class PetsViewModel {
         self.likedPetUC = likedPetUC
         self.dislikedPetUC = dislikePetUC
         observeState()
-        fetchPets(collection: .getPath(for: .birds))
         
 //        Task {
 //            try await uploadNextImage(index:0)
@@ -75,13 +77,16 @@ final class PetsViewModel {
     }
     
     //MARK: - Internal Methods
-    func fetchPets(collection: String) {
+    func fetchPets(collection: String, resetFilterQueries: Bool) {
         guard !isFetching else { return }
         isFetching = true
         
         Task {
             do {
-                let data = try await fetchPetsUC.execute(fetchCollection: collection)
+                let data = try await fetchPetsUC.execute(fetchCollection: collection, resetFilterQueries: resetFilterQueries)
+                print("colleciton: => \(collection)")
+                print("se llama fetchpets: => ")
+                print("data en fetchpets: => \(data) ")
                 if !isFirstLoad && !data.isEmpty {
                     petsSubject.send(data)
                 } else if isFirstLoad {

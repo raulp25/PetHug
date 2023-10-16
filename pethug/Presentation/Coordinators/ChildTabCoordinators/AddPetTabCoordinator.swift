@@ -15,6 +15,7 @@ final class AddPetTabCoordinator: NSObject, ChildTabCoordinator {
     var rootViewController: UINavigationController = .init()
     
     var viewModel = AddPetViewModel(
+        imageService: ImageService(),
         fetchUserPetsUC: FetchUserPets.composeFetchUserPetsUC(),
         deletePetUC: DeletePet.composeDeletePetUC(),
         deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC()

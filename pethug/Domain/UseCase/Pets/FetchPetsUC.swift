@@ -8,7 +8,7 @@
 import Foundation
 //MARK: - Protocol
 protocol FetchPetsUC {
-    func execute(fetchCollection path: String) async throws -> [Pet]
+    func execute(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet]
 }
 
 
@@ -20,8 +20,8 @@ final class DefaultFetchPetsUC: FetchPetsUC {
         self.petRepository = petRepository
     }
     
-    func execute(fetchCollection path: String) async throws -> [Pet] {
-        let pets = try await petRepository.fetchPets(fetchCollection: path)
+    func execute(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet] {
+        let pets = try await petRepository.fetchPets(fetchCollection: path, resetFilterQueries: resetFilterQueries)
         
         return pets
     }

@@ -22,6 +22,7 @@ final class AddPetViewModel {
     //    var fetchPetsUseCase
     
     //MARK: - Private Properties
+    private let imageService: ImageServiceProtocol
     private let fetchUserPetsUC: DefaultFetchUserPetsUC
     private let deletePetUC: DefaultDeletePetUC
     private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
@@ -34,10 +35,12 @@ final class AddPetViewModel {
     
     //MARK: - Init
     init(
+        imageService: ImageServiceProtocol,
         fetchUserPetsUC: DefaultFetchUserPetsUC,
         deletePetUC: DefaultDeletePetUC,
         deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
     ) {
+        self.imageService = imageService
         self.fetchUserPetsUC = fetchUserPetsUC
         self.deletePetUC = deletePetUC
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
@@ -95,17 +98,23 @@ final class AddPetViewModel {
     }
     
     func deletePet(collection path: String,  id: String) async -> Bool {
-        await withThrowingTaskGroup(of: Void.self) { [unowned self] group in
-            group.addTask { let _ = try await self.deletePetUC.execute(collection: path, docId: id) }
-            group.addTask { let _ = try await self.deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id) }
+        do{
+            if let pet = pets.first(where: { $0.id == id}) {
+                await withThrowingTaskGroup(of: Void.self) { [unowned self] group in
+                    group.addTask{ self.imageService.deleteImages(imagesUrl: pet.imagesUrls) }
+                    group.addTask { let _ = try await self.deletePetUC.execute(collection: path, docId: id) }
+                    group.addTask { let _ = try await self.deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id) }
+                }
+                
+                if let index = pets.firstIndex(where: { $0.id == id }) {
+                    pets.remove(at: index)
+                }
+                return true
+            }
+        } catch {
+            print("Error deleting pet in Addpet module => \(error)")
         }
-        
-        if let index = pets.firstIndex(where: { $0.id == id }) {
-            pets.remove(at: index)
-        }
-        //Check if we refactor this function to not return bool
-        //since everything is handled by firebase
-        return true
+        return false
     }
     
     //MARK: - Private methods

@@ -207,6 +207,8 @@ extension AddPetContentViewController: AddPetContentDelegate {
                     DispatchQueue.main.async { [weak self] in
                         self?.dataSource.apply(snapshot, animatingDifferences: true)
                     }
+                } else {
+                    alert(message: "Hubo un error al elminar, intenta nuevamente", title: "Error")
                 }
             }
         }

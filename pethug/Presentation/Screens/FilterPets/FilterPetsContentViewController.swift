@@ -58,6 +58,7 @@ final class FilterPetsContentViewController: UIViewController {
             paddingRight: 0
         )
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
         
         hideKeyboardWhenTappedAround()

@@ -43,7 +43,8 @@ final class PetsViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationController?.navigationBar.isHidden = false
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        //Doesn't work
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
@@ -111,6 +112,9 @@ final class PetsViewController: UIViewController {
 }
 
 extension PetsViewController: PetsViewHeaderDelegate {
+    func didTapIcon() {
+        navigationController?.popViewController(animated: true)
+    }
     func didTapFilter() {
         viewModel.navigation?.tappedFilter()
     }
@@ -121,7 +125,7 @@ extension PetsViewController: PetsContentViewControllerDelegate {
         if viewModel.isFilterMode() {
             viewModel.fetchPetsWithFilter()
         } else {
-            viewModel.fetchPets(collection: "birds")
+            viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: false)
         }
     }
     

@@ -35,8 +35,13 @@ final class PetContentViewController: UIViewController {
         configureUI()
         configureDataSource()
         updateSnapShot()
-        
-        
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
     }
 
     

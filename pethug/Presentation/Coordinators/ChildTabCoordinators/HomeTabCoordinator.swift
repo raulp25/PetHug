@@ -27,33 +27,37 @@ final class HomeTabCoordinator: ChildTabCoordinator {
     }
     
     func startDogs() {
+        let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .dogs)
-        let vc = PetsViewController(viewModel: viewModel)
+        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
     func startCats() {
+        let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .cats)
-        let vc = PetsViewController(viewModel: viewModel)
+        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
     func startBirds() {
+        let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .birds)
-        let vc = PetsViewController(viewModel: viewModel)
+        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
     func startRabbits() {
+        let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .rabbits)
-        let vc = PetsViewController(viewModel: viewModel)
+        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
