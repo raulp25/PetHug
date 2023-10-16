@@ -54,7 +54,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         case .add:
             childCoordinator = AddPetTabCoordinator()
         case .profile:
-            childCoordinator = HomeTabCoordinator()
+            childCoordinator = ProfileTabCoordinator()
         }
 
         childCoordinator.start()

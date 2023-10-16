@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class AddPetTabCoordinator: NSObject, ChildTabCoordinator {
+final class AddPetTabCoordinator: ChildTabCoordinator {
     var childCoordinators: [NavCoordinator] = .init()
     
     var parentCoordinator: InAppCoordinator?

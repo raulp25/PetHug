@@ -206,6 +206,8 @@
 		C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */; };
 		C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75022AB25C5B00D69185 /* Constants.swift */; };
 		C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75052AB25CE100D69185 /* ValidationState.swift */; };
+		C4D44A1A2ADDDFF4004D2A53 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */; };
+		C4D44A1C2ADDE057004D2A53 /* ProfileContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */; };
 		C4E654432AC8E745009E027F /* BreedPopupSearchViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */; };
 		C4E654462AC8E834009E027F /* SearchBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654452AC8E834009E027F /* SearchBreedListCellConfiguration.swift */; };
 		C4E654482AC8E8BA009E027F /* SearchBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654472AC8E8BA009E027F /* SearchBreedCellContentView.swift */; };
@@ -428,6 +430,8 @@
 		C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTextField.swift; sourceTree = "<group>"; };
 		C4CF75022AB25C5B00D69185 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C4CF75052AB25CE100D69185 /* ValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationState.swift; sourceTree = "<group>"; };
+		C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentViewController.swift; sourceTree = "<group>"; };
 		C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BreedPopupSearchViewController+Types.swift"; sourceTree = "<group>"; };
 		C4E654452AC8E834009E027F /* SearchBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBreedListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4E654472AC8E8BA009E027F /* SearchBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBreedCellContentView.swift; sourceTree = "<group>"; };
@@ -581,6 +585,7 @@
 				C426D2652AB6703E00BFA357 /* HomeTabCoordinator.swift */,
 				C43261D52AC222B900B70ACA /* AddPetTabCoordinator.swift */,
 				C4C872692ADC7407007110E2 /* FavoriteTabCoordinator.swift */,
+				C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */,
 			);
 			path = ChildTabCoordinators;
 			sourceTree = "<group>";
@@ -1324,6 +1329,7 @@
 		C4CF74DF2AB22A8C00D69185 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C4D44A1D2ADDE05F004D2A53 /* Profile */,
 				C4C872682ADC73A9007110E2 /* Favorites */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
 				C4CF74EF2AB2504300D69185 /* Login */,
@@ -1418,6 +1424,14 @@
 				C42616E22AB2788A006925DB /* Validator.swift */,
 			);
 			path = Validation;
+			sourceTree = "<group>";
+		};
+		C4D44A1D2ADDE05F004D2A53 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		C4E654442AC8E7EF009E027F /* SearchBreed */ = {
@@ -1616,6 +1630,7 @@
 				C4CF74E82AB22FD100D69185 /* UIView+Extensions.swift in Sources */,
 				C4C872732ADC76F6007110E2 /* CollectionViewFavoritePetCell.swift in Sources */,
 				C4B1BD152AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift in Sources */,
+				C4D44A1A2ADDDFF4004D2A53 /* ProfileCoordinator.swift in Sources */,
 				C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */,
 				C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */,
 				C480DBC62AD3985F005F707C /* CollectionViewImageCell.swift in Sources */,
@@ -1663,6 +1678,7 @@
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
 				C48D9B4F2AC49E3B002EDA90 /* NewPetNameCellContentView.swift in Sources */,
 				C43FAF9A2AD257F300A437C3 /* Badge.swift in Sources */,
+				C4D44A1C2ADDE057004D2A53 /* ProfileContentViewController.swift in Sources */,
 				C42616DD2AB277C4006925DB /* ValidatorType.swift in Sources */,
 				C4F7DFDA2ACCA8E2000D5F76 /* NewPetActivityCellContentView.swift in Sources */,
 				C41E8E642AD489970065DEFC /* FilterPetsViewHeaderViewController.swift in Sources */,
