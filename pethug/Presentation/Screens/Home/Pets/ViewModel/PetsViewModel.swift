@@ -167,7 +167,7 @@ final class PetsViewModel {
         
         Task {
             do {
-                let data = try await filterPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
+                let data = try await filterPetsUC.execute(collection: collection, options: filterOptions, resetFilterQueries: resetFilterQueries)
                 handleFilterResult(data)
             } catch {
                 handleFilterError(error)

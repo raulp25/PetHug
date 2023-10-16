@@ -7,12 +7,11 @@
 
 import FirebaseFirestore
 
-func buildQuery(for options: FilterOptions) -> Query {
+func buildQuery(for options: FilterOptions, collection: String) -> Query {
     var db = Firestore.firestore()
     var query: Query
     
-    
-    query = db.collection("birds")
+    query = db.collection(collection)
     
         
         if options.age.min != 0 ||

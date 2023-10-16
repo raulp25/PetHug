@@ -9,7 +9,7 @@
 import Foundation
 //MARK: - Protocol
 protocol FilterPetsUC {
-    func execute(options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet]
+    func execute(collection: String, options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet]
 }
 
 
@@ -21,9 +21,8 @@ final class DefaultFilterPetsUC: FilterPetsUC {
         self.petRepository = petRepository
     }
     
-    func execute(options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
-        let pets = try await petRepository.fetchPetsWithFilter(options: options, resetFilterQueries: resetFilterQueries)
-        
+    func execute(collection: String, options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
+        let pets = try await petRepository.fetchPets(collection: collection, withFilter: options, resetFilterQueries: resetFilterQueries)
         return pets
     }
 }
