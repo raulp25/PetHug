@@ -17,4 +17,10 @@ final class DefaultUserRepository: UserRepository {
     func registerUser(user: User) async throws {
         try await userDataSource.registerUser(user: user)
     }
+    
+    func fetchUser() async throws -> User {
+        let user = try await userDataSource.fetchUser()
+        
+        return user
+    }
 }

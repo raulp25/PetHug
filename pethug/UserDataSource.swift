@@ -11,6 +11,7 @@ import FirebaseFirestore
 // MARK: - Protocol -
 protocol UserDataSource {
     func registerUser(user: User) async throws
+    func fetchUser() async throws -> User
 }
 
 
@@ -22,6 +23,10 @@ final class DefaultUserDataSource: UserDataSource {
     func registerUser(user: User) async throws {
         let data = user.toObjectLiteral()
         try await db.collection(.getPath(for: .users)).document(user.id).setData(data)
+    }
+    
+    func fetchUser() async throws -> User {
+        return User(id: "", username: "", email: "", bio: "", profileImageUrl: "")
     }
     
 }

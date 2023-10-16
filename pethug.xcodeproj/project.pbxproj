@@ -208,6 +208,7 @@
 		C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75052AB25CE100D69185 /* ValidationState.swift */; };
 		C4D44A1A2ADDDFF4004D2A53 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */; };
 		C4D44A1C2ADDE057004D2A53 /* ProfileContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */; };
+		C4D44A1F2ADDE5A3004D2A53 /* FetchUserUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A1E2ADDE5A3004D2A53 /* FetchUserUC.swift */; };
 		C4E654432AC8E745009E027F /* BreedPopupSearchViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */; };
 		C4E654462AC8E834009E027F /* SearchBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654452AC8E834009E027F /* SearchBreedListCellConfiguration.swift */; };
 		C4E654482AC8E8BA009E027F /* SearchBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654472AC8E8BA009E027F /* SearchBreedCellContentView.swift */; };
@@ -432,6 +433,7 @@
 		C4CF75052AB25CE100D69185 /* ValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationState.swift; sourceTree = "<group>"; };
 		C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentViewController.swift; sourceTree = "<group>"; };
+		C4D44A1E2ADDE5A3004D2A53 /* FetchUserUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserUC.swift; sourceTree = "<group>"; };
 		C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BreedPopupSearchViewController+Types.swift"; sourceTree = "<group>"; };
 		C4E654452AC8E834009E027F /* SearchBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBreedListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4E654472AC8E8BA009E027F /* SearchBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBreedCellContentView.swift; sourceTree = "<group>"; };
@@ -863,6 +865,7 @@
 			isa = PBXGroup;
 			children = (
 				C44820192AB53EF200E72BD2 /* RegisterUserUC.swift */,
+				C4D44A1E2ADDE5A3004D2A53 /* FetchUserUC.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -1781,6 +1784,7 @@
 				C4F7DFDE2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift in Sources */,
 				C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */,
 				C4B1BD262AD4C1F3003311EB /* FilterPetsSendCellContentView.swift in Sources */,
+				C4D44A1F2ADDE5A3004D2A53 /* FetchUserUC.swift in Sources */,
 				C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */,
 				C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */,
 				C4B1BD122AD4BD1E003311EB /* FilterPetsGenderCellContentView.swift in Sources */,

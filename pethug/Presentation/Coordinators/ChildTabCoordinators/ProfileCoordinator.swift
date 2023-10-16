@@ -15,11 +15,11 @@ final class ProfileTabCoordinator: ChildTabCoordinator {
     var rootViewController: UINavigationController = .init()
     
     func start() {
-        let vc = ProfileContentViewController()
+        let vc = ProfileContentViewController(authService: AuthService(),
+                                              fetchUserUC: FetchUser.composeFetchUserUC()
+                                             )
         rootViewController.pushViewController(vc, animated: true)
     }
-    
-    
 }
 
 
