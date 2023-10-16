@@ -1,21 +1,20 @@
 //
-//  PetsContentViewController.swift
+//  FavoritesContentViewController.swift
 //  pethug
 //
-//  Created by Raul Pena on 19/09/23.
+//  Created by Raul Pena on 15/10/23.
 //
 
 import UIKit
 import Firebase
-protocol PetsContentViewControllerDelegate: AnyObject {
+protocol FavoritesContentViewControllerDelegate: AnyObject {
     func didTap(pet: Pet)
-    func didLike(pet: Pet, completion: @escaping (Bool) -> Void)
     func didDislike(pet: Pet, completion: @escaping (Bool) -> Void)
     func executeFetch()
 //    func didTap(_:  Any)
 }
 
-final class PetsContentViewController: UIViewController {
+final class FavoritesContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     
@@ -30,7 +29,7 @@ final class PetsContentViewController: UIViewController {
         }
     }
 
-    weak var delegate: PetsContentViewControllerDelegate?
+    weak var delegate: FavoritesContentViewControllerDelegate?
     
     init(snapData: [SnapData]) {
         self.snapData = snapData
@@ -65,57 +64,12 @@ final class PetsContentViewController: UIViewController {
             bottom: 50,
             right: 0
         )
-        collectionView.delegate = self
         
         configureDataSource()
         updateSnapShot()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        print("viewwillappear called: =>")
-        if isMounted == false {
-            isMounted = true
-        } else{
-            print("isMounted: => \(isMounted)")
-            let ssnapData = snapData
-            snapData = ssnapData
-            updateSnapShot()
-        }
-        
-        
-    }
-    
-//    func generatePet(total: Int) -> [Item] {
-//        var pets = [Item]()
-//        var counter = 0
-//        for number in 0...total {
-//            let k = Int(arc4random_uniform(6))
-//            pets.append(.pet(.init(
-//                id: "32de\(counter)",
-//                name: "Laruent\(counter)",
-//                gender: .female,
-//                size: .small,
-//                breed: "Pomeranian\(counter)",
-//                imagesUrls: ["firebase/fakeURL"],
-//                type: .bird,
-//                age: 5,
-//                activityLevel: 8,
-//                socialLevel: 8,
-//                affectionLevel: 9,
-//                address: .Campeche,
-//                info: "Lets goy cowboys",
-//                isLiked: false,
-//                timestamp: Timestamp(date: Date())
-//            )))
-//            counter += 1
-//        }
-//
-//        return pets
-//    }
-    
     //MARK: - CollectionView layout
-//   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
             guard let self else { fatalError() }
@@ -123,10 +77,8 @@ final class PetsContentViewController: UIViewController {
 
             switch section {
             case .pets:
-                print("dogs section")
                 return .createPetsLayout()
             }
-            
         }
         
         return layout
@@ -144,7 +96,7 @@ final class PetsContentViewController: UIViewController {
         }
 
         
-        let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { cell, _, model in
+        let petViewCellRegistration = UICollectionView.CellRegistration<FavoriteControllerCollectionViewCell, Pet> { cell, _, model in
             print("llama cellregistration: =")
             cell.configure(with: model, delegate: self)
         }
@@ -189,53 +141,72 @@ final class PetsContentViewController: UIViewController {
     }
 }
 
-extension PetsContentViewController: UICollectionViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset
-        let bounds = scrollView.bounds
-        let size = scrollView.contentSize
-        let inset = scrollView.contentInset
-        let y: Float = Float(offset.y) + Float(bounds.size.height) - Float(inset.bottom)
-        let height: Float = Float(size.height)
-        let distance: Float = 10
-        
-        if y > height + distance {
-            print(":pasa el limite y \(y) > height + distance \(height + distance) ")
-            delegate?.executeFetch()
-        }
-    }
-}
 
-extension PetsContentViewController: PetContentDelegate {
+extension FavoritesContentViewController: FavoriteContentDelegate {
     func didTapCell(pet: Pet) {
         delegate?.didTap(pet: pet)
     }
     
-    func didTapLike(_ pet: Pet, completion: @escaping(Bool) -> Void) {
+    func didTapDislike(_ item: Item, completion: @escaping (Bool) -> Void) {
         if let delegate = delegate {
-            delegate.didLike(pet: pet, completion: { result in
-                if result == true {
-                    completion(true)
-                } else {
-                    completion(false)
-                }
-            })
+            switch item {
+            case .pet(let pet):
+                delegate.didDislike(pet: pet, completion: { [self] result in
+                    if result == true {
+                        completion(true)
+                    } else {
+                        completion(false)
+                    }
+                })
+            }
+        }
+        
+        if let sectionIndex = snapData.firstIndex(where: { $0.key == .pets }),
+           let itemIndex = snapData[sectionIndex].values.firstIndex(where: { $0 == item })
+        {
+            snapData[sectionIndex].values.remove(at: itemIndex)
+            
+            var snapshot = dataSource.snapshot()
+            snapshot.deleteItems([item])
+            
+            DispatchQueue.main.async { [weak self] in
+                self?.dataSource.apply(snapshot, animatingDifferences: true)
+            }
         }
     }
     
-    func didTapDislike(_ pet: Pet, completion: @escaping (Bool) -> Void) {
-        if let delegate = delegate {
-            delegate.didDislike(pet: pet, completion: { result in
-                if result == true {
-                    completion(true)
-                } else {
-                    completion(false)
+    func updatePet(_ pet: FavoritesContentViewController.Item) {
+        switch pet {
+        case .pet(let pet):
+            if let indexToUpdate = dataSource.snapshot().itemIdentifiers.firstIndex(where: { item in
+                switch item {
+                case .pet(let item):
+                    if item.id == pet.id {
+                        return true
+                    }
                 }
-            })
+                return false
+            }) {
+                    var snapshot = dataSource.snapshot()
+                    
+                    // Remove the old item
+                    snapshot.deleteItems([snapshot.itemIdentifiers[indexToUpdate]])
+                    
+                    // Insert the updated item at the original index
+                snapshot.insertItems([.pet(pet)], beforeItem: snapshot.itemIdentifiers[indexToUpdate])
+                    
+                    // Apply the updated snapshot on the main thread
+                    DispatchQueue.main.async { [weak self] in
+                        self?.dataSource.apply(snapshot, animatingDifferences: true)
+                    }
+                }
+              
         }
-    }
         
     }
+    
+}
+
 
 
 

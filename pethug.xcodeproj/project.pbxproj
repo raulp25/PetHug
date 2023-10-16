@@ -152,6 +152,8 @@
 		C49440872ACD34C10042A1DA /* DeletePetUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49440862ACD34C10042A1DA /* DeletePetUC.swift */; };
 		C49440892ACD3ABF0042A1DA /* AddPetContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49440882ACD3ABF0042A1DA /* AddPetContentViewModel.swift */; };
 		C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */; };
+		C49F70802ADCC55E008A0D38 /* AnimalsStackContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F707F2ADCC55E008A0D38 /* AnimalsStackContentViewController.swift */; };
+		C49F70832ADCE1CC008A0D38 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F70822ADCE1CB008A0D38 /* Banner.swift */; };
 		C4A95C3D2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A95C3C2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift */; };
 		C4A95C3F2AC8BE33002781E2 /* NewPetBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4A95C3E2AC8BE33002781E2 /* NewPetBreedCellContentView.swift */; };
 		C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4AB87712ACA082C0081451F /* NewPetViewModel.swift */; };
@@ -171,6 +173,17 @@
 		C4BCFEBC2AD9CD020089A1A8 /* FilterPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFEBB2AD9CD020089A1A8 /* FilterPetsUC.swift */; };
 		C4C4950E2AC7A5A300CBBDE4 /* BreedPopupSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */; };
 		C4C872672ADC59BC007110E2 /* UpdatePetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872662ADC59BC007110E2 /* UpdatePetModel.swift */; };
+		C4C8726A2ADC7407007110E2 /* FavoriteTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872692ADC7407007110E2 /* FavoriteTabCoordinator.swift */; };
+		C4C8726C2ADC747D007110E2 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8726B2ADC747D007110E2 /* FavoritesViewController.swift */; };
+		C4C8726E2ADC7564007110E2 /* FavoritesContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8726D2ADC7564007110E2 /* FavoritesContentViewController.swift */; };
+		C4C872702ADC75C4007110E2 /* FavoritesContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8726F2ADC75C4007110E2 /* FavoritesContentViewController+Types.swift */; };
+		C4C872732ADC76F6007110E2 /* CollectionViewFavoritePetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872722ADC76F6007110E2 /* CollectionViewFavoritePetCell.swift */; };
+		C4C872752ADC7748007110E2 /* FavoriteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872742ADC7748007110E2 /* FavoriteCellViewModel.swift */; };
+		C4C872782ADC7928007110E2 /* FavoritesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872772ADC7928007110E2 /* FavoritesViewModel.swift */; };
+		C4C8727A2ADC794F007110E2 /* FavoritesViewModel+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872792ADC794F007110E2 /* FavoritesViewModel+Types.swift */; };
+		C4C8727C2ADC7D1B007110E2 /* FetchAllPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8727B2ADC7D1B007110E2 /* FetchAllPetsUC.swift */; };
+		C4C8727E2ADC7D26007110E2 /* FetchFavoritePets.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8727D2ADC7D26007110E2 /* FetchFavoritePets.swift */; };
+		C4C872802ADC84A8007110E2 /* FavoritesViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C8727F2ADC84A8007110E2 /* FavoritesViewHeaderViewController.swift */; };
 		C4CB96A32AD3491E00E5C338 /* CollectionViewDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */; };
 		C4CB96A52AD351FA00E5C338 /* CollectionViewMedicalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CB96A42AD351FA00E5C338 /* CollectionViewMedicalCell.swift */; };
 		C4CF74CF2AB21D8900D69185 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74CE2AB21D8900D69185 /* AuthService.swift */; };
@@ -361,6 +374,8 @@
 		C49440862ACD34C10042A1DA /* DeletePetUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePetUC.swift; sourceTree = "<group>"; };
 		C49440882ACD3ABF0042A1DA /* AddPetContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetContentViewModel.swift; sourceTree = "<group>"; };
 		C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponser+Extensions.swift"; sourceTree = "<group>"; };
+		C49F707F2ADCC55E008A0D38 /* AnimalsStackContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalsStackContentViewController.swift; sourceTree = "<group>"; };
+		C49F70822ADCE1CB008A0D38 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
 		C4A95C3C2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetBreedListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4A95C3E2AC8BE33002781E2 /* NewPetBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetBreedCellContentView.swift; sourceTree = "<group>"; };
 		C4AB87712ACA082C0081451F /* NewPetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewModel.swift; sourceTree = "<group>"; };
@@ -380,6 +395,17 @@
 		C4BCFEBB2AD9CD020089A1A8 /* FilterPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsUC.swift; sourceTree = "<group>"; };
 		C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedPopupSearch.swift; sourceTree = "<group>"; };
 		C4C872662ADC59BC007110E2 /* UpdatePetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePetModel.swift; sourceTree = "<group>"; };
+		C4C872692ADC7407007110E2 /* FavoriteTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTabCoordinator.swift; sourceTree = "<group>"; };
+		C4C8726B2ADC747D007110E2 /* FavoritesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		C4C8726D2ADC7564007110E2 /* FavoritesContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesContentViewController.swift; sourceTree = "<group>"; };
+		C4C8726F2ADC75C4007110E2 /* FavoritesContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoritesContentViewController+Types.swift"; sourceTree = "<group>"; };
+		C4C872722ADC76F6007110E2 /* CollectionViewFavoritePetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewFavoritePetCell.swift; sourceTree = "<group>"; };
+		C4C872742ADC7748007110E2 /* FavoriteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteCellViewModel.swift; sourceTree = "<group>"; };
+		C4C872772ADC7928007110E2 /* FavoritesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModel.swift; sourceTree = "<group>"; };
+		C4C872792ADC794F007110E2 /* FavoritesViewModel+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoritesViewModel+Types.swift"; sourceTree = "<group>"; };
+		C4C8727B2ADC7D1B007110E2 /* FetchAllPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchAllPetsUC.swift; sourceTree = "<group>"; };
+		C4C8727D2ADC7D26007110E2 /* FetchFavoritePets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchFavoritePets.swift; sourceTree = "<group>"; };
+		C4C8727F2ADC84A8007110E2 /* FavoritesViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewHeaderViewController.swift; sourceTree = "<group>"; };
 		C4CB96A22AD3491E00E5C338 /* CollectionViewDescriptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDescriptionCell.swift; sourceTree = "<group>"; };
 		C4CB96A42AD351FA00E5C338 /* CollectionViewMedicalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewMedicalCell.swift; sourceTree = "<group>"; };
 		C4CF74CE2AB21D8900D69185 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
@@ -554,6 +580,7 @@
 				C426D2612AB66F8800BFA357 /* ChildTabCoordinatorProtocol.swift */,
 				C426D2652AB6703E00BFA357 /* HomeTabCoordinator.swift */,
 				C43261D52AC222B900B70ACA /* AddPetTabCoordinator.swift */,
+				C4C872692ADC7407007110E2 /* FavoriteTabCoordinator.swift */,
 			);
 			path = ChildTabCoordinators;
 			sourceTree = "<group>";
@@ -561,11 +588,8 @@
 		C426D2692AB6719900BFA357 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C476E2B52ABA82730014DEA4 /* ViewModel */,
-				C435314B2AB960A10070D7EE /* PetsViewController.swift */,
-				C43531562AB983920070D7EE /* PetsContentViewController.swift */,
-				C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */,
-				C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */,
+				C49F707E2ADCC50B008A0D38 /* Pets */,
+				C49F707D2ADCC4F7008A0D38 /* AnimalsStack */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -938,6 +962,8 @@
 		C476E2BC2ABA96B20014DEA4 /* Pets */ = {
 			isa = PBXGroup;
 			children = (
+				C4C8727D2ADC7D26007110E2 /* FetchFavoritePets.swift */,
+				C4C8727B2ADC7D1B007110E2 /* FetchAllPetsUC.swift */,
 				C476E2BD2ABA96C40014DEA4 /* FetchPetsUC.swift */,
 				C4F7DFC92ACC8407000D5F76 /* CreatePetUC.swift */,
 				C451930B2ACE7C4A00B80926 /* UpdatePetUC.swift */,
@@ -1088,6 +1114,34 @@
 			path = Gallery;
 			sourceTree = "<group>";
 		};
+		C49F707D2ADCC4F7008A0D38 /* AnimalsStack */ = {
+			isa = PBXGroup;
+			children = (
+				C49F707F2ADCC55E008A0D38 /* AnimalsStackContentViewController.swift */,
+			);
+			path = AnimalsStack;
+			sourceTree = "<group>";
+		};
+		C49F707E2ADCC50B008A0D38 /* Pets */ = {
+			isa = PBXGroup;
+			children = (
+				C435314B2AB960A10070D7EE /* PetsViewController.swift */,
+				C43531562AB983920070D7EE /* PetsContentViewController.swift */,
+				C43531582AB983ED0070D7EE /* PetsContentViewController+Types.swift */,
+				C476E2B32ABA6B300014DEA4 /* PetsViewHeaderViewController.swift */,
+				C476E2B52ABA82730014DEA4 /* ViewModel */,
+			);
+			path = Pets;
+			sourceTree = "<group>";
+		};
+		C49F70812ADCE1C0008A0D38 /* Banner */ = {
+			isa = PBXGroup;
+			children = (
+				C49F70822ADCE1CB008A0D38 /* Banner.swift */,
+			);
+			path = Banner;
+			sourceTree = "<group>";
+		};
 		C4A95C392AC8BD7D002781E2 /* Breed */ = {
 			isa = PBXGroup;
 			children = (
@@ -1155,6 +1209,7 @@
 		C4BC4A262ABA1A020017428D /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				C4C872712ADC76DE007110E2 /* FavoriteCollectionViewPetCell */,
 				C41E8E662AD4A21E0065DEFC /* FilterPetsCollectionViewPetCell */,
 				C43FAF912AD229FA00A437C3 /* PetView */,
 				C48D9B492AC49D47002EDA90 /* NewPetCollectionViewCell */,
@@ -1172,6 +1227,36 @@
 				C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */,
 			);
 			path = BreedPopupSearch;
+			sourceTree = "<group>";
+		};
+		C4C872682ADC73A9007110E2 /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				C4C872762ADC7917007110E2 /* ViewModel */,
+				C4C8726B2ADC747D007110E2 /* FavoritesViewController.swift */,
+				C4C8726D2ADC7564007110E2 /* FavoritesContentViewController.swift */,
+				C4C8726F2ADC75C4007110E2 /* FavoritesContentViewController+Types.swift */,
+				C4C8727F2ADC84A8007110E2 /* FavoritesViewHeaderViewController.swift */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		C4C872712ADC76DE007110E2 /* FavoriteCollectionViewPetCell */ = {
+			isa = PBXGroup;
+			children = (
+				C4C872722ADC76F6007110E2 /* CollectionViewFavoritePetCell.swift */,
+				C4C872742ADC7748007110E2 /* FavoriteCellViewModel.swift */,
+			);
+			path = FavoriteCollectionViewPetCell;
+			sourceTree = "<group>";
+		};
+		C4C872762ADC7917007110E2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4C872772ADC7928007110E2 /* FavoritesViewModel.swift */,
+				C4C872792ADC794F007110E2 /* FavoritesViewModel+Types.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		C4CF74CD2AB21D5300D69185 /* Services */ = {
@@ -1239,15 +1324,16 @@
 		C4CF74DF2AB22A8C00D69185 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				C41E8E592AD46B9D0065DEFC /* FilterPets */,
-				C4B9EB782AD2033F0040ACCE /* Pet */,
-				C43531512AB96A420070D7EE /* Error */,
+				C4C872682ADC73A9007110E2 /* Favorites */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
 				C4CF74EF2AB2504300D69185 /* Login */,
 				C482908B2AB391AE00DE6227 /* CreateAccount */,
 				C426D2692AB6719900BFA357 /* Home */,
 				C43261D72AC2254800B70ACA /* AddPet */,
 				C4779BEE2AC3BA6B00E3A16F /* NewPet */,
+				C41E8E592AD46B9D0065DEFC /* FilterPets */,
+				C4B9EB782AD2033F0040ACCE /* Pet */,
+				C43531512AB96A420070D7EE /* Error */,
 				C435314F2AB969D20070D7EE /* LoadingViewController.swift */,
 				C426D26A2AB671AD00BFA357 /* SettingsViewController.swift */,
 			);
@@ -1275,6 +1361,7 @@
 		C4CF74F42AB2599B00D69185 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C49F70812ADCE1C0008A0D38 /* Banner */,
 				C475540B2AD8E229008AA12F /* FilterAddressPopupSearch */,
 				C480DBBF2AD3698F005F707C /* TextCheckbox */,
 				C43FAF982AD257E900A437C3 /* Badge */,
@@ -1527,6 +1614,7 @@
 				C42616E92AB27B37006925DB /* AuthPublisher.swift in Sources */,
 				C47554122AD8E3BA008AA12F /* FilterSearchAddressListCellConfiguration.swift in Sources */,
 				C4CF74E82AB22FD100D69185 /* UIView+Extensions.swift in Sources */,
+				C4C872732ADC76F6007110E2 /* CollectionViewFavoritePetCell.swift in Sources */,
 				C4B1BD152AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift in Sources */,
 				C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */,
 				C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */,
@@ -1552,6 +1640,8 @@
 				C483EB9D2AC558ED005E8BE2 /* NewPetGenderListCellConfiguration.swift in Sources */,
 				C4CF74EC2AB23A1A00D69185 /* Colors.swift in Sources */,
 				C41E8E5B2AD46D720065DEFC /* FilterPetsContentViewController.swift in Sources */,
+				C4C8727A2ADC794F007110E2 /* FavoritesViewModel+Types.swift in Sources */,
+				C49F70832ADCE1CC008A0D38 /* Banner.swift in Sources */,
 				C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */,
 				C426D25F2AB66E7C00BFA357 /* InAppManager.swift in Sources */,
 				C435315D2AB986C00070D7EE /* UICollectionView+Factory.swift in Sources */,
@@ -1559,12 +1649,15 @@
 				C43261D42AC2213700B70ACA /* UICollectionView+Layout.swift in Sources */,
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
 				C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */,
+				C4C8727E2ADC7D26007110E2 /* FetchFavoritePets.swift in Sources */,
 				C4BCFEBC2AD9CD020089A1A8 /* FilterPetsUC.swift in Sources */,
 				C4F7DFCD2ACC8FED000D5F76 /* NewPetAgeListCellConfiguration.swift in Sources */,
 				C4779BED2AC3A9FD00E3A16F /* AddPetCellViewModel.swift in Sources */,
+				C4C872802ADC84A8007110E2 /* FavoritesViewHeaderViewController.swift in Sources */,
 				C4EF851E2ACB3CD20088A53A /* GalleryPageSheetView.swift in Sources */,
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
 				C483EB9F2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift in Sources */,
+				C4C8727C2ADC7D1B007110E2 /* FetchAllPetsUC.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
 				C45193102ACE8B0E00B80926 /* FetchUserPetsUC.swift in Sources */,
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
@@ -1608,6 +1701,7 @@
 				C43FAF932AD22A9A00A437C3 /* CollectionViewGalleryCell.swift in Sources */,
 				C4779BF42AC3C97E00E3A16F /* NewPetContentViewController.swift in Sources */,
 				C44DFD402AC639B20045DD7A /* NewPetUploadCellContentView.swift in Sources */,
+				C4C872782ADC7928007110E2 /* FavoritesViewModel.swift in Sources */,
 				C4779BF02AC3BADE00E3A16F /* NewPetViewController.swift in Sources */,
 				C43FAF972AD2472300A437C3 /* CollectionViewInfoCell.swift in Sources */,
 				C418BBA82AC0BE5400C31967 /* PetCellViewModel.swift in Sources */,
@@ -1621,6 +1715,7 @@
 				C4F7DFD62ACCA8CA000D5F76 /* NewPetSocialListCellConfiguration.swift in Sources */,
 				C483EB982AC5382A005E8BE2 /* NewPetTypeListCellConfiguration.swift in Sources */,
 				C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */,
+				C49F70802ADCC55E008A0D38 /* AnimalsStackContentViewController.swift in Sources */,
 				C426D2682AB6713A00BFA357 /* SettingsCoordinator.swift in Sources */,
 				C42616E32AB2788A006925DB /* Validator.swift in Sources */,
 				C4B1BD1C2AD4BFFD003311EB /* FilterPetsAgeCellContentView.swift in Sources */,
@@ -1629,6 +1724,7 @@
 				C476E2C42ABA9A1A0014DEA4 /* PetDataSource.swift in Sources */,
 				C43FAF952AD2382800A437C3 /* CollectionViewNameLocationCell.swift in Sources */,
 				C4B9EB7C2AD2040D0040ACCE /* PetContentViewController.swift in Sources */,
+				C4C872752ADC7748007110E2 /* FavoriteCellViewModel.swift in Sources */,
 				C4779BDB2AC38D5500E3A16F /* AddPetViewController.swift in Sources */,
 				C4F7DFCF2ACC9077000D5F76 /* NewPetAgeCellContentView.swift in Sources */,
 				C4F7DFDC2ACCA8E9000D5F76 /* NewPetSocialCellContentView.swift in Sources */,
@@ -1658,6 +1754,7 @@
 				C43531572AB983920070D7EE /* PetsContentViewController.swift in Sources */,
 				C4E654462AC8E834009E027F /* SearchBreedListCellConfiguration.swift in Sources */,
 				C43FAF902AD21AE500A437C3 /* PetContentViewController+Types.swift in Sources */,
+				C4C8726C2ADC747D007110E2 /* FavoritesViewController.swift in Sources */,
 				C41DE38F2ADB577400E653BA /* DislikePetUC.swift in Sources */,
 				C475540A2AD8CD4B008AA12F /* Keys.swift in Sources */,
 				C476E2B42ABA6B300014DEA4 /* PetsViewHeaderViewController.swift in Sources */,
@@ -1675,12 +1772,14 @@
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C4F7DFC72ACC7F76000D5F76 /* NewPetViewModel+Types.swift in Sources */,
 				C476E2C22ABA99D30014DEA4 /* DefaultPetRepository.swift in Sources */,
+				C4C8726A2ADC7407007110E2 /* FavoriteTabCoordinator.swift in Sources */,
 				C42616F32AB282DF006925DB /* SpinnerView.swift in Sources */,
 				C4779BEB2AC3A9E800E3A16F /* CollectionViewAddPetCell.swift in Sources */,
 				C40AD70A2AC60C83003177E2 /* NewPetInfoCellContentView.swift in Sources */,
 				C42616F92AB2A6B5006925DB /* GradientButton.swift in Sources */,
 				C4CF74D52AB226CD00D69185 /* CoordinatorProtocol.swift in Sources */,
 				C4CF74E22AB22B0200D69185 /* LaunchViewController.swift in Sources */,
+				C4C8726E2ADC7564007110E2 /* FavoritesContentViewController.swift in Sources */,
 				C42616DB2AB27774006925DB /* Miscellaneous.swift in Sources */,
 				C48D9B542AC4CA3F002EDA90 /* NewPetGalleryListCellConfiguration.swift in Sources */,
 				C43531552AB96C120070D7EE /* ErrorView.swift in Sources */,
@@ -1711,6 +1810,7 @@
 				C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */,
 				C44820162AB539B400E72BD2 /* UserModel+DomainMapper.swift in Sources */,
 				C42D3D9C2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift in Sources */,
+				C4C872702ADC75C4007110E2 /* FavoritesContentViewController+Types.swift in Sources */,
 				C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

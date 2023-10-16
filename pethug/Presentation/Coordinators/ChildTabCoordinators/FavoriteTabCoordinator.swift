@@ -1,46 +1,30 @@
 //
-//  HomeTabCoordinator.swift
+//  FavoriteTabCoordinator.swift
 //  pethug
 //
-//  Created by Raul Pena on 16/09/23.
+//  Created by Raul Pena on 15/10/23.
 //
 
 import UIKit
 
-final class HomeTabCoordinator: ChildTabCoordinator {
+final class FavoriteTabCoordinator: ChildTabCoordinator {
     var childCoordinators: [NavCoordinator] = .init()
     
     var parentCoordinator: InAppCoordinator?
     
     var rootViewController: UINavigationController = .init()
     
-    let viewModel: PetsViewModel = .init(fetchPetsUC: FetchPets.composeFetchPetsUC(),
-                                         filterPetsUC: FilterPets.composeFilterPetsUC(),
-                                         likedPetUC: LikePet.composeLikePetUC(),
-                                         dislikePetUC: DisLikePet.composeDisLikePetUC()
-                                    )
-    
-//    func start() {
-//        viewModel.navigation = self
-//        let vc = PetsViewController(viewModel: viewModel)
-//        rootViewController.pushViewController(vc, animated: true)
-//    }
-    
     func start() {
-        let vc = AnimalsStackContentViewController()
+        let viewModel: FavoritesViewModel = .init(fetchFavoritePetsUC: FetchFavoritePets.composeFetchFavoritePetsUC(),
+                                                  dislikePetUC: DisLikePet.composeDisLikePetUC()
+                                             )
+        viewModel.navigation = self
+        let vc = FavoritesViewController(viewModel: viewModel)
         rootViewController.pushViewController(vc, animated: true)
     }
 }
 
-extension HomeTabCoordinator: PetsNavigatable {
-    func tappedFilter() {
-        let vc = FilterPetsContentViewController()
-        vc.coordinator = self
-        vc.hidesBottomBarWhenPushed = true 
-        rootViewController.pushViewController(vc, animated: true)
-    }
-    
-
+extension FavoriteTabCoordinator: FavoritesNavigatable {
     func tapped(pet: Pet) {
         let vc = PetContentViewController(snapData: [
             .init(

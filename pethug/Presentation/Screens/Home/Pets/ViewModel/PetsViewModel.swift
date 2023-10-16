@@ -280,7 +280,8 @@ final class PetsViewModel {
         let uid = AuthService().uid
         
         if pet.likedByUsers.contains(uid) {
-            throw PetsError.defaultCustom("Duplicated like event in addLikeUid")
+//            throw PetsError.defaultCustom("Duplicated like event in addLikeUid")
+            return pet
         }
         
         let updatePet = pet

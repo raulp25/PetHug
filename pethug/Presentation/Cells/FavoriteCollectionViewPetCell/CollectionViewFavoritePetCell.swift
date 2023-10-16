@@ -1,20 +1,19 @@
 //
-//  PetCell.swift
+//  CollectionViewFavoritePetCell.swift
 //  pethug
 //
-//  Created by Raul Pena on 19/09/23.
+//  Created by Raul Pena on 15/10/23.
 //
 
 import UIKit
 import SDWebImage
 import FirebaseFirestore
-protocol PetContentDelegate: AnyObject {
-    func didTapLike(_ pet: Pet, completion: @escaping (Bool) -> Void)
-    func didTapDislike(_ pet: Pet, completion: @escaping (Bool) -> Void)
+protocol FavoriteContentDelegate: AnyObject {
+    func didTapDislike(_ pet: FavoritesContentViewController.Item, completion: @escaping (Bool) -> Void)
     func didTapCell(pet: Pet)
 }
 
-final class PetControllerCollectionViewCell: UICollectionViewCell {
+final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private components
     lazy private var petImage: UIImageView = {
@@ -23,7 +22,7 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         iv.backgroundColor = customRGBColor(red: 0, green: 61, blue: 44)
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
-        iv.layer.cornerRadius = 10 
+        iv.layer.cornerRadius = 10
         iv.translatesAutoresizingMaskIntoConstraints = false
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
@@ -81,15 +80,15 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     }()
     
     //MARK: - Private properties
-    private var viewModel: PetCellViewModel?
-    private weak var delegate: PetContentDelegate?
+    private var viewModel: FavoriteCellViewModel?
+    private weak var delegate: FavoriteContentDelegate?
     //MARK: - Internal properties
     var liked = false
     
     var action: ((_ cellId: String) -> Void)? = nil
     
     //MARK: - LifeCycle
-    func configure(with pet: Pet, delegate: PetContentDelegate? = nil) {
+    func configure(with pet: Pet, delegate: FavoriteContentDelegate? = nil) {
         print("llama cellconfigure: => ")
         viewModel = .init(pet: pet)
         self.delegate = delegate
@@ -149,26 +148,24 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         )
     }
     
-    private var work: DispatchWorkItem? 
+    private var work: DispatchWorkItem?
     private var checkLikesWork: DispatchWorkItem?
     private var db = Firestore.firestore()
-    private func configureCellUI(with viewModel: PetCellViewModel) {
+    private func configureCellUI(with viewModel: FavoriteCellViewModel) {
         
         
          work = DispatchWorkItem(block: {
-//             let imageDownloader = ImageService()
-//             imageDownloader.downloadImage(url: viewModel.petImage) { image in
-//                 if let image = image {
-//                     DispatchQueue.main.async {
-//                         self.petImage.image = UIImage(data: image)
-//                     }
-//                 }
-//             }
-             self.petImage.image = UIImage(named: viewModel.petImage)
-             let url = URL(string: viewModel.petImage)
-             DispatchQueue.main.async {
-                 self.petImage.sd_setImage(with: url)
+             let imageDownloader = ImageService()
+             imageDownloader.downloadImage(url: viewModel.petImage) { image in
+                 if let image = image {
+                     DispatchQueue.main.async {
+                         self.petImage.image = UIImage(data: image)
+                     }
+                 }
              }
+//             self.petImage.image = UIImage(named: viewModel.petImage)
+//             let url = URL(string: viewModel.petImage)
+//             self.petImage.sd_setImage(with: url)
         })
         
         DispatchQueue.main.async(execute: work!)
@@ -177,37 +174,8 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         if viewModel.pet.likedByUsers.contains(uid) {
             viewModel.isLiked = true
         }
+        
         heartImage.image = UIImage(systemName: viewModel.heartImage)
-        
-        
-//        checkLikesWork = DispatchWorkItem(block: {
-//            self.db.collection(viewModel.pet.type.getPath).document(viewModel.pet.id).getDocument { snapshot, error in
-//                let doc = snapshot?.data()
-//                guard let doc = doc else { return }
-//                if let error = error {
-//                    print("error fetching liked pets array: => \(error.localizedDescription)")
-//                    return
-//                }
-//                
-//                if let arrayOfLikes = doc["likedByUsers"] as? [String] {
-//                    if arrayOfLikes.contains(uid) {
-//                        DispatchQueue.main.async {
-//                            viewModel.isLiked = true
-//                            self.heartImage.image = UIImage(systemName: "heart.fill")
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            viewModel.isLiked = false
-//                            self.heartImage.image = UIImage(systemName: "heart")
-//                        }
-//                    }
-//                }
-//            }
-//            
-//            
-//        })
-//        
-//        DispatchQueue.main.async(execute: checkLikesWork!)
         name.text = viewModel.name
         address.text = viewModel.address.rawValue
     }
@@ -237,26 +205,10 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         
         heartImageContainer.isUserInteractionEnabled = false
         
-        if !viewModel.isLiked {
-            print(":viewmodel no es ta like entra condicion")
-            delegate.didTapLike(viewModel.pet) { [weak self] result in
-                print(":viewmodel no es ta like entra condicion RESULTADO \(result)")
-                if result == false {
-                    viewModel.isLiked.toggle()
-                    DispatchQueue.main.async {
-                        self?.heartImage.image = UIImage(systemName: viewModel.heartImage)
-                    }
-                }
-                DispatchQueue.main.async {
-                    self?.heartImageContainer.isUserInteractionEnabled = true
-                }
-            }
-        }
-        
         if viewModel.isLiked {
             print(":viewmodel si esta like entra condicion")
             
-            delegate.didTapDislike(viewModel.pet) { [weak self] result in
+            delegate.didTapDislike(.pet(viewModel.pet)) { [weak self] result in
                 print(":viewmodel si esta like entra condicion RESULTADO \(result)")
                 if result == false {
                     viewModel.isLiked.toggle()
@@ -275,3 +227,4 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     }
 
 }
+

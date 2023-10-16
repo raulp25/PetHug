@@ -32,6 +32,12 @@ final class DefaultPetRepository: PetRepository {
         return pets
     }
     
+    func fetchFavoritePets() async throws -> [Pet] {
+        let pets = try await petDataSource.fetchFavoritePets()
+        
+        return pets
+    }
+    
     func createPet(collection path: String, data: Pet) async throws -> Bool {
         let result = try await petDataSource.createPet(collection: path, data: data)
         return result

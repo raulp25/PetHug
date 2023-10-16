@@ -50,7 +50,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         case .home:
             childCoordinator = HomeTabCoordinator()
         case .favorites:
-            childCoordinator = HomeTabCoordinator()
+            childCoordinator = FavoriteTabCoordinator()
         case .add:
             childCoordinator = AddPetTabCoordinator()
         case .about:

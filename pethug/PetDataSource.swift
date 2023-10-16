@@ -18,6 +18,8 @@ protocol PetDataSource {
     func fetchPets(fetchCollection path: String) async throws -> [Pet]
     func fetchUserPets(with resetPagination: Bool) async throws -> [Pet]
     func fetchPetsWithFilter(options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet]
+    func fetchFavoritePets() async throws -> [Pet]
+    
     func createPet(collection path: String, data: Pet) async throws -> Bool
     func updatePet(collection path: String, data: Pet) async throws -> Bool
     func deletePet(collection path: String, docId: String) async throws -> Bool
@@ -112,6 +114,34 @@ final class DefaultPetDataSource: PetDataSource {
         if !documents.isEmpty {
             query = query.start(afterDocument: documents.last!)
         }
+        
+        let snapshot = try await query.getDocuments()
+        
+        let docs = snapshot.documents
+        
+        var pets = [Pet]()
+        
+        for doc in docs {
+            let dictionary = doc.data()
+            let pet = Pet(dictionary: dictionary)
+            pets.append(pet)
+            documents += [doc]
+            
+        }
+        
+        return pets
+    }
+    
+    func fetchFavoritePets() async throws -> [Pet] {
+        let uid = AuthService().uid
+        
+        if query == nil {
+            query = db.collection("users")
+                      .document(uid)
+                      .collection("likedPets")
+                      .order(by: order, descending: true)
+        }
+        
         
         let snapshot = try await query.getDocuments()
         

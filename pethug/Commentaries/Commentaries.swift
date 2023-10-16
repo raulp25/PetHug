@@ -1005,7 +1005,6 @@ import Foundation
 //
 
 ///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-///
 ///Recursive register fireStorage objects
 ///
 ///
@@ -1142,3 +1141,48 @@ import Foundation
 //    return true
 //
 //}
+
+///~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//// Example that was refactored
+//    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
+//        filterMode = true
+//        if options != nil {
+//            filterOptions = options
+//        }
+//
+//        if resetFilterQueries {
+//            print("entra reset firstload: => \(resetFilterQueries)")
+//            isFirstLoad = true
+//            pets = []
+//        }
+//
+//        if isFirstLoad {
+//            state.send(.loading)
+//        }
+//
+//        print("filter options en fecthpets with filter 931: => \(filterOptions)")
+//        guard let filterOptions = filterOptions else { return }
+//        guard !isFetching else { return }
+//        isFetching = true
+//
+//        Task {
+//            do {
+//
+//                let data = try await filterPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
+//                if !isFirstLoad && !data.isEmpty {
+//                    print("no es firstload envia la dadta: => \(data)")
+//                    petsSubject.send(data)
+//
+//                } else if isFirstLoad {
+//                    isFirstLoad = false
+//                    petsSubject.send(data)
+//                }
+//
+//            } catch {
+//                state.send(.loaded([]))
+//                state.send(.error(.default(error)))
+//            }
+//
+//            isFetching = false
+//        }
+//    }
