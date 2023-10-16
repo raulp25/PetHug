@@ -43,13 +43,8 @@ final class FavoritesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if !isMounted{
-            isMounted = true
-        } else {
-            viewModel.fetchFavoritePets(resetData: true)
-        }
+        viewModel.fetchFavoritePets(resetData: true)
     }
-    
     
     // MARK: - setup
     private func setup() {

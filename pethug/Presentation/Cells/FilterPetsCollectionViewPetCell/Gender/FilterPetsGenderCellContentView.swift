@@ -10,6 +10,13 @@ import UIKit
 final class FilterPetsGenderCellContentView: UIView, UIContentView {
     
     //MARK: - Private components
+    private let headerLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Especificaciones"
+        label.font = UIFont.systemFont(ofSize: 14, weight: .heavy)
+        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
+        return label
+    }()
     
     private let titleLabel: UILabel = {
        let label = UILabel()
@@ -186,13 +193,20 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         let height = CGFloat(30)
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
+        addSubview(headerLabel)
         addSubview(titleLabel)
         addSubview(vStack)
         
+        headerLabel.centerX(
+            inView: self,
+            topAnchor: topAnchor
+        )
+        
         titleLabel.anchor(
-            top: topAnchor,
+            top: headerLabel.bottomAnchor,
             left: leftAnchor,
-            right: rightAnchor
+            right: rightAnchor,
+            paddingTop: 30
         )
         
         vStack.anchor(
