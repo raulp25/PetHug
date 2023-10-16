@@ -12,13 +12,8 @@ func buildQuery(for options: FilterOptions) -> Query {
     var query: Query
     
     
-        if options.type != .all {
-            
-            query = db.collection(options.type.rawValue)
-            
-        } else {
-            query = db.collection("birds")
-        }
+    query = db.collection("birds")
+    
         
         if options.age.min != 0 ||
            options.age.max != 25 {

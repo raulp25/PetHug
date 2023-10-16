@@ -99,14 +99,14 @@ final class FilterPetsContentViewController: UIViewController {
             let listConfiguration: UICollectionLayoutListConfiguration = .createBaseListConfigWithSeparators()
             
             switch section {
-            case .type:
-                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
-                section.contentInsets.top = 20
-                section.contentInsets.bottom = 30
-                section.contentInsets.leading = sideInsets
-                section.contentInsets.trailing = sideInsets
-                
-                return section
+//            case .type:
+//                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+//                section.contentInsets.top = 20
+//                section.contentInsets.bottom = 30
+//                section.contentInsets.leading = sideInsets
+//                section.contentInsets.trailing = sideInsets
+//
+//                return section
             case .gender:
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
                 section.contentInsets.bottom = 30
@@ -161,12 +161,12 @@ final class FilterPetsContentViewController: UIViewController {
                 supplementaryView.titleLabel.text = "Adopta a un amigo"
         }
         
-        let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsTypeListCellConfiguration>, FilterPetsType> { [weak self] cell, _, model in
-            guard let self = self else { return }
-            cell.viewModel = model
-            cell.viewModel?.delegate  = self
-            cell.viewModel?.type = self.viewModel.typeState
-        }
+//        let newPetTypeViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsTypeListCellConfiguration>, FilterPetsType> { [weak self] cell, _, model in
+//            guard let self = self else { return }
+//            cell.viewModel = model
+//            cell.viewModel?.delegate  = self
+//            cell.viewModel?.type = self.viewModel.typeState
+//        }
         
         let newPetGenderViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterPetsGenderListCellConfiguration>, FilterPetsGender> { [weak self] cell, _, model in
             guard let self = self else { return }
@@ -204,8 +204,8 @@ final class FilterPetsContentViewController: UIViewController {
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
-            case .type(let typeVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetTypeViewCellRegistration, for: indexPath, item: typeVM)
+//            case .type(let typeVM):
+//                return collectionView.dequeueConfiguredReusableCell(using: newPetTypeViewCellRegistration, for: indexPath, item: typeVM)
             case .gender(let genderVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetGenderViewCellRegistration, for: indexPath, item: genderVM)
             case .size(let sizeVM):
@@ -225,7 +225,7 @@ final class FilterPetsContentViewController: UIViewController {
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
         snapData  = [
-            .init(key: .type,      values: [.type(.init(type: viewModel.typeState))]),
+//            .init(key: .type,      values: [.type(.init(type: viewModel.typeState))]),
             
             .init(key: .gender,    values: [.gender(.init(gender: viewModel.genderState))]),
             
@@ -259,13 +259,13 @@ extension FilterPetsContentViewController: FilterPetsViewHeaderDelegate {
 }
 
 
-extension FilterPetsContentViewController: FilterPetsTypeDelegate {
-    func typeDidChange(type: FilterType) {
-        if viewModel.typeState != type {
-            viewModel.typeState = type
-        }
-    }
-}
+//extension FilterPetsContentViewController: FilterPetsTypeDelegate {
+//    func typeDidChange(type: FilterType) {
+//        if viewModel.typeState != type {
+//            viewModel.typeState = type
+//        }
+//    }
+//}
 
 extension FilterPetsContentViewController: FilterPetsGenderDelegate {
     func genderDidChange(gender: FilterGender) {

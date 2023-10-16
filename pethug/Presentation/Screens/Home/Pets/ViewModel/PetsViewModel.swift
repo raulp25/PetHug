@@ -30,6 +30,7 @@ final class PetsViewModel {
     private let filterPetsUC: DefaultFilterPetsUC
     private let likedPetUC: DefaultLikePetUC
     private let dislikedPetUC: DefaultDisLikePetUC
+    var collection: String!
     private var filterOptions: FilterOptions? = nil
     private var filterMode = false
     

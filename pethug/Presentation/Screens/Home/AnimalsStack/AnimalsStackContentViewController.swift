@@ -7,6 +7,13 @@
 
 import UIKit
 
+protocol AnimalsStackNavigatable: AnyObject {
+    func didTapDogsBanner()
+    func didTapCatsBanner()
+    func didTapBirdsBanner()
+    func didTapRabbitsBanner()
+}
+
 final class AnimalsStackContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var scrollView: UIScrollView = {
@@ -30,25 +37,37 @@ final class AnimalsStackContentViewController: UIViewController {
         return label
     }()
     
-    private let dogsBanner: Banner = {
+    private lazy var dogsBanner: Banner = {
         let uv = Banner(title: "Adopta", caption: "perros", imageNamed: "banner6", textAlign: .left)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
         return uv
     }()
-    private let catsBanner: Banner = {
+    private lazy var catsBanner: Banner = {
         let uv = Banner(title: "Adopta", caption: "gatos", imageNamed: "cats9", textAlign: .right)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
         return uv
     }()
-    private let birdsBanner: Banner = {
+    private lazy var birdsBanner: Banner = {
         let uv = Banner(title: "Adopta", caption: "pajaros", imageNamed: "birds2", textAlign: .left)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
         return uv
     }()
-    private let rabbitsBanner: Banner = {
+    private lazy var rabbitsBanner: Banner = {
         let uv = Banner(title: "Adopta", caption: "conejos", imageNamed: "rabbit1", textAlign: .right)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
         return uv
     }()
     
     //MARK: - Private properties
-    weak var delegate: PetsViewHeaderDelegate?
+    weak var delegate: AnimalsStackNavigatable?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -56,8 +75,9 @@ final class AnimalsStackContentViewController: UIViewController {
     }
     
     //MARK: - Private actions
-    @objc private func didTapFilter() {
-        delegate?.didTapFilter()
+    @objc private func didTapBanner(_ sender: Banner) {
+        print(":sender => \(sender)")
+//        delegate?.didTapFilter()
     }
     
     //MARK: - Setup

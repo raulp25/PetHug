@@ -6,48 +6,48 @@
 //
 
 import UIKit
-
-protocol FilterPetsTypeDelegate: AnyObject {
-    func typeDidChange(type: FilterType)
-}
-
-struct FilterPetsType: Hashable {
-    static func == (lhs: FilterPetsType, rhs: FilterPetsType) -> Bool {
-        (
-            lhs.id == rhs.id &&
-            lhs.type == rhs.type
-        )
-    }
-    var id = UUID().uuidString
-    var type: FilterType
-    weak var delegate: FilterPetsTypeDelegate?
-    func hash(into hasher: inout Hasher) {
-           hasher.combine(id)
-       }
-    init(type: FilterType = .all) {
-        self.type = type
-    }
-}
-
-struct FilterPetsTypeListCellConfiguration: ContentConfigurable {
-    var viewModel: FilterPetsType?
-
-    func makeContentView() -> UIView & UIContentView {
-        return FilterPetsTypeCellContentView(configuration: self)
-    }
-
-    func updated(for state: UIConfigurationState) -> FilterPetsTypeListCellConfiguration {
-        guard let state = state as? UICellConfigurationState else {
-            return self
-        }
-
-        let updateConfiguration = self
-
-        if state.isSwiped {
-        }
-
-        return updateConfiguration
-    }
-}
+//
+//protocol FilterPetsTypeDelegate: AnyObject {
+//    func typeDidChange(type: FilterType)
+//}
+//
+//struct FilterPetsType: Hashable {
+//    static func == (lhs: FilterPetsType, rhs: FilterPetsType) -> Bool {
+//        (
+//            lhs.id == rhs.id &&
+//            lhs.type == rhs.type
+//        )
+//    }
+//    var id = UUID().uuidString
+//    var type: FilterType
+//    weak var delegate: FilterPetsTypeDelegate?
+//    func hash(into hasher: inout Hasher) {
+//           hasher.combine(id)
+//       }
+//    init(type: FilterType = .all) {
+//        self.type = type
+//    }
+//}
+//
+//struct FilterPetsTypeListCellConfiguration: ContentConfigurable {
+//    var viewModel: FilterPetsType?
+//
+//    func makeContentView() -> UIView & UIContentView {
+//        return FilterPetsTypeCellContentView(configuration: self)
+//    }
+//
+//    func updated(for state: UIConfigurationState) -> FilterPetsTypeListCellConfiguration {
+//        guard let state = state as? UICellConfigurationState else {
+//            return self
+//        }
+//
+//        let updateConfiguration = self
+//
+//        if state.isSwiped {
+//        }
+//
+//        return updateConfiguration
+//    }
+//}
 
 

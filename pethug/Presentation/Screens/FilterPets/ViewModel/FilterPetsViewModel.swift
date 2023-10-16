@@ -18,8 +18,6 @@ class FilterPetsViewModel {
 
     //MARK: - Form Validation
     private var cancellables = Set<AnyCancellable>()
-    
-    @Published var typeState:     FilterType = .all
     @Published var genderState:   FilterGender  = .all
     @Published var sizeState:     FilterSize   = .all
     @Published var ageRangeState: FilterAgeRange  = .init(min: 0, max: 25)
@@ -47,23 +45,21 @@ class FilterPetsViewModel {
     
     private var formValidationState: AnyPublisher<State, Never> {
         return Publishers.CombineLatest(
-            Publishers.CombineLatest3($typeState, $ageRangeState, $addressState),
+            Publishers.CombineLatest($ageRangeState, $addressState),
             Publishers.CombineLatest($genderState, $sizeState)
         )
         .map { [weak self] nameGalleryType, breedGenderSize in
             guard let self = self else { return .invalid }
             
-            let (type, ageRange, address) = nameGalleryType
+            let (ageRange, address) = nameGalleryType
             let (gender, size) = breedGenderSize
             createFilterOptions(
-                type: type,
                 gender: gender,
                 size: size,
                 ageRange: ageRange,
                 address: address
             )
             return self.validateForm(
-                type: type,
                 gender: gender,
                 size: size,
                 ageRange: ageRange,
@@ -74,7 +70,6 @@ class FilterPetsViewModel {
     }
     
     private func validateForm(
-        type: FilterType,
         gender: FilterGender,
         size: FilterSize,
         ageRange: FilterAgeRange,
@@ -82,7 +77,6 @@ class FilterPetsViewModel {
     ) -> State{
         if let currentFilterOptions = currentFilterOptions {
             let options = FilterOptions(
-                type: type,
                 gender: gender,
                 size: size,
                 age: ageRange,
@@ -96,8 +90,7 @@ class FilterPetsViewModel {
             }
         }
          
-        if type   != .all ||
-           gender != .all ||
+        if gender != .all ||
            size   != .all ||
            address != nil {
             return .valid
@@ -113,14 +106,12 @@ class FilterPetsViewModel {
     
     
     private func createFilterOptions(
-        type: FilterType,
         gender: FilterGender,
         size: FilterSize,
         ageRange: FilterAgeRange,
         address: FilterState?
     ) {
         let options = FilterOptions(
-                        type: type,
                         gender: gender,
                         size: size,
                         age: ageRange,
@@ -134,7 +125,6 @@ class FilterPetsViewModel {
             print("savedFilterOptions: => \(savedFilterOptions)")
             currentFilterOptions = savedFilterOptions
             
-            typeState     = savedFilterOptions.type
             genderState   = savedFilterOptions.gender
             sizeState     = savedFilterOptions.size
             ageRangeState = savedFilterOptions.age
@@ -171,7 +161,6 @@ class FilterPetsViewModel {
     }
     
     func resetState() {
-        typeState     = .all
         genderState   = .all
         sizeState     = .all
         ageRangeState = .init(min: 0, max: 25)

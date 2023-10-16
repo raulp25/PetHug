@@ -20,15 +20,53 @@ final class HomeTabCoordinator: ChildTabCoordinator {
                                          dislikePetUC: DisLikePet.composeDisLikePetUC()
                                     )
     
-//    func start() {
-//        viewModel.navigation = self
-//        let vc = PetsViewController(viewModel: viewModel)
-//        rootViewController.pushViewController(vc, animated: true)
-//    }
-    
     func start() {
         let vc = AnimalsStackContentViewController()
+        vc.delegate = self
         rootViewController.pushViewController(vc, animated: true)
+    }
+    
+    func startDogs() {
+        viewModel.navigation = self
+        viewModel.collection = .getPath(for: .dogs)
+        let vc = PetsViewController(viewModel: viewModel)
+        rootViewController.pushViewController(vc, animated: true)
+    }
+    
+    func startCats() {
+        viewModel.navigation = self
+        let vc = PetsViewController(viewModel: viewModel)
+        rootViewController.pushViewController(vc, animated: true)
+    }
+    
+    func startBirds() {
+        viewModel.navigation = self
+        let vc = PetsViewController(viewModel: viewModel)
+        rootViewController.pushViewController(vc, animated: true)
+    }
+    
+    func startRabbits() {
+        viewModel.navigation = self
+        let vc = PetsViewController(viewModel: viewModel)
+        rootViewController.pushViewController(vc, animated: true)
+    }
+}
+
+extension HomeTabCoordinator: AnimalsStackNavigatable {
+    func didTapDogsBanner() {
+        startDogs()
+    }
+    
+    func didTapCatsBanner() {
+        startCats()
+    }
+    
+    func didTapBirdsBanner() {
+        startBirds()
+    }
+    
+    func didTapRabbitsBanner() {
+        startRabbits()
     }
 }
 

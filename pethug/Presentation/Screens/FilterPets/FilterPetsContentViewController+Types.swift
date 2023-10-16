@@ -13,7 +13,7 @@ extension FilterPetsContentViewController {
     typealias Snapshot = NSDiffableDataSourceSnapshot<Section, Item>
     
     enum Section: Int {
-        case type
+//        case type
         case gender
         case size
         case ageRange
@@ -22,7 +22,7 @@ extension FilterPetsContentViewController {
     }
     
     enum Item: Hashable {
-        case type(FilterPetsType)
+//        case type(FilterPetsType)
         case gender(FilterPetsGender)
         case size(FilterPetsSize)
         case ageRange(FilterPetsAge)
@@ -36,13 +36,13 @@ extension FilterPetsContentViewController {
     }
 }
 
-enum FilterType: String, Codable, Hashable {
-    case all
-    case dog = "dogs"
-    case cat = "cats"
-    case bird = "birds"
-    case rabbit = "rabbits"
-}
+//enum FilterType: String, Codable, Hashable {
+//    case all
+//    case dog = "dogs"
+//    case cat = "cats"
+//    case bird = "birds"
+//    case rabbit = "rabbits"
+//}
 
 enum FilterGender: String, Codable, Hashable {
     case all
@@ -94,15 +94,15 @@ enum FilterState: String, Codable, Hashable, CaseIterable {
 }
 
 struct FilterOptions: Codable {
-    let type: FilterType
+//    let type: FilterType
     let gender: FilterGender
     let size: FilterSize
     let age: FilterAgeRange
     let address: FilterState?
     
     static func == (lhs: FilterOptions, rhs: FilterOptions) -> Bool {
-            return lhs.type    == rhs.type    &&
-                   lhs.gender  == rhs.gender  &&
+            return lhs.gender  == rhs.gender  &&
+//                 lhs.type    == rhs.type    &&
                    lhs.size    == rhs.size    &&
                    lhs.age     == rhs.age     &&
                    lhs.address == rhs.address
