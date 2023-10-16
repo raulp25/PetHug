@@ -12,7 +12,7 @@ extension InAppCoordinator {
         case home = "Home"
         case favorites = "Favorites"
         case add = "Add"
-        case about = "About"
+        case profile = "User"
 
         var imageName: String {
             switch self {
@@ -22,7 +22,7 @@ extension InAppCoordinator {
                 return "heart"
             case .add:
                 return "pawprint"
-            case .about:
+            case .profile:
                 return "fireplace"
             }
         }
@@ -35,7 +35,7 @@ extension InAppCoordinator {
                 return 1
             case .add:
                 return 2
-            case .about:
+            case .profile:
                 return 3
             }
         }

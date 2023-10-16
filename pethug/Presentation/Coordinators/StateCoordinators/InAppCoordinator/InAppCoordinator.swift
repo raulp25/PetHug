@@ -53,7 +53,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
             childCoordinator = FavoriteTabCoordinator()
         case .add:
             childCoordinator = AddPetTabCoordinator()
-        case .about:
+        case .profile:
             childCoordinator = HomeTabCoordinator()
         }
 
@@ -83,7 +83,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
     }
 
     private func setUpTabBarComponents(for tab: TabBar, with vc: UIViewController) {
-        vc.tabBarItem = .init(title: nil, image: UIImage(systemName: tab.imageName), selectedImage: UIImage(systemName: tab.imageName))    
+        vc.tabBarItem = .init(title: nil, image: UIImage(systemName: tab.imageName), selectedImage: UIImage(systemName: tab.imageName))
         vc.tabBarItem.tag = tab.tag
     }
 
