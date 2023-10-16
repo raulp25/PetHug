@@ -30,24 +30,31 @@ final class HomeTabCoordinator: ChildTabCoordinator {
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .dogs)
         let vc = PetsViewController(viewModel: viewModel)
+        vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
     func startCats() {
         viewModel.navigation = self
+        viewModel.collection = .getPath(for: .cats)
         let vc = PetsViewController(viewModel: viewModel)
+        vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
     func startBirds() {
         viewModel.navigation = self
+        viewModel.collection = .getPath(for: .birds)
         let vc = PetsViewController(viewModel: viewModel)
+        vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
     func startRabbits() {
         viewModel.navigation = self
+        viewModel.collection = .getPath(for: .rabbits)
         let vc = PetsViewController(viewModel: viewModel)
+        vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
 }
@@ -74,7 +81,6 @@ extension HomeTabCoordinator: PetsNavigatable {
     func tappedFilter() {
         let vc = FilterPetsContentViewController()
         vc.coordinator = self
-        vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
