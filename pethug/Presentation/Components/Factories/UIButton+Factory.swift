@@ -64,11 +64,11 @@ extension UIButton {
 
 // MARK: - TextButton
 public extension UIButton {
-    static func createTextButton(with buttonText: String, fontSize: CGFloat? = nil) -> UIButton {
+    static func createTextButton(with buttonText: String, fontSize: CGFloat? = nil, color: UIColor? = nil) -> UIButton {
         let button = UIButton(frame: .zero)
         button.setTitle(buttonText, for: .normal)
 //        button.setTitleColor(.theme.tintColor, for: .normal)
-        button.setTitleColor(.orange, for: .normal)
+        button.setTitleColor( color ?? .black, for: .normal)
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = .systemFont(ofSize: fontSize ?? 15, weight: .semibold)
         button.translatesAutoresizingMaskIntoConstraints = false

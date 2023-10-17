@@ -103,11 +103,10 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
         
         addSubview(petImage)
         sendSubviewToBack(petImage)
-        
         addSubview(heartImageContainer)
         heartImageContainer.addSubview(blurView)
         heartImageContainer.addSubview(heartImage)
-        
+        heartImageContainer.bringSubviewToFront(heartImage)
         addSubview(name)
         addSubview(address)
         
@@ -125,7 +124,6 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
             paddingRight: 5
         )
         heartImageContainer.setDimensions(height: 24, width: 24)
-        heartImageContainer.bringSubviewToFront(heartImage)
         
         blurView.fillSuperview()
         blurView.effect = blurEffect

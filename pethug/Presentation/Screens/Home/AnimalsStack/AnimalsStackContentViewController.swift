@@ -38,7 +38,7 @@ final class AnimalsStackContentViewController: UIViewController {
     }()
     
     private lazy var dogsBanner: Banner = {
-        let uv = Banner(title: "Adopta", caption: "perros", imageNamed: "banner6", textAlign: .left)
+        let uv = Banner(title: "Adopta", caption: "perros", imageNamed: "dogs12", textAlign: .left)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
@@ -140,7 +140,7 @@ final class AnimalsStackContentViewController: UIViewController {
             top: titleLabel.bottomAnchor,
             left: containerView.leftAnchor,
             right: containerView.rightAnchor,
-            paddingTop: 10,
+            paddingTop: 30,
             paddingLeft: sidePadding,
             paddingRight: sidePadding
         )

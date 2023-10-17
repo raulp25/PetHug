@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 // MARK: - Protocol -
 protocol UserDataSource {
@@ -26,7 +27,13 @@ final class DefaultUserDataSource: UserDataSource {
     }
     
     func fetchUser() async throws -> User {
-        return User(id: "", username: "", email: "", bio: "", profileImageUrl: "")
+        let uid = AuthService().uid
+        let snapshot = try await db.collection(.getPath(for: .users)).document(uid).getDocument()
+        
+        let doc = try snapshot.data(as: User.self)
+        
+        return doc
+        
     }
     
 }

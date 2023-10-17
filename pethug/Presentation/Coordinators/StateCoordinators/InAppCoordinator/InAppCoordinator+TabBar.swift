@@ -10,9 +10,9 @@ import Foundation
 extension InAppCoordinator {
     enum TabBar: String, CaseIterable {
         case home = "Home"
-        case favorites = "Favorites"
-        case add = "Add"
-        case profile = "User"
+        case favorites = "Favoritos"
+        case add = "Publicar"
+        case profile = "General"
 
         var imageName: String {
             switch self {

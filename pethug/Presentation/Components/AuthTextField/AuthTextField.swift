@@ -164,7 +164,6 @@ final class AuthTextField: UIView {
         print(" textfield auth is secure \(viewModel.isSecure)")
 
         floatingLabel.text = viewModel.placeholder
-        floatingLabel.textColor = .lightGray
 
         if viewModel.type == .date {
             textField.inputView = datePicker
@@ -219,7 +218,8 @@ final class AuthTextField: UIView {
 
         // Add rightView if rightView is not nil
         if let rightViewBtnName = viewModel.rightViewButtonName {
-            iconButton = .createCustomIconImage(customIcon: rightViewBtnName, size: textFieldHeight * 0.9)
+            //Changes SLR
+            iconButton = .createCustomIconImage(customIcon: rightViewBtnName, size: textFieldHeight * 0.9, color: .black)
 
             guard let iconBtn = iconButton else { return }
 
@@ -282,11 +282,13 @@ final class AuthTextField: UIView {
             focusState: focusState,
             validationState: validationState
         )
-        floatingLabel.textColor = viewModel.getFloatingLabelColor(
-            focusState: focusState,
-            textState: textState,
-            validationState: validationState
-        )
+        //Changes SLR
+//        floatingLabel.textColor = viewModel.getFloatingLabelColor(
+//            focusState: focusState,
+//            textState: textState,
+//            validationState: validationState
+//        )
+        floatingLabel.textColor = .black
         animateFloatingLabel(focuseState: focusState, textState: textState)
         animateErrorLabel(validationState: validationState)
 
