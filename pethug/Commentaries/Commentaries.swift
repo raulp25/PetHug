@@ -1186,3 +1186,19 @@ import Foundation
 //            isFetching = false
 //        }
 //    }
+///~~~~~~~~~~~~~~~
+/////Colors
+///
+///doble del mismo naranja
+//customRGBColor(red: 250, green: 138, blue: 52).cgColor
+///doble del mismo rojo
+//customRGBColor(red: 250, green: 52, blue: 72).cgColor,
+//////doble del mismo azul ORIGINAL y podria ser que se ve mejor que el de abajo
+//customRGBColor(red: 0, green: 171, blue: 187).cgColor,
+//////doble del mismo azul no original pero se ve bien tambien
+//customRGBColor(red: 19, green: 145, blue: 178).cgColor
+//////doble del mismo morado
+//125, 52, 250
+///combinacion naranja y azul
+///customRGBColor(red: 178, green: 106, blue: 19).cgColor,
+//customRGBColor(red: 19, green: 145, blue: 178).cgColor

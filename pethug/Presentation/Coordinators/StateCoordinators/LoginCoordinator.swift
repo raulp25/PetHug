@@ -15,7 +15,7 @@ final class LoginCoordinator: NSObject, StateCoordinator {
     var rootViewController: UINavigationController = .init()
     
     override init() {
-        rootViewController.navigationBar.tintColor = .systemGreen
+        rootViewController.navigationBar.tintColor = .white
     }
     
     func start() {

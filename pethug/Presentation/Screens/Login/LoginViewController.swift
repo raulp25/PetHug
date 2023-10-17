@@ -11,11 +11,27 @@ import UIKit
 class LoginViewController: UIViewController {
     
     //MARK: - Private components
-    private let containerView = UIView(withAutolayout: true)
-    private let childContainerView = UIView(withAutolayout: true)
+    private lazy var scrollView: UIScrollView = {
+        let sv = UIScrollView(withAutolayout: true)
+        sv.isDirectionalLockEnabled = true
+        sv.showsVerticalScrollIndicator = false
+        sv.isScrollEnabled = true
+        sv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        return sv
+    }()
+    
+    private let containerView: UIView = {
+       let uv = UIView(withAutolayout: true)
+        return uv
+    }()
+    private let childContainerView: UIView = {
+       let uv = UIView(withAutolayout: true)
+        uv.backgroundColor = .clear
+        return uv
+    }()
     
     private let iconImageView: UIImageView = {
-       let iv = UIImageView(image: UIImage(named: "bull"))
+       let iv = UIImageView(image: UIImage(named: "login"))
         iv.contentMode = .scaleAspectFit
         return iv
     }()
@@ -23,10 +39,14 @@ class LoginViewController: UIViewController {
     
     private let titleLabel: UILabel = {
        let label = UILabel(withAutolayout: true)
-        label.text = "Welcome Back!"
-        label.textColor = .black.withAlphaComponent(0.8)
-        label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
-        return label
+       label.attributedLightBoldColoredText(
+           lightText: "pet",
+           boldText: "hug",
+           colorRegularText: .black,
+           colorBoldText: .white,
+           fontSize: 60
+       )
+       return label
     }()
     
     let blurView: UIVisualEffectView = {
@@ -34,7 +54,7 @@ class LoginViewController: UIViewController {
         vv.clipsToBounds = true
         vv.layer.cornerRadius = 7
         vv.translatesAutoresizingMaskIntoConstraints = false
-        vv.backgroundColor = customRGBColor(red: 240, green: 245, blue: 246, alpha: 0.4)
+        vv.backgroundColor = customRGBColor(red: 255, green: 255, blue: 256, alpha: 0.85)
        return vv
     }()
     
@@ -50,6 +70,32 @@ class LoginViewController: UIViewController {
         return stack
     }()
     
+    private lazy var hStackEmail: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [mailIcon, emailTextField])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.distribution = .fillProportionally
+        stack.spacing = 8
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    lazy private var mailIcon: UIImageView = {
+       let iv = UIImageView()
+        let k = Int(arc4random_uniform(6))
+        iv.image = UIImage(systemName: "envelope")
+        iv.tintColor = .black.withAlphaComponent(0.8)
+        iv.image?.withTintColor(.red)
+        iv.clipsToBounds = true
+        iv.contentMode = .scaleAspectFit
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfilePic))
+//        iv.isUserInteractionEnabled = true
+//        iv.addGestureRecognizer(tapGesture)
+        return iv
+    }()
+    
     private let emailTextField = AuthTextField(
         viewModel: .init(
             type: .email,
@@ -58,13 +104,31 @@ class LoginViewController: UIViewController {
         )
     )
     
-    private let testTextField = AuthTextField(
-        viewModel: .init(
-            type: .email,
-            placeholderOption: .custom("email test"),
-            returnKey: .continue
-        )
-    )
+    private lazy var hStackPassword: UIStackView = {
+        let stack = UIStackView(arrangedSubviews: [lockIcon, passwordTextField])
+        stack.axis = .horizontal
+        stack.alignment = .center
+        stack.distribution = .fillProportionally
+        stack.spacing = 8
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
+    lazy private var lockIcon: UIImageView = {
+       let iv = UIImageView()
+        let k = Int(arc4random_uniform(6))
+        iv.image = UIImage(systemName: "lock.fill")
+        iv.tintColor = .black.withAlphaComponent(0.8)
+        iv.image?.withTintColor(.red)
+        iv.clipsToBounds = true
+        iv.contentMode = .scaleAspectFit
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfilePic))
+//        iv.isUserInteractionEnabled = true
+//        iv.addGestureRecognizer(tapGesture)
+        return iv
+    }()
     
     private let passwordTextField = AuthTextField(
         viewModel: .init(
@@ -80,55 +144,31 @@ class LoginViewController: UIViewController {
     }()
 
     private lazy var forgotPasswordBtn: UIButton = {
-        let btn: UIButton = .createTextButton(with: "Forgot Password", color: .black)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 13.7)
+        let btn: UIButton = .createTextButton(with: "Olvidé contraseña", color: .black)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         btn.addTarget(self, action: #selector(forgotPassword), for: .touchUpInside)
         return btn
     }()
-    
-    private lazy var vStack2: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [loginBtn, createAccountBtn])
-        stack.axis = .vertical
-        stack.distribution = .equalSpacing
-        stack.alignment = .fill
-        stack.spacing = 5
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
+
     
     private lazy var loginBtn: AuthButton = {
-        let btn = AuthButton(viewModel: .init(title: "Log in"))
+        let btn = AuthButton(viewModel: .init(title: "LOGIN"))
         btn.addTarget(self, action: #selector(login), for: .touchUpInside)
+        btn.titleLabel?.font = UIFont.systemFont(ofSize: 20.7, weight: .bold)
+        btn.layer.cornerRadius = 20
         return btn
     }()
     
     private lazy var createAccountBtn: UIButton = {
         let btn = UIButton(type: .system)
-        btn.attributedRegularBoldColoredText(regularText: "New to Pet Hug?", boldText: "Create Account")
+        btn.attributedRegularBoldColoredText(regularText: "No tienes cuenta?", boldText: " Registrate", color: .white, fontSize: 16)
         btn.addTarget(self, action: #selector(goToCreateNewAccount), for: .touchUpInside)
         return btn
     }()
     
-//    private lazy var googleSignInBtn: GradientUIViewButton = {
-//        let button = GradientUIViewButton()
-//        button.title.text = "Sign in with Google"
-//        button.setImage(image: UIImage(systemName: "snowflake")!, withDimensions: Dimensions(height: 25, width: 25))
-//        button.setHeight(50)
-//        button.startColor = customRGBColor(red: 243, green: 117, blue: 121)
-//        button.endColor = customRGBColor(red: 243, green: 117, blue: 121)
-////
-////        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleResetPassword))
-////        button.addGestureRecognizer(gesture)
-//        return button
-//    }()
-    
-    
     //MARK: - Private properties
     private let viewModel = LoginViewModel(authService: AuthService())
     private var subscriptions = Set<AnyCancellable>()
-    private var keyboardPublisher: AnyCancellable?
-    
-    private var flowLayoutConstraint: NSLayoutConstraint!
     
     //MARK: - Internal properties
     weak var coordinator: LoginCoordinator?
@@ -136,7 +176,7 @@ class LoginViewController: UIViewController {
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = customRGBColor(red: 248, green: 111, blue: 14)
+        setupGradientLayer()
         setupKeyboardHiding()
         hideKeyboardWhenTappedAround()
         setup()
@@ -159,20 +199,16 @@ class LoginViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        keyboardPublisher = nil
-        keyboardPublisher?.cancel()
-    }
     
     //MARK: - Actions
     @objc func login() {
         print(": => login clicked")
         guard
-            let validFirstName = emailTextField.isValidText(),
-            let validSurname = passwordTextField.isValidText() else {
+            let _ = emailTextField.isValidText(),
+            let _ = passwordTextField.isValidText() else {
             return
         }
         Task {
@@ -218,10 +254,24 @@ class LoginViewController: UIViewController {
     }
     
     
-//  private methods
+//MARK: - Private methods
     private func setupKeyboardHiding(){
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    private func setupGradientLayer() {
+        let gradientLayer = CAGradientLayer()
+        
+        gradientLayer.colors = [
+            customRGBColor(red: 0, green: 171, blue: 187).cgColor,
+            customRGBColor(red: 0, green: 171, blue: 187).cgColor
+            
+        ]
+        gradientLayer.locations = [0, 1]
+        gradientLayer.frame = view.bounds // Use bounds instead of frame
+        
+        view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
     
@@ -231,61 +281,73 @@ class LoginViewController: UIViewController {
         emailTextField.delegate = self
         passwordTextField.delegate = self
         
-        view.addSubview(containerView)
+        mailIcon.setDimensions(height: 25, width: 25)
+        lockIcon.setDimensions(height: 25, width: 25)
+        
+        
+        view.addSubview(scrollView)
+        scrollView.addSubview(containerView)
+        
         containerView.addSubview(iconImageView)
+        containerView.addSubview(titleLabel)
         containerView.addSubview(childContainerView)
-//        containerView.addSubview(googleSignInBtn)
-//        childContainerView.addSubview(titleLabel)
         childContainerView.addSubview(blurView)
         childContainerView.bringSubviewToFront(vStack)
         childContainerView.addSubview(vStack)
         childContainerView.addSubview(forgotPasswordContainerView)
-        childContainerView.addSubview(vStack2)
-//        childContainerView.backgroundColor = customRGBColor(red: 250, green: 250, blue: 250, alpha: 0.3)
-
-        flowLayoutConstraint = containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        flowLayoutConstraint.isActive = true
+        containerView.addSubview(loginBtn)
+        containerView.addSubview(createAccountBtn)
         
-        containerView.anchor(
+        scrollView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
             left: view.leftAnchor,
             bottom: view.safeAreaLayoutGuide.bottomAnchor,
             right: view.rightAnchor
         )
         
+        containerView.anchor(
+            top: scrollView.contentLayoutGuide.topAnchor,
+            left: scrollView.contentLayoutGuide.leftAnchor,
+            bottom: scrollView.contentLayoutGuide.bottomAnchor,
+            right: scrollView.contentLayoutGuide.rightAnchor
+        )
+        //Without this containerView gets expanded horizontally which is bad
+        containerView.centerX(inView: scrollView)
+        
+        
+        
         iconImageView.centerX(
             inView: containerView,
             topAnchor: containerView.topAnchor,
-            paddingTop: 50
+            paddingTop: -30
         )
-        
         iconImageView.setDimensions(height: 230, width: 230)
         
+        titleLabel.centerX(
+            inView: iconImageView,
+            topAnchor: iconImageView.bottomAnchor,
+            paddingTop: 0
+        )
+        
         childContainerView.anchor(
-            top: iconImageView.bottomAnchor,
+            top: titleLabel.bottomAnchor,
             left: containerView.leftAnchor,
             right: containerView.rightAnchor,
+            paddingTop: 40,
             paddingLeft: 10,
             paddingRight: 10
         )
         
-        childContainerView.setHeight(300)
+        childContainerView.setHeight(270)
         
         blurView.fillSuperview()
         blurView.effect = blurEffect
-//        childContainerView.layer.cornerRadius = 30
-        
-//        titleLabel.anchor(
-//            top: childContainerView.topAnchor,
-//            left: childContainerView.leftAnchor,
-//            paddingTop: 30,
-//            paddingLeft: padding
-//        )
-        
+
         vStack.anchor(
             top: childContainerView.topAnchor,
             left: childContainerView.leftAnchor,
             right: childContainerView.rightAnchor,
-            paddingTop: 20,
+            paddingTop: 40,
             paddingLeft: padding,
             paddingRight: padding
         )
@@ -293,29 +355,32 @@ class LoginViewController: UIViewController {
         forgotPasswordContainerView.centerX(
             inView: vStack,
             topAnchor: vStack.bottomAnchor,
-            paddingTop: 30
+            paddingTop: 40
         )
         forgotPasswordContainerView.addSubview(forgotPasswordBtn)
         
         forgotPasswordBtn.center(inView: forgotPasswordContainerView)
         
-        
-        vStack2.anchor(
-            top: forgotPasswordContainerView.bottomAnchor,
-            left: childContainerView.leftAnchor,
-            right: childContainerView.rightAnchor,
-            paddingTop: 20,
-            paddingLeft: padding,
-            paddingRight: padding
+        loginBtn.centerX(
+            inView: childContainerView,
+            topAnchor: childContainerView.bottomAnchor,
+            paddingTop: -24
         )
-       
-//        googleSignInBtn.anchor(
-//            left: containerView.leftAnchor,
-//            bottom: view.safeAreaLayoutGuide.bottomAnchor,
-//            right: containerView.rightAnchor,
-//            paddingLeft: padding,
-//            paddingRight: padding
-//        )
+        loginBtn.anchor(
+            left: containerView.leftAnchor,
+            right: containerView.rightAnchor,
+            paddingLeft: 40,
+            paddingRight: 40
+        )
+        
+        createAccountBtn.centerX(
+            inView: loginBtn,
+            topAnchor: loginBtn.bottomAnchor,
+            paddingTop: 40
+        )
+        createAccountBtn.anchor(
+            bottom: containerView.bottomAnchor
+        )
         
     }
 

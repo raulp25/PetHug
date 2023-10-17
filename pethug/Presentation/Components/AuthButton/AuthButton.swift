@@ -56,6 +56,7 @@ final class AuthButton: UIButton {
     private func setup() {
         // self
         backgroundColor = viewModel.backgroundColor
+        backgroundColor = .black
         setTitleColor(viewModel.textColor, for: .normal)
         setTitleColor(viewModel.textColor, for: .highlighted)
         layer.cornerRadius = 10
@@ -72,8 +73,8 @@ final class AuthButton: UIButton {
 
         // self
         translatesAutoresizingMaskIntoConstraints = false
-        topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -15).isActive = true
-        bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 15).isActive = true
+        topAnchor.constraint(equalTo: titleLabel.topAnchor, constant: -10).isActive = true
+        bottomAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10).isActive = true
 
         // activityIndicator
         spinner.translatesAutoresizingMaskIntoConstraints = false

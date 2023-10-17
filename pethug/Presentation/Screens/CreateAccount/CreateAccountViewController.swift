@@ -7,38 +7,84 @@
 
 import Combine
 import UIKit
+import SwiftUI
 
 class CreateAccountViewController: UIViewController {
     
     //MARK: - Private components
-    
-//    CHECAR SI AFECTO EL withoutAutoLayout - respuesta: parece que no afecta pero vamos a dejarlo para el futuro aver
-//    si afecta o no
-    private let containerView = UIView(withAutolayout: true)
-    private let childContainerView = UIView(withAutolayout: true)
-    
-    private let backgroundImageView: UIImageView = {
-       let iv = UIImageView(image: UIImage(named: "orange"))
-        iv.contentMode = .scaleAspectFill
-        return iv
+    private let containerView: UIView = {
+       let uv = UIView(withAutolayout: true)
+        return uv
     }()
+    
+    private let titleLabel: UILabel = {
+       let label = UILabel(withAutolayout: true)
+       label.attributedLightBoldColoredText(
+           lightText: "pet",
+           boldText: "hug",
+           colorRegularText: .black,
+           colorBoldText: .white,
+           fontSize: 60
+       )
+       return label
+    }()
+    
+    private let createAccountLabel: UILabel = {
+       let label = UILabel(withAutolayout: true)
+        label.text = "Crear cuenta"
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 27, weight: .bold, width: .condensed)
+        return label
+    }()
+    
+    private let childContainerView: UIView = {
+       let uv = UIView(withAutolayout: true)
+        uv.backgroundColor = customRGBColor(red: 248, green: 247, blue: 245, alpha: 1)
+        return uv
+    }()
+    
+    private let formContainerView: UIView = {
+       let uv = UIView(withAutolayout: true)
+        uv.layer.cornerRadius = 8
+        
+        uv.layer.shadowColor = customRGBColor(red: 200, green: 200, blue: 200, alpha: 0.8).cgColor
+        uv.layer.shadowOpacity = 20
+        uv.layer.shadowOffset = .zero
+        uv.layer.shadowRadius = 7
+        
+        
+//        uv.layer.shadowPath = UIBezierPath(rect: uv.bounds).cgPath
+//        uv.layer.shouldRasterize = true
+//        uv.layer.rasterizationScale = UIScreen.main.scale
+        return uv
+    }()
+    
+    let blurView: UIVisualEffectView = {
+        let vv = UIVisualEffectView()
+        vv.clipsToBounds = true
+        vv.layer.cornerRadius = 7
+        vv.translatesAutoresizingMaskIntoConstraints = false
+        vv.backgroundColor = customRGBColor(red: 247, green: 247, blue: 247, alpha: 0.8)
+       return vv
+    }()
+    
+    let blurEffect  = UIBlurEffect(style: .systemUltraThinMaterial)
     
     private lazy var plusPhotoImageView: UIImageView = {
        let iv = UIImageView(image: UIImage(systemName: "plus.circle"))
-        iv.tintColor = .white.withAlphaComponent(0.73)
+        iv.tintColor = .black
         iv.contentMode = .scaleAspectFill
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleProfilePhotoSelect))
         iv.isUserInteractionEnabled = true
         iv.addGestureRecognizer(tapGesture)
         return iv
     }()
-
-
-    private let titleLabel: UILabel = {
+    
+    private let addPhotoLabel: UILabel = {
        let label = UILabel(withAutolayout: true)
-        label.text = "Create account"
-        label.textColor = .black.withAlphaComponent(0.8)
-        label.font = UIFont.systemFont(ofSize: 25, weight: .bold)
+        label.text = "Imagen de perfil"
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 12, weight: .medium)
         return label
     }()
     
@@ -63,7 +109,7 @@ class CreateAccountViewController: UIViewController {
     private let usernameTextField = AuthTextField(
         viewModel: .init(
             type: .name,
-            placeholderOption: .custom("Enter your name"),
+            placeholderOption: .custom("Nombre usuario"),
             returnKey: .continue
         )
     )
@@ -71,7 +117,7 @@ class CreateAccountViewController: UIViewController {
     private let emailTextField = AuthTextField(
         viewModel: .init(
             type: .email,
-            placeholderOption: .custom("Email"),
+            placeholderOption: .custom("Correo electrónico"),
             returnKey: .continue
         )
     )
@@ -80,13 +126,13 @@ class CreateAccountViewController: UIViewController {
     private let passwordTextField = AuthTextField(
         viewModel: .init(
             type: .password,
-            placeholderOption: .custom("Password"),
+            placeholderOption: .custom("Contraseña"),
             returnKey: .done
         )
     )
     
     private lazy var createAccountBtn: AuthButton = {
-        let btn = AuthButton(viewModel: .init(title: "Create account"))
+        let btn = AuthButton(viewModel: .init(title: "Crear cuenta"))
         btn.addTarget(self, action: #selector(createAccount), for: .touchUpInside)
         return btn
     }()
@@ -100,9 +146,6 @@ class CreateAccountViewController: UIViewController {
                             useCase: RegisterUser.composeRegisterUserUC()
                         )
     private var subscriptions = Set<AnyCancellable>()
-    private var keyboardPublisher: AnyCancellable?
-    
-    private var flowLayoutConstraint: NSLayoutConstraint!
     
     //MARK: - Internal properties
     weak var coordinator: CreateAccountCoordinator?
@@ -111,6 +154,7 @@ class CreateAccountViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = customRGBColor(red: 248, green: 111, blue: 14)
+        setupGradientLayer()
         setupKeyboardHiding()
         hideKeyboardWhenTappedAround()
         setup()
@@ -131,12 +175,10 @@ class CreateAccountViewController: UIViewController {
             }.store(in: &subscriptions)
     }
     
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        backgroundImageView.removeFromSuperview()
-        keyboardPublisher = nil
-        keyboardPublisher?.cancel()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     
@@ -193,6 +235,20 @@ class CreateAccountViewController: UIViewController {
             object: nil
         )
     }
+    
+    private func setupGradientLayer() {
+        let gradientLayer = CAGradientLayer()
+        
+        gradientLayer.colors = [
+            customRGBColor(red: 0, green: 171, blue: 187).cgColor,
+            customRGBColor(red: 0, green: 171, blue: 187).cgColor
+            
+        ]
+        gradientLayer.locations = [0, 1]
+        gradientLayer.frame = view.bounds // Use bounds instead of frame
+        
+        view.layer.insertSublayer(gradientLayer, at: 0)
+    }
    
     @objc func keyboardWillShow(sender: NSNotification) {
         guard let userInfo = sender.userInfo,
@@ -223,80 +279,98 @@ class CreateAccountViewController: UIViewController {
     //MARK: - setup
     func setup() {
         let paddintTop = UIScreen.main.bounds.height * 0.05
-        let sidePadding: CGFloat = 50
+        let sidePadding: CGFloat = 20
         
         usernameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
-        
-        view.addSubview(backgroundImageView)
-        backgroundImageView.fillSuperview()
+    
         
         view.addSubview(containerView)
-        containerView.addSubview(plusPhotoImageView)
         containerView.addSubview(childContainerView)
-
-        flowLayoutConstraint = containerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor)
-        flowLayoutConstraint.isActive = true
+        
+        childContainerView.addSubview(titleLabel)
+        childContainerView.addSubview(formContainerView)
+        
+        formContainerView.addSubview(blurView)
+        formContainerView.addSubview(addPhotoLabel)
+        formContainerView.addSubview(createAccountLabel)
+        formContainerView.addSubview(plusPhotoImageView)
+        formContainerView.addSubview(vStack)
+        formContainerView.addSubview(createAccountBtn)
         
         containerView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
             left: view.leftAnchor,
-            bottom: view.safeAreaLayoutGuide.bottomAnchor,
+            bottom: view.bottomAnchor,
             right: view.rightAnchor
         )
         
-        plusPhotoImageView.centerX(
-            inView: containerView,
-            topAnchor: containerView.topAnchor,
-            paddingTop: 50
-        )
-        
-        plusPhotoImageView.setDimensions(height: 180, width: 180)
-        
-        childContainerView.addSubview(titleLabel)
-        childContainerView.addSubview(iconImageView)
-        childContainerView.addSubview(vStack)
-        childContainerView.addSubview(createAccountBtn)
         
         childContainerView.anchor(
-            top: plusPhotoImageView.bottomAnchor,
             left: containerView.leftAnchor,
-            bottom: view.bottomAnchor,
+            bottom: containerView.bottomAnchor,
             right: containerView.rightAnchor,
-            paddingTop: CGFloat(Int(paddintTop))
+            paddingTop: 30,
+            height: (UIScreen.main.bounds.height / 8) * 5
         )
+
         
-        childContainerView.layer.cornerRadius = 30
-        childContainerView.backgroundColor = .white
-        
-        titleLabel.anchor(
+        formContainerView.anchor(
             top: childContainerView.topAnchor,
             left: childContainerView.leftAnchor,
+            right: childContainerView.rightAnchor,
+            paddingTop: -100,
+            paddingLeft: 35,
+            paddingRight: 35,
+            height: 560
+        )
+        
+        blurView.fillSuperview()
+        blurView.effect = blurEffect
+        
+        titleLabel.centerX(
+            inView: formContainerView
+        )
+        titleLabel.anchor(
+            bottom: formContainerView.topAnchor,
+            paddingBottom: 50
+        )
+        
+        createAccountLabel.centerX(
+            inView: formContainerView,
+            topAnchor: formContainerView.topAnchor,
+            paddingTop: 20
+        )
+        
+        addPhotoLabel.anchor(
+            top: createAccountLabel.bottomAnchor,
+            left: formContainerView.leftAnchor,
             paddingTop: 30,
             paddingLeft: sidePadding
         )
         
-        iconImageView.centerY(
-            inView: titleLabel,
-            leftAnchor: titleLabel.rightAnchor,
-            paddingLeft: 10
+        plusPhotoImageView.anchor(
+            top: addPhotoLabel.bottomAnchor,
+            left: formContainerView.leftAnchor,
+            paddingTop: 10,
+            paddingLeft: sidePadding
         )
-        
-        iconImageView.setDimensions(height: 20, width: 20)
+        plusPhotoImageView.setDimensions(height: 80, width: 80)
         
         vStack.anchor(
-            top: titleLabel.bottomAnchor,
-            left: childContainerView.leftAnchor,
-            right: childContainerView.rightAnchor,
-            paddingTop: 20,
+            top: plusPhotoImageView.bottomAnchor,
+            left: formContainerView.leftAnchor,
+            right: formContainerView.rightAnchor,
+            paddingTop: 30,
             paddingLeft: sidePadding,
             paddingRight: sidePadding
         )
        
         createAccountBtn.anchor(
             top: vStack.bottomAnchor,
-            left: containerView.leftAnchor,
-            right: containerView.rightAnchor,
+            left: formContainerView.leftAnchor,
+            right: formContainerView.rightAnchor,
             paddingTop: 50,
             paddingLeft: sidePadding,
             paddingRight: sidePadding
@@ -350,4 +424,25 @@ extension CreateAccountViewController: AuthTextFieldDelegate {
     }
 }
 
+
+
+
+struct ViewControllerRepresentable: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> CreateAccountViewController {
+        CreateAccountViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: CreateAccountViewController, context: Context) {
+        
+    }
+    
+typealias UIViewControllerType = CreateAccountViewController
+
+}
+
+struct ViewController_Previews: PreviewProvider {
+    static var previews: some View {
+        ViewControllerRepresentable()
+    }
+}
 
