@@ -129,6 +129,9 @@
 		C4779BF02AC3BADE00E3A16F /* NewPetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */; };
 		C4779BF22AC3C92000E3A16F /* NewPetContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BF12AC3C92000E3A16F /* NewPetContentViewController+Types.swift */; };
 		C4779BF42AC3C97E00E3A16F /* NewPetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */; };
+		C479D08C2ADF67550028B456 /* ForgotPasswordCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C479D08B2ADF67550028B456 /* ForgotPasswordCoordinator.swift */; };
+		C479D08F2ADF67C50028B456 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C479D08E2ADF67C50028B456 /* ForgotPasswordViewController.swift */; };
+		C479D0922ADF72060028B456 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C479D0912ADF72060028B456 /* ForgotPasswordViewModel.swift */; };
 		C480DBC12AD369AE005F707C /* TextCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC02AD369AE005F707C /* TextCheckbox.swift */; };
 		C480DBC32AD37219005F707C /* CollectionViewSocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */; };
 		C480DBC62AD3985F005F707C /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC52AD3985F005F707C /* CollectionViewImageCell.swift */; };
@@ -354,6 +357,9 @@
 		C4779BEF2AC3BADE00E3A16F /* NewPetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewController.swift; sourceTree = "<group>"; };
 		C4779BF12AC3C92000E3A16F /* NewPetContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPetContentViewController+Types.swift"; sourceTree = "<group>"; };
 		C4779BF32AC3C97E00E3A16F /* NewPetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetContentViewController.swift; sourceTree = "<group>"; };
+		C479D08B2ADF67550028B456 /* ForgotPasswordCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordCoordinator.swift; sourceTree = "<group>"; };
+		C479D08E2ADF67C50028B456 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		C479D0912ADF72060028B456 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		C480DBC02AD369AE005F707C /* TextCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextCheckbox.swift; sourceTree = "<group>"; };
 		C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSocialCell.swift; sourceTree = "<group>"; };
 		C480DBC52AD3985F005F707C /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
@@ -1015,6 +1021,23 @@
 			path = NewPet;
 			sourceTree = "<group>";
 		};
+		C479D08D2ADF67AB0028B456 /* ForgotPassword */ = {
+			isa = PBXGroup;
+			children = (
+				C479D0902ADF71F40028B456 /* ViewModel */,
+				C479D08E2ADF67C50028B456 /* ForgotPasswordViewController.swift */,
+			);
+			path = ForgotPassword;
+			sourceTree = "<group>";
+		};
+		C479D0902ADF71F40028B456 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C479D0912ADF72060028B456 /* ForgotPasswordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C480DBBF2AD3698F005F707C /* TextCheckbox */ = {
 			isa = PBXGroup;
 			children = (
@@ -1325,6 +1348,7 @@
 				C426D2672AB6713A00BFA357 /* SettingsCoordinator.swift */,
 				C4779BE12AC3A34D00E3A16F /* NewPetCoordinator.swift */,
 				C41E8E572AD468DC0065DEFC /* FilterPetsCoordinator.swift */,
+				C479D08B2ADF67550028B456 /* ForgotPasswordCoordinator.swift */,
 			);
 			path = NavCoordinators;
 			sourceTree = "<group>";
@@ -1332,6 +1356,7 @@
 		C4CF74DF2AB22A8C00D69185 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C479D08D2ADF67AB0028B456 /* ForgotPassword */,
 				C4D44A1D2ADDE05F004D2A53 /* Profile */,
 				C4C872682ADC73A9007110E2 /* Favorites */,
 				C4CF74E02AB22AF400D69185 /* Launch */,
@@ -1667,6 +1692,7 @@
 				C43261D42AC2213700B70ACA /* UICollectionView+Layout.swift in Sources */,
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
 				C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */,
+				C479D08C2ADF67550028B456 /* ForgotPasswordCoordinator.swift in Sources */,
 				C4C8727E2ADC7D26007110E2 /* FetchFavoritePets.swift in Sources */,
 				C4BCFEBC2AD9CD020089A1A8 /* FilterPetsUC.swift in Sources */,
 				C4F7DFCD2ACC8FED000D5F76 /* NewPetAgeListCellConfiguration.swift in Sources */,
@@ -1786,6 +1812,7 @@
 				C4B1BD262AD4C1F3003311EB /* FilterPetsSendCellContentView.swift in Sources */,
 				C4D44A1F2ADDE5A3004D2A53 /* FetchUserUC.swift in Sources */,
 				C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */,
+				C479D0922ADF72060028B456 /* ForgotPasswordViewModel.swift in Sources */,
 				C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */,
 				C4B1BD122AD4BD1E003311EB /* FilterPetsGenderCellContentView.swift in Sources */,
 				C480DBC12AD369AE005F707C /* TextCheckbox.swift in Sources */,
@@ -1820,6 +1847,7 @@
 				C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */,
 				C451930C2ACE7C4A00B80926 /* UpdatePetUC.swift in Sources */,
 				C42616D92AB276CA006925DB /* UITextField+Extensions.swift in Sources */,
+				C479D08F2ADF67C50028B456 /* ForgotPasswordViewController.swift in Sources */,
 				C49440872ACD34C10042A1DA /* DeletePetUC.swift in Sources */,
 				C4B1BD212AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift in Sources */,
 				C448200E2AB5335500E72BD2 /* UserService.swift in Sources */,

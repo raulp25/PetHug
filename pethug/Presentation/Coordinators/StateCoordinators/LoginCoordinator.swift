@@ -14,6 +14,8 @@ final class LoginCoordinator: NSObject, StateCoordinator {
     
     var rootViewController: UINavigationController = .init()
     
+    let vc = LoginViewController()
+    
     override init() {
         rootViewController.navigationBar.tintColor = .white
         //Changes SLR
@@ -26,8 +28,8 @@ final class LoginCoordinator: NSObject, StateCoordinator {
     }
     
     func start() {
-        let vc = LoginViewController()
         vc.coordinator = self
+        vc.navigation = self 
         rootViewController.delegate = self
         rootViewController.pushViewController(vc, animated: true)
         
@@ -40,6 +42,13 @@ final class LoginCoordinator: NSObject, StateCoordinator {
         child.start()
     }
     
+    func startForgotPasswordCoordinator() {
+        let child = ForgotPasswordCoordinator(rootViewController: rootViewController)
+        childCoordinators.append(child)
+        child.parentCoordinator = self
+        child.start()
+    }
+    
     deinit {
         print("✅ Deinit LogInCoordinator")
         
@@ -47,6 +56,17 @@ final class LoginCoordinator: NSObject, StateCoordinator {
     
 }
 
+extension LoginCoordinator {
+    func controllerDidSendResetPasswordLink() {
+        vc.alert = true
+    }
+}
+
+extension LoginCoordinator: LoginViewControllerNavigatable {
+    func didTapForgotPassword() {
+        startForgotPasswordCoordinator()
+    }
+}
 
 extension LoginCoordinator: UINavigationControllerDelegate {
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {

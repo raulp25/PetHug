@@ -8,6 +8,10 @@
 import Combine
 import UIKit
 
+protocol LoginViewControllerNavigatable: AnyObject{
+    func didTapForgotPassword()
+}
+
 class LoginViewController: UIViewController {
     
     //MARK: - Private components
@@ -70,76 +74,28 @@ class LoginViewController: UIViewController {
         return stack
     }()
     
-    private lazy var hStackEmail: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [mailIcon, emailTextField])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.spacing = 8
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    lazy private var mailIcon: UIImageView = {
-       let iv = UIImageView()
-        let k = Int(arc4random_uniform(6))
-        iv.image = UIImage(systemName: "envelope")
-        iv.tintColor = .black.withAlphaComponent(0.8)
-        iv.image?.withTintColor(.red)
-        iv.clipsToBounds = true
-        iv.contentMode = .scaleAspectFit
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfilePic))
-//        iv.isUserInteractionEnabled = true
-//        iv.addGestureRecognizer(tapGesture)
-        return iv
-    }()
-    
     private let emailTextField = AuthTextField(
         viewModel: .init(
             type: .email,
-            placeholderOption: .custom("Email address"),
+            placeholderOption: .custom("Correo electrónico"),
             returnKey: .continue
         )
     )
     
-    private lazy var hStackPassword: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [lockIcon, passwordTextField])
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.spacing = 8
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    lazy private var lockIcon: UIImageView = {
-       let iv = UIImageView()
-        let k = Int(arc4random_uniform(6))
-        iv.image = UIImage(systemName: "lock.fill")
-        iv.tintColor = .black.withAlphaComponent(0.8)
-        iv.image?.withTintColor(.red)
-        iv.clipsToBounds = true
-        iv.contentMode = .scaleAspectFit
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfilePic))
-//        iv.isUserInteractionEnabled = true
-//        iv.addGestureRecognizer(tapGesture)
-        return iv
-    }()
-    
     private let passwordTextField = AuthTextField(
         viewModel: .init(
             type: .password,
-            placeholderOption: .custom("Password"),
+            placeholderOption: .custom("Contraseña"),
             returnKey: .done
         )
     )
-    
+
     private lazy var forgotPasswordContainerView: UIView = {
-        let uv = UIView(withAutolayout: true)
+        let uv = UIView(withAutolayout: false)
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(forgotPassword))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
         return uv
     }()
 
@@ -152,7 +108,7 @@ class LoginViewController: UIViewController {
 
     
     private lazy var loginBtn: AuthButton = {
-        let btn = AuthButton(viewModel: .init(title: "LOGIN"))
+        let btn = AuthButton(viewModel: .init(title: "Iniciar sesión"))
         btn.addTarget(self, action: #selector(login), for: .touchUpInside)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 20.7, weight: .bold)
         btn.layer.cornerRadius = 20
@@ -172,7 +128,16 @@ class LoginViewController: UIViewController {
     
     //MARK: - Internal properties
     weak var coordinator: LoginCoordinator?
+    weak var navigation: LoginViewControllerNavigatable?
     
+    var alert: Bool = false {
+        didSet {
+            if alert == true {
+                self.alert(message: "Enviamos un link a tu correo electrónico para restablecer tu contraseña", title: "Envío exitóso")
+                alert = false
+            }
+        }
+    }
     //MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -217,8 +182,8 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func forgotPassword() {
-        // TODO: Create forgot password flow after first release
         print(": => forgot password clicked")
+        navigation?.didTapForgotPassword()
     }
     
     @objc func goToCreateNewAccount() {
@@ -281,20 +246,19 @@ class LoginViewController: UIViewController {
         emailTextField.delegate = self
         passwordTextField.delegate = self
         
-        mailIcon.setDimensions(height: 25, width: 25)
-        lockIcon.setDimensions(height: 25, width: 25)
-        
-        
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
         
         containerView.addSubview(iconImageView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(childContainerView)
+        
         childContainerView.addSubview(blurView)
-        childContainerView.bringSubviewToFront(vStack)
         childContainerView.addSubview(vStack)
+        
         childContainerView.addSubview(forgotPasswordContainerView)
+        forgotPasswordContainerView.addSubview(forgotPasswordBtn)
+        
         containerView.addSubview(loginBtn)
         containerView.addSubview(createAccountBtn)
         
@@ -342,7 +306,8 @@ class LoginViewController: UIViewController {
         
         blurView.fillSuperview()
         blurView.effect = blurEffect
-
+        childContainerView.sendSubviewToBack(blurView)
+        
         vStack.anchor(
             top: childContainerView.topAnchor,
             left: childContainerView.leftAnchor,
@@ -355,9 +320,9 @@ class LoginViewController: UIViewController {
         forgotPasswordContainerView.centerX(
             inView: vStack,
             topAnchor: vStack.bottomAnchor,
-            paddingTop: 40
+            paddingTop: 20
         )
-        forgotPasswordContainerView.addSubview(forgotPasswordBtn)
+        forgotPasswordContainerView.setDimensions(height: 30, width: 200)
         
         forgotPasswordBtn.center(inView: forgotPasswordContainerView)
         

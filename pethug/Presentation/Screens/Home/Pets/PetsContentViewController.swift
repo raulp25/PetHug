@@ -99,6 +99,11 @@ final class PetsContentViewController: UIViewController {
 //        return pets
 //    }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     //MARK: - CollectionView layout
 //   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {

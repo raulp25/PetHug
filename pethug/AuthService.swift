@@ -39,6 +39,8 @@ protocol AuthServiceProtocol {
     func observeAuthChanges() -> AnyPublisher<SessionState, Never>
 
     func updateAuthDisplayName(uid: String, name: String) async throws
+    
+    func resetPassword(withEmail email: String) async throws
 }
 
 enum SessionState: Equatable {
@@ -82,6 +84,11 @@ final class AuthService: AuthServiceProtocol {
     // MARK: - Observe
     func observeAuthChanges() -> AnyPublisher<SessionState, Never> {
         return Publishers.AuthPublisher().eraseToAnyPublisher()
+    }
+    
+    //MARK: - Reset Password
+    func resetPassword(withEmail email: String) async throws {
+        try await Auth.auth().sendPasswordReset(withEmail: email)
     }
 }
 

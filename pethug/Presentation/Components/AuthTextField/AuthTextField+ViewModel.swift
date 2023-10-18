@@ -21,16 +21,19 @@ extension AuthTextField {
         var type: TextFieldType
         var placeholderOption: PlaceholderOption
         var returnKey: UIReturnKeyType
+        var color: UIColor? = nil
 
         // MARK: - Init
         init(
             type: TextFieldType,
             placeholderOption: PlaceholderOption = .default,
-            returnKey: UIReturnKeyType = .default
+            returnKey: UIReturnKeyType = .default,
+            color: UIColor? = nil
         ) {
             self.type = type
             self.placeholderOption = placeholderOption
             self.returnKey = returnKey
+            self.color = color
         }
 
         // MARK: - Computed Properties

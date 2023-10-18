@@ -48,7 +48,7 @@ final class AuthTextField: UIView {
     // MARK: - Components
     lazy var textField: UITextField = {
         let textField = viewModel.type == .date ? DisabledTextField(withAutolayout: true) : UITextField(withAutolayout: true)
-        textField.textColor = .black.withAlphaComponent(0.7)
+        textField.textColor = viewModel.color ?? .black.withAlphaComponent(0.7)
         textField.delegate = self
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         textField.font = .systemFont(ofSize: 17, weight: .regular)
@@ -158,7 +158,7 @@ final class AuthTextField: UIView {
         textField.returnKeyType = viewModel.returnKey
         textField.textContentType = viewModel.textContentTypes
         textField.autocapitalizationType = viewModel.autocapitalization
-        textField.tintColor = .black.withAlphaComponent(0.7)
+        textField.tintColor = viewModel.color ?? .black.withAlphaComponent(0.7)
         textField.isSecureTextEntry = viewModel.isSecure
         
         print(" textfield auth is secure \(viewModel.isSecure)")
@@ -186,7 +186,7 @@ final class AuthTextField: UIView {
         composeFirstStackBorderBottom.anchor(bottom: textFieldbackgroundView.bottomAnchor)
         composeFirstStackBorderBottom.setWidthConstraint(equalTo: textFieldbackgroundView.widthAnchor)
         composeFirstStackBorderBottom.setHeight(0.29)
-        composeFirstStackBorderBottom.backgroundColor = .black
+        composeFirstStackBorderBottom.backgroundColor = viewModel.color ?? .black
         
         textFieldbackgroundView.addSubview(hStack)
         textField.addSubview(floatingLabel)
@@ -219,7 +219,7 @@ final class AuthTextField: UIView {
         // Add rightView if rightView is not nil
         if let rightViewBtnName = viewModel.rightViewButtonName {
             //Changes SLR
-            iconButton = .createCustomIconImage(customIcon: rightViewBtnName, size: textFieldHeight * 0.9, color: .black)
+            iconButton = .createCustomIconImage(customIcon: rightViewBtnName, size: textFieldHeight * 0.9, color: viewModel.color ?? .black)
 
             guard let iconBtn = iconButton else { return }
 
@@ -288,7 +288,7 @@ final class AuthTextField: UIView {
 //            textState: textState,
 //            validationState: validationState
 //        )
-        floatingLabel.textColor = .black
+        floatingLabel.textColor = viewModel.color ?? .black
         animateFloatingLabel(focuseState: focusState, textState: textState)
         animateErrorLabel(validationState: validationState)
 
