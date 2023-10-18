@@ -18,15 +18,15 @@ class NewPetViewModel {
     private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
     //MARK: - Internal Properties
     private var pet: Pet?
-    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC) {
-        self.imageService = imageService
-        self.createPetUseCase = createPetUseCase
-        self.updatePetUseCase = updatePetUseCase
-        self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
-        observeValidation()
-        
-        //        mockDecodePetModel()
-    }
+//    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC) {
+//        self.imageService = imageService
+//        self.createPetUseCase = createPetUseCase
+//        self.updatePetUseCase = updatePetUseCase
+//        self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
+//        observeValidation()
+//
+//        //        mockDecodePetModel()
+//    }
     
     init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC, pet: Pet? = nil) {
         print("recibio pet en newpet view model 444 : => \(String(describing: pet?.imagesUrls))")
@@ -36,9 +36,7 @@ class NewPetViewModel {
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
         self.pet = pet
         self.isEdit = pet != nil
-
-        observeValidation()
-
+    
         self.imagesToEditState = pet?.imagesUrls ?? []
         self.nameState      = pet?.name
         self.galleryState   = []
@@ -50,8 +48,19 @@ class NewPetViewModel {
         self.activityState  = pet?.activityLevel
         self.socialState    = pet?.socialLevel
         self.affectionState = pet?.affectionLevel
+        self.medicalInfoState = pet?.medicalInfo ?? MedicalInfo(internalDeworming: false,
+                                                            externalDeworming: false,
+                                                            microchip: false,
+                                                            sterilized: false,
+                                                            vaccinated: false)
+        self.socialInfoState =  pet?.socialInfo ?? SocialInfo(maleDogFriendly: false,
+                                           femaleDogFriendly: false,
+                                           maleCatFriendly: false,
+                                           femaleCatFriendly: false)
         self.addressState   = pet?.address
         self.infoState      = pet?.info
+        
+        observeValidation()
         
 
     }
@@ -60,18 +69,20 @@ class NewPetViewModel {
     //MARK: - Form Validation
     private var cancellables = Set<AnyCancellable>()
     
-    @Published var nameState:     String? = nil
-    @Published var galleryState:  [UIImage] = []
-    @Published var typeState:     Pet.PetType? = nil
-    @Published var breedsState:   String? = nil
-    @Published var genderState:   Pet.Gender? = nil
-    @Published var sizeState:     Pet.Size? = nil
-    @Published var ageState:      Int? = nil
-    @Published var activityState: Int? = nil
-    @Published var socialState:   Int? = nil
-    @Published var affectionState: Int? = nil
-    @Published var addressState:  Pet.State? = nil
-    @Published var infoState:     String? = nil
+    @Published var nameState:        String? = nil
+    @Published var galleryState:     [UIImage] = []
+    @Published var typeState:        Pet.PetType? = nil
+    @Published var breedsState:      String? = nil
+    @Published var genderState:      Pet.Gender? = nil
+    @Published var sizeState:        Pet.Size? = nil
+    @Published var ageState:         Int? = nil
+    @Published var activityState:    Int? = nil
+    @Published var socialState:      Int? = nil
+    @Published var affectionState:   Int? = nil
+    @Published var medicalInfoState: MedicalInfo
+    @Published var socialInfoState:  SocialInfo
+    @Published var addressState:     Pet.State? = nil
+    @Published var infoState:        String? = nil
     
     var imagesToEditState: [String] = []
     var isEdit = false
@@ -93,16 +104,16 @@ class NewPetViewModel {
     ///Agregar de nuevo las variables de isValidSubject  y stateSubject al send button
     var formValidationState: AnyPublisher<State, Never> {
         return Publishers.CombineLatest4(
-            Publishers.CombineLatest3($nameState, $galleryState, $typeState),
-            Publishers.CombineLatest3($breedsState, $genderState, $sizeState),
-            Publishers.CombineLatest4($ageState, $activityState, $socialState, $affectionState),
+            Publishers.CombineLatest4($nameState, $galleryState, $typeState, $breedsState),
+            Publishers.CombineLatest4($genderState, $sizeState, $ageState, $activityState),
+            Publishers.CombineLatest($socialState, $affectionState),
             Publishers.CombineLatest($addressState, $infoState)
         )
         .map { [weak self] nameGalleryType, breedGenderSize, petStats, addressInfo in
             guard let self = self else { return .invalid }
-            let (name, gallery, type) = nameGalleryType
-            let (breed, gender, size) = breedGenderSize
-            let (age, activity, social, affection) = petStats
+            let (name, gallery, type, breed) = nameGalleryType
+            let (gender, size, age, activity) = breedGenderSize
+            let (social, affection) = petStats
             let (address, info) =  addressInfo
             
             return self.validateForm(
@@ -178,6 +189,8 @@ class NewPetViewModel {
                 affectionLevel: affectionState!,
                 address: addressState!,
                 info: infoState!,
+                medicalInfo: medicalInfoState,
+                socialInfo: socialInfoState,
                 isLiked: false,
                 timestamp: Timestamp(date: Date()),
                 owneruid: AuthService().uid,
@@ -222,6 +235,8 @@ class NewPetViewModel {
                 affectionLevel: affectionState!,
                 address: addressState!,
                 info: infoState!,
+                medicalInfo: medicalInfoState,
+                socialInfo: socialInfoState,
                 isLiked: currentPet.isLiked,
                 timestamp: currentPet.timestamp,
                 owneruid: currentPet.owneruid,

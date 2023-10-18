@@ -51,7 +51,7 @@ struct InfoData: Hashable {
     var affectionLevel: Int
 }
 
-struct MedicalInfo: Hashable {
+struct MedicalInfo: Hashable, Codable, Equatable {
     var internalDeworming: Bool
     var externalDeworming: Bool
     var microchip: Bool
@@ -59,7 +59,7 @@ struct MedicalInfo: Hashable {
     var vaccinated: Bool
 }
 
-struct SocialInfo: Hashable {
+struct SocialInfo: Hashable, Codable, Equatable {
     var maleDogFriendly: Bool
     var femaleDogFriendly: Bool
     var maleCatFriendly: Bool

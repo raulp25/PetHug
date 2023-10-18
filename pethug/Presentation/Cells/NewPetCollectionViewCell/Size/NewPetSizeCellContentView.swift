@@ -137,8 +137,6 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
         
         // apply the configuration (set data to UI elements / define custom content view appearance)
         apply(configuration: configuration)
-        
-        translatesAutoresizingMaskIntoConstraints = true
     }
     
     @available(*, unavailable) required init?(coder _: NSCoder) {
@@ -185,10 +183,20 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
         addSubview(titleLabel)
         addSubview(vStack)
         
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
         titleLabel.setHeight(16)
         
-        vStack.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 20)
+        vStack.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor, bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 5,
+            paddingBottom: 20
+        )
         vStack.setHeight(105)
         
         for button in buttons {

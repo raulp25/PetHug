@@ -93,7 +93,6 @@ class ForgotPasswordViewController: UIViewController {
     
     //MARK: - Actions
     @objc func resetPassword() {
-        print(": => login clicked")
         guard let email = emailTextField.isValidText() else { return }
         
         Task {

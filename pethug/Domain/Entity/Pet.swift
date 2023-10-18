@@ -40,6 +40,8 @@ class Pet: Codable, Hashable {
     let socialLevel: Int
     let affectionLevel: Int
     let address: State
+    let medicalInfo: MedicalInfo
+    let socialInfo: SocialInfo
     let info: String
     var isLiked: Bool
     let timestamp: Timestamp
@@ -60,6 +62,8 @@ class Pet: Codable, Hashable {
         affectionLevel: Int,
         address: State,
         info: String,
+        medicalInfo: MedicalInfo,
+        socialInfo: SocialInfo,
         isLiked: Bool,
         timestamp: Timestamp,
         owneruid: String,
@@ -78,6 +82,8 @@ class Pet: Codable, Hashable {
         self.affectionLevel = affectionLevel
         self.address        = address
         self.info           = info
+        self.medicalInfo    = medicalInfo
+        self.socialInfo     = socialInfo
         self.isLiked        = isLiked
         self.timestamp      = timestamp
         self.owneruid       = owneruid
@@ -99,58 +105,67 @@ class Pet: Codable, Hashable {
         self.affectionLevel = dictionary["affectionLevel"] as? Int ?? 0
         self.address        = State.fromString(dictionary["address"] as! String)
         self.info           = dictionary["info"]           as? String ?? ""
+        self.medicalInfo    = dictionary["medicalInfo"]    as? MedicalInfo ?? MedicalInfo(internalDeworming: false,
+                                                                                          externalDeworming: false,
+                                                                                          microchip: false,
+                                                                                          sterilized: false,
+                                                                                          vaccinated: false)
+        self.socialInfo     = dictionary["socialInfo"]     as? SocialInfo ?? SocialInfo(maleDogFriendly: false,
+                                                                                        femaleDogFriendly: false,
+                                                                                        maleCatFriendly: false,
+                                                                                        femaleCatFriendly: false)
         self.isLiked        = dictionary["isLiked"]        as? Bool ?? false
         self.timestamp      = dictionary["timestamp"]      as? Timestamp ?? Timestamp(date: Date())
         self.owneruid       = dictionary["owneruid"]       as? String ?? ""
         self.likedByUsers   = dictionary["likedByUsers"]   as? [String] ?? []
     }
     //Became useless, delete it at the end of project
-    required init(from decoder: Decoder) throws {
-            let container = try decoder.container(keyedBy: CodingKeys.self)
-        
-            self.id             = try container.decode(String.self,    forKey: .id)
-            self.name           = try container.decode(String.self,    forKey: .name)
-            self.breed          = try container.decode(String.self,    forKey: .breed)
-            self.imagesUrls     = try container.decode([String].self,  forKey: .imagesUrls)
-            self.age            = try container.decode(Int.self,       forKey: .age)
-            self.activityLevel  = try container.decode(Int.self,       forKey: .activityLevel)
-            self.socialLevel    = try container.decode(Int.self,       forKey: .socialLevel)
-            self.affectionLevel = try container.decode(Int.self,       forKey: .affectionLevel)
-            self.info           = try container.decode(String.self,    forKey: .info)
-            self.isLiked        = try container.decode(Bool.self,      forKey: .isLiked)
-            self.timestamp      = try container.decode(Timestamp.self, forKey: .timestamp)
-            self.owneruid       = try container.decode(String.self,    forKey: .owneruid)
-            self.likedByUsers   = try container.decode([String].self,    forKey: .likedByUsers)
-        
-            let typeString = try container.decode(String.self, forKey: .type)
-            if let petType = PetType(rawValue: typeString) {
-                self.type = petType
-            } else {
-                throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid type value")
-            }
-        
-            let genderString = try container.decode(String.self, forKey: .gender)
-            if let genderType = Gender(rawValue: genderString) {
-                self.gender = genderType
-            } else {
-                throw DecodingError.dataCorruptedError(forKey: .gender, in: container, debugDescription: "Invalid type value")
-            }
-            
-            let sizeString = try container.decode(String.self, forKey: .size)
-            if let size = Size(rawValue: sizeString) {
-                self.size = size
-            } else {
-                throw DecodingError.dataCorruptedError(forKey: .size, in: container, debugDescription: "Invalid size value")
-            }
-            
-            let addressString = try container.decode(String.self, forKey: .address)
-            if let address = State(rawValue: addressString) {
-                self.address = address
-            } else {
-                throw DecodingError.dataCorruptedError(forKey: .address, in: container, debugDescription: "Invalid address value")
-            }
-        
-        }
+//    required init(from decoder: Decoder) throws {
+//            let container = try decoder.container(keyedBy: CodingKeys.self)
+//
+//            self.id             = try container.decode(String.self,    forKey: .id)
+//            self.name           = try container.decode(String.self,    forKey: .name)
+//            self.breed          = try container.decode(String.self,    forKey: .breed)
+//            self.imagesUrls     = try container.decode([String].self,  forKey: .imagesUrls)
+//            self.age            = try container.decode(Int.self,       forKey: .age)
+//            self.activityLevel  = try container.decode(Int.self,       forKey: .activityLevel)
+//            self.socialLevel    = try container.decode(Int.self,       forKey: .socialLevel)
+//            self.affectionLevel = try container.decode(Int.self,       forKey: .affectionLevel)
+//            self.info           = try container.decode(String.self,    forKey: .info)
+//            self.isLiked        = try container.decode(Bool.self,      forKey: .isLiked)
+//            self.timestamp      = try container.decode(Timestamp.self, forKey: .timestamp)
+//            self.owneruid       = try container.decode(String.self,    forKey: .owneruid)
+//            self.likedByUsers   = try container.decode([String].self,    forKey: .likedByUsers)
+//
+//            let typeString = try container.decode(String.self, forKey: .type)
+//            if let petType = PetType(rawValue: typeString) {
+//                self.type = petType
+//            } else {
+//                throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid type value")
+//            }
+//
+//            let genderString = try container.decode(String.self, forKey: .gender)
+//            if let genderType = Gender(rawValue: genderString) {
+//                self.gender = genderType
+//            } else {
+//                throw DecodingError.dataCorruptedError(forKey: .gender, in: container, debugDescription: "Invalid type value")
+//            }
+//
+//            let sizeString = try container.decode(String.self, forKey: .size)
+//            if let size = Size(rawValue: sizeString) {
+//                self.size = size
+//            } else {
+//                throw DecodingError.dataCorruptedError(forKey: .size, in: container, debugDescription: "Invalid size value")
+//            }
+//
+//            let addressString = try container.decode(String.self, forKey: .address)
+//            if let address = State(rawValue: addressString) {
+//                self.address = address
+//            } else {
+//                throw DecodingError.dataCorruptedError(forKey: .address, in: container, debugDescription: "Invalid address value")
+//            }
+//
+//        }
 }
 
 extension Pet {

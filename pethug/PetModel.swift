@@ -25,6 +25,8 @@ struct PetModel: Codable {
     let activityLevel: Int
     let socialLevel: Int
     let affectionLevel: Int
+    let medicalInfo: MedicalInfo
+    let socialInfo: SocialInfo
     let info: String
     var isLiked: Bool
     var timestamp: Timestamp

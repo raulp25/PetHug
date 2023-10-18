@@ -242,6 +242,20 @@ final class NewPetContentViewController: UIViewController {
                 section.contentInsets.trailing = sideInsets
                 
                 return section
+            case .medicalInfo:
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = sideInsets
+                section.contentInsets.trailing = sideInsets
+                
+                return section
+            case .socialInfo:
+                let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
+                section.contentInsets.bottom = 30
+                section.contentInsets.leading = sideInsets
+                section.contentInsets.trailing = sideInsets
+                
+                return section
             case .address:
                 let section = NSCollectionLayoutSection.list(using: listConfiguration, layoutEnvironment: layoutEnv)
                 section.contentInsets.bottom = 30
@@ -343,6 +357,22 @@ final class NewPetContentViewController: UIViewController {
             cell.viewModel?.affectionLevel = self?.viewModel.affectionState
         }
         
+        let newPetMedicalInfoViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetMedicalInfoListCellConfiguration>, NewPetMedicalInfo> { [weak self] cell, _, model in
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+            if let self = self {
+                cell.viewModel?.medicalInfo = self.viewModel.medicalInfoState
+            }
+        }
+        
+        let newPetSocialInfoViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetSocialInfoListCellConfiguration>, NewPetSocialInfo> { [weak self] cell, _, model in
+            cell.viewModel = model
+            cell.viewModel?.delegate = self
+            if let self = self {
+                cell.viewModel?.socialInfo = self.viewModel.socialInfoState
+            }
+        }
+        
         let newPetAddressViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetAddressListCellConfiguration>, NewPetAddress> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
@@ -362,6 +392,7 @@ final class NewPetContentViewController: UIViewController {
             cell.viewModel?.isFormValid = self?.viewModel.isValidSubject
             cell.viewModel?.delegate = self
         }
+        
         
 //        var nameMockVM = NewPetName(name: "Fernanda Sanchez")
 //        nameMockVM.delegate = self
@@ -433,6 +464,10 @@ final class NewPetContentViewController: UIViewController {
                 return collectionView.dequeueConfiguredReusableCell(using: newPetSocialViewCellRegistration, for: indexPath, item: socialVM)
             case .affection(let affectionVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetAffectionViewCellRegistration, for: indexPath, item: affectionVM)
+            case .medicalInfo(let medicalInfoVM):
+                return collectionView.dequeueConfiguredReusableCell(using: newPetMedicalInfoViewCellRegistration, for: indexPath, item: medicalInfoVM)
+            case .socialInfo(let socialInfoVM):
+                return collectionView.dequeueConfiguredReusableCell(using: newPetSocialInfoViewCellRegistration, for: indexPath, item: socialInfoVM)
             case .address(let addressVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetAddressViewCellRegistration, for: indexPath, item: addressVM)
             case .info(let infoVM):
@@ -493,6 +528,10 @@ final class NewPetContentViewController: UIViewController {
             .init(key: .social,    values: [.social(.init(socialLevel: viewModel.socialState))]),
             
             .init(key: .affection, values: [.affection(.init(affectionLevel: viewModel.affectionState))]),
+            
+            .init(key: .medicalInfo, values: [.medicalInfo(.init(medicalInfo: viewModel.medicalInfoState))]),
+            
+            .init(key: .socialInfo, values: [.socialInfo(.init(socialInfo: viewModel.socialInfoState))]),
             
             .init(key: .address,   values: [.address(.init(address: viewModel.addressState))]),
             
@@ -574,6 +613,18 @@ extension NewPetContentViewController: NewPetSocialDelegate {
 extension NewPetContentViewController: NewPetAffectionDelegate {
     func affectionLevelChanged(to level: Int?) {
         viewModel.affectionState = level
+    }
+}
+
+extension NewPetContentViewController: NewPetMedicalInfoDelegate {
+    func medicalInfoChanged(to newMedicalInfo: MedicalInfo) {
+        viewModel.medicalInfoState = newMedicalInfo
+    }
+}
+
+extension NewPetContentViewController: NewPetSocialInfoDelegate {
+    func socialInfoChanged(to newSocialInfo: SocialInfo) {
+        viewModel.socialInfoState = newSocialInfo
     }
 }
 

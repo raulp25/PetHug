@@ -7,9 +7,12 @@
 
 import UIKit
 
+protocol TextCheckBoxDelegate: AnyObject {
+    func didTapCheckBox()
+}
+
 final class TextCheckbox: UIView {
-    
-    
+    //MARK: - Private components
     private lazy var hStack: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [textLabel, checkMarkButton])
         stack.axis = .horizontal
@@ -32,6 +35,7 @@ final class TextCheckbox: UIView {
         button.setImage(UIImage(systemName: "square"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
+        button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
         return button
     }()
     
@@ -39,20 +43,35 @@ final class TextCheckbox: UIView {
         super.init(frame: .zero)
     }
     
+    //MARK: - Private properties
+    private var isSelected: Bool = false
+    private var font: UIFont? = nil
+    private var isClickable: Bool = false
     
-    convenience init(titleText: String, isChecked: Bool) {
+    //MARK: - LifeCycle
+    convenience init(
+        titleText: String,
+        isChecked: Bool,
+        font: UIFont? = nil,
+        isClickable: Bool = false
+    ) {
         self.init(frame: .zero)
-        configureUI(titleText: titleText, isChecked: isChecked)
+        configureUI(titleText: titleText, isChecked: isChecked, font: font)
         configureConstraints()
+        self.isClickable = isClickable
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    func configureUI(titleText: String, isChecked: Bool) {
+    //MARK: - Setup
+    func configureUI(titleText: String, isChecked: Bool, font: UIFont?) {
         textLabel.text = titleText
+        
+        if let font = font {
+            textLabel.font = font
+        }
         
         if isChecked {
             checkMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
@@ -67,6 +86,21 @@ final class TextCheckbox: UIView {
     func configureConstraints() {
         addSubview(hStack)
         hStack.fillSuperview()
+    }
+    
+    //MARK: - Private actions
+    @objc private func didTapCheckMark(_ sender: UIButton) {
+        guard isClickable else { return }
+        
+        if isSelected {
+            checkMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+            checkMarkButton.tintColor = .black
+        } else {
+            checkMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
+            checkMarkButton.tintColor = .systemOrange
+        }
+        
+        isSelected = !isSelected
     }
     
 }

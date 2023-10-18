@@ -186,7 +186,7 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
     var currentButton: CurrentChecked = .unset
     var buttons: [UIButton] = []
     
-    @objc func didTapCheckMark(_ sender: UIButton) {
+    @objc private func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else {
             return
         }

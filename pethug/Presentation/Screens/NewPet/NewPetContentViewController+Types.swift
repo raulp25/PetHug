@@ -23,6 +23,8 @@ extension NewPetContentViewController {
         case activity
         case social
         case affection
+        case medicalInfo
+        case socialInfo
         case info
         case address
         case end
@@ -41,6 +43,8 @@ extension NewPetContentViewController {
         case affection(NewPetAffection)
         case info(NewPetInfo)
         case address(NewPetAddress)
+        case medicalInfo(NewPetMedicalInfo)
+        case socialInfo(NewPetSocialInfo)
         case end(NewPetUpload)
     }
     

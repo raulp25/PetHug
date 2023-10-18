@@ -105,6 +105,10 @@
 		C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578E2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift */; };
 		C4680D0B2AD778A2003ABD3E /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = C4680D0A2AD778A2003ABD3E /* MultiSlider */; };
 		C4685C0F2AD87F68003366F2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4685C0E2AD87F68003366F2 /* GoogleService-Info.plist */; };
+		C470DBFB2AE068A40002DE09 /* NewPetMedicalInfoListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C470DBFA2AE068A40002DE09 /* NewPetMedicalInfoListCellConfiguration.swift */; };
+		C470DBFD2AE068AE0002DE09 /* NewPetSocialInfoListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C470DBFC2AE068AE0002DE09 /* NewPetSocialInfoListCellConfiguration.swift */; };
+		C470DBFF2AE06A870002DE09 /* NewPetMedicalInfoCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C470DBFE2AE06A870002DE09 /* NewPetMedicalInfoCellContentView.swift */; };
+		C470DC012AE06AA80002DE09 /* NewPetSocialInfoCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C470DC002AE06AA80002DE09 /* NewPetSocialInfoCellContentView.swift */; };
 		C475540A2AD8CD4B008AA12F /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = C47554092AD8CD4B008AA12F /* Keys.swift */; };
 		C475540D2AD8E24E008AA12F /* FilterAddressPopupSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C475540C2AD8E24E008AA12F /* FilterAddressPopupSearch.swift */; };
 		C475540F2AD8E259008AA12F /* FilterAddressPopupSearchViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C475540E2AD8E259008AA12F /* FilterAddressPopupSearchViewController+Types.swift */; };
@@ -333,6 +337,10 @@
 		C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoControllerCollectionViewCell.swift; sourceTree = "<group>"; };
 		C467578E2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryControllerCollectionViewCell.swift; sourceTree = "<group>"; };
 		C4685C0E2AD87F68003366F2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C470DBFA2AE068A40002DE09 /* NewPetMedicalInfoListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetMedicalInfoListCellConfiguration.swift; sourceTree = "<group>"; };
+		C470DBFC2AE068AE0002DE09 /* NewPetSocialInfoListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSocialInfoListCellConfiguration.swift; sourceTree = "<group>"; };
+		C470DBFE2AE06A870002DE09 /* NewPetMedicalInfoCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetMedicalInfoCellContentView.swift; sourceTree = "<group>"; };
+		C470DC002AE06AA80002DE09 /* NewPetSocialInfoCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSocialInfoCellContentView.swift; sourceTree = "<group>"; };
 		C47554092AD8CD4B008AA12F /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		C475540C2AD8E24E008AA12F /* FilterAddressPopupSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAddressPopupSearch.swift; sourceTree = "<group>"; };
 		C475540E2AD8E259008AA12F /* FilterAddressPopupSearchViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterAddressPopupSearchViewController+Types.swift"; sourceTree = "<group>"; };
@@ -922,6 +930,24 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
+		C470DBF82AE068800002DE09 /* MedicalInfo */ = {
+			isa = PBXGroup;
+			children = (
+				C470DBFA2AE068A40002DE09 /* NewPetMedicalInfoListCellConfiguration.swift */,
+				C470DBFE2AE06A870002DE09 /* NewPetMedicalInfoCellContentView.swift */,
+			);
+			path = MedicalInfo;
+			sourceTree = "<group>";
+		};
+		C470DBF92AE068880002DE09 /* SocialInfo */ = {
+			isa = PBXGroup;
+			children = (
+				C470DBFC2AE068AE0002DE09 /* NewPetSocialInfoListCellConfiguration.swift */,
+				C470DC002AE06AA80002DE09 /* NewPetSocialInfoCellContentView.swift */,
+			);
+			path = SocialInfo;
+			sourceTree = "<group>";
+		};
 		C47554082AD8CD38008AA12F /* UserDefaults */ = {
 			isa = PBXGroup;
 			children = (
@@ -1104,6 +1130,8 @@
 		C48D9B492AC49D47002EDA90 /* NewPetCollectionViewCell */ = {
 			isa = PBXGroup;
 			children = (
+				C470DBF92AE068880002DE09 /* SocialInfo */,
+				C470DBF82AE068800002DE09 /* MedicalInfo */,
 				C4F7DFD22ACCA8B1000D5F76 /* Affection */,
 				C4F7DFD12ACCA8AA000D5F76 /* Social */,
 				C4F7DFD02ACCA8A1000D5F76 /* Activity */,
@@ -1682,6 +1710,7 @@
 				C42616E12AB27858006925DB /* Validatable.swift in Sources */,
 				C483EB9D2AC558ED005E8BE2 /* NewPetGenderListCellConfiguration.swift in Sources */,
 				C4CF74EC2AB23A1A00D69185 /* Colors.swift in Sources */,
+				C470DBFB2AE068A40002DE09 /* NewPetMedicalInfoListCellConfiguration.swift in Sources */,
 				C41E8E5B2AD46D720065DEFC /* FilterPetsContentViewController.swift in Sources */,
 				C4C8727A2ADC794F007110E2 /* FavoritesViewModel+Types.swift in Sources */,
 				C49F70832ADCE1CC008A0D38 /* Banner.swift in Sources */,
@@ -1693,6 +1722,7 @@
 				C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */,
 				C476E2B72ABA827F0014DEA4 /* PetsViewModel.swift in Sources */,
 				C479D08C2ADF67550028B456 /* ForgotPasswordCoordinator.swift in Sources */,
+				C470DBFD2AE068AE0002DE09 /* NewPetSocialInfoListCellConfiguration.swift in Sources */,
 				C4C8727E2ADC7D26007110E2 /* FetchFavoritePets.swift in Sources */,
 				C4BCFEBC2AD9CD020089A1A8 /* FilterPetsUC.swift in Sources */,
 				C4F7DFCD2ACC8FED000D5F76 /* NewPetAgeListCellConfiguration.swift in Sources */,
@@ -1702,6 +1732,7 @@
 				C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */,
 				C483EB9F2AC5595B005E8BE2 /* NewPetGenderCellContentView.swift in Sources */,
 				C4C8727C2ADC7D1B007110E2 /* FetchAllPetsUC.swift in Sources */,
+				C470DBFF2AE06A870002DE09 /* NewPetMedicalInfoCellContentView.swift in Sources */,
 				C4CF74D92AB2270900D69185 /* ChildControllerManagableProtocol.swift in Sources */,
 				C45193102ACE8B0E00B80926 /* FetchUserPetsUC.swift in Sources */,
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
@@ -1721,6 +1752,7 @@
 				C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */,
 				C41DE38D2ADB576600E653BA /* LikePetUC.swift in Sources */,
 				C426D26B2AB671AD00BFA357 /* SettingsViewController.swift in Sources */,
+				C470DC012AE06AA80002DE09 /* NewPetSocialInfoCellContentView.swift in Sources */,
 				C42616D52AB274B4006925DB /* UIButton+Factory.swift in Sources */,
 				C4A95C3D2AC8BDA3002781E2 /* NewPetBreedListCellConfiguration.swift in Sources */,
 				C483EBA42AC55C11005E8BE2 /* NewPetSizeCellContentView.swift in Sources */,
