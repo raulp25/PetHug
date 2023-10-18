@@ -51,11 +51,6 @@ class CreateAccountViewController: UIViewController {
         uv.layer.shadowOpacity = 20
         uv.layer.shadowOffset = .zero
         uv.layer.shadowRadius = 7
-        
-        
-//        uv.layer.shadowPath = UIBezierPath(rect: uv.bounds).cgPath
-//        uv.layer.shouldRasterize = true
-//        uv.layer.rasterizationScale = UIScreen.main.scale
         return uv
     }()
     
@@ -320,7 +315,8 @@ class CreateAccountViewController: UIViewController {
             top: childContainerView.topAnchor,
             left: childContainerView.leftAnchor,
             right: childContainerView.rightAnchor,
-            paddingTop: -100,
+            //Responsive for se 3rd gen
+            paddingTop: UIScreen.main.bounds.size.height < 700 ? -120 : -100,
             paddingLeft: 35,
             paddingRight: 35,
             height: 560
@@ -334,7 +330,8 @@ class CreateAccountViewController: UIViewController {
         )
         titleLabel.anchor(
             bottom: formContainerView.topAnchor,
-            paddingBottom: 50
+            //Responsive for se 3rd gen
+            paddingBottom: UIScreen.main.bounds.size.height < 700 ? 10 : 50
         )
         
         createAccountLabel.centerX(

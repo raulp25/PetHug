@@ -16,6 +16,13 @@ final class LoginCoordinator: NSObject, StateCoordinator {
     
     override init() {
         rootViewController.navigationBar.tintColor = .white
+        //Changes SLR
+//        let app = UINavigationBarAppearance()
+//        app.shadowImage = UIImage()
+//        app.shadowColor = nil
+//        app.backgroundEffect = nil
+//
+//        UINavigationBar.appearance().standardAppearance = app
     }
     
     func start() {
