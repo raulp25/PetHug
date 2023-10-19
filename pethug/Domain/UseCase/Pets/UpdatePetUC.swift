@@ -8,7 +8,7 @@
 import Foundation
 //MARK: - Protocol
 protocol UpdatePetUC {
-    func execute(collection path: String, data: Pet) async throws -> Bool
+    func execute(data: Pet, oldCollection: String) async throws -> Bool
 }
 
 
@@ -20,8 +20,8 @@ final class DefaultUpdatePetUC: UpdatePetUC {
         self.petRepository = petRepository
     }
     
-    func execute(collection path: String, data: Pet) async throws -> Bool {
-        let result = try await petRepository.updatePet(collection: path, data: data)
+    func execute(data: Pet, oldCollection: String) async throws -> Bool {
+        let result = try await petRepository.updatePet(data: data, oldCollection: oldCollection)
         
         return result
     }

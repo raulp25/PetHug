@@ -42,8 +42,8 @@ final class DefaultPetRepository: PetRepository {
         return result
     }
     
-    func updatePet(collection path: String, data: Pet) async throws -> Bool {
-        let result = try await petDataSource.updatePet(collection: path, data: data)
+    func updatePet(data: Pet, oldCollection: String) async throws -> Bool {
+        let result = try await petDataSource.updatePet(data: data, oldCollection: oldCollection)
         return result
     }
     

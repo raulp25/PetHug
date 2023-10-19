@@ -284,9 +284,8 @@ class NewPetViewModel {
     }
     
     private func executeUpdatePet(pet: Pet) async throws -> Bool{
-        let path = pet.type.getPath
-        
-        return try await updatePetUseCase.execute(collection: path, data: pet)
+        guard let path = self.pet?.type.getPath else { return false}
+        return try await updatePetUseCase.execute(data: pet, oldCollection: path)
     }
     
     //Recursively Upload images in sequence to respect the order in which the user selected the images

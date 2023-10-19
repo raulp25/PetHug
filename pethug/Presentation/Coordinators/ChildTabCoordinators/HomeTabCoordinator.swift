@@ -105,10 +105,10 @@ extension HomeTabCoordinator: PetsNavigatable {
                 values: [.description(pet.info)]),
             .init(
                 key: .medical,
-                values: [.medical(.init(internalDeworming: true, externalDeworming: false, microchip: true, sterilized: false, vaccinated: true))]),
+                values: [.medical(.init(internalDeworming: pet.medicalInfo.internalDeworming, externalDeworming: pet.medicalInfo.externalDeworming, microchip: pet.medicalInfo.microchip, sterilized: pet.medicalInfo.sterilized, vaccinated: pet.medicalInfo.sterilized))]),
             .init(
                 key: .social,
-                values: [.social(.init(maleDogFriendly: true, femaleDogFriendly: true, maleCatFriendly: false, femaleCatFriendly: false))])
+                values: [.social(.init(maleDogFriendly: pet.socialInfo.maleDogFriendly, femaleDogFriendly: pet.socialInfo.femaleDogFriendly, maleCatFriendly: pet.socialInfo.maleCatFriendly, femaleCatFriendly: pet.socialInfo.femaleCatFriendly))])
         ])
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)

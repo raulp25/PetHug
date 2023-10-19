@@ -49,7 +49,7 @@ extension String {
         case dogs
         case cats
         case birds
-        case rabbits
+        case rabbits 
         case likedPets
     }
     
