@@ -356,12 +356,10 @@ extension LoginViewController: AuthTextFieldDelegate {
         if textField == emailTextField {
             textField.textField.resignFirstResponder()
             passwordTextField.textField.becomeFirstResponder()
-            
         } else {
-            login()
             textField.textField.resignFirstResponder()
-            print(": => keyboard continue button login clicked textfieldShouldReturn")
+            login()
         }
-        return true
+        return false
     }
 }

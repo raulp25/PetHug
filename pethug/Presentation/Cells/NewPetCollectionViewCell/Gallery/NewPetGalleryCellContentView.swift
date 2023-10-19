@@ -24,13 +24,12 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
+    private var work: DispatchWorkItem?
     
     //MARK: - Internal properties
-    private var currentSnapData = [SnapData]() {
-        didSet {
-            print("cambio currentsnap data checar")
-        }
-    }
+    private var currentSnapData: [SnapData] = [.init(key: .gallery, values: [
+        .image(.init(image: UIImage(systemName: "pencil")!))
+    ])]
     private var images: [UIImage] = [] {
         didSet {
             currentConfiguration.viewModel?.delegate?.galleryDidChange(images: images)
@@ -64,7 +63,8 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
 
         // create the content view UI
         setup()
-
+        configureDataSource()
+        updateSnapShot()
         // apply the configuration (set data to UI elements / define custom content view appearance)
         apply(configuration: configuration)
         
@@ -74,16 +74,27 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         addSubview(collectionView)
         
         let sideInsets = CGFloat(40)
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor, paddingLeft: sideInsets)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingLeft: sideInsets
+        )
         titleLabel.setHeight(14)
         
-        collectionView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingBottom: 20)
+        collectionView.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 10,
+            paddingBottom: 20
+        )
         collectionView.setHeight(90)
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         collectionView.showsHorizontalScrollIndicator = false
-        configureDataSource()
-        updateSnapShot()
+
     }
     
     @available(*, unavailable) required init?(coder _: NSCoder) {
@@ -105,18 +116,29 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         guard let item = currentConfiguration.viewModel else { return }
         
         if !item.imagesToEdit.isEmpty {
+            //Set the initial gray placeholder squares until loading the images finish
+            if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
+                var array = [GalleryImage]()
+                for _ in 0..<item.imagesToEdit.count {
+                    array.append(GalleryImage(isEmpty: true))
+                }
+                
+                currentSnapData[gallerySectionIndex].values.append(contentsOf: array.map({ .image($0) }))
+                updateSnapShot()
+            }
+            //Load pet images
             item.getImagetImagesSequentially(stringUrlArray: item.imagesToEdit) { [weak self] images in
-//                print("images ya descargadas como [UIIMAGE] en formulario gallery 421: => \(images)")
                 if !images.isEmpty {
                     if let gallerySectionIndex = self?.currentSnapData.firstIndex(where: { $0.key == .gallery }) {
-                        self?.currentSnapData[gallerySectionIndex].values.append(contentsOf: images.map({ .image($0) }))
+                        self?.currentSnapData[gallerySectionIndex].values.removeAll(where: { item in
+                            switch item {
+                            case let .image(galleryImage):
+                                return galleryImage.isEmpty == true
+                            }
+                        })
                         self?.images.append(contentsOf: images)
-                        
-                        self?.snapshot = self?.dataSource.snapshot()
-                        self?.snapshot.appendItems((self?.currentSnapData[gallerySectionIndex].values)!, toSection: .gallery)
-                        DispatchQueue.main.async {
-                            self?.dataSource.apply((self?.snapshot)!, animatingDifferences: false)
-                        }
+                        self?.currentSnapData[gallerySectionIndex].values.append(contentsOf: images.map({ .image(.init(image: $0)) }))
+                        self?.updateSnapShot()
                     }
                 }
             }
@@ -162,7 +184,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
             cell.configure(delegate: self)
         }
         
-        let galleryImageViewCellRegistration = UICollectionView.CellRegistration<GalleryControllerCollectionViewCell, UIImage> { cell, _, model in
+        let galleryImageViewCellRegistration = UICollectionView.CellRegistration<GalleryControllerCollectionViewCell, GalleryImage> { cell, _, model in
             cell.configure(with: model)
             cell.delegate = self
         }
@@ -183,9 +205,9 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-        currentSnapData  = [.init(key: .gallery, values: [
-            .image(UIImage(systemName: "pencil")!)
-        ])]
+//        currentSnapData  = [.init(key: .gallery, values: [
+//            .image(.init(image: UIImage(systemName: "pencil")!))
+//        ])]
 //        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
         
         snapshot = Snapshot()
@@ -337,7 +359,7 @@ extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavig
         guard let image = info[.editedImage] as? UIImage else { return }
         
         if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
-            currentSnapData[gallerySectionIndex].values.append(.image(image))
+            currentSnapData[gallerySectionIndex].values.append(.image(.init(image: image)))
             images.append(image)
             
             snapshot = dataSource.snapshot()
@@ -372,7 +394,7 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
                     }
                     
                     if let image = object as? UIImage {
-                        self?.currentSnapData[gallerySectionIndex].values.append(.image(image))
+                        self?.currentSnapData[gallerySectionIndex].values.append(.image(.init(image: image)))
                         self?.images.append(image)
                         
                         self?.snapshot.appendItems((self?.currentSnapData[gallerySectionIndex].values)!, toSection: .gallery)

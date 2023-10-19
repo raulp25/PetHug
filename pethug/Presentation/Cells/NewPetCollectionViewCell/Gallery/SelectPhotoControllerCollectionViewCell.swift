@@ -15,7 +15,7 @@ final class SelectPhotoControllerCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private components
     private lazy var petImage: UIImageView = {
-       let iv = UIImageView(image: UIImage(systemName: "camera.on.rectangle"))
+       let iv = UIImageView(image: UIImage(systemName: "camera.fill"))
         let k = Int(arc4random_uniform(6))
         iv.backgroundColor = .clear
         iv.tintColor = .orange

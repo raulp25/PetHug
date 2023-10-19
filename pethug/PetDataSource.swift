@@ -213,16 +213,17 @@ final class DefaultPetDataSource: PetDataSource {
     }
     //MARK: - Update
     func updatePet(data: Pet, oldCollection: String) async throws -> Bool {
-        let uid = AuthService().uid
         let collection = data.type.getPath
-        let petFirebaseEntinty = data.toFirebaseEntity()
-        let dataModel = petFirebaseEntinty.toDictionaryUpdate()
-        
+
         if collection != oldCollection {
             
             try await handlePetChangedType(oldCollection: oldCollection, data: data)
             
         } else {
+            
+            let uid = AuthService().uid
+            let petFirebaseEntinty = data.toFirebaseEntity()
+            let dataModel = petFirebaseEntinty.toDictionaryUpdate()
             
             try await withThrowingTaskGroup(of: Void.self) { group in
                 
@@ -292,7 +293,6 @@ final class DefaultPetDataSource: PetDataSource {
     }
     //MARK: - Like
     func likePet(data: Pet) async throws {
-        
         try await updateOwnerPetLikes(data: data)
     }
     
@@ -305,11 +305,11 @@ final class DefaultPetDataSource: PetDataSource {
                     .document(data.id)
                     .updateData(dataModel)
         
-        try await db.collection("users")
-            .document(data.owneruid)
-                    .collection("pets")
-                    .document(data.id)
-                    .updateData(dataModel)
+//        try await db.collection("users")
+//            .document(data.owneruid)
+//                    .collection("pets")
+//                    .document(data.id)
+//                    .updateData(dataModel)
 
     }
     //We dont need it anymore cause we changed the approach

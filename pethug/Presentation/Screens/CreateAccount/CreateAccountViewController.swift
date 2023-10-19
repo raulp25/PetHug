@@ -400,9 +400,6 @@ extension CreateAccountViewController: UIImagePickerControllerDelegate & UINavig
 extension CreateAccountViewController: AuthTextFieldDelegate {
     func textFieldShouldReturn(_ textField: AuthTextField) -> Bool {
         
-        print("current textfield in textfieldShouldreturn(): => \(textField)")
-        print("textField === usernameTextField: => \(textField === usernameTextField)")
-        
         switch textField {
         case usernameTextField:
             textField.textField.resignFirstResponder()
@@ -417,7 +414,7 @@ extension CreateAccountViewController: AuthTextFieldDelegate {
             createAccount()
             textField.textField.resignFirstResponder()
         }
-        return true
+        return false
     }
 }
 

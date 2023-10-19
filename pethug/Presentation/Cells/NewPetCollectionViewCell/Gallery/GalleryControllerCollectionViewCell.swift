@@ -50,11 +50,11 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
 //    private weak var delegate: GalleryCellDelegate?
     //MARK: - Internal properties
     weak var delegate: GalleryCellDelegate?
-    private var image: UIImage? = nil
+    private var galleryImage: GalleryImage? = nil
     //MARK: - LifeCycle
-    func configure(with image: UIImage) {
+    func configure(with galleryImage: GalleryImage) {
 //        self.delegate = delegate
-        configureCellUI(with: image)
+        configureCellUI(with: galleryImage)
     }
     
     override init(frame: CGRect = .zero) {
@@ -64,26 +64,32 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
         addGestureRecognizer(tapGesture)
         
         addSubview(petImage)
-        addSubview(editImageContainer)
-        editImageContainer.addSubview(editImage)
+//        addSubview(editImageContainer)
+//        editImageContainer.addSubview(editImage)
         
         petImage.fillSuperview()
 //        petImage.setHeight(frame.height / 2.6 * 2)
         
-        editImageContainer.anchor(bottom: bottomAnchor, right: rightAnchor, paddingBottom: 5, paddingRight: 2)
-        editImageContainer.setDimensions(height: 17, width: 17)
-        
-        editImage.center(inView: editImageContainer)
-        editImage.setDimensions(height: 15, width: 15)
+//        editImageContainer.anchor(bottom: bottomAnchor, right: rightAnchor, paddingBottom: 5, paddingRight: 2)
+//        editImageContainer.setDimensions(height: 17, width: 17)
+//
+//        editImage.center(inView: editImageContainer)
+//        editImage.setDimensions(height: 15, width: 15)
         
     }
     
     
     private var work: DispatchWorkItem?
     
-    private func configureCellUI(with image: UIImage) {
-        petImage.image = image
-        self.image = image
+    private func configureCellUI(with galleryImage: GalleryImage) {
+        print("gallery image en celda: => \(galleryImage)")
+        if let image = galleryImage.image {
+            petImage.image = image
+        } else if galleryImage.isEmpty {
+            petImage.backgroundColor = customRGBColor(red: 238, green: 238, blue: 238)
+        }
+        
+        self.galleryImage = galleryImage
     }
     
     override func prepareForReuse() {
@@ -97,7 +103,7 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Private actions
     @objc private func didTapCell() {
-        delegate?.didTapCell(.image(image!))
+        delegate?.didTapCell(.image(galleryImage!))
     }
 
 }

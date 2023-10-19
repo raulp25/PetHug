@@ -17,12 +17,23 @@ extension NewPetGalleryCellContentView {
     }
     
     enum Item: Hashable {
-        case image(UIImage)
+        case image(GalleryImage)
     }
     
     struct SnapData {
         var key: Section
         var values: [Item]
+    }
+}
+
+struct GalleryImage: Hashable {
+    let id = UUID().uuidString
+    let isEmpty: Bool
+    let image: UIImage?
+    
+    init(isEmpty: Bool = false, image: UIImage? = nil) {
+        self.isEmpty = isEmpty
+        self.image = image
     }
 }
 
