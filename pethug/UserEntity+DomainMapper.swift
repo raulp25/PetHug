@@ -20,8 +20,8 @@ extension User: DomainMapper {
     }
 }
 
-extension User: ObjectLiteralMapper {
-    func toObjectLiteral() -> [String: Any] {
+extension User: DictionaryLiteralMapper {
+    func toDictionaryLiteral() -> [String: Any] {
         return [
             "id": id,
             "username": username,

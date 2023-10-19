@@ -167,10 +167,12 @@ final class DefaultPetDataSource: PetDataSource {
         
         let results = try await [dogsSnapshot, catsSnapshot, birdsSnapshot, rabbitsSnapshot]
         
-        let docsArr: [QueryDocumentSnapshot] = results[0].documents + results[1].documents + results[2].documents + results[3].documents
+        let docsArr: [QueryDocumentSnapshot] = results[0].documents +
+                                               results[1].documents +
+                                               results[2].documents +
+                                               results[3].documents
 
         var pets = [Pet]()
-        
         
         for doc in docsArr {
             let dictionary = doc.data()
@@ -182,11 +184,12 @@ final class DefaultPetDataSource: PetDataSource {
         
         return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
     }
+    
     //MARK: - Create
     func createPet(collection path: String, data: Pet) async throws -> Bool {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
-        let dataModel = petFirebaseEntinty.toObjectLiteral()
+        let dataModel = petFirebaseEntinty.toDictionaryLiteral()
         try await db.collection(path)
                     .document(data.id)
                     .setData(dataModel)
@@ -202,7 +205,7 @@ final class DefaultPetDataSource: PetDataSource {
     
     func createPetInSingle(collection path: String, data: Pet) async throws{
         let petFirebaseEntinty = data.toFirebaseEntity()
-        let dataModel = petFirebaseEntinty.toObjectLiteral()
+        let dataModel = petFirebaseEntinty.toDictionaryLiteral()
         try await db.collection(path)
                     .document(data.id)
                     .setData(dataModel)
@@ -213,7 +216,7 @@ final class DefaultPetDataSource: PetDataSource {
         let uid = AuthService().uid
         let collection = data.type.getPath
         let petFirebaseEntinty = data.toFirebaseEntity()
-        let dataModel = petFirebaseEntinty.toObjectLiteralUpdate()
+        let dataModel = petFirebaseEntinty.toDictionaryUpdate()
         
         if collection != oldCollection {
             
@@ -247,7 +250,7 @@ final class DefaultPetDataSource: PetDataSource {
     func handlePetChangedType(oldCollection: String, data: Pet) async throws {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
-        let updatedPet = petFirebaseEntinty.toObjectLiteralUpdate()
+        let updatedPet = petFirebaseEntinty.toDictionaryUpdate()
         let collection = data.type.getPath
         
         try await withThrowingTaskGroup(of: Void.self) { group in
@@ -296,7 +299,7 @@ final class DefaultPetDataSource: PetDataSource {
     func updateOwnerPetLikes(data: Pet) async throws {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
-        let dataModel = petFirebaseEntinty.toObjectLiteralLiked()
+        let dataModel = petFirebaseEntinty.toDictionaryLiked()
         
         try await db.collection(data.type.getPath)
                     .document(data.id)

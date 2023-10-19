@@ -91,7 +91,7 @@
 		C448201F2AB5401600E72BD2 /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C448201E2AB5401600E72BD2 /* UserRepository.swift */; };
 		C44820222AB5424900E72BD2 /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820212AB5424900E72BD2 /* UserDataSource.swift */; };
 		C44820242AB5438000E72BD2 /* Paths.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820232AB5438000E72BD2 /* Paths.swift */; };
-		C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820272AB54AB900E72BD2 /* ObjectLiteralMapper.swift */; };
+		C44820282AB54ABA00E72BD2 /* DictionaryMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820272AB54AB900E72BD2 /* DictionaryMapper.swift */; };
 		C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */; };
 		C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */; };
 		C44DFD402AC639B20045DD7A /* NewPetUploadCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */; };
@@ -324,7 +324,7 @@
 		C448201E2AB5401600E72BD2 /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
 		C44820212AB5424900E72BD2 /* UserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSource.swift; sourceTree = "<group>"; };
 		C44820232AB5438000E72BD2 /* Paths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Paths.swift; sourceTree = "<group>"; };
-		C44820272AB54AB900E72BD2 /* ObjectLiteralMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObjectLiteralMapper.swift; sourceTree = "<group>"; };
+		C44820272AB54AB900E72BD2 /* DictionaryMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryMapper.swift; sourceTree = "<group>"; };
 		C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToModelMapper.swift; sourceTree = "<group>"; };
 		C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadListCellConfiguration.swift; sourceTree = "<group>"; };
 		C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadCellContentView.swift; sourceTree = "<group>"; };
@@ -906,7 +906,7 @@
 			isa = PBXGroup;
 			children = (
 				C44820132AB538DC00E72BD2 /* DomainMapperProtocol.swift */,
-				C44820272AB54AB900E72BD2 /* ObjectLiteralMapper.swift */,
+				C44820272AB54AB900E72BD2 /* DictionaryMapper.swift */,
 				C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */,
 				C43A5C702ACCE547007C8ECB /* FirebaseMapper.swift */,
 			);
@@ -1688,7 +1688,7 @@
 				C4B1BD152AD4BE79003311EB /* FilterPetsSizeListCellConfiguration.swift in Sources */,
 				C4D44A1A2ADDDFF4004D2A53 /* ProfileCoordinator.swift in Sources */,
 				C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */,
-				C44820282AB54ABA00E72BD2 /* ObjectLiteralMapper.swift in Sources */,
+				C44820282AB54ABA00E72BD2 /* DictionaryMapper.swift in Sources */,
 				C480DBC62AD3985F005F707C /* CollectionViewImageCell.swift in Sources */,
 				C42616F52AB29DF4006925DB /* UILabel+Extensions.swift in Sources */,
 				C4CB96A32AD3491E00E5C338 /* CollectionViewDescriptionCell.swift in Sources */,

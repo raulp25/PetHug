@@ -33,8 +33,8 @@ extension Pet: DomainMapper {
     }
 }
 
-extension Pet: ObjectLiteralMapper {
-    func toObjectLiteral() -> [String: Any] {
+extension Pet: DictionaryLiteralMapper {
+    func toDictionaryLiteral() -> [String: Any] {
         return [
             "id": id,
             "name": name,
@@ -87,8 +87,8 @@ extension Pet: FirebaseMapper {
     }
 }
 
-extension PetModel: ObjectLiteralMapper {
-    func toObjectLiteral() -> [String: Any] {
+extension PetModel: DictionaryLiteralMapper {
+    func toDictionaryLiteral() -> [String: Any] {
         return [
             "id": id,
             "name": name,
@@ -113,8 +113,8 @@ extension PetModel: ObjectLiteralMapper {
     }
 }
 
-extension PetModel: ObjectLiteralUpdateMapper {
-    func toObjectLiteralUpdate() -> [String: Any] {
+extension PetModel: DictionaryUpdateMapper {
+    func toDictionaryUpdate() -> [String: Any] {
         return [
             "id": id,
             "name": name,
@@ -135,8 +135,8 @@ extension PetModel: ObjectLiteralUpdateMapper {
     }
 }
 
-extension PetModel: ObjectLiteralLikedMapper {
-    func toObjectLiteralLiked() -> [String: Any] {
+extension PetModel: DictionaryLikedMapper {
+    func toDictionaryLiked() -> [String: Any] {
         return [
             "likedByUsers": likedByUsers
         ]
