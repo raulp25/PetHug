@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MultiSlider
 
 final class NewPetSocialCellContentView: UIView, UIContentView {
     private let titleLabel: UILabel = {
@@ -17,50 +18,37 @@ final class NewPetSocialCellContentView: UIView, UIContentView {
         return label
     }()
     
-    private let containerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        return uv
-    }()
-    
-    private lazy var subContainerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        uv.backgroundColor = .white
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openKeyboard))
-        uv.isUserInteractionEnabled = true
-        uv.addGestureRecognizer(tapGesture)
-        return uv
-    }()
-    
-    private lazy var hStackSocial: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [socialTextField, ageLabel])
-        stack.backgroundColor = .white
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    private lazy var socialTextField: UITextField = {
-        let txtField = UITextField(frame: .zero)
-        txtField.keyboardType = .numberPad
-        txtField.textColor = .label
-        txtField.tintColor = .orange
-        txtField.textAlignment = .left
-        txtField.font = .systemFont(ofSize: 16, weight: .regular)
-        txtField.backgroundColor = .clear
-        txtField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        return txtField
-    }()
-    
-    private let ageLabel: UILabel = {
+    private let socialLabel: UILabel = {
        let label = UILabel()
-        label.text = "años"
+        label.text = "Social: 0"
         label.font = UIFont.systemFont(ofSize: 14.3, weight: .medium)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
+    
+    private lazy var slider: MultiSlider = {
+        let horizontalMultiSlider = MultiSlider()
+        horizontalMultiSlider.orientation = .horizontal
+        horizontalMultiSlider.outerTrackColor = customRGBColor(red: 210, green: 210, blue: 210)
+        horizontalMultiSlider.tintColor = .orange
+        horizontalMultiSlider.valueLabelPosition = .top
+        horizontalMultiSlider.trackWidth = 5
+        horizontalMultiSlider.showsThumbImageShadow = true
+        horizontalMultiSlider.valueLabelAlternatePosition = false
+        horizontalMultiSlider.valueLabelPosition = .bottom
+        horizontalMultiSlider.valueLabelFormatter.positiveSuffix = ""
+        horizontalMultiSlider.valueLabelFont = UIFont.systemFont(ofSize: 11, weight: .light, width: .expanded)
+        
+        horizontalMultiSlider.minimumValue = 0
+        horizontalMultiSlider.maximumValue = 10
+        horizontalMultiSlider.value = [0]
+        horizontalMultiSlider.snapValues = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
+        
+        horizontalMultiSlider.addTarget(self, action: #selector(sliderChanged), for: .valueChanged)
+        
+        return horizontalMultiSlider
+    }()
+    
     
     // MARK: - Properties
     private var currentConfiguration: NewPetSocialListCellConfiguration!
@@ -91,52 +79,21 @@ final class NewPetSocialCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Private actions
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        guard let text = textField.text, let number = Int(text) else {
-            currentConfiguration.viewModel?.delegate?.socialLevelChanged(to: nil)
-            textField.text = ""
-            return
-            
-        }
-        
-        if text.count > 1 && text.hasPrefix("0") {
-            let text = String(text.dropFirst())
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.socialLevelChanged(to: Int(text))
-            
-        }
-        
-        if number > 10 {
-            let text = "10"
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.socialLevelChanged(to: Int(text))
-        }
-        
-        if number < 1 {
-            let text = "1"
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.socialLevelChanged(to: Int(text))
-        }
-        
-        if number >= 1 && number <= 10 {
-            currentConfiguration.viewModel?.delegate?.socialLevelChanged(to: number)
-        }
-
-
+    @objc func sliderChanged(slider: MultiSlider) {
+        let vals: [CGFloat] = slider.value
+        currentConfiguration.viewModel?.delegate?.socialLevelChanged(to: Int(vals[0]))
+        socialLabel.text = "Social: \(Int(vals[0]))"
     }
-    
-    @objc private func openKeyboard() {
-        socialTextField.becomeFirstResponder()
-    }
-    
     
     // MARK: - Functions
     private func apply(configuration: NewPetSocialListCellConfiguration) {
         guard currentConfiguration != configuration else { return }
         
         currentConfiguration = configuration
-        guard let item = currentConfiguration.viewModel else { return }
-        socialTextField.text = item.socialLevel != nil ? String(item.socialLevel!) : ""
+        guard let socialLevel = currentConfiguration.viewModel?.socialLevel else { return }
+        slider.value = [CGFloat(socialLevel)]
+        socialLabel.text = "Social: \(socialLevel)"
+        
     }
     
     
@@ -144,30 +101,29 @@ final class NewPetSocialCellContentView: UIView, UIContentView {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         addSubview(titleLabel)
-        addSubview(containerView)
+        addSubview(socialLabel)
+        addSubview(slider)
+        
         titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
         
-        containerView.addSubview(subContainerView)
-        subContainerView.addSubview(socialTextField)
+        socialLabel.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            paddingTop: 15
+        )
         
-        containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 30)
-        containerView.setHeight(40)
+        slider.anchor(
+            top: socialLabel.topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 20,
+            paddingBottom: 30
+        )
         
-        subContainerView.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, paddingLeft: 0)
-        subContainerView.setWidth(50)
-        subContainerView.layer.cornerRadius = 10
-        
-        socialTextField.center(inView: subContainerView)
     }
     
 }
-
-extension NewPetSocialCellContentView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        socialTextField.resignFirstResponder()
-    }
-}
-
 
 
 

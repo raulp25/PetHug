@@ -106,31 +106,36 @@ final class NewPetMedicalInfoCellContentView: UIView, UIContentView {
             titleText: "Desparasitación Interna",
             isChecked: medicalInfo.internalDeworming,
             font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true
+            isClickable: true,
+            delegate: self
         )
         externalDeworming = TextCheckbox(
             titleText: "Desparasitación Externa",
             isChecked: medicalInfo.externalDeworming,
             font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true
+            isClickable: true,
+            delegate: self
         )
         microchip = TextCheckbox(
             titleText: "Microchip",
             isChecked: medicalInfo.microchip,
             font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true
+            isClickable: true,
+            delegate: self
         )
         sterilized = TextCheckbox(
             titleText: "Esterilizado",
             isChecked: medicalInfo.sterilized,
             font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true
+            isClickable: true,
+            delegate: self
         )
         vaccinated = TextCheckbox(
             titleText: "Vacunas",
             isChecked: medicalInfo.vaccinated,
             font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true
+            isClickable: true,
+            delegate: self
         )
         
         
@@ -150,10 +155,21 @@ final class NewPetMedicalInfoCellContentView: UIView, UIContentView {
         }
     }
     
-    func addGesture(to textCheckBox: UIView) {
-    }
+    
 }
 
+extension NewPetMedicalInfoCellContentView: TextCheckBoxDelegate {
+    func didTapCheckBox() {
+        
+        let medicalInfo = MedicalInfo(internalDeworming: internalDeworming!.isChecked,
+                                      externalDeworming: externalDeworming!.isChecked,
+                                      microchip: microchip!.isChecked,
+                                      sterilized: sterilized!.isChecked,
+                                      vaccinated: vaccinated!.isChecked)
+        
+        currentConfiguration.viewModel?.delegate?.medicalInfoChanged(to: medicalInfo)
+    }
+}
 
 
 

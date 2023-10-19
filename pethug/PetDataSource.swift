@@ -34,7 +34,8 @@ final class DefaultPetDataSource: PetDataSource {
     internal var query: Query!
     internal var documents = [QueryDocumentSnapshot]()
     internal var order = "timestamp"
-    
+    //MARK: - Get
+    //Fetch pets in general
     func fetchPets(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet] {
         if resetFilterQueries {
             query = nil
@@ -68,7 +69,7 @@ final class DefaultPetDataSource: PetDataSource {
         
         return pets
     }
-    
+    //Fetch user pets
     func fetchUserPets(with resetPagination: Bool) async throws -> [Pet] {
         let uid = AuthService().uid
         
@@ -106,7 +107,7 @@ final class DefaultPetDataSource: PetDataSource {
         
         return pets
     }
-    
+    //Fetch with filter options
     func fetchPets(collection: String, withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
         if resetFilterQueries {
             query = nil
@@ -137,7 +138,7 @@ final class DefaultPetDataSource: PetDataSource {
         
         return pets
     }
-    
+    //Favorites
     func fetchFavoritePets() async throws -> [Pet] {
         let uid = AuthService().uid
         
@@ -165,15 +166,16 @@ final class DefaultPetDataSource: PetDataSource {
         
         return pets
     }
-    
+    //MARK: - Create
     func createPet(collection path: String, data: Pet) async throws -> Bool {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
         let dataModel = petFirebaseEntinty.toObjectLiteral()
+        print("pet in data source as object literal: => \(dataModel)")
         try await db.collection(path)
                     .document(data.id)
                     .setData(dataModel)
-        
+
         try await db.collection("users")
                     .document(uid)
                     .collection("pets")
@@ -182,7 +184,7 @@ final class DefaultPetDataSource: PetDataSource {
         return true
         
     }
-    
+    //MARK: - Update
     func updatePet(collection path: String, data: Pet) async throws -> Bool {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
@@ -200,7 +202,7 @@ final class DefaultPetDataSource: PetDataSource {
         return true
         
     }
-    
+    //MARK: - Delete
     func deletePet(collection path: String, docId: String) async throws -> Bool {
         let uid = AuthService().uid
         try await db.collection("users")
@@ -216,7 +218,7 @@ final class DefaultPetDataSource: PetDataSource {
                     .delete()
         return true
     }
-    
+    //MARK: - Like
     func likePet(data: Pet) async throws {
         
         try await updateOwnerPetLikes(data: data)
@@ -252,7 +254,7 @@ final class DefaultPetDataSource: PetDataSource {
                     .document(data.id)
                     .setData(dataModel)
     }
-    
+    //MARK: - Dislike
     func dislikePet(data: Pet) async throws {
         
         try await updateOwnerPetLikes(data: data)

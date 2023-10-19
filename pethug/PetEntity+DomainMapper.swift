@@ -101,8 +101,8 @@ extension PetModel: ObjectLiteralMapper {
             "activityLevel": activityLevel,
             "socialLevel": socialLevel,
             "affectionLevel": affectionLevel,
-            "medicalInfo": medicalInfo,
-            "socialInfo": socialInfo,
+            "medicalInfo": medicalInfo.toObjectLiteral(),
+            "socialInfo": socialInfo.toObjectLiteral(),
             "address": address,
             "info": info,
             "isLiked": isLiked,
@@ -127,8 +127,8 @@ extension PetModel: ObjectLiteralUpdateMapper {
             "activityLevel": activityLevel,
             "socialLevel": socialLevel,
             "affectionLevel": affectionLevel,
-            "medicalInfo": medicalInfo,
-            "socialInfo": socialInfo,
+            "medicalInfo": medicalInfo.toObjectLiteral(),
+            "socialInfo": socialInfo.toObjectLiteral(),
             "address": address,
             "info": info
         ]

@@ -44,21 +44,27 @@ final class TextCheckbox: UIView {
     }
     
     //MARK: - Private properties
-    private var isSelected: Bool = false
-    private var font: UIFont? = nil
+    private var font: UIFont?
     private var isClickable: Bool = false
+    private weak var delegate: TextCheckBoxDelegate?
+    
+    //MARK: - Internal properties
+    var isChecked = false
     
     //MARK: - LifeCycle
     convenience init(
         titleText: String,
         isChecked: Bool,
         font: UIFont? = nil,
-        isClickable: Bool = false
+        isClickable: Bool = false,
+        delegate: TextCheckBoxDelegate? = nil
     ) {
         self.init(frame: .zero)
+        self.isChecked = isChecked
+        self.isClickable = isClickable
+        self.delegate = delegate
         configureUI(titleText: titleText, isChecked: isChecked, font: font)
         configureConstraints()
-        self.isClickable = isClickable
     }
     
     required init?(coder: NSCoder) {
@@ -92,7 +98,7 @@ final class TextCheckbox: UIView {
     @objc private func didTapCheckMark(_ sender: UIButton) {
         guard isClickable else { return }
         
-        if isSelected {
+        if isChecked {
             checkMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
             checkMarkButton.tintColor = .black
         } else {
@@ -100,7 +106,9 @@ final class TextCheckbox: UIView {
             checkMarkButton.tintColor = .systemOrange
         }
         
-        isSelected = !isSelected
+        isChecked = !isChecked
+        
+        delegate?.didTapCheckBox()
     }
     
 }

@@ -28,7 +28,13 @@ class NewPetViewModel {
 //        //        mockDecodePetModel()
 //    }
     
-    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC, pet: Pet? = nil) {
+    init(
+        imageService: ImageServiceProtocol,
+        createPetUseCase: DefaultCreatePetUC,
+        updatePetUseCase: DefaultUpdatePetUC,
+        deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC,
+        pet: Pet? = nil
+    ) {
         print("recibio pet en newpet view model 444 : => \(String(describing: pet?.imagesUrls))")
         self.imageService     = imageService
         self.createPetUseCase = createPetUseCase
@@ -79,10 +85,18 @@ class NewPetViewModel {
     @Published var activityState:    Int? = nil
     @Published var socialState:      Int? = nil
     @Published var affectionState:   Int? = nil
-    @Published var medicalInfoState: MedicalInfo
-    @Published var socialInfoState:  SocialInfo
-    @Published var addressState:     Pet.State? = nil
-    @Published var infoState:        String? = nil
+    @Published var medicalInfoState: MedicalInfo {
+        didSet {
+            print("medical info state publisher changed: => \(medicalInfoState)")
+        }
+    }
+    @Published var socialInfoState:  SocialInfo{
+        didSet {
+            print("social info state publisher changed: => \(socialInfoState)")
+        }
+    }
+    @Published var addressState: Pet.State? = nil
+    @Published var infoState:    String? = nil
     
     var imagesToEditState: [String] = []
     var isEdit = false

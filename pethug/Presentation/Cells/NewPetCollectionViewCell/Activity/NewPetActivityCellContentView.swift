@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MultiSlider
 
 final class NewPetActivityCellContentView: UIView, UIContentView {
     private let titleLabel: UILabel = {
@@ -16,51 +17,38 @@ final class NewPetActivityCellContentView: UIView, UIContentView {
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
-    private let containerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        return uv
-    }()
     
-    private lazy var subContainerView: UIView = {
-        let uv = UIView(withAutolayout: true)
-        uv.backgroundColor = .white
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(openKeyboard))
-        uv.isUserInteractionEnabled = true
-        uv.addGestureRecognizer(tapGesture)
-        return uv
-    }()
-    
-    private lazy var hStackActivity: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [activityTextField, ageLabel])
-        stack.backgroundColor = .white
-        stack.axis = .horizontal
-        stack.alignment = .center
-        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        return stack
-    }()
-    
-    private lazy var activityTextField: UITextField = {
-        let txtField = UITextField(frame: .zero)
-        txtField.keyboardType = .numberPad
-        txtField.textColor = .label
-        txtField.tintColor = .orange
-        txtField.textAlignment = .left
-        txtField.font = .systemFont(ofSize: 16, weight: .regular)
-        txtField.backgroundColor = .clear
-//        txtField.delegate = self
-        txtField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
-        return txtField
-    }()
-    
-    private let ageLabel: UILabel = {
+    private let activityLabel: UILabel = {
        let label = UILabel()
-        label.text = "años"
+        label.text = "Actividad: 0"
         label.font = UIFont.systemFont(ofSize: 14.3, weight: .medium)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
+    
+    private lazy var slider: MultiSlider = {
+        let horizontalMultiSlider = MultiSlider()
+        horizontalMultiSlider.orientation = .horizontal
+        horizontalMultiSlider.outerTrackColor = customRGBColor(red: 210, green: 210, blue: 210)
+        horizontalMultiSlider.tintColor = .orange
+        horizontalMultiSlider.valueLabelPosition = .top
+        horizontalMultiSlider.trackWidth = 5
+        horizontalMultiSlider.showsThumbImageShadow = true
+        horizontalMultiSlider.valueLabelAlternatePosition = false
+        horizontalMultiSlider.valueLabelPosition = .bottom
+        horizontalMultiSlider.valueLabelFormatter.positiveSuffix = ""
+        horizontalMultiSlider.valueLabelFont = UIFont.systemFont(ofSize: 11, weight: .light, width: .expanded)
+        
+        horizontalMultiSlider.minimumValue = 0
+        horizontalMultiSlider.maximumValue = 10
+        horizontalMultiSlider.value = [0]
+        horizontalMultiSlider.snapValues = [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]
+        
+        horizontalMultiSlider.addTarget(self, action: #selector(sliderChanged), for: .valueChanged)
+        
+        return horizontalMultiSlider
+    }()
+    
     
     // MARK: - Properties
     private var currentConfiguration: NewPetActivityListCellConfiguration!
@@ -91,51 +79,21 @@ final class NewPetActivityCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Private actions
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        guard let text = textField.text, let number = Int(text) else {
-            currentConfiguration.viewModel?.delegate?.activityLevelChanged(to: nil)
-            textField.text = ""
-            return
-            
-        }
-        
-        if text.count > 1 && text.hasPrefix("0") {
-            let text = String(text.dropFirst())
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.activityLevelChanged(to: Int(text))
-            
-        }
-        
-        if number > 10 {
-            let text = "10"
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.activityLevelChanged(to: Int(text))
-        }
-        
-        if number < 1 {
-            let text = "1"
-            textField.text = text
-            currentConfiguration.viewModel?.delegate?.activityLevelChanged(to: Int(text))
-        }
-        
-        if number >= 1 && number <= 10 {
-            currentConfiguration.viewModel?.delegate?.activityLevelChanged(to: number)
-        }
-
+    @objc func sliderChanged(slider: MultiSlider) {
+        let vals: [CGFloat] = slider.value
+        currentConfiguration.viewModel?.delegate?.activityLevelChanged(to: Int(vals[0]))
+        activityLabel.text = "Actividad: \(Int(vals[0]))"
     }
-    
-    @objc private func openKeyboard() {
-        activityTextField.becomeFirstResponder()
-    }
-    
     
     // MARK: - Functions
     private func apply(configuration: NewPetActivityListCellConfiguration) {
         guard currentConfiguration != configuration else { return }
         
         currentConfiguration = configuration
-        guard let item = currentConfiguration.viewModel else { return }
-        activityTextField.text = item.activityLevel != nil ? String(item.activityLevel!) : ""
+        guard let activityLevel = currentConfiguration.viewModel?.activityLevel else { return }
+        slider.value = [CGFloat(activityLevel)]
+        activityLabel.text = "Actividad: \(activityLevel)"
+        
     }
     
     
@@ -143,32 +101,29 @@ final class NewPetActivityCellContentView: UIView, UIContentView {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         addSubview(titleLabel)
-        addSubview(containerView)
+        addSubview(activityLabel)
+        addSubview(slider)
+        
         titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
         
-        containerView.addSubview(subContainerView)
-        subContainerView.addSubview(activityTextField)
+        activityLabel.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            paddingTop: 15
+        )
         
-        containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 30)
-        containerView.setHeight(40)
-        
-        subContainerView.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, paddingLeft: 0)
-        subContainerView.setWidth(50)
-        subContainerView.layer.cornerRadius = 10
-        
-        activityTextField.center(inView: subContainerView)
-        
+        slider.anchor(
+            top: activityLabel.topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 20,
+            paddingBottom: 30
+        )
         
     }
     
 }
-
-extension NewPetActivityCellContentView: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        activityTextField.resignFirstResponder()
-    }
-}
-
 
 
 

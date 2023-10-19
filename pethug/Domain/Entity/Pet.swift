@@ -105,19 +105,29 @@ class Pet: Codable, Hashable {
         self.affectionLevel = dictionary["affectionLevel"] as? Int ?? 0
         self.address        = State.fromString(dictionary["address"] as! String)
         self.info           = dictionary["info"]           as? String ?? ""
-        self.medicalInfo    = dictionary["medicalInfo"]    as? MedicalInfo ?? MedicalInfo(internalDeworming: false,
-                                                                                          externalDeworming: false,
-                                                                                          microchip: false,
-                                                                                          sterilized: false,
-                                                                                          vaccinated: false)
-        self.socialInfo     = dictionary["socialInfo"]     as? SocialInfo ?? SocialInfo(maleDogFriendly: false,
-                                                                                        femaleDogFriendly: false,
-                                                                                        maleCatFriendly: false,
-                                                                                        femaleCatFriendly: false)
         self.isLiked        = dictionary["isLiked"]        as? Bool ?? false
         self.timestamp      = dictionary["timestamp"]      as? Timestamp ?? Timestamp(date: Date())
         self.owneruid       = dictionary["owneruid"]       as? String ?? ""
         self.likedByUsers   = dictionary["likedByUsers"]   as? [String] ?? []
+        
+        if let medicalInfoData = dictionary["medicalInfo"] as? [String: Any] {
+                self.medicalInfo = MedicalInfo(fromDictionary: medicalInfoData)
+        } else {
+            self.medicalInfo = MedicalInfo(internalDeworming: false,
+                                           externalDeworming: false,
+                                           microchip: false,
+                                           sterilized: false,
+                                           vaccinated: false)
+        }
+        
+        if let socialInfoData = dictionary["socialInfo"] as? [String: Any] {
+                self.socialInfo = SocialInfo(fromDictionary: socialInfoData)
+        } else {
+            self.socialInfo = SocialInfo(maleDogFriendly: false,
+                                          femaleDogFriendly: false,
+                                          maleCatFriendly: false,
+                                          femaleCatFriendly: false)
+        }
     }
     //Became useless, delete it at the end of project
 //    required init(from decoder: Decoder) throws {

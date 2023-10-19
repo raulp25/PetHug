@@ -106,25 +106,29 @@ final class NewPetSocialInfoCellContentView: UIView, UIContentView {
                                 titleText: "Perro macho",
                                 isChecked: socialInfo.maleDogFriendly,
                                 font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                                isClickable: true
+                                isClickable: true,
+                                delegate: self
                             )
         femaleDogFriendly = TextCheckbox(
                                 titleText: "Perro hembra",
                                 isChecked: socialInfo.femaleDogFriendly,
                                 font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                                isClickable: true
+                                isClickable: true,
+                                delegate: self
                             )
         maleCatFriendly = TextCheckbox(
                         titleText: "Gato macho",
                         isChecked: socialInfo.maleCatFriendly,
                         font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                        isClickable: true
+                        isClickable: true,
+                        delegate: self
                     )
         femaleCatFriendly = TextCheckbox(
                         titleText: "Gato hembra",
                         isChecked: socialInfo.femaleCatFriendly,
                         font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                        isClickable: true
+                        isClickable: true,
+                        delegate: self
                     )
         
         let textCheckBoxes = [
@@ -142,11 +146,19 @@ final class NewPetSocialInfoCellContentView: UIView, UIContentView {
         }
     }
     
-    private func addTapGesture(checkBox: UIView) {
-    }
-    
 }
 
+extension NewPetSocialInfoCellContentView: TextCheckBoxDelegate {
+    func didTapCheckBox() {
+        
+        let socialInfo = SocialInfo(maleDogFriendly: maleDogFriendly!.isChecked,
+                                    femaleDogFriendly: femaleDogFriendly!.isChecked,
+                                    maleCatFriendly: maleCatFriendly!.isChecked,
+                                    femaleCatFriendly: femaleCatFriendly!.isChecked)
+        
+        currentConfiguration.viewModel?.delegate?.socialInfoChanged(to: socialInfo)
+    }
+}
 
 
 

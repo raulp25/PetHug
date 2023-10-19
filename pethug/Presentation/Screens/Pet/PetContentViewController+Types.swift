@@ -57,6 +57,34 @@ struct MedicalInfo: Hashable, Codable, Equatable {
     var microchip: Bool
     var sterilized: Bool
     var vaccinated: Bool
+
+    init(internalDeworming: Bool, externalDeworming: Bool, microchip: Bool, sterilized: Bool, vaccinated: Bool) {
+        self.internalDeworming = internalDeworming
+        self.externalDeworming = externalDeworming
+        self.microchip         = microchip
+        self.sterilized        = sterilized
+        self.vaccinated        = vaccinated
+    }
+    
+    init(fromDictionary dictionary: [String: Any]) {
+        self.internalDeworming = dictionary["internalDeworming"] as? Bool ?? false
+        self.externalDeworming = dictionary["externalDeworming"] as? Bool ?? false
+        self.microchip         = dictionary["microchip"] as? Bool ?? false
+        self.sterilized        = dictionary["sterilized"] as? Bool ?? false
+        self.vaccinated        = dictionary["vaccinated"] as? Bool ?? false
+    }
+    
+    
+    func toObjectLiteral() -> [String: Any] {
+        return [
+            "internalDeworming": internalDeworming,
+            "externalDeworming": externalDeworming,
+            "microchip": microchip,
+            "sterilized": sterilized,
+            "vaccinated": vaccinated
+        ]
+    }
+    
 }
 
 struct SocialInfo: Hashable, Codable, Equatable {
@@ -64,5 +92,28 @@ struct SocialInfo: Hashable, Codable, Equatable {
     var femaleDogFriendly: Bool
     var maleCatFriendly: Bool
     var femaleCatFriendly: Bool
+    
+    init(maleDogFriendly: Bool, femaleDogFriendly: Bool, maleCatFriendly: Bool, femaleCatFriendly: Bool) {
+        self.maleDogFriendly   = maleDogFriendly
+        self.femaleDogFriendly = femaleDogFriendly
+        self.maleCatFriendly   = maleCatFriendly
+        self.femaleCatFriendly = femaleCatFriendly
+    }
+    
+    init(fromDictionary dictionary: [String: Any]) {
+        self.maleDogFriendly   = dictionary["maleDogFriendly"] as? Bool ?? false
+        self.femaleDogFriendly = dictionary["femaleDogFriendly"] as? Bool ?? false
+        self.maleCatFriendly   = dictionary["maleCatFriendly"] as? Bool ?? false
+        self.femaleCatFriendly = dictionary["femaleCatFriendly"] as? Bool ?? false
+    }
+    
+    func toObjectLiteral() -> [String: Any] {
+        return [
+            "maleDogFriendly": maleDogFriendly,
+            "femaleDogFriendly": femaleDogFriendly,
+            "maleCatFriendly": maleCatFriendly,
+            "femaleCatFriendly": femaleCatFriendly,
+        ]
+    }
 }
 
