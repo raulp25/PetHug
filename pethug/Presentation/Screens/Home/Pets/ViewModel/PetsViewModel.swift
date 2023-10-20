@@ -25,6 +25,8 @@ final class PetsViewModel {
     private var pets: [Pet] = []
     private var isFetching = false
     private var isFirstLoad = true
+    private let fetchAllPetsUC: DefaultFetchAllPetsUC
+    private let filterAllPetsUC: DefaultFilterAllPetsUC
     private let fetchPetsUC: DefaultFetchPetsUC
     private let filterPetsUC: DefaultFilterPetsUC
     private let likedPetUC: DefaultLikePetUC
@@ -38,11 +40,15 @@ final class PetsViewModel {
     private var filterMode = false
     
     init(
+        fetchAllPetsUC: DefaultFetchAllPetsUC,
+        filterAllPetsUC: DefaultFilterAllPetsUC,
         fetchPetsUC: DefaultFetchPetsUC,
         filterPetsUC: DefaultFilterPetsUC,
         likedPetUC: DefaultLikePetUC,
         dislikePetUC: DefaultDisLikePetUC
     ) {
+        self.fetchAllPetsUC = fetchAllPetsUC
+        self.filterAllPetsUC = filterAllPetsUC
         self.fetchPetsUC = fetchPetsUC
         self.filterPetsUC = filterPetsUC
         self.likedPetUC = likedPetUC
@@ -78,19 +84,61 @@ final class PetsViewModel {
     
     //MARK: - Internal Methods
     func fetchPets(collection: String, resetFilterQueries: Bool) {
+        print("collection adentro de fetch pets: => \(collection)")
+        if collection == .getPath(for: .allPets) {
+            applyFetchAllPets(resetFilterQueries: resetFilterQueries)
+//            print("collection adentro de fetch pets: => \(collection)")
+        } else {
+            applyFetchPets(collection: collection, resetFilterQueries: resetFilterQueries)
+        }
+        
+    }
+    
+    private func applyFetchAllPets(resetFilterQueries: Bool) {
+        print("ejecuta applyfetchallpets: => ")
+        if resetFilterQueries {
+            resetFilterData()
+        }
+        guard !isFetching else { return }
+        isFetching = true
+
+        Task {
+            do {
+                let data = try await fetchAllPetsUC.execute(resetFilterQueries: resetFilterQueries)
+                if !isFirstLoad && !data.isEmpty {
+                    petsSubject.send(data)
+                } else if isFirstLoad {
+                    petsSubject.send(data)
+                    isFirstLoad = false
+                }
+                print("pets fetched: => \(data)")
+                for pet in data {
+                    print("pet id: => \(pet.id)")
+                    print("pet type: => \(pet.type.rawValue)")
+                }
+                
+                
+            } catch {
+                state.send(.error(.default(error)))
+            }
+            isFetching = false
+        }
+    }
+    
+    private func applyFetchPets(collection: String, resetFilterQueries: Bool) {
+        if resetFilterQueries {
+            resetFilterData()
+        }
+        
         guard !isFetching else { return }
         isFetching = true
         
         Task {
             do {
                 let data = try await fetchPetsUC.execute(fetchCollection: collection, resetFilterQueries: resetFilterQueries)
-                print("colleciton: => \(collection)")
-                print("se llama fetchpets: => ")
-                print("data en fetchpets: => \(data) ")
                 if !isFirstLoad && !data.isEmpty {
                     petsSubject.send(data)
                 } else if isFirstLoad {
-                    print("pets fetched: => \(data)")
                     petsSubject.send(data)
                     isFirstLoad = false
                 }
@@ -102,7 +150,7 @@ final class PetsViewModel {
             isFetching = false
         }
     }
-    
+
 //    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
 //        filterMode = true
 //        if options != nil {
@@ -148,10 +196,47 @@ final class PetsViewModel {
     
     //Coordinates the filter process
     func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
-        applyFilter(options: options, resetFilterQueries: resetFilterQueries)
+        if self.collection == .getPath(for: .allPets) {
+            applyFilterToAllPets(options: options, resetFilterQueries: resetFilterQueries)
+        } else {
+            applyFilter(options: options, resetFilterQueries: resetFilterQueries)
+        }
     }
     
-    //Main logic for applying the filter
+    //Main logic for applying the filter.
+    //filterOptions gets set inmediatly after setting the filter options in the app so the next time we
+    //call this function we dont need to set again the filter options
+    
+    private func applyFilterToAllPets(options: FilterOptions?, resetFilterQueries: Bool) {
+        filterMode = true
+        if options != nil {
+            filterOptions = options
+        }
+        
+        if resetFilterQueries {
+            resetFilterData()
+        }
+        
+        if isFirstLoad {
+            state.send(.loading)
+        }
+        
+        guard let filterOptions = filterOptions else { return }
+        guard !isFetching else { return }
+        isFetching = true
+        
+        Task {
+            do {
+                let data = try await filterAllPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
+                handleFilterResult(data)
+            } catch {
+                handleFilterError(error)
+            }
+            
+            isFetching = false
+        }
+    }
+    
     private func applyFilter(options: FilterOptions?, resetFilterQueries: Bool) {
         filterMode = true
         if options != nil {
@@ -184,6 +269,8 @@ final class PetsViewModel {
             isFetching = false
         }
     }
+    
+   
     //Resets the filter data and marks it as the first load when new filter options are applied.
     private func resetFilterData() {
         isFirstLoad = true //Indicates that a new search has begun with new filter options

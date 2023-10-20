@@ -123,6 +123,7 @@ extension PetsViewController: PetsViewHeaderDelegate {
 extension PetsViewController: PetsContentViewControllerDelegate {
     func executeFetch() {
         if viewModel.isFilterMode() {
+            //No arguments cause at this point the options has been set by the filter options form module
             viewModel.fetchPetsWithFilter()
         } else {
             viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: false)

@@ -8,6 +8,7 @@
 import UIKit
 
 protocol AnimalsStackNavigatable: AnyObject {
+    func didTapAllPetsBanner()
     func didTapDogsBanner()
     func didTapCatsBanner()
     func didTapBirdsBanner()
@@ -37,36 +38,45 @@ final class AnimalsStackContentViewController: UIViewController {
         return label
     }()
     
-    private lazy var dogsBanner: Banner = {
-        let uv = Banner(title: "Adopta", caption: "perros", imageNamed: "dogs12", textAlign: .left)
+    private lazy var allPetsBanner: Banner = {
+        let uv = Banner(title: "Adopta", caption: "todos", imageNamed: "all", textAlign: .left)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
         uv.tag = 1
         return uv
     }()
-    private lazy var catsBanner: Banner = {
-        let uv = Banner(title: "Adopta", caption: "gatos", imageNamed: "cats9", textAlign: .right)
+    
+    private lazy var dogsBanner: Banner = {
+        let uv = Banner(title: "Adopta", caption: "perros", imageNamed: "dogs12", textAlign: .right)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
         uv.tag = 2
         return uv
     }()
-    private lazy var birdsBanner: Banner = {
-        let uv = Banner(title: "Adopta", caption: "pajaros", imageNamed: "birds2", textAlign: .left)
+    private lazy var catsBanner: Banner = {
+        let uv = Banner(title: "Adopta", caption: "gatos", imageNamed: "cats9", textAlign: .left)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
         uv.tag = 3
         return uv
     }()
-    private lazy var rabbitsBanner: Banner = {
-        let uv = Banner(title: "Adopta", caption: "conejos", imageNamed: "rabbit1", textAlign: .right)
+    private lazy var birdsBanner: Banner = {
+        let uv = Banner(title: "Adopta", caption: "pajaros", imageNamed: "birds2", textAlign: .right)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
         uv.tag = 4
+        return uv
+    }()
+    private lazy var rabbitsBanner: Banner = {
+        let uv = Banner(title: "Adopta", caption: "conejos", imageNamed: "rabbit1", textAlign: .left)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
+        uv.tag = 5
         return uv
     }()
     
@@ -83,12 +93,14 @@ final class AnimalsStackContentViewController: UIViewController {
         if let banner = sender.view as? Banner {
             switch banner.tag {
             case 1:
-                delegate?.didTapDogsBanner()
+                delegate?.didTapAllPetsBanner()
             case 2:
-                delegate?.didTapCatsBanner()
+                delegate?.didTapDogsBanner()
             case 3:
-                delegate?.didTapBirdsBanner()
+                delegate?.didTapCatsBanner()
             case 4:
+                delegate?.didTapBirdsBanner()
+            case 5:
                 delegate?.didTapRabbitsBanner()
             default:
                 print("")
@@ -108,6 +120,7 @@ final class AnimalsStackContentViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
         containerView.addSubview(titleLabel)
+        containerView.addSubview(allPetsBanner)
         containerView.addSubview(dogsBanner)
         containerView.addSubview(catsBanner)
         containerView.addSubview(birdsBanner)
@@ -138,11 +151,21 @@ final class AnimalsStackContentViewController: UIViewController {
         
         titleLabel.centerX(inView: containerView, topAnchor: containerView.topAnchor, paddingTop: 10)
         
-        dogsBanner.anchor(
+        allPetsBanner.anchor(
             top: titleLabel.bottomAnchor,
             left: containerView.leftAnchor,
             right: containerView.rightAnchor,
             paddingTop: 30,
+            paddingLeft: sidePadding,
+            paddingRight: sidePadding
+        )
+        allPetsBanner.setHeight(120)
+        
+        dogsBanner.anchor(
+            top: allPetsBanner.bottomAnchor,
+            left: containerView.leftAnchor,
+            right: containerView.rightAnchor,
+            paddingTop: paddingTop,
             paddingLeft: sidePadding,
             paddingRight: sidePadding
         )

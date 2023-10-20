@@ -14,6 +14,18 @@ final class DefaultPetRepository: PetRepository {
         self.petDataSource = petDataSource
     }
     
+    func fetchAllPets(resetFilterQueries: Bool) async throws -> [Pet] {
+        let pets = try await petDataSource.fetchAllPets(resetFilterQueries: resetFilterQueries)
+        
+        return pets
+    }
+    
+    func fetchAllPets(withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
+        let pets = try await petDataSource.fetchAllPets(withFilter: options, resetFilterQueries: resetFilterQueries)
+        
+        return pets
+    }
+    
     func fetchPets(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet] {
         let pets = try await petDataSource.fetchPets(fetchCollection: path, resetFilterQueries: resetFilterQueries)
         

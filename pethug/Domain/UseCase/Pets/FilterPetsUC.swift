@@ -5,7 +5,6 @@
 //  Created by Raul Pena on 13/10/23.
 //
 
-
 import Foundation
 //MARK: - Protocol
 protocol FilterPetsUC {

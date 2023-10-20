@@ -15,6 +15,8 @@ protocol PetDataSource {
     var documents: [QueryDocumentSnapshot] { get set }
     var order: String { get set }
     
+    func fetchAllPets(resetFilterQueries: Bool) async throws -> [Pet]
+    func fetchAllPets(withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] 
     func fetchPets(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet]
     func fetchUserPets(with resetPagination: Bool) async throws -> [Pet]
     func fetchPets(collection: String, withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet]
@@ -34,7 +36,88 @@ final class DefaultPetDataSource: PetDataSource {
     internal var query: Query!
     internal var documents = [QueryDocumentSnapshot]()
     internal var order = "timestamp"
+    
+    internal var dogsQuery: Query!
+    internal var catsQuery: Query!
+    internal var birdsQuery: Query!
+    internal var rabbitsQuery: Query!
+    
+    
+    internal var dogsdocuments  = [QueryDocumentSnapshot]()
+    internal var catsdocuments  = [QueryDocumentSnapshot]()
+    internal var birdsdocuments   = [QueryDocumentSnapshot]()
+    internal var rabbitsdocuments = [QueryDocumentSnapshot]()
     //MARK: - Get
+    func fetchAllPets(resetFilterQueries: Bool) async throws -> [Pet] {
+        async let dogsSnapshot    = try applyFetchAllPets(collection: .getPath(for: .dogs),
+                                                          resetFilterQueries: resetFilterQueries,
+                                                          query: &dogsQuery,
+                                                          documents: &dogsdocuments)
+        
+        async let catsSnapshot    = try applyFetchAllPets(collection: .getPath(for: .cats),
+                                                          resetFilterQueries: resetFilterQueries,
+                                                          query: &catsQuery,
+                                                          documents: &catsdocuments)
+        
+        async let birdsSnapshot   = try applyFetchAllPets(collection: .getPath(for: .birds),
+                                                          resetFilterQueries: resetFilterQueries,
+                                                          query: &birdsQuery,
+                                                          documents: &birdsdocuments)
+        
+        async let rabbitsSnapshot = try applyFetchAllPets(collection: .getPath(for: .rabbits),
+                                                          resetFilterQueries: resetFilterQueries,
+                                                          query: &rabbitsQuery,
+                                                          documents: &rabbitsdocuments)
+        
+        let results = try await [dogsSnapshot, catsSnapshot, birdsSnapshot, rabbitsSnapshot]
+
+        let pets: [Pet] = results[0] + results[1] + results[2] + results[3]
+        
+        return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
+    }
+    
+    func applyFetchAllPets(
+        collection path: String,
+        resetFilterQueries: Bool,
+        query: inout Query?,
+        documents pa: inout [QueryDocumentSnapshot]
+    ) async throws -> [Pet] {
+        
+        print("resetFiltqueries: => \(resetFilterQueries)")
+        if resetFilterQueries {
+            query = nil
+            pa = []
+            print("entra a resetfilterqueries y reinicia documents collection: => \(path), \(pa)")
+        }
+        
+        if query == nil {
+            query = db.collection(path)
+                      .order(by: order, descending: true)
+                      .limit(to: 10)
+        } else {
+            if !pa.isEmpty {
+                print("entra a documents is not empty: => \(pa)")
+                query = query!.start(afterDocument: pa.last!)
+            }
+        }      
+        
+        
+        let snapshot = try await query!.getDocuments()
+        
+        let docs = snapshot.documents
+        
+        var pets = [Pet]()
+        
+        for doc in docs {
+            let dictionary = doc.data()
+            let pet = Pet(dictionary: dictionary)
+            pets.append(pet)
+            pa += [doc]
+        }
+        
+        return pets
+    }
+    
     //Fetch pets in general
     func fetchPets(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet] {
         if resetFilterQueries {
@@ -107,7 +190,81 @@ final class DefaultPetDataSource: PetDataSource {
         
         return pets
     }
+    
     //Fetch with filter options
+    
+    //filter all collections at once
+    func fetchAllPets(withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
+        async let dogsSnapshot    = try applyFetchAllPets(collection: .getPath(for: .dogs),
+                                                          withFilter: options,
+                                                          resetFilterQueries: resetFilterQueries,
+                                                          query: &dogsQuery,
+                                                          documents: &dogsdocuments)
+        
+        async let catsSnapshot    = try applyFetchAllPets(collection: .getPath(for: .cats),
+                                                          withFilter: options,
+                                                          resetFilterQueries: resetFilterQueries,
+                                                          query: &catsQuery,
+                                                          documents: &catsdocuments)
+        
+        async let birdsSnapshot   = try applyFetchAllPets(collection: .getPath(for: .birds),
+                                                          withFilter: options,
+                                                          resetFilterQueries: resetFilterQueries,
+                                                          query: &birdsQuery,
+                                                          documents: &birdsdocuments)
+        
+        async let rabbitsSnapshot = try applyFetchAllPets(collection: .getPath(for: .rabbits),
+                                                          withFilter: options,
+                                                          resetFilterQueries: resetFilterQueries,
+                                                          query: &rabbitsQuery,
+                                                          documents: &rabbitsdocuments)
+        
+        let results = try await [dogsSnapshot, catsSnapshot, birdsSnapshot, rabbitsSnapshot]
+
+        let pets: [Pet] = results[0] + results[1] + results[2] + results[3]
+        
+        return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
+    }
+    
+    func applyFetchAllPets(
+        collection path: String,
+        withFilter options: FilterOptions,
+        resetFilterQueries: Bool,
+        query: inout Query?,
+        documents: inout [QueryDocumentSnapshot]
+    ) async throws -> [Pet] {
+        if resetFilterQueries {
+            query = nil
+            documents = []
+        }
+        
+        if query == nil {
+           query = buildQuery(for: options, collection: path)
+        }
+        
+        if !documents.isEmpty {
+            query = query!.start(afterDocument: documents.last!)
+        }
+        
+        let snapshot = try await query!.getDocuments()
+        
+        let docs = snapshot.documents
+        
+        var pets = [Pet]()
+        
+        for doc in docs {
+            let dictionary = doc.data()
+            let pet = Pet(dictionary: dictionary)
+            pets.append(pet)
+            documents += [doc]
+            
+        }
+        
+        return pets
+    }
+    
+    
+    //filter only a one collection
     func fetchPets(collection: String, withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
         if resetFilterQueries {
             query = nil

@@ -167,8 +167,19 @@ final class PetsContentViewController: UIViewController {
         snapshot.appendSections(snapData.map {
             return $0.key
         })
+        
+        var val:  [PetsContentViewController.Item]!
         for datum in snapData {
             snapshot.appendItems(datum.values, toSection: datum.key)
+            print("snapdata values: => \(datum.values)")
+            val = datum.values
+        }
+        
+        for mas in val {
+            switch mas{
+            case .pet(let pet):
+                print(": => \(pet.id)")
+            }
         }
         
 

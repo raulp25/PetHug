@@ -14,15 +14,26 @@ final class HomeTabCoordinator: ChildTabCoordinator {
     
     var rootViewController: UINavigationController = .init()
     
-    let viewModel: PetsViewModel = .init(fetchPetsUC: FetchPets.composeFetchPetsUC(),
-                                         filterPetsUC: FilterPets.composeFilterPetsUC(),
-                                         likedPetUC: LikePet.composeLikePetUC(),
-                                         dislikePetUC: DisLikePet.composeDisLikePetUC()
+    let viewModel: PetsViewModel = .init(fetchAllPetsUC:  FetchAllPets.composeFetchAllPetsUC(),
+                                         filterAllPetsUC: FilterAllPets.composeFilterAllPetsUC(),
+                                         fetchPetsUC:     FetchPets.composeFetchPetsUC(),
+                                         filterPetsUC:    FilterPets.composeFilterPetsUC(),
+                                         likedPetUC:      LikePet.composeLikePetUC(),
+                                         dislikePetUC:    DisLikePet.composeDisLikePetUC()
                                     )
     
     func start() {
         let vc = AnimalsStackContentViewController()
         vc.delegate = self
+        rootViewController.pushViewController(vc, animated: true)
+    }
+    
+    func startAllPets() {
+        let vc = PetsViewController(viewModel: viewModel)
+        viewModel.navigation = self
+        viewModel.collection = .getPath(for: .allPets)
+        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
+        vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
     
@@ -64,6 +75,9 @@ final class HomeTabCoordinator: ChildTabCoordinator {
 }
 
 extension HomeTabCoordinator: AnimalsStackNavigatable {
+    func didTapAllPetsBanner() {
+        startAllPets()
+    }
     func didTapDogsBanner() {
         startDogs()
     }

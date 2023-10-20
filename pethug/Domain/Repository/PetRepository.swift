@@ -8,9 +8,11 @@
 import Foundation
 
 protocol PetRepository {
+    func fetchAllPets(resetFilterQueries: Bool) async throws -> [Pet]
+    func fetchAllPets(withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet]
     func fetchPets(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet]
-    func fetchUserPets(with resetPagination: Bool) async throws -> [Pet]
     func fetchPets(collection: String, withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet]
+    func fetchUserPets(with resetPagination: Bool) async throws -> [Pet]
     func fetchFavoritePets() async throws -> [Pet]
     
     func createPet(collection path: String, data: Pet) async throws -> Bool
