@@ -32,8 +32,8 @@ final class AnimalsStackContentViewController: UIViewController {
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Inicio"
-        label.font = UIFont.systemFont(ofSize: 55, weight: .light, width: .expanded)
-        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
+        label.font = UIFont.systemFont(ofSize: 65, weight: .light, width: .compressed)
+        label.textColor = customRGBColor(red: 18, green: 89, blue: 103)
         return label
     }()
     
@@ -103,7 +103,7 @@ final class AnimalsStackContentViewController: UIViewController {
         let paddingTop: CGFloat = 20
         let sidePadding: CGFloat = 20
         navigationController?.setNavigationBarHidden(true, animated: true)
-        view.backgroundColor = .white
+        view.backgroundColor = customRGBColor(red: 248, green: 248, blue: 248)
         
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
@@ -128,13 +128,15 @@ final class AnimalsStackContentViewController: UIViewController {
         )
         //Without this containerView gets expanded horizontally which is bad
         containerView.centerX(inView: scrollView)
+//
+//        titleLabel.anchor(
+//            top: containerView.topAnchor,
+//            left: containerView.leftAnchor,
+//            right: containerView.rightAnchor,
+//            paddingLeft: 30
+//        )
         
-        titleLabel.anchor(
-            top: containerView.topAnchor,
-            left: containerView.leftAnchor,
-            right: containerView.rightAnchor,
-            paddingLeft: 30
-        )
+        titleLabel.centerX(inView: containerView, topAnchor: containerView.topAnchor, paddingTop: 10)
         
         dogsBanner.anchor(
             top: titleLabel.bottomAnchor,

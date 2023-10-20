@@ -16,16 +16,13 @@ final class NewPetContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     private let dummyView = DummyView()
+    private let loadingView = LoadingViewController(spinnerColors: [customRGBColor(red: 255, green: 176, blue: 42)  ])
 //
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
     private var viewModel: NewPetViewModel
-    private var currentSnapData = [SnapData]() {
-        didSet {
-            print("cambio currentsnap data checar")
-        }
-    }
+    private var currentSnapData = [SnapData]()
     private var cancellables = Set<AnyCancellable>()
     //MARK: - Internal properties
 //    var snapData: [SnapData] {
@@ -74,11 +71,13 @@ final class NewPetContentViewController: UIViewController {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
                         self?.dismiss(animated: true)
                     })
+                case .loading:
+                    print("")
+                    self?.setLoadingScreen()
                 case let.error(error):
                     self?.alert(message: "Hubo un error, intenta nuevamente")
+                    self?.removeLoadingScreen()
                     print("error in NewPetContentView VC: => \(error.localizedDescription)")
-                default:
-                    print("")
                 }
                 
             }.store(in: &cancellables)
@@ -393,151 +392,76 @@ final class NewPetContentViewController: UIViewController {
             cell.viewModel?.delegate = self
         }
         
-        
-//        var nameMockVM = NewPetName(name: "Fernanda Sanchez")
-//        nameMockVM.delegate = self
-//
-//        let galleryMockVM = NewPetGallery(imagesToEdit: [])
-//
-//        let typeMockVM = NewPetType(type: .dog)
-//
-//        let breedMockVM = NewPetBreed(currentBreed: "Golden Retriever")
-        
-//        let pet1 = Pet(id: "332", name: "joanna", age: 332, gender: .female, size: .small, breed: "dd", imagesUrls: [], type: .dog, address: .QuintanaRoo, isLiked: true)
-//        switch (typeMockVM.type, pet1.type) {
-//        case (.dog, .dog):
-//            print("son iguales qwe DOG: =>")
-//        case (.cat, .cat):
-//            print("extra ///.2: =>")
-//        case (.bird, .bird):
-//            print("extra ///.2: =>")
-//        case (.rabbit, .rabbit):
-//            print("extra ///.2: =>")
-//        default:
-//            print("extra ///.2: =>")
-//        }
-        
-//        if typeMockVM.type == .dog(.goldenRetriever) {
-//            print("son iguales qwe: => \(typeMockVM.type == .dog(.goldenRetriever))")
-//        } else {
-//            print("no son iguales qwe")
-//        }
-//
-//        let genderMockVM = NewPetGender(gender: .none)
-//
-//        let sizeMockVM = NewPetSize()
-//
-//        let ageMockVM = NewPetAge(age: nil)
-//
-//        let activityMockVM = NewPetActivity(activityLevel: nil)
-//
-//        let socialMockVM = NewPetSocial(socialLevel: nil)
-//
-//        let affectionMockVM = NewPetAffection(affectionLevel: nil)
-//
-//        let addressMockVM = NewPetAddress(address: nil)
-//
-//        let infoMockVM = NewPetInfo(info: nil)
-//
-//        let uploadMockVM = NewPetUpload()
-        
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
             case .name(let nameVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration, for: indexPath, item: nameVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetNameViewCellRegistration,        for: indexPath, item: nameVM)
             case .gallery(let imagesVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetGalleryViewCellRegistration, for: indexPath, item: imagesVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetGalleryViewCellRegistration,     for: indexPath, item: imagesVM)
             case .type(let typeVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetTypeViewCellRegistration, for: indexPath, item: typeVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetTypeViewCellRegistration,        for: indexPath, item: typeVM)
             case .breed(let breedVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetBreedViewCellRegistration, for: indexPath, item: breedVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetBreedViewCellRegistration,       for: indexPath, item: breedVM)
             case .gender(let genderVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetGenderViewCellRegistration, for: indexPath, item: genderVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetGenderViewCellRegistration,      for: indexPath, item: genderVM)
             case .size(let sizeVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetSizeViewCellRegistration, for: indexPath, item: sizeVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetSizeViewCellRegistration,        for: indexPath, item: sizeVM)
             case .age(let ageVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetAgeViewCellRegistration, for: indexPath, item: ageVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetAgeViewCellRegistration,         for: indexPath, item: ageVM)
             case .activity(let activityVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetActivityViewCellRegistration, for: indexPath, item: activityVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetActivityViewCellRegistration,    for: indexPath, item: activityVM)
             case .social(let socialVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetSocialViewCellRegistration, for: indexPath, item: socialVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetSocialViewCellRegistration,      for: indexPath, item: socialVM)
             case .affection(let affectionVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetAffectionViewCellRegistration, for: indexPath, item: affectionVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetAffectionViewCellRegistration,   for: indexPath, item: affectionVM)
             case .medicalInfo(let medicalInfoVM):
                 return collectionView.dequeueConfiguredReusableCell(using: newPetMedicalInfoViewCellRegistration, for: indexPath, item: medicalInfoVM)
             case .socialInfo(let socialInfoVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetSocialInfoViewCellRegistration, for: indexPath, item: socialInfoVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetSocialInfoViewCellRegistration,  for: indexPath, item: socialInfoVM)
             case .address(let addressVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetAddressViewCellRegistration, for: indexPath, item: addressVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetAddressViewCellRegistration,     for: indexPath, item: addressVM)
             case .info(let infoVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetInfoViewCellRegistration, for: indexPath, item: infoVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetInfoViewCellRegistration,        for: indexPath, item: infoVM)
             case .end(let endVM):
-                return collectionView.dequeueConfiguredReusableCell(using: newPetUploadViewCellRegistration, for: indexPath, item: endVM)
+                return collectionView.dequeueConfiguredReusableCell(using: newPetUploadViewCellRegistration,      for: indexPath, item: endVM)
             }
             
         })
-        
-//        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-//            guard let self else {
-//                return nil
-//            }
-//
-//            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-//
-//            switch section {
-//            case .name:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            case .gallery:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            case .type:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            case .breed:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            case .gender:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            case .size:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            case .info:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            case .end:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            }
-//        }
     }
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
         currentSnapData  = [
-            .init(key: .name,      values: [.name(.init(name: viewModel.nameState))]),
+            .init(key: .name,        values: [.name(.init(name: viewModel.nameState))]),
             
-            .init(key: .gallery,   values: [.gallery( .init(imagesToEdit: viewModel.imagesToEditState, imageService: ImageService()))]),
+            .init(key: .gallery,     values: [.gallery( .init(imagesToEdit: viewModel.imagesToEditState, imageService: ImageService()))]),
             
-            .init(key: .type,      values: [.type(.init(type: viewModel.typeState))]),
+            .init(key: .type,        values: [.type(.init(type: viewModel.typeState))]),
             
-            .init(key: .breed,     values: [.breed(.init(currentBreed: viewModel.breedsState))]),
+            .init(key: .breed,       values: [.breed(.init(currentBreed: viewModel.breedsState))]),
             
-            .init(key: .gender,    values: [.gender(.init(gender: viewModel.genderState))]),
+            .init(key: .gender,      values: [.gender(.init(gender: viewModel.genderState))]),
             
-            .init(key: .size,      values: [.size(.init(size: viewModel.sizeState))]),
+            .init(key: .size,        values: [.size(.init(size: viewModel.sizeState))]),
             
-            .init(key: .age,       values: [.age(.init(age: viewModel.ageState))]),
+            .init(key: .age,         values: [.age(.init(age: viewModel.ageState))]),
             
-            .init(key: .activity,  values: [.activity(.init(activityLevel: viewModel.activityState))]),
+            .init(key: .activity,    values: [.activity(.init(activityLevel: viewModel.activityState))]),
             
-            .init(key: .social,    values: [.social(.init(socialLevel: viewModel.socialState))]),
+            .init(key: .social,      values: [.social(.init(socialLevel: viewModel.socialState))]),
             
-            .init(key: .affection, values: [.affection(.init(affectionLevel: viewModel.affectionState))]),
+            .init(key: .affection,   values: [.affection(.init(affectionLevel: viewModel.affectionState))]),
             
             .init(key: .medicalInfo, values: [.medicalInfo(.init(medicalInfo: viewModel.medicalInfoState))]),
             
-            .init(key: .socialInfo, values: [.socialInfo(.init(socialInfo: viewModel.socialInfoState))]),
+            .init(key: .socialInfo,  values: [.socialInfo(.init(socialInfo: viewModel.socialInfoState))]),
             
-            .init(key: .address,   values: [.address(.init(address: viewModel.addressState))]),
+            .init(key: .address,     values: [.address(.init(address: viewModel.addressState))]),
             
-            .init(key: .info,      values: [.info(.init(info: viewModel.infoState))]),
+            .init(key: .info,        values: [.info(.init(info: viewModel.infoState))]),
             
-            .init(key: .end,       values: [.end(.init())])
+            .init(key: .end,         values: [.end(.init())])
             
         ]
         
@@ -551,7 +475,24 @@ final class NewPetContentViewController: UIViewController {
         }
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
-    var counter = 0
+    func setLoadingScreen() {
+        view.isUserInteractionEnabled = false
+        
+        add(loadingView)
+        view.bringSubviewToFront(loadingView.view)
+        
+        loadingView.view.fillSuperview()
+        loadingView.view.backgroundColor = customRGBColor(red: 247, green: 247, blue: 247, alpha: 0.5)
+        
+        
+        let topIndexPath = IndexPath(item: 0, section: 0)
+        collectionView.scrollToItem(at: topIndexPath, at: .top, animated: true)
+        
+    }
+    
+    func removeLoadingScreen() {
+        loadingView.remove()
+    }
 }
 
 extension NewPetContentViewController: NewPetNameDelegate {
@@ -654,9 +595,6 @@ extension NewPetContentViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
-        
-        counter += 1
-        print(":ejecuta didselect con datasource => \(counter)")
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     

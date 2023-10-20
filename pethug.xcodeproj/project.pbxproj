@@ -47,6 +47,7 @@
 		C426D26B2AB671AD00BFA357 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D26A2AB671AD00BFA357 /* SettingsViewController.swift */; };
 		C426D26D2AB671D100BFA357 /* DummyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D26C2AB671D100BFA357 /* DummyView.swift */; };
 		C42A584D2AC1258A00A6FFBF /* Commentaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42A584C2AC1258A00A6FFBF /* Commentaries.swift */; };
+		C42CD59C2AE1E2E5004C28E6 /* LoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42CD59B2AE1E2E5004C28E6 /* LoadingScreen.swift */; };
 		C42D3D8C2AB6356900EBA1B7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = C42D3D8B2AB6356900EBA1B7 /* FirebaseAuth */; };
 		C42D3D8E2AB6356900EBA1B7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = C42D3D8D2AB6356900EBA1B7 /* FirebaseFirestore */; };
 		C42D3D902AB6356900EBA1B7 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = C42D3D8F2AB6356900EBA1B7 /* FirebaseFirestoreSwift */; };
@@ -280,6 +281,7 @@
 		C426D26A2AB671AD00BFA357 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		C426D26C2AB671D100BFA357 /* DummyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummyView.swift; sourceTree = "<group>"; };
 		C42A584C2AC1258A00A6FFBF /* Commentaries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Commentaries.swift; sourceTree = "<group>"; };
+		C42CD59B2AE1E2E5004C28E6 /* LoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreen.swift; sourceTree = "<group>"; };
 		C42D3D962AB65D8A00EBA1B7 /* InAppTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppTabBarController.swift; sourceTree = "<group>"; };
 		C42D3D982AB65EB100EBA1B7 /* InAppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppCoordinator.swift; sourceTree = "<group>"; };
 		C42D3D9B2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppContainerRootViewController.swift; sourceTree = "<group>"; };
@@ -621,6 +623,14 @@
 				C42A584C2AC1258A00A6FFBF /* Commentaries.swift */,
 			);
 			path = Commentaries;
+			sourceTree = "<group>";
+		};
+		C42CD59A2AE1E2DA004C28E6 /* LoadingScreen */ = {
+			isa = PBXGroup;
+			children = (
+				C42CD59B2AE1E2E5004C28E6 /* LoadingScreen.swift */,
+			);
+			path = LoadingScreen;
 			sourceTree = "<group>";
 		};
 		C42D3D952AB65D5300EBA1B7 /* Containers */ = {
@@ -1423,6 +1433,7 @@
 		C4CF74F42AB2599B00D69185 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C42CD59A2AE1E2DA004C28E6 /* LoadingScreen */,
 				C49F70812ADCE1C0008A0D38 /* Banner */,
 				C475540B2AD8E229008AA12F /* FilterAddressPopupSearch */,
 				C480DBBF2AD3698F005F707C /* TextCheckbox */,
@@ -1883,6 +1894,7 @@
 				C49440872ACD34C10042A1DA /* DeletePetUC.swift in Sources */,
 				C4B1BD212AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift in Sources */,
 				C448200E2AB5335500E72BD2 /* UserService.swift in Sources */,
+				C42CD59C2AE1E2E5004C28E6 /* LoadingScreen.swift in Sources */,
 				C4779BF22AC3C92000E3A16F /* NewPetContentViewController+Types.swift in Sources */,
 				C435314E2AB966750070D7EE /* ContentStateViewController.swift in Sources */,
 				C445F1602AB1435300053BE7 /* User.swift in Sources */,

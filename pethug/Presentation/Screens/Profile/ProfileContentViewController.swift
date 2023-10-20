@@ -172,7 +172,7 @@ final class ProfileContentViewController: UIViewController {
         containerView.addSubview(profileImageView)
         containerView.addSubview(cameraIcon)
         view.addSubview(logoutBtn)
-        view.addSubview(vStack)
+//        view.addSubview(vStack)
         view.addSubview(deleteAccBtn)
 //        containerView.anchor(
 //            top: view.safeAreaLayoutGuide.topAnchor,
@@ -208,7 +208,7 @@ final class ProfileContentViewController: UIViewController {
             paddingLeft: 30
         )
         
-        containerView.centerX(inView: view, topAnchor: titleLabel.bottomAnchor, paddingTop: 50)
+        containerView.centerX(inView: view, topAnchor: titleLabel.bottomAnchor, paddingTop: 150)
         containerView.setDimensions(height: 145, width: 145)
         
 //        profileImageView.fillSuperview()
@@ -226,13 +226,13 @@ final class ProfileContentViewController: UIViewController {
         logoutBtn.centerX(inView: containerView, topAnchor: containerView.bottomAnchor, paddingTop: 10)
         logoutBtn.setDimensions(height: 32, width: 145)
         
-        vStack.centerX(inView: logoutBtn, topAnchor: logoutBtn.bottomAnchor, paddingTop: 50)
-        vStack.setWidth(200)
+//        vStack.centerX(inView: logoutBtn, topAnchor: logoutBtn.bottomAnchor, paddingTop: 150)
+//        vStack.setWidth(200)
+//
+//        privacyButton.setHeight(32)
+//        aboutButton.setHeight(32)
         
-        privacyButton.setHeight(32)
-        aboutButton.setHeight(32)
-        
-        deleteAccBtn.centerX(inView: vStack, topAnchor: vStack.bottomAnchor, paddingTop: 50)
+        deleteAccBtn.centerX(inView: logoutBtn, topAnchor: logoutBtn.bottomAnchor, paddingTop: 50)
         deleteAccBtn.setDimensions(height: 32, width: 200)
         
     }

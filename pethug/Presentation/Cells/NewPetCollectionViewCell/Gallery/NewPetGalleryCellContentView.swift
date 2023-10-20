@@ -21,6 +21,14 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         return label
     }()
     
+    private let captionLabel: UILabel = {
+       let label = UILabel(withAutolayout: true)
+        label.text = "Máximo 8 imagenes"
+        label.textColor = .black.withAlphaComponent(0.8)
+        label.font = UIFont.systemFont(ofSize: 11, weight: .medium)
+        return label
+    }()
+    
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
@@ -72,6 +80,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         isUserInteractionEnabled = true
         addSubview(titleLabel)
         addSubview(collectionView)
+        addSubview(captionLabel)
         
         let sideInsets = CGFloat(40)
         titleLabel.anchor(
@@ -85,15 +94,27 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         collectionView.anchor(
             top: titleLabel.bottomAnchor,
             left: leftAnchor,
+            right: rightAnchor,
+            paddingTop: 10
+        )
+        
+        collectionView.setHeight(90)
+        
+        captionLabel.anchor(
+            top: collectionView.bottomAnchor,
+            left: leftAnchor,
             bottom: bottomAnchor,
             right: rightAnchor,
             paddingTop: 10,
+            paddingLeft: sideInsets,
             paddingBottom: 20
         )
-        collectionView.setHeight(90)
+        
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         collectionView.showsHorizontalScrollIndicator = false
+        
+        
 
     }
     
@@ -103,6 +124,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     
     deinit {
         print("✅ Deinit NewPetGalleryContentView")
+        work?.cancel()
     }
     
     // MARK: - Functions
@@ -126,22 +148,27 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
                 currentSnapData[gallerySectionIndex].values.append(contentsOf: array.map({ .image($0) }))
                 updateSnapShot()
             }
+            
             //Load pet images
-            item.getImagetImagesSequentially(stringUrlArray: item.imagesToEdit) { [weak self] images in
-                if !images.isEmpty {
-                    if let gallerySectionIndex = self?.currentSnapData.firstIndex(where: { $0.key == .gallery }) {
-                        self?.currentSnapData[gallerySectionIndex].values.removeAll(where: { item in
-                            switch item {
-                            case let .image(galleryImage):
-                                return galleryImage.isEmpty == true
-                            }
-                        })
-                        self?.images.append(contentsOf: images)
-                        self?.currentSnapData[gallerySectionIndex].values.append(contentsOf: images.map({ .image(.init(image: $0)) }))
-                        self?.updateSnapShot()
+            work = DispatchWorkItem(block: {
+                item.getImagetImagesSequentially(stringUrlArray: item.imagesToEdit) { [weak self] images in
+                    if !images.isEmpty {
+                        if let gallerySectionIndex = self?.currentSnapData.firstIndex(where: { $0.key == .gallery }) {
+                            self?.currentSnapData[gallerySectionIndex].values.removeAll(where: { item in
+                                switch item {
+                                case let .image(galleryImage):
+                                    return galleryImage.isEmpty == true
+                                }
+                            })
+                            self?.images.append(contentsOf: images)
+                            self?.currentSnapData[gallerySectionIndex].values.append(contentsOf: images.map({ .image(.init(image: $0)) }))
+                            self?.updateSnapShot()
+                        }
                     }
                 }
-            }
+            })
+            
+            DispatchQueue.main.async(execute: work!)
         }
     }
     
@@ -357,6 +384,7 @@ extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavig
         picker.dismiss(animated: true, completion: nil)
         
         guard let image = info[.editedImage] as? UIImage else { return }
+        guard images.count < 8 else { return }
         
         if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
             currentSnapData[gallerySectionIndex].values.append(.image(.init(image: image)))
@@ -380,10 +408,12 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
         snapshot = dataSource.snapshot()
         
         func downloadNextImage(index: Int) {
-            if index >= results.count {
+            if index >= results.count || images.count >= 8 {
+                snapshot.appendItems(currentSnapData[gallerySectionIndex].values, toSection: .gallery)
                 DispatchQueue.main.async {[weak self] in
                     self?.dataSource.apply((self?.snapshot)!, animatingDifferences: true)
                 }
+                
             } else {
                 let image = results[index]
                 
@@ -395,9 +425,10 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
                     
                     if let image = object as? UIImage {
                         self?.currentSnapData[gallerySectionIndex].values.append(.image(.init(image: image)))
+                        
                         self?.images.append(image)
                         
-                        self?.snapshot.appendItems((self?.currentSnapData[gallerySectionIndex].values)!, toSection: .gallery)
+                        
                         downloadNextImage(index: index + 1)
                     }
                 }

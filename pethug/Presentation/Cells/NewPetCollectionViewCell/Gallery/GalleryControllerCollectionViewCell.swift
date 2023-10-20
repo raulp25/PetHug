@@ -78,9 +78,6 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
         
     }
     
-    
-    private var work: DispatchWorkItem?
-    
     private func configureCellUI(with galleryImage: GalleryImage) {
         print("gallery image en celda: => \(galleryImage)")
         if let image = galleryImage.image {
