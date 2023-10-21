@@ -22,26 +22,29 @@ enum ValidationState: Equatable {
         case passwordNeedsLetters
         case nameCantHaveNumOrSpecialChars
         case toShortName
+        case toLongName
         case custom(String)
 
         var description: String {
             switch self {
             case .empty:
-                return "Field is empty."
+                return "Campo vacío"
             case .invalidEmail:
-                return "Invalid email."
+                return "Correo inválido"
             case .invalidPhoneNum:
-                return "Invalid phone number."
+                return "Numero de telefono inválido"
             case .toShortPassword:
-                return "Your password is to short."
+                return "Contraseña corta"
             case .passwordNeedsNum:
-                return "Your password doesn't contain any numbers."
+                return "Contraseña debe incluir un número"
             case .passwordNeedsLetters:
-                return "Your password doesn't contain any letters."
+                return "Contraseña debe incluir letras"
             case .nameCantHaveNumOrSpecialChars:
-                return "Name can't contain numbers or special characters."
+                return "Sin espacios o carácteres espciales"
             case .toShortName:
-                return "Your name can't be less than two characters."
+                return "Mínimo 2 letras"
+            case .toLongName:
+                return "Máximo 12 letras"
             case let .custom(text):
                 return text
             }

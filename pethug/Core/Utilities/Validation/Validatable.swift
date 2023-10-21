@@ -26,6 +26,12 @@ extension Validatable {
             .map { !($0.count >= count) }
             .eraseToAnyPublisher()
     }
+    
+    func isToLong(with publisher: AnyPublisher<String, Never>, count: Int) -> AnyPublisher<Bool, Never> {
+        publisher
+            .map { ($0.count >= count) }
+            .eraseToAnyPublisher()
+    }
 
     func hasNumbers(with publisher: AnyPublisher<String, Never>) -> AnyPublisher<Bool, Never> {
         publisher
@@ -99,29 +105,41 @@ struct PhoneValidator: Validatable {
     }
 }
 
-struct PasswordValidator: Validatable {
+struct NewAccountPasswordValidator: Validatable {
     func validate(
         publisher: AnyPublisher<String, Never>
     ) -> AnyPublisher<ValidationState, Never> {
         Publishers.CombineLatest4(
             isEmpty(with: publisher),
             isToShort(with: publisher, count: 6),
-            hasNumbers(with: publisher),
-            hasLetters(with: publisher)
+            hasLetters(with: publisher),
+            hasSpecialChars(with: publisher)
         )
         .removeDuplicates(by: { prev, curr in
             prev == curr
         })
-        .map { isEmpty, toShort, hasNumbers, hasLetters in
+        .map { isEmpty, toShort, hasLetters, hasSpecialChars  in
             if isEmpty { return .error(.empty) }
             if toShort { return .error(.toShortPassword) }
-            if !hasNumbers { return .error(.passwordNeedsNum) }
             if !hasLetters { return .error(.passwordNeedsLetters) }
             return .valid
         }
         .eraseToAnyPublisher()
     }
 }
+
+struct PasswordValidator: Validatable {
+    func validate(
+        publisher: AnyPublisher<String, Never>
+    ) -> AnyPublisher<ValidationState, Never> {
+        publisher
+        .map { input in
+            return input.isEmpty ? .error(.empty) : .valid
+        }
+        .eraseToAnyPublisher()
+    }
+}
+
 
 struct NameValidator: Validatable {
     func validate(
@@ -130,16 +148,16 @@ struct NameValidator: Validatable {
         Publishers.CombineLatest4(
             isEmpty(with: publisher),
             isToShort(with: publisher, count: 2),
-            hasNumbers(with: publisher),
+            isToLong(with: publisher, count: 15),
             hasSpecialChars(with: publisher)
-        )
-        .removeDuplicates(by: { prev, curr in
+        ).removeDuplicates(by: { prev, curr in
             prev == curr
         })
-        .map { isEmpty, toShort, hasNumbers, hasSpecialChars in
+        .map { isEmpty, toShort, toLong, hasSpecialChars in
             if isEmpty { return .error(.empty) }
             if toShort { return .error(.toShortName) }
-            if hasNumbers || hasSpecialChars { return .error(.nameCantHaveNumOrSpecialChars) }
+            if toLong  { return .error(.toLongName) }
+            if hasSpecialChars { return .error(.nameCantHaveNumOrSpecialChars) }
             return .valid
         }
         .eraseToAnyPublisher()

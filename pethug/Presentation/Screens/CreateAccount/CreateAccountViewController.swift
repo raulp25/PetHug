@@ -120,7 +120,7 @@ class CreateAccountViewController: UIViewController {
     
     private let passwordTextField = AuthTextField(
         viewModel: .init(
-            type: .password,
+            type: .newAccountPassword,
             placeholderOption: .custom("Contraseña"),
             returnKey: .done
         )

@@ -23,7 +23,8 @@ struct LoginViewModel {
     }
     
     func login(email: String?, password: String?) async {
-        guard let email, let password else {
+        guard let email = email?.trimmingCharacters(in: .whitespacesAndNewlines),
+              let password = password?.trimmingCharacters(in: .whitespacesAndNewlines) else {
             state.send(.error(.someThingWentWrong))
             return
         }

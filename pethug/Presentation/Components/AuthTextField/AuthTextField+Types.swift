@@ -17,6 +17,7 @@ extension AuthTextField {
     enum TextFieldType: String {
         case name
         case password
+        case newAccountPassword
         case email
         case date
 

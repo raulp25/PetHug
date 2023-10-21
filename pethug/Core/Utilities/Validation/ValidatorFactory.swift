@@ -17,6 +17,8 @@ enum ValidatorFactory {
             return PhoneValidator()
         case .password:
             return PasswordValidator()
+        case .newAccountPassword:
+            return NewAccountPasswordValidator()
         case .name:
             return NameValidator()
         }

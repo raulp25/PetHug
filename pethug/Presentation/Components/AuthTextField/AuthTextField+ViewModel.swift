@@ -77,6 +77,8 @@ extension AuthTextField {
                 return .name
             case .password:
                 return .password
+            case .newAccountPassword:
+                return .password
             case .email:
                 return .emailAddress
             case .date:
@@ -93,7 +95,7 @@ extension AuthTextField {
             switch type {
             case .email, .name:
                 return xmarkIcon
-            case .password:
+            case .password, .newAccountPassword:
                 return eyeSlashIcon
             case .date:
                 return nil

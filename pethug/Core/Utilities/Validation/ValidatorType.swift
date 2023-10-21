@@ -12,5 +12,6 @@ enum ValidatorType: String {
     case email
     case phone
     case password
+    case newAccountPassword
     case name
 }

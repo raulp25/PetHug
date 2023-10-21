@@ -241,11 +241,7 @@ final class AuthTextField: UIView {
     }
 
     // MARK: - Observe
-    // I can expose this satate publisher so if we have an error of type
-    // password dont contain any letter update the constraint of the forgot password
-    // view so it doesnt overlays with the error message
     private func observeStates() {
-        print("observeStates =>~")
         statePublisher
             .sink { [weak self] focus, text, validation in
                 guard let self else { return }
@@ -255,9 +251,6 @@ final class AuthTextField: UIView {
     }
 
     private func observeValidationState() {
-        
-        print("observeValidationState =>~")
-        
         guard validationState == .idle, let validationType = ValidatorType(rawValue: viewModel.type.rawValue) else { return }
 
         textField.textPublisher()

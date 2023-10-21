@@ -255,7 +255,6 @@ class LoginViewController: UIViewController {
         
         childContainerView.addSubview(blurView)
         childContainerView.addSubview(vStack)
-        
         childContainerView.addSubview(forgotPasswordContainerView)
         forgotPasswordContainerView.addSubview(forgotPasswordBtn)
         
@@ -277,8 +276,6 @@ class LoginViewController: UIViewController {
         )
         //Without this containerView gets expanded horizontally which is bad
         containerView.centerX(inView: scrollView)
-        
-        
         
         iconImageView.centerX(
             inView: containerView,
