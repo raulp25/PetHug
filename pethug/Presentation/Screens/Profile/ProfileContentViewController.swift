@@ -211,6 +211,7 @@ final class ProfileContentViewController: UIViewController {
         Task {
             do {
                 let user = try await fetchUserUC.execute()
+                viewModel.user = user
                 guard let image = user.profileImageUrl else { return }
                 
                 let url = URL(string: image)

@@ -20,9 +20,11 @@ final class ProfileViewModel {
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
     private let imageSubject = PassthroughSubject<UIImage, PetsError>()
-    
     private let updateUserUC: DefaultUpdateUserUC
     private let imageService: ImageServiceProtocol
+    
+    var user: User? = nil
+    
     init(
         updateUserUC: DefaultUpdateUserUC,
         imageService: ImageServiceProtocol
@@ -40,6 +42,9 @@ final class ProfileViewModel {
         state.send(.loading)
         
         do {
+            if let oldProfilePic = user?.profileImageUrl {
+                try imageService.deleteImages(imagesUrl: [oldProfilePic])
+            }
             
             let imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users))
             
