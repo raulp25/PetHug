@@ -18,6 +18,11 @@ final class PetsViewModel {
     //MARK: - Internal Properties
     weak var navigation: PetsNavigatable?
     var state = PassthroughSubject<State,Never>()
+    var collection: String = .getPath(for: .allPets) {
+        didSet {
+            resetFilterData()
+        }
+    }
     
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
@@ -31,11 +36,6 @@ final class PetsViewModel {
     private let filterPetsUC: DefaultFilterPetsUC
     private let likedPetUC: DefaultLikePetUC
     private let dislikedPetUC: DefaultDisLikePetUC
-    var collection: String = .getPath(for: .dogs) {
-        didSet {
-            resetFilterData()
-        }
-    }
     private var filterOptions: FilterOptions? = nil
     private var filterMode = false
     
@@ -84,10 +84,8 @@ final class PetsViewModel {
     
     //MARK: - Internal Methods
     func fetchPets(collection: String, resetFilterQueries: Bool) {
-        print("collection adentro de fetch pets: => \(collection)")
         if collection == .getPath(for: .allPets) {
             applyFetchAllPets(resetFilterQueries: resetFilterQueries)
-//            print("collection adentro de fetch pets: => \(collection)")
         } else {
             applyFetchPets(collection: collection, resetFilterQueries: resetFilterQueries)
         }
@@ -95,7 +93,6 @@ final class PetsViewModel {
     }
     
     private func applyFetchAllPets(resetFilterQueries: Bool) {
-        print("ejecuta applyfetchallpets: => ")
         if resetFilterQueries {
             resetFilterData()
         }
@@ -105,21 +102,9 @@ final class PetsViewModel {
         Task {
             do {
                 let data = try await fetchAllPetsUC.execute(resetFilterQueries: resetFilterQueries)
-                if !isFirstLoad && !data.isEmpty {
-                    petsSubject.send(data)
-                } else if isFirstLoad {
-                    petsSubject.send(data)
-                    isFirstLoad = false
-                }
-                print("pets fetched: => \(data)")
-                for pet in data {
-                    print("pet id: => \(pet.id)")
-                    print("pet type: => \(pet.type.rawValue)")
-                }
-                
-                
+                handleResult(data)
             } catch {
-                state.send(.error(.default(error)))
+                handleError(error)
             }
             isFetching = false
         }
@@ -136,63 +121,14 @@ final class PetsViewModel {
         Task {
             do {
                 let data = try await fetchPetsUC.execute(fetchCollection: collection, resetFilterQueries: resetFilterQueries)
-                if !isFirstLoad && !data.isEmpty {
-                    petsSubject.send(data)
-                } else if isFirstLoad {
-                    petsSubject.send(data)
-                    isFirstLoad = false
-                }
-                
+                handleResult(data)
             } catch {
-                state.send(.error(.default(error)))
+                handleError(error)
             }
             
             isFetching = false
         }
     }
-
-//    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
-//        filterMode = true
-//        if options != nil {
-//            filterOptions = options
-//        }
-//
-//        if resetFilterQueries {
-//            print("entra reset firstload: => \(resetFilterQueries)")
-//            isFirstLoad = true
-//            pets = []
-//        }
-//
-//        if isFirstLoad {
-//            state.send(.loading)
-//        }
-//
-//        print("filter options en fecthpets with filter 931: => \(filterOptions)")
-//        guard let filterOptions = filterOptions else { return }
-//        guard !isFetching else { return }
-//        isFetching = true
-//
-//        Task {
-//            do {
-//
-//                let data = try await filterPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
-//                if !isFirstLoad && !data.isEmpty {
-//                    print("no es firstload envia la dadta: => \(data)")
-//                    petsSubject.send(data)
-//
-//                } else if isFirstLoad {
-//                    isFirstLoad = false
-//                    petsSubject.send(data)
-//                }
-//
-//            } catch {
-//                state.send(.loaded([]))
-//                state.send(.error(.default(error)))
-//            }
-//
-//            isFetching = false
-//        }
-//    }
     
     //Coordinates the filter process
     func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
@@ -203,7 +139,7 @@ final class PetsViewModel {
         }
     }
     
-    //Main logic for applying the filter.
+    
     //filterOptions gets set inmediatly after setting the filter options in the app so the next time we
     //call this function we dont need to set again the filter options
     
@@ -228,9 +164,9 @@ final class PetsViewModel {
         Task {
             do {
                 let data = try await filterAllPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
-                handleFilterResult(data)
+                handleResult(data)
             } catch {
-                handleFilterError(error)
+                handleError(error)
             }
             
             isFetching = false
@@ -261,9 +197,9 @@ final class PetsViewModel {
                                                           options: filterOptions,
                                                           resetFilterQueries: resetFilterQueries
                                                           )
-                handleFilterResult(data)
+                handleResult(data)
             } catch {
-                handleFilterError(error)
+                handleError(error)
             }
             
             isFetching = false
@@ -279,7 +215,7 @@ final class PetsViewModel {
     
     //If not the first load and the results are not empty, send the data.
     //Otherwise, if it's the first load with new filter options, mark isFirstLoad as false and send data whether is empty or not.
-    private func handleFilterResult(_ data: [Pet]) {
+    private func handleResult(_ data: [Pet]) {
         if !isFirstLoad && !data.isEmpty {
             petsSubject.send(data)
         } else if isFirstLoad {
@@ -288,7 +224,7 @@ final class PetsViewModel {
         }
     }
     
-    private func handleFilterError(_ error: Error) {
+    private func handleError(_ error: Error) {
         state.send(.loaded([]))
         state.send(.error(.default(error)))
     }
@@ -376,16 +312,13 @@ final class PetsViewModel {
         let uid = AuthService().uid
         
         if pet.likedByUsers.contains(uid) {
-//            throw PetsError.defaultCustom("Duplicated like event in addLikeUid")
             return pet
         }
         
         let updatePet = pet
         updatePet.likedByUsers.append(uid)
         
-        if let index = pets.firstIndex(where: { pet in
-            pet.id == updatePet.id
-        }) {
+        if let index = pets.firstIndex(where: { pet in pet.id == updatePet.id }) {
             pets[index] = updatePet
             return updatePet
         }

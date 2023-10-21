@@ -14,7 +14,6 @@ import Combine
 //}
 
 final class PetsViewController: UIViewController {
-    
     //MARK: - Private components
     private lazy var contentStateVC = ContentStateViewController()
     private lazy var contentVc: PetsContentViewController? = nil

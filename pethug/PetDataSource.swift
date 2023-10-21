@@ -42,11 +42,11 @@ final class DefaultPetDataSource: PetDataSource {
     internal var birdsQuery: Query!
     internal var rabbitsQuery: Query!
     
-    
     internal var dogsdocuments  = [QueryDocumentSnapshot]()
     internal var catsdocuments  = [QueryDocumentSnapshot]()
     internal var birdsdocuments   = [QueryDocumentSnapshot]()
     internal var rabbitsdocuments = [QueryDocumentSnapshot]()
+    
     //MARK: - Get
     func fetchAllPets(resetFilterQueries: Bool) async throws -> [Pet] {
         async let dogsSnapshot    = try applyFetchAllPets(collection: .getPath(for: .dogs),
@@ -80,14 +80,11 @@ final class DefaultPetDataSource: PetDataSource {
         collection path: String,
         resetFilterQueries: Bool,
         query: inout Query?,
-        documents pa: inout [QueryDocumentSnapshot]
+        documents: inout [QueryDocumentSnapshot]
     ) async throws -> [Pet] {
-        
-        print("resetFiltqueries: => \(resetFilterQueries)")
         if resetFilterQueries {
             query = nil
-            pa = []
-            print("entra a resetfilterqueries y reinicia documents collection: => \(path), \(pa)")
+            documents = []
         }
         
         if query == nil {
@@ -95,9 +92,8 @@ final class DefaultPetDataSource: PetDataSource {
                       .order(by: order, descending: true)
                       .limit(to: 10)
         } else {
-            if !pa.isEmpty {
-                print("entra a documents is not empty: => \(pa)")
-                query = query!.start(afterDocument: pa.last!)
+            if !documents.isEmpty {
+                query = query!.start(afterDocument: documents.last!)
             }
         }      
         
@@ -112,7 +108,7 @@ final class DefaultPetDataSource: PetDataSource {
             let dictionary = doc.data()
             let pet = Pet(dictionary: dictionary)
             pets.append(pet)
-            pa += [doc]
+            documents += [doc]
         }
         
         return pets
@@ -454,14 +450,13 @@ final class DefaultPetDataSource: PetDataSource {
     }
     
     func updateOwnerPetLikes(data: Pet) async throws {
-        let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
         let dataModel = petFirebaseEntinty.toDictionaryLiked()
         
         try await db.collection(data.type.getPath)
                     .document(data.id)
                     .updateData(dataModel)
-        
+        //We dont need it anymore cause we changed the approach
 //        try await db.collection("users")
 //            .document(data.owneruid)
 //                    .collection("pets")
