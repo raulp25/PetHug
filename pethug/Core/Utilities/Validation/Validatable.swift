@@ -148,7 +148,7 @@ struct NameValidator: Validatable {
         Publishers.CombineLatest4(
             isEmpty(with: publisher),
             isToShort(with: publisher, count: 2),
-            isToLong(with: publisher, count: 15),
+            isToLong(with: publisher, count: 12),
             hasSpecialChars(with: publisher)
         ).removeDuplicates(by: { prev, curr in
             prev == curr
