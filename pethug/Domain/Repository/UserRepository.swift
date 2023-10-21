@@ -11,4 +11,5 @@ protocol UserRepository {
     
     func registerUser(user: User) async throws
     func fetchUser() async throws -> User
+    func updateUser(imageUrl: String) async throws
 }

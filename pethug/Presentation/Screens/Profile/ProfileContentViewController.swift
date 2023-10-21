@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Combine
+import PhotosUI
 import SDWebImage
 
 final class ProfileContentViewController: UIViewController {
@@ -95,11 +97,15 @@ final class ProfileContentViewController: UIViewController {
     
     
     //MARK: - Private properties
+    private let viewModel = ProfileViewModel(updateUserUC: UpdateUser.composeUpdateUserUC(),
+                                             imageService: ImageService())
     private let authService: AuthServiceProtocol
     private let fetchUserUC: DefaultFetchUserUC
+    private var cancellables = Set<AnyCancellable>()
     
+    private var newImage: UIImage? = nil
     //MARK: - Internal properties
-    weak var delegate: PetsViewHeaderDelegate?
+    weak var coordinator: ProfileTabCoordinator?
     
     init(authService: AuthServiceProtocol, fetchUserUC: DefaultFetchUserUC) {
         self.authService = authService
@@ -116,6 +122,20 @@ final class ProfileContentViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
         fetchUser()
         setup()
+        
+        viewModel.state
+            .handleThreadsOperator()
+            .sink { [weak self] state in
+                switch state {
+                case .loaded:
+                    self?.profileImageView.image = self?.newImage!
+                case .error(let error):
+                    print("error updating profile image: => \(error)")
+                    self?.alert(message: "Hubo un error, intenta de nuevo", title: "Error")
+                default:
+                    print("")
+                }
+            }.store(in: &cancellables)
     }
     
     //MARK: - Private actions
@@ -124,6 +144,12 @@ final class ProfileContentViewController: UIViewController {
     }
     
     @objc private func didTapProfilePic() {
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 1
+        
+        let phPicker = PHPickerViewController(configuration: config)
+        phPicker.delegate = self
+        coordinator?.rootViewController.present(phPicker, animated: true)
         
     }
     
@@ -199,6 +225,29 @@ final class ProfileContentViewController: UIViewController {
     }
     
 }
+
+extension ProfileContentViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        coordinator?.rootViewController.dismiss(animated: true)
+        
+        for image in results {
+            image.itemProvider.loadObject(ofClass: UIImage.self) { [weak self] object, error in
+                if let error = error {
+                    print("error loading image object: => \(error)")
+                }
+                
+                if let image = object as? UIImage {
+                    self?.newImage = image
+                    Task {
+                        await self?.viewModel.updateProfilePic(image: image)
+                    }
+                }
+            }
+        }
+    }
+}
+
+
 
 
 

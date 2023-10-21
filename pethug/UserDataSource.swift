@@ -13,6 +13,7 @@ import FirebaseFirestoreSwift
 protocol UserDataSource {
     func registerUser(user: User) async throws
     func fetchUser() async throws -> User
+    func updateUser(imageUrl: String) async throws
 }
 
 
@@ -33,7 +34,15 @@ final class DefaultUserDataSource: UserDataSource {
         let doc = try snapshot.data(as: User.self)
         
         return doc
+    }
+    
+    func updateUser(imageUrl: String) async throws {
+        let uid = AuthService().uid
+        let dataModel =  ["profileImageUrl": imageUrl]
         
+        try await db.collection(.getPath(for: .users))
+                    .document(uid)
+                    .updateData(dataModel)
     }
     
 }

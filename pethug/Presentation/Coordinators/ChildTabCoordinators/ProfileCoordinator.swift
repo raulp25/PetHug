@@ -18,6 +18,7 @@ final class ProfileTabCoordinator: ChildTabCoordinator {
         let vc = ProfileContentViewController(authService: AuthService(),
                                               fetchUserUC: FetchUser.composeFetchUserUC()
                                              )
+        vc.coordinator = self
         rootViewController.pushViewController(vc, animated: true)
     }
 }
