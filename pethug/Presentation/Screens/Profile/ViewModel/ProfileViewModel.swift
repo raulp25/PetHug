@@ -8,10 +8,8 @@
 import Foundation
 import Combine
 import FirebaseFirestore
+import FirebaseAuth
 import Firebase
-//protocol FavoritesNavigatable: AnyObject {
-//    func tapped(pet: Pet)
-//}
 
 final class ProfileViewModel {
     //MARK: - Internal Properties
@@ -21,15 +19,18 @@ final class ProfileViewModel {
     private var subscriptions = Set<AnyCancellable>()
     private let imageSubject = PassthroughSubject<UIImage, PetsError>()
     private let updateUserUC: DefaultUpdateUserUC
+    private let deleteUserUC: DefaultDeleteUserUC
     private let imageService: ImageServiceProtocol
     
     var user: User? = nil
     
     init(
         updateUserUC: DefaultUpdateUserUC,
+        deleteUserUC: DefaultDeleteUserUC,
         imageService: ImageServiceProtocol
     ) {
         self.updateUserUC = updateUserUC
+        self.deleteUserUC = deleteUserUC
         self.imageService = imageService
     }
     
@@ -43,7 +44,7 @@ final class ProfileViewModel {
         
         do {
             if let oldProfilePic = user?.profileImageUrl {
-                try imageService.deleteImages(imagesUrl: [oldProfilePic])
+                imageService.deleteImages(imagesUrl: [oldProfilePic])
             }
             
             let imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users))
@@ -54,6 +55,16 @@ final class ProfileViewModel {
             
         } catch {
             state.send(.error(.default(error)))
+        }
+    }
+    
+    func deleteUser() async {
+        state.send(.loading)
+        
+        do {
+            try await deleteUserUC.execute()
+        } catch {
+            state.send(.deleteUserError)
         }
     }
   

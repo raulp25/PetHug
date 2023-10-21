@@ -16,7 +16,7 @@ final class NewPetContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     private let dummyView = DummyView()
-    private let loadingView = LoadingViewController(spinnerColors: [customRGBColor(red: 255, green: 176, blue: 42)  ])
+    private let loadingView = LoadingViewController(spinnerColors: [customRGBColor(red: 255, green: 176, blue: 42)])
 //
     //MARK: - Private properties
     private var dataSource: DataSource!
@@ -73,10 +73,14 @@ final class NewPetContentViewController: UIViewController {
                     })
                 case .loading:
                     print("")
-                    self?.setLoadingScreen()
+                    DispatchQueue.main.async {
+                        self?.setLoadingScreen()
+                    }
                 case let.error(error):
-                    self?.alert(message: "Hubo un error, intenta nuevamente")
-                    self?.removeLoadingScreen()
+                    DispatchQueue.main.async {
+                        self?.alert(message: "Hubo un error, intenta nuevamente")
+                        self?.removeLoadingScreen()
+                    }
                     print("error in NewPetContentView VC: => \(error.localizedDescription)")
                 }
                 
@@ -475,7 +479,7 @@ final class NewPetContentViewController: UIViewController {
         }
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
-    func setLoadingScreen() {
+    private func setLoadingScreen() {
         view.isUserInteractionEnabled = false
         
         add(loadingView)
@@ -490,7 +494,7 @@ final class NewPetContentViewController: UIViewController {
         
     }
     
-    func removeLoadingScreen() {
+    private func removeLoadingScreen() {
         loadingView.remove()
     }
 }

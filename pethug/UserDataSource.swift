@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
@@ -14,6 +15,7 @@ protocol UserDataSource {
     func registerUser(user: User) async throws
     func fetchUser() async throws -> User
     func updateUser(imageUrl: String) async throws
+    func deleteUser() async throws
 }
 
 
@@ -43,6 +45,15 @@ final class DefaultUserDataSource: UserDataSource {
         try await db.collection(.getPath(for: .users))
                     .document(uid)
                     .updateData(dataModel)
+    }
+    
+    func deleteUser() async throws {
+        guard let user = Auth.auth().currentUser else { throw PetsError.defaultCustom("") }
+        try await db.collection(.getPath(for: .users)).document(user.uid).delete()
+        try await db.collection(.getPath(for: .deletedUsers))
+                    .document(user.uid)
+                    .setData(["userId": user.uid])
+        try await user.delete()
     }
     
 }

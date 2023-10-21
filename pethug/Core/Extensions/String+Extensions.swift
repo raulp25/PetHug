@@ -46,6 +46,7 @@ extension String {
 extension String {
     enum CollectionPath: String {
         case users
+        case deletedUsers
         case allPets
         case dogs
         case cats
@@ -66,7 +67,7 @@ extension String {
     
     static func getPath(for path: CollectionPath) -> String {
         switch path {
-        case .users, .allPets, .dogs, .cats, .rabbits, .birds, .likedPets:
+        case .users, .deletedUsers, .allPets, .dogs, .cats, .rabbits, .birds, .likedPets:
             return path.rawValue
         }
     }

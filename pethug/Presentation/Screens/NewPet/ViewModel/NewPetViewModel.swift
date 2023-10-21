@@ -16,6 +16,7 @@ class NewPetViewModel {
     private let createPetUseCase: DefaultCreatePetUC
     private let updatePetUseCase: DefaultUpdatePetUC
     private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
+    private let uid = AuthService().uid
     //MARK: - Internal Properties
     private var pet: Pet?
 //    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC) {
@@ -291,8 +292,7 @@ class NewPetViewModel {
     //Recursively Upload images in sequence to respect the order in which the user selected the images
     func uploadNextImage(index: Int, imagesUrls: inout [String]) async throws {
         guard let typeState = typeState else { return }
-        let path = typeState.storagePath
-        
+        let path = "/userImages:\(uid)/"
         
         guard index < galleryState.count else { return }
         

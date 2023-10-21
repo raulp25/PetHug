@@ -27,4 +27,8 @@ final class DefaultUserRepository: UserRepository {
     func updateUser(imageUrl: String) async throws {
         try await userDataSource.updateUser(imageUrl: imageUrl)
     }
+    
+    func deleteUser() async throws {
+        try await userDataSource.deleteUser()
+    }
 }

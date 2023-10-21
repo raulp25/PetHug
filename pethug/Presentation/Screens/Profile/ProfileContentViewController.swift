@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import SwiftUI
 import Combine
 import PhotosUI
 import SDWebImage
 
 final class ProfileContentViewController: UIViewController {
     //MARK: - Private components
+    private let dummyView = DummyView()
+    private let loadingView = LoadingViewController(spinnerColors: [customRGBColor(red: 255, green: 176, blue: 42)])
     
     private let titleLabel: UILabel = {
        let label = UILabel()
@@ -91,13 +94,14 @@ final class ProfileContentViewController: UIViewController {
         btn.layer.borderColor = UIColor.red.cgColor
         btn.layer.borderWidth = 1
         btn.layer.cornerRadius = 8
-//        btn.addTarget(self, action: #selector(didTapSingOut), for: .touchUpInside)
+        btn.addTarget(self, action: #selector(didTapDeleteAccount), for: .touchUpInside)
         return btn
     }()
     
     
     //MARK: - Private properties
     private let viewModel = ProfileViewModel(updateUserUC: UpdateUser.composeUpdateUserUC(),
+                                             deleteUserUC: DeleteUser.composeDeleteUserUC(),
                                              imageService: ImageService())
     private let authService: AuthServiceProtocol
     private let fetchUserUC: DefaultFetchUserUC
@@ -127,22 +131,24 @@ final class ProfileContentViewController: UIViewController {
             .handleThreadsOperator()
             .sink { [weak self] state in
                 switch state {
+                case .loading:
+                    DispatchQueue.main.async {
+                        self?.setLoadingScreen()
+                    }
                 case .loaded:
                     self?.profileImageView.image = self?.newImage!
                 case .error(let error):
                     print("error updating profile image: => \(error)")
                     self?.alert(message: "Hubo un error, intenta de nuevo", title: "Error")
-                default:
-                    print("")
+                case .deleteUserError:
+                    self?.alert(message: "Hubo un error eliminando tu usuario, intenta de nuevo o inicia sesión nuevamente y luego elimina tu cuenta", title: "Error Usuario")
                 }
+                self?.view.isUserInteractionEnabled = true
+                self?.removeLoadingScreen()
             }.store(in: &cancellables)
     }
     
     //MARK: - Private actions
-    @objc private func didTapSingOut() {
-        try! AuthService().signOut()
-    }
-    
     @objc private func didTapProfilePic() {
         var config = PHPickerConfiguration()
         config.selectionLimit = 1
@@ -151,6 +157,18 @@ final class ProfileContentViewController: UIViewController {
         phPicker.delegate = self
         coordinator?.rootViewController.present(phPicker, animated: true)
         
+    }
+    
+    @objc private func didTapSingOut() {
+        try! AuthService().signOut()
+    }
+    
+    @objc private func didTapDeleteAccount() {
+        showModal()
+    }
+    
+        @objc private func didTapModalScreen() {
+        cancel()
     }
     
     //MARK: - Setup
@@ -207,7 +225,7 @@ final class ProfileContentViewController: UIViewController {
     }
     
     //MARK: - Private methods
-    func fetchUser() {
+    private func fetchUser() {
         Task {
             do {
                 let user = try await fetchUserUC.execute()
@@ -225,6 +243,72 @@ final class ProfileContentViewController: UIViewController {
         }
     }
     
+    private func setLoadingScreen() {
+        print("se llama loading view: => ")
+        view.isUserInteractionEnabled = false
+        
+        add(loadingView)
+        view.bringSubviewToFront(loadingView.view)
+        loadingView.view.fillSuperview()
+        loadingView.view.backgroundColor = customRGBColor(red: 247, green: 247, blue: 247, alpha: 0.5)
+    }
+    
+    private func removeLoadingScreen() {
+        loadingView.remove()
+    }
+    
+    
+    private func deleteUser() {
+        dismissModal()
+        Task{
+            await viewModel.deleteUser()
+        }
+    }
+    
+    private func cancel() {
+        dismissModal()
+    }
+    
+    private func dismissModal() {
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
+            self.dummyView.view.alpha = 0
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: { [weak self] in
+                self?.dummyView.remove()
+                self?.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    private func showModal(){
+        let deleteAccView = Modal(leftButtonAction: cancel,
+                                  rightButtonAction: deleteUser,
+                                  leftButtonTitle: "Cancelar",
+                                  rightButtonTitle: "Eliminar")
+        
+        add(dummyView)
+        view.bringSubviewToFront(dummyView.view)
+        dummyView.view.addSubview(deleteAccView)
+        
+        dummyView.view.fillSuperview()
+        dummyView.view.alpha = 0
+        dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapModalScreen))
+        dummyView.view.isUserInteractionEnabled = true
+        dummyView.view.addGestureRecognizer(tapGesture)
+        
+        
+        deleteAccView.center(
+            inView: dummyView.view
+        )
+        deleteAccView.setDimensions(height: 200, width: view.frame.size.width - 100)
+        deleteAccView.layer.cornerRadius = 15
+        
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
+            self.dummyView.view.alpha = 1
+        }
+        self.view.layoutIfNeeded()
+    }
 }
 
 extension ProfileContentViewController: PHPickerViewControllerDelegate {
@@ -247,8 +331,5 @@ extension ProfileContentViewController: PHPickerViewControllerDelegate {
         }
     }
 }
-
-
-
 
 
