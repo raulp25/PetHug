@@ -81,39 +81,6 @@ final class ProfileContentViewController: UIViewController {
         return btn
     }()
     
-    private lazy var vStack: UIStackView = {
-        let stack: UIStackView = .init(arrangedSubviews: [privacyButton, aboutButton])
-        stack.axis = .vertical
-        stack.distribution = .fillEqually
-        stack.alignment = .fill
-                stack.spacing = 10
-        stack.translatesAutoresizingMaskIntoConstraints = true
-        return stack
-    }()
-    
-    private lazy var privacyButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setTitle("Políticas de privacidad", for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = customRGBColor(red: 255, green: 166, blue: 15)
-        btn.layer.cornerRadius = 8
-//        btn.addTarget(self, action: #selector(didTapSingOut), for: .touchUpInside)
-        return btn
-    }()
-    
-    private lazy var aboutButton: UIButton = {
-        let btn = UIButton(type: .system)
-        btn.setTitle("Sobre nosotros", for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
-        btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = customRGBColor(red: 255, green: 166, blue: 15)
-        btn.layer.cornerRadius = 8
-//        btn.addTarget(self, action: #selector(didTapSingOut), for: .touchUpInside)
-        return btn
-    }()
-    
-    
     private lazy var deleteAccBtn: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("Eliminar cuenta", for: .normal)
@@ -162,9 +129,6 @@ final class ProfileContentViewController: UIViewController {
     
     //MARK: - Setup
     private func setup() {
-        
-        let paddingTop: CGFloat = 15
-        let sidePadding: CGFloat = 25
         view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
         
         view.addSubview(titleLabel)
@@ -172,35 +136,7 @@ final class ProfileContentViewController: UIViewController {
         containerView.addSubview(profileImageView)
         containerView.addSubview(cameraIcon)
         view.addSubview(logoutBtn)
-//        view.addSubview(vStack)
         view.addSubview(deleteAccBtn)
-//        containerView.anchor(
-//            top: view.safeAreaLayoutGuide.topAnchor,
-//            left: view.leftAnchor,
-//            paddingTop: 30,
-//            paddingLeft: 30
-//        )
-//        containerView.setDimensions(height: 120, width: 120)
-//
-////        profileImageView.fillSuperview()
-//        profileImageView.center(inView: containerView)
-//        profileImageView.setDimensions(height: 30, width: 30)
-//
-//        cameraIcon.anchor(
-//            bottom: containerView.bottomAnchor,
-//            right: containerView.rightAnchor,
-//            paddingBottom: 3,
-//            paddingRight: 4
-//        )
-//        cameraIcon.setDimensions(height: 26, width: 26)
-//
-//        logoutBtn.centerY(
-//            inView: containerView,
-//            leftAnchor: containerView.rightAnchor,
-//            paddingLeft: 20
-//        )
-//        logoutBtn.setDimensions(height: 30, width: 140)
-        
         
         titleLabel.anchor(
             top: view.safeAreaLayoutGuide.topAnchor,
@@ -208,11 +144,16 @@ final class ProfileContentViewController: UIViewController {
             paddingLeft: 30
         )
         
-        containerView.centerX(inView: view, topAnchor: titleLabel.bottomAnchor, paddingTop: 150)
+        containerView.centerX(
+            inView: view,
+            topAnchor: titleLabel.bottomAnchor,
+            paddingTop: 150
+        )
         containerView.setDimensions(height: 145, width: 145)
-        
-//        profileImageView.fillSuperview()
-        profileImageView.center(inView: containerView)
+    
+        profileImageView.center(
+            inView: containerView
+        )
         profileImageView.setDimensions(height: 30, width: 30)
         
         cameraIcon.anchor(
@@ -223,16 +164,18 @@ final class ProfileContentViewController: UIViewController {
         )
         cameraIcon.setDimensions(height: 26, width: 26)
         
-        logoutBtn.centerX(inView: containerView, topAnchor: containerView.bottomAnchor, paddingTop: 10)
+        logoutBtn.centerX(
+            inView: containerView,
+            topAnchor: containerView.bottomAnchor,
+            paddingTop: 10
+        )
         logoutBtn.setDimensions(height: 32, width: 145)
         
-//        vStack.centerX(inView: logoutBtn, topAnchor: logoutBtn.bottomAnchor, paddingTop: 150)
-//        vStack.setWidth(200)
-//
-//        privacyButton.setHeight(32)
-//        aboutButton.setHeight(32)
-        
-        deleteAccBtn.centerX(inView: logoutBtn, topAnchor: logoutBtn.bottomAnchor, paddingTop: 50)
+        deleteAccBtn.centerX(
+            inView: logoutBtn,
+            topAnchor: logoutBtn.bottomAnchor,
+            paddingTop: 50
+        )
         deleteAccBtn.setDimensions(height: 32, width: 200)
         
     }

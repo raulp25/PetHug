@@ -199,7 +199,7 @@ extension PetsContentViewController: UICollectionViewDelegate {
         let distance: Float = 10
         
         if y > height + distance {
-            print(":pasa el limite y \(y) > height + distance \(height + distance) ")
+            print(":exceeds the limit y \(y) > height + distance \(height + distance) ")
             delegate?.executeFetch()
         }
     }
