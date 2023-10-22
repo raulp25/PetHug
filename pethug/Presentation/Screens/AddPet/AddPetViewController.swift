@@ -43,17 +43,19 @@ final class AddPetViewController: UIViewController {
         if viewModel.isNetworkOnline == false {
             viewModel.fetchUserPets(resetPagination: true)
         }
+        
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
     // MARK: - setup
     private func setup() {
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
-        view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
         
         add(headerView)
-        headerView.delegate = self
-        headerView.view.setHeight(70)
+        add(contentStateVC)
+        
         headerView.view.anchor(
             top: view.topAnchor,
             left: view.leftAnchor,
@@ -65,11 +67,17 @@ final class AddPetViewController: UIViewController {
                     60 :
                         75
         )
+        headerView.view.setHeight(70)
+        headerView.delegate = self
         
-        add(contentStateVC)
-        contentStateVC.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        contentStateVC.view.anchor(
+            top: headerView.view.bottomAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor
+        )
     }
-    
+        
     //MARK: - Bind
     private func bind() {
         viewModel
@@ -91,9 +99,6 @@ final class AddPetViewController: UIViewController {
     
     //MARK: - Private methods
     private func render(_ data: [Pet], _ debounce: Bool = false) {
-//        let snapData: [PetsContentViewController.SnapData] = [
-//            .init(key: .pets, values: data.map { .pet($0) })
-//        ]
         let snapData: [AddPetContentViewController.SnapData] = [
             .init(key: .pets, values: data.map { .pet($0) })
         ]

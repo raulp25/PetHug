@@ -23,7 +23,7 @@ final class AddPetViewHeaderViewController: UIViewController {
         return iv
     }()
     
-    private let titleLabel: UILabel = {
+    private lazy var titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Mis Animales en Adopcion"
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
@@ -65,25 +65,32 @@ final class AddPetViewHeaderViewController: UIViewController {
     func setup() {
         let paddingTop: CGFloat = 20
         let sidePadding: CGFloat = 25
-//        view.layer.borderColor = UIColor.blue.cgColor
-//        view.layer.borderWidth = 1
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
-        view.addSubview(logoImageView)
         view.addSubview(titleLabel)
         view.addSubview(plusImageContainer)
-        view.bringSubviewToFront(plusImageContainer)
         plusImageContainer.addSubview(plusImageView)
+        view.sendSubviewToBack(plusImageContainer)
+        view.sendSubviewToBack(plusImageView)
         
-        logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 0, paddingLeft: sidePadding)
-        logoImageView.setDimensions(height: 60, width: 60)
         
-        titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
+        titleLabel.centerX(
+            inView: view, topAnchor:
+                view.topAnchor,
+            paddingTop: paddingTop
+        )
         
-        plusImageContainer.anchor(top: view.topAnchor, right: view.rightAnchor, paddingTop: 15, paddingRight: sidePadding)
+        plusImageContainer.anchor(
+            top: view.topAnchor,
+            right: view.rightAnchor,
+            paddingTop: 15,
+            paddingRight: sidePadding
+        )
         plusImageContainer.setDimensions(height: 32, width: 32)
         
-        plusImageView.center(inView: plusImageContainer)
+        plusImageView.center(
+            inView: plusImageContainer
+        )
         plusImageView.setDimensions(height: 20, width: 20)
     }
     

@@ -14,19 +14,15 @@ protocol PetsViewHeaderDelegate: AnyObject {
 
 final class PetsViewHeaderViewController: UIViewController {
     //MARK: - Private components
-//    private lazy var logoImageView: UIImageView = {
-//       let iv = UIImageView()
-//        iv.image = UIImage(named: "dog3")
-//        iv.tintColor = UIColor.systemPink.withAlphaComponent(0.7)
-//        iv.contentMode = .scaleAspectFill
-//        iv.clipsToBounds = true
-//        iv.translatesAutoresizingMaskIntoConstraints = false
-//
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapSingOut))
-//        iv.isUserInteractionEnabled = true
-//        iv.addGestureRecognizer(tapGesture)
-//        return iv
-//    }()
+    lazy var logoContainerView: UIView = {
+        let uv = UIView(withAutolayout: true)
+        uv.backgroundColor = .clear
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapChevron))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
+        return uv
+    }()
     
     private lazy var logoImageView: UIImageView = {
        let iv = UIImageView()
@@ -48,6 +44,16 @@ final class PetsViewHeaderViewController: UIViewController {
         label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
+    }()
+    
+    lazy var filterContainerView: UIView = {
+        let uv = UIView(withAutolayout: true)
+        uv.backgroundColor = .clear
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapFilter))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
+        return uv
     }()
     
     private lazy var filterImageView: UIImageView = {
@@ -72,12 +78,7 @@ final class PetsViewHeaderViewController: UIViewController {
         setup()
     }
     
-    //MARK: - Private actions
-//    @objc private func didTapSingOut() {
-//        try! AuthService().signOut()
-//    }
-    
-    
+    //MARK: - Private actions    
     @objc private func didTapChevron() {
         delegate?.didTapIcon()
     }
@@ -89,19 +90,47 @@ final class PetsViewHeaderViewController: UIViewController {
     //MARK: - Setup
     func setup() {
         let paddingTop: CGFloat = 15
-        let sidePadding: CGFloat = 25
+        let sidePadding: CGFloat = 20
         view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
         
-        view.addSubview(logoImageView)
-        view.addSubview(titleLabel)
-        view.addSubview(filterImageView)
+        view.addSubview(logoContainerView)
+        logoContainerView.addSubview(logoImageView)
         
-        logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 0, paddingLeft: sidePadding)
+        view.addSubview(titleLabel)
+        
+        view.addSubview(filterContainerView)
+        filterContainerView.addSubview(filterImageView)
+        
+        logoContainerView.centerY(
+            inView: titleLabel,
+            leftAnchor: view.leftAnchor,
+            paddingLeft: sidePadding
+        )
+        logoContainerView.setDimensions(height: 35, width: 45)
+        
+        logoImageView.center(
+            inView: logoContainerView
+        )
         logoImageView.setDimensions(height: 20, width: 20)
         
-        titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
+        titleLabel.centerX(
+            inView: view,
+            topAnchor: view.topAnchor,
+            paddingTop: paddingTop
+        )
         
-        filterImageView.anchor(top: view.topAnchor, right: view.rightAnchor, paddingTop: 10, paddingRight: sidePadding)
+        filterContainerView.centerY(
+            inView: titleLabel
+        )
+        filterContainerView.anchor(
+            right: view.rightAnchor,
+            paddingRight: sidePadding
+        )
+        filterContainerView.setDimensions(height: 40, width: 40)
+        
+        filterImageView.center(
+            inView: filterContainerView
+        )
         filterImageView.setDimensions(height: 30, width: 30)
     }
     

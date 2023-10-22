@@ -8,11 +8,6 @@
 import UIKit
 import Combine
 
-//protocol PetsViewControllerDelegate: AnyObject {
-//    func didTap(recipient: Any)
-////    func didTap(_: Any)
-//}
-
 final class PetsViewController: UIViewController {
     //MARK: - Private components
     private lazy var contentStateVC = ContentStateViewController()
@@ -50,10 +45,11 @@ final class PetsViewController: UIViewController {
     // MARK: - setup
     private func setup() {
         view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
-        view.isMultipleTouchEnabled = false
         view.isExclusiveTouch = true
         
         add(headerView)
+        add(contentStateVC)
+        
         headerView.view.setHeight(70)
         headerView.view.anchor(
             top: view.topAnchor,
@@ -67,8 +63,13 @@ final class PetsViewController: UIViewController {
                         75
         )
         headerView.delegate = self
-        add(contentStateVC)
-        contentStateVC.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        
+        contentStateVC.view.anchor(
+            top: headerView.view.bottomAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor
+        )
     }
     
     //MARK: - Bind

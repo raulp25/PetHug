@@ -13,6 +13,16 @@ protocol FilterPetsViewHeaderDelegate: AnyObject {
 
 final class FilterPetsViewHeaderViewController: UIViewController {
     //MARK: - Private components
+    lazy var logoContainerView: UIView = {
+        let uv = UIView(withAutolayout: true)
+        uv.backgroundColor = .clear
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapChevron))
+        uv.isUserInteractionEnabled = true
+        uv.addGestureRecognizer(tapGesture)
+        return uv
+    }()
+    
     private lazy var logoImageView: UIImageView = {
        let iv = UIImageView()
         iv.image = UIImage(systemName: "chevron.backward")
@@ -51,18 +61,32 @@ final class FilterPetsViewHeaderViewController: UIViewController {
     
     //MARK: - Setup
     func setup() {
-        let paddingTop: CGFloat = 3
-        let sidePadding: CGFloat = 25
+        let paddingTop: CGFloat = 15
+        let sidePadding: CGFloat = 20
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
-        view.addSubview(logoImageView)
+        view.addSubview(logoContainerView)
+        logoContainerView.addSubview(logoImageView)
+        
         view.addSubview(titleLabel)
         
-        
-        logoImageView.centerY(inView: view, leftAnchor: view.leftAnchor, paddingLeft: sidePadding)
+        logoContainerView.centerY(
+            inView: titleLabel,
+            leftAnchor: view.leftAnchor,
+            paddingLeft: sidePadding
+        )
+        logoContainerView.setDimensions(height: 35, width: 45)
+
+        logoImageView.center(
+            inView: logoContainerView
+        )
         logoImageView.setDimensions(height: 20, width: 20)
         
-        titleLabel.center(inView: view)
+        titleLabel.centerX(
+            inView: view,
+            topAnchor: view.topAnchor,
+            paddingTop: paddingTop
+        )
         
     }
     
