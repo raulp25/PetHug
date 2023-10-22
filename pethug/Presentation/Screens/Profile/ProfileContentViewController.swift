@@ -137,12 +137,12 @@ final class ProfileContentViewController: UIViewController {
                     self?.view.isUserInteractionEnabled = true
                     self?.profileImageView.image = self?.newImage!
                     self?.removeLoadingScreen()
-                case .error(let error):
+                case .error(_):
                     self?.handleError(message: "Hubo un error, intenta de nuevo", title: "Error")
                 case .deleteUserError:
                     self?.handleError(message: "Hubo un error eliminando tu usuario, intenta de nuevo o inicia sesión nuevamente y luego elimina tu cuenta", title: "Error Usuario")
                 case .networkError:
-                    self?.handleError(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
+                    self?.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
                 
             }.store(in: &cancellables)
@@ -160,6 +160,10 @@ final class ProfileContentViewController: UIViewController {
     }
     
     @objc private func didTapSingOut() {
+        guard NetworkMonitor.shared.isConnected == true else {
+            handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
+            return
+        }
         try! AuthService().signOut()
     }
     

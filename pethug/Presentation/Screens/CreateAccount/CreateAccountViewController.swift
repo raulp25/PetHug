@@ -179,7 +179,7 @@ class CreateAccountViewController: UIViewController {
                     self.alert(message: "Algo salió mal, verifica el correo electrónico y vuelve a intentarlo", title: "Error")
                 case .networkError:
                     self.createAccountBtn.isLoading = false
-                    self.alert(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
+                    self.alert(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }

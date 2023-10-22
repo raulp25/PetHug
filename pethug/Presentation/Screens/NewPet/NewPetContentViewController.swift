@@ -72,19 +72,19 @@ final class NewPetContentViewController: UIViewController {
                         self?.dismiss(animated: true)
                     })
                 case .loading:
-                    print("")
-                    DispatchQueue.main.async {
                         self?.setLoadingScreen()
-                    }
                 case let.error(error):
-                    DispatchQueue.main.async {
-                        self?.alert(message: "Hubo un error, intenta nuevamente")
-                        self?.removeLoadingScreen()
-                    }
-                    print("error in NewPetContentView VC: => \(error.localizedDescription)")
+                        self?.renderError(message: "Hubo un error, intenta nuevamente")
+                case .networkError:
+                    self?.renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
                 
             }.store(in: &cancellables)
+    }
+    
+    private func renderError(message: String, title: String = "") {
+            removeLoadingScreen()
+            alert(message: message, title: title)
     }
     
     private func setupKeyboardHiding(){
@@ -105,7 +105,6 @@ final class NewPetContentViewController: UIViewController {
     var keyboardY = CGFloat(0)
     
     @objc func keyboardWillShow(sender: NSNotification) {
-        print("keyboard will show lmr: => ")
         guard let userInfo = sender.userInfo,
               let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
               let currentTextField = UIResponder.currentFirst() as? UITextView
@@ -122,9 +121,7 @@ final class NewPetContentViewController: UIViewController {
         let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
 
         let intOne:CGFloat = 10, intTwo: CGFloat = 150
-        print(":UIScreen.main.bounds.height intone => \(UIScreen.main.bounds.height)")
-//        print(" (textFieldBottomY + intOne)  => \((textFieldBottomY + intOne)), > keyboardTopY ): \(keyboardTopY)")
-//        print(" (textFieldBottomY + intOne) > keyboardTopY ): => \((textFieldBottomY + intOne) > keyboardTopY )")
+        
         if (textFieldBottomY + intOne) > keyboardTopY {
             let textBoxY = convertedTextFieldFrame.origin.y
             let newFrameY = (textBoxY - keyboardTopY / 2) * -1
@@ -135,7 +132,7 @@ final class NewPetContentViewController: UIViewController {
                 UIScreen.main.bounds.size.height <= 870 ?
                     UIScreen.main.bounds.height / 0.86:
                         UIScreen.main.bounds.size.height <= 926 ?
-                            UIScreen.main.bounds.height / 0.62:
+                            UIScreen.main.bounds.height / 0.52:
                                 UIScreen.main.bounds.height / 1.1
             
             collectionView.setContentOffset(CGPoint(x: 0, y:  height), animated: true)
@@ -496,6 +493,8 @@ final class NewPetContentViewController: UIViewController {
     
     private func removeLoadingScreen() {
         loadingView.remove()
+        view.isUserInteractionEnabled = true
+        
     }
 }
 

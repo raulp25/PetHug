@@ -17,7 +17,7 @@ protocol AddPetNavigatable: AnyObject {
 final class AddPetViewModel {
     //MARK: - Internal Properties
     weak var navigation: AddPetNavigatable?
-    var state = CurrentValueSubject<State,Never>(.loading)
+    var state = PassthroughSubject<State,Never>()
     
     //    var fetchPetsUseCase
     
@@ -32,6 +32,9 @@ final class AddPetViewModel {
     private var pets: [Pet] = []
     private var isFetching = false
     private var isFirstLoad = true
+    var isNetworkOnline = true
+    
+    
     
     //MARK: - Init
     init(
@@ -46,7 +49,6 @@ final class AddPetViewModel {
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
         
         observeState()
-        fetchUserPets()
     }
     
     deinit {
@@ -86,8 +88,15 @@ final class AddPetViewModel {
         
         Task {
             do {
+                guard NetworkMonitor.shared.isConnected == true else {
+                    state.send(.networkError)
+                    isFetching = false
+                    isNetworkOnline = false
+                    return
+                }
+                
+                isNetworkOnline = true  
                 let data = try await fetchUserPetsUC.execute(with: resetPagination)
-//                print("data obtenida despues de crear pet: => \(data)")
                 handleFetchedPets(data, resetPagination: resetPagination)
             } catch {
                 handleFetchError(error)
@@ -99,6 +108,10 @@ final class AddPetViewModel {
     
     func deletePet(collection path: String,  id: String) async -> Bool {
         do{
+            guard NetworkMonitor.shared.isConnected == true else {
+                state.send(.networkError)
+                return false
+            }
             if let pet = pets.first(where: { $0.id == id}) {
                 await withThrowingTaskGroup(of: Void.self) { [unowned self] group in
                     group.addTask{ self.imageService.deleteImages(imagesUrl: pet.imagesUrls) }

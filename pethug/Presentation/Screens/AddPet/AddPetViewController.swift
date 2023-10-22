@@ -34,6 +34,15 @@ final class AddPetViewController: UIViewController {
         super.viewDidLoad()
         setup()
         bind()
+        viewModel.fetchUserPets()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("viewwill appear: =>")
+        if viewModel.isNetworkOnline == false {
+            viewModel.fetchUserPets(resetPagination: true)
+        }
     }
     
     // MARK: - setup
@@ -73,8 +82,9 @@ final class AddPetViewController: UIViewController {
                 case .loading:
                     break
                 case let .error(error):
-                    print(": => \(error.localizedDescription)")
-                    break
+                    self?.renderError(message: "Hubo un error, intenta nuevamente", title: "Error")
+                case .networkError:
+                    self?.renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }
@@ -98,6 +108,12 @@ final class AddPetViewController: UIViewController {
         }
     }
     
+    private func renderError(message: String, title: String = "") {
+        DispatchQueue.main.async { [weak self] in
+            self?.alert(message: message, title: title)
+        }
+    }
+
 }
 
 extension AddPetViewController: AddPetViewHeaderDelegate {
@@ -107,11 +123,13 @@ extension AddPetViewController: AddPetViewHeaderDelegate {
 }
 extension AddPetViewController: AddPetContentViewControllerDelegate {
     func executeFetch() {
-        
-        print("se llama execute fetch depsues de crear pet por el scroll cuando no debe: => ")
         viewModel.fetchUserPets()
     }
     func didTapEdit(pet: Pet) {
+        if !(NetworkMonitor.shared.isConnected) {
+            renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
+            return
+        }
         viewModel.navigation?.startEditPetFlow(pet: pet)
     }
     func didTapDelete(collection path: String, id: String) async  -> Bool {

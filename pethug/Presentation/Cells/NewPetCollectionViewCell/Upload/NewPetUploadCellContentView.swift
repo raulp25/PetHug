@@ -98,6 +98,9 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
                 case .error(let error):
                     self?.uploadBtn.isLoading = false
                     print("error uploading pet: => \(error.localizedDescription)")
+                case .networkError:
+                    self?.uploadBtn.isLoading = false
+                    print("error network connection: => ")
                 }
             }).store(in: &cancellables)
     }

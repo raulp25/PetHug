@@ -65,6 +65,10 @@ final class ProfileViewModel {
         state.send(.loading)
         
         do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                state.send(.networkError)
+                return
+            }
             try await deleteUserUC.execute()
         } catch {
             state.send(.deleteUserError)

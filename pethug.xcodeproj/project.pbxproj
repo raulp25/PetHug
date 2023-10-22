@@ -165,7 +165,6 @@
 		C49231902AE461EF003F29A6 /* Modal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C492318F2AE461EF003F29A6 /* Modal.swift */; };
 		C49231922AE478E3003F29A6 /* DeleteUserUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49231912AE478E3003F29A6 /* DeleteUserUC.swift */; };
 		C49440872ACD34C10042A1DA /* DeletePetUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49440862ACD34C10042A1DA /* DeletePetUC.swift */; };
-		C49440892ACD3ABF0042A1DA /* AddPetContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49440882ACD3ABF0042A1DA /* AddPetContentViewModel.swift */; };
 		C494AA7C2AB4D8CA005D2F7A /* UIResponser+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */; };
 		C49F70802ADCC55E008A0D38 /* AnimalsStackContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F707F2ADCC55E008A0D38 /* AnimalsStackContentViewController.swift */; };
 		C49F70832ADCE1CC008A0D38 /* Banner.swift in Sources */ = {isa = PBXBuildFile; fileRef = C49F70822ADCE1CB008A0D38 /* Banner.swift */; };
@@ -405,7 +404,6 @@
 		C492318F2AE461EF003F29A6 /* Modal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Modal.swift; sourceTree = "<group>"; };
 		C49231912AE478E3003F29A6 /* DeleteUserUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteUserUC.swift; sourceTree = "<group>"; };
 		C49440862ACD34C10042A1DA /* DeletePetUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeletePetUC.swift; sourceTree = "<group>"; };
-		C49440882ACD3ABF0042A1DA /* AddPetContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetContentViewModel.swift; sourceTree = "<group>"; };
 		C494AA7B2AB4D8CA005D2F7A /* UIResponser+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIResponser+Extensions.swift"; sourceTree = "<group>"; };
 		C49F707F2ADCC55E008A0D38 /* AnimalsStackContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalsStackContentViewController.swift; sourceTree = "<group>"; };
 		C49F70822ADCE1CB008A0D38 /* Banner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Banner.swift; sourceTree = "<group>"; };
@@ -1049,7 +1047,6 @@
 			children = (
 				C4779BDD2AC38DC100E3A16F /* AddPetViewModel.swift */,
 				C4779BDF2AC38E3B00E3A16F /* AddPetViewModel+Types.swift */,
-				C49440882ACD3ABF0042A1DA /* AddPetContentViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1719,7 +1716,6 @@
 				C480DBC82AD398C9005F707C /* CollectionViewGalleryCell+Types.swift in Sources */,
 				C4779BE82AC3A7F100E3A16F /* AddPetContentViewController+Types.swift in Sources */,
 				C42616F12AB28296006925DB /* AuthButton.swift in Sources */,
-				C49440892ACD3ABF0042A1DA /* AddPetContentViewModel.swift in Sources */,
 				C44820142AB538DC00E72BD2 /* DomainMapperProtocol.swift in Sources */,
 				C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */,
 				C42616E92AB27B37006925DB /* AuthPublisher.swift in Sources */,

@@ -90,7 +90,7 @@ final class FavoritesViewController: UIViewController {
                 case .error(_):
                     self?.renderError(message: "Hubo un error, intenta nuevamente")
                 case .networkError:
-                    self?.renderError(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
+                    self?.renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }

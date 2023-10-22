@@ -44,7 +44,6 @@ final class PetsViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
-        //Doesn't work
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
@@ -82,13 +81,11 @@ final class PetsViewController: UIViewController {
                 case let .loaded(data):
                     self?.render(data)
                 case .loading:
-                    print(":se llama loading =>")
                     self?.renderLoading()
                 case let .error(error):
                     self?.renderError(message: "Hubo un error, intenta nuevamente")
                 case .networkError:
-                    print("se llama networkerror apply =>")
-                    self?.renderError(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
+                    self?.renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }

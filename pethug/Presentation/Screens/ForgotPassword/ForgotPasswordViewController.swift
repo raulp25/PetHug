@@ -80,7 +80,7 @@ class ForgotPasswordViewController: UIViewController {
                 case .error(_):
                     self.handleError(message: "Algo salió mal, comprueba tu correo electrónico e intenta de nuevo", title: "Error")
                 case .networkError:
-                    self.handleError(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
+                    self.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }

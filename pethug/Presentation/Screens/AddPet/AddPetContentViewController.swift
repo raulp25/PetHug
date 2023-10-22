@@ -169,7 +169,9 @@ extension AddPetContentViewController: UICollectionViewDelegate {
         let distance: Float = 10
         
         if y > height + distance {
-            delegate?.executeFetch()
+            if NetworkMonitor.shared.isConnected == true {
+                delegate?.executeFetch()
+            }
         }
     }
 }

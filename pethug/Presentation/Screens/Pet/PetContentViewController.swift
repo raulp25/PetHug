@@ -46,14 +46,14 @@ final class PetContentViewController: UIViewController {
         navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
+        if !(NetworkMonitor.shared.isConnected) {
+            alert(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
+        }
     }
-
+    
     
     //MARK: - CollectionView layout
     func createLayout() -> UICollectionViewCompositionalLayout {

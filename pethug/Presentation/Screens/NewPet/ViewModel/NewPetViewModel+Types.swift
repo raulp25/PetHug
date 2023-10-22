@@ -17,6 +17,7 @@ extension NewPetViewModel {
         case loading
         case success
         case error(PetsError)
+        case networkError
     }
 
 }
