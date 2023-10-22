@@ -102,9 +102,7 @@ final class PetsViewModel {
 
         Task {
             do {
-                print("NetworkMonitor.shared.isConnected apply ALLfetchpets:\(NetworkMonitor.shared.isConnected) =>")
                 guard NetworkMonitor.shared.isConnected == true else {
-                    print("entra al ugard fetch all pets apply: => \(NetworkMonitor.shared.isConnected)")
                     self.state.send(.networkError)
                     isFetching = false
                     return
@@ -122,15 +120,13 @@ final class PetsViewModel {
         if resetFilterQueries {
             resetFilterData()
         }
-        print("entra applyfetch pets normal: => ")
+        
         guard !isFetching else { return }
         isFetching = true
         
         Task {
             do {
-                print("NetworkMonitor.shared.isConnected apply fetchpets normal: => \(NetworkMonitor.shared.isConnected)")
                 guard NetworkMonitor.shared.isConnected == true else {
-                    print("no hay internet petsviewmodel: => \(NetworkMonitor.shared.isConnected)")
                     self.state.send(.networkError)
                     isFetching = false
                     return

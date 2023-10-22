@@ -167,6 +167,9 @@ class LoginViewController: UIViewController {
                 case let.error(err):
                     self.loginBtn.isLoading = false
                     self.alert(message: err.localizedDescription, title: "Error")
+                case .networkError:
+                    self.loginBtn.isLoading = false
+                    self.alert(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }

@@ -108,13 +108,11 @@ final class PetsViewController: UIViewController {
     }
     
     private func renderError(message: String, title: String = "") {
-        print(" render error llamado petsview controller")
-//        guard !(contentStateVC.shownViewController is ErrorViewController) else { return }
         contentStateVC.transition(to: .failed(PetsError.defaultCustom("sin conexion a internet")))
     }
     
     private func renderLoading() {
-//        contentStateVC.transition(to: .loading)
+        contentStateVC.transition(to: .loading)
     }
     
 }

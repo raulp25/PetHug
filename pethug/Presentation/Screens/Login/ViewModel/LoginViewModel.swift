@@ -9,12 +9,6 @@ import Combine
 import UIKit
 
 struct LoginViewModel {
-    enum State {
-        case loading
-        case success
-        case error(PetsError)
-    }
-    
     var state = PassthroughSubject<State, Never>()
     
     private let authService: AuthServiceProtocol
@@ -30,6 +24,10 @@ struct LoginViewModel {
         }
         state.send(.loading)
         do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                self.state.send(.networkError)
+                return
+            }
             try await authService.signIn(email: email, password: password)
         } catch {
             state.send(.error(.default(error)))
