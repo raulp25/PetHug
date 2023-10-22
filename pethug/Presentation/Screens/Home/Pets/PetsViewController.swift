@@ -79,11 +79,13 @@ final class PetsViewController: UIViewController {
             .handleThreadsOperator()
             .sink { [weak self] state in
                 switch state {
-                case let .loaded(data):
-                    self?.render(data)
                 case .loading:
                     self?.renderLoading()
-                case let .error(error):
+                case let .loaded(data):
+                    self?.render(data)
+                case .empty:
+                    self?.renderEmptyView()
+                case .error(_):
                     self?.renderError(message: "Hubo un error, intenta nuevamente")
                 case .networkError:
                     self?.renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
@@ -103,6 +105,11 @@ final class PetsViewController: UIViewController {
             contentVc?.delegate = self
             contentStateVC.transition(to: .render(contentVc!))
         }
+    }
+    
+    private func renderEmptyView() {
+        let vc = EmptyDataViewController(namedImage: "empty1")
+        contentStateVC.transition(to: .render(vc))
     }
     
     private func renderError(message: String, title: String = "") {

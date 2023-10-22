@@ -239,6 +239,9 @@ final class PetsViewModel {
     private func handleResult(_ data: [Pet]) {
         if !isFirstLoad && !data.isEmpty {
             petsSubject.send(data)
+        } else if isFirstLoad && data.isEmpty {
+            state.send(.empty)
+            isFirstLoad = false
         } else if isFirstLoad {
             isFirstLoad = false
             petsSubject.send(data)

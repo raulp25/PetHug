@@ -119,7 +119,7 @@ final class AnimalsStackContentViewController: UIViewController {
         
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
-        containerView.addSubview(titleLabel)
+//        containerView.addSubview(titleLabel)
         containerView.addSubview(allPetsBanner)
         containerView.addSubview(dogsBanner)
         containerView.addSubview(catsBanner)
@@ -149,13 +149,13 @@ final class AnimalsStackContentViewController: UIViewController {
 //            paddingLeft: 30
 //        )
         
-        titleLabel.centerX(inView: containerView, topAnchor: containerView.topAnchor, paddingTop: 10)
+//        titleLabel.centerX(inView: containerView, topAnchor: containerView.topAnchor, paddingTop: 10)
         
         allPetsBanner.anchor(
-            top: titleLabel.bottomAnchor,
+            top: containerView.topAnchor,
             left: containerView.leftAnchor,
             right: containerView.rightAnchor,
-            paddingTop: 30,
+            paddingTop: 50,
             paddingLeft: sidePadding,
             paddingRight: sidePadding
         )

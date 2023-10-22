@@ -185,6 +185,8 @@
 		C4B9EB7C2AD2040D0040ACCE /* PetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */; };
 		C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */; };
 		C4BCFEBC2AD9CD020089A1A8 /* FilterPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BCFEBB2AD9CD020089A1A8 /* FilterPetsUC.swift */; };
+		C4C242C92AE5A30800FB3A64 /* EmptyDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C242C82AE5A30800FB3A64 /* EmptyDataViewController.swift */; };
+		C4C242CB2AE5A33800FB3A64 /* EmptyDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C242CA2AE5A33800FB3A64 /* EmptyDataView.swift */; };
 		C4C4950E2AC7A5A300CBBDE4 /* BreedPopupSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */; };
 		C4C872672ADC59BC007110E2 /* UpdatePetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872662ADC59BC007110E2 /* UpdatePetModel.swift */; };
 		C4C8726A2ADC7407007110E2 /* FavoriteTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C872692ADC7407007110E2 /* FavoriteTabCoordinator.swift */; };
@@ -424,6 +426,8 @@
 		C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetContentViewController.swift; sourceTree = "<group>"; };
 		C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPetCell.swift; sourceTree = "<group>"; };
 		C4BCFEBB2AD9CD020089A1A8 /* FilterPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsUC.swift; sourceTree = "<group>"; };
+		C4C242C82AE5A30800FB3A64 /* EmptyDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataViewController.swift; sourceTree = "<group>"; };
+		C4C242CA2AE5A33800FB3A64 /* EmptyDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDataView.swift; sourceTree = "<group>"; };
 		C4C4950D2AC7A5A300CBBDE4 /* BreedPopupSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreedPopupSearch.swift; sourceTree = "<group>"; };
 		C4C872662ADC59BC007110E2 /* UpdatePetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatePetModel.swift; sourceTree = "<group>"; };
 		C4C872692ADC7407007110E2 /* FavoriteTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteTabCoordinator.swift; sourceTree = "<group>"; };
@@ -1313,6 +1317,15 @@
 			path = Cells;
 			sourceTree = "<group>";
 		};
+		C4C242C72AE5A2E800FB3A64 /* EmptyData */ = {
+			isa = PBXGroup;
+			children = (
+				C4C242C82AE5A30800FB3A64 /* EmptyDataViewController.swift */,
+				C4C242CA2AE5A33800FB3A64 /* EmptyDataView.swift */,
+			);
+			path = EmptyData;
+			sourceTree = "<group>";
+		};
 		C4C4950C2AC7A58C00CBBDE4 /* BreedPopupSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -1418,6 +1431,7 @@
 		C4CF74DF2AB22A8C00D69185 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				C4C242C72AE5A2E800FB3A64 /* EmptyData */,
 				C479D08D2ADF67AB0028B456 /* ForgotPassword */,
 				C4D44A1D2ADDE05F004D2A53 /* Profile */,
 				C4C872682ADC73A9007110E2 /* Favorites */,
@@ -1880,6 +1894,7 @@
 				C435315B2AB9845D0070D7EE /* Pet.swift in Sources */,
 				C4C872672ADC59BC007110E2 /* UpdatePetModel.swift in Sources */,
 				C431F50E2AE4AFFE003D3FE3 /* ForgotPassword+Types.swift in Sources */,
+				C4C242CB2AE5A33800FB3A64 /* EmptyDataView.swift in Sources */,
 				C4F7DFDE2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift in Sources */,
 				C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */,
 				C4B1BD262AD4C1F3003311EB /* FilterPetsSendCellContentView.swift in Sources */,
@@ -1889,6 +1904,7 @@
 				C476E2B92ABA82FB0014DEA4 /* PetsViewModel+Types.swift in Sources */,
 				C4B1BD122AD4BD1E003311EB /* FilterPetsGenderCellContentView.swift in Sources */,
 				C480DBC12AD369AE005F707C /* TextCheckbox.swift in Sources */,
+				C4C242C92AE5A30800FB3A64 /* EmptyDataViewController.swift in Sources */,
 				C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */,
 				C4F7DFC72ACC7F76000D5F76 /* NewPetViewModel+Types.swift in Sources */,
 				C476E2C22ABA99D30014DEA4 /* DefaultPetRepository.swift in Sources */,
