@@ -153,7 +153,18 @@ class CreateAccountViewController: UIViewController {
         setupKeyboardHiding()
         hideKeyboardWhenTappedAround()
         setup()
-        
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+    
+    
+    //MARK: - Bind
+    private func bind() {
         viewModel.state
             .handleThreadsOperator()
             .sink { [weak self] currentState in
@@ -170,15 +181,7 @@ class CreateAccountViewController: UIViewController {
             }.store(in: &subscriptions)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-    }
-    
-    
     //MARK: - Actions
-    
     @objc func handleProfilePhotoSelect() {
         view.endEditing(true)
         let picker = UIImagePickerController()

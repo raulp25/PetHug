@@ -32,7 +32,6 @@ final class HomeTabCoordinator: ChildTabCoordinator {
         let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .allPets)
-        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
@@ -41,7 +40,6 @@ final class HomeTabCoordinator: ChildTabCoordinator {
         let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .dogs)
-        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
@@ -50,7 +48,6 @@ final class HomeTabCoordinator: ChildTabCoordinator {
         let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .cats)
-        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
@@ -59,7 +56,6 @@ final class HomeTabCoordinator: ChildTabCoordinator {
         let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .birds)
-        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }
@@ -68,7 +64,6 @@ final class HomeTabCoordinator: ChildTabCoordinator {
         let vc = PetsViewController(viewModel: viewModel)
         viewModel.navigation = self
         viewModel.collection = .getPath(for: .rabbits)
-        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         vc.hidesBottomBarWhenPushed = true
         rootViewController.pushViewController(vc, animated: true)
     }

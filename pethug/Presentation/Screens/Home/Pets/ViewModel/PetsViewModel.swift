@@ -93,6 +93,7 @@ final class PetsViewModel {
     }
     
     private func applyFetchAllPets(resetFilterQueries: Bool) {
+        print("entra applyfetchallpets: => ")
         if resetFilterQueries {
             resetFilterData()
         }
@@ -101,6 +102,13 @@ final class PetsViewModel {
 
         Task {
             do {
+                print("NetworkMonitor.shared.isConnected apply ALLfetchpets:\(NetworkMonitor.shared.isConnected) =>")
+                guard NetworkMonitor.shared.isConnected == true else {
+                    print("entra al ugard fetch all pets apply: => \(NetworkMonitor.shared.isConnected)")
+                    self.state.send(.networkError)
+                    isFetching = false
+                    return
+                }
                 let data = try await fetchAllPetsUC.execute(resetFilterQueries: resetFilterQueries)
                 handleResult(data)
             } catch {
@@ -114,12 +122,19 @@ final class PetsViewModel {
         if resetFilterQueries {
             resetFilterData()
         }
-        
+        print("entra applyfetch pets normal: => ")
         guard !isFetching else { return }
         isFetching = true
         
         Task {
             do {
+                print("NetworkMonitor.shared.isConnected apply fetchpets normal: => \(NetworkMonitor.shared.isConnected)")
+                guard NetworkMonitor.shared.isConnected == true else {
+                    print("no hay internet petsviewmodel: => \(NetworkMonitor.shared.isConnected)")
+                    self.state.send(.networkError)
+                    isFetching = false
+                    return
+                }
                 let data = try await fetchPetsUC.execute(fetchCollection: collection, resetFilterQueries: resetFilterQueries)
                 handleResult(data)
             } catch {
@@ -163,6 +178,11 @@ final class PetsViewModel {
         
         Task {
             do {
+                guard NetworkMonitor.shared.isConnected == true else {
+                    self.state.send(.networkError)
+                    isFetching = false
+                    return
+                }
                 let data = try await filterAllPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
                 handleResult(data)
             } catch {
@@ -193,6 +213,11 @@ final class PetsViewModel {
         
         Task {
             do {
+                guard NetworkMonitor.shared.isConnected == true else {
+                    self.state.send(.networkError)
+                    isFetching = false
+                    return
+                }
                 let data = try await filterPetsUC.execute(collection: collection,
                                                           options: filterOptions,
                                                           resetFilterQueries: resetFilterQueries

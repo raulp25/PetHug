@@ -145,7 +145,16 @@ class LoginViewController: UIViewController {
         setupKeyboardHiding()
         hideKeyboardWhenTappedAround()
         setup()
-        
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
+    //MARK: - Bind
+    private func bind() {
         viewModel.state
             .handleThreadsOperator()
             .sink { [weak self] currentState in
@@ -161,13 +170,6 @@ class LoginViewController: UIViewController {
                 }
             }.store(in: &subscriptions)
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
-    
     //MARK: - Actions
     @objc func login() {
         print(": => login clicked")

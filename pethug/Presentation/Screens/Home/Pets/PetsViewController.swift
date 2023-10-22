@@ -35,8 +35,9 @@ final class PetsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
         bind()
+        setup()
+        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
     }
     
     
@@ -81,11 +82,13 @@ final class PetsViewController: UIViewController {
                 case let .loaded(data):
                     self?.render(data)
                 case .loading:
+                    print(":se llama loading =>")
                     self?.renderLoading()
                 case let .error(error):
-                    self?.alert(message: "Hubo un error, intenta nuevamente")
-                    print("error in Pets VC: => \(error.localizedDescription)")
-                    break
+                    self?.renderError(message: "Hubo un error, intenta nuevamente")
+                case .networkError:
+                    print("se llama networkerror apply =>")
+                    self?.renderError(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }
@@ -104,8 +107,14 @@ final class PetsViewController: UIViewController {
         }
     }
     
+    private func renderError(message: String, title: String = "") {
+        print(" render error llamado petsview controller")
+//        guard !(contentStateVC.shownViewController is ErrorViewController) else { return }
+        contentStateVC.transition(to: .failed(PetsError.defaultCustom("sin conexion a internet")))
+    }
+    
     private func renderLoading() {
-        contentStateVC.transition(to: .loading)
+//        contentStateVC.transition(to: .loading)
     }
     
 }

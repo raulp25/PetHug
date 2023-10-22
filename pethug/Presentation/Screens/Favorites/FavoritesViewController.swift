@@ -53,6 +53,8 @@ final class FavoritesViewController: UIViewController {
         view.isExclusiveTouch = true
         
         add(headerView)
+        add(contentStateVC)
+        
         headerView.view.setHeight(70)
         headerView.view.anchor(
             top: view.topAnchor,
@@ -65,8 +67,13 @@ final class FavoritesViewController: UIViewController {
                     60 :
                         75
         )
-        add(contentStateVC)
-        contentStateVC.view.anchor(top: headerView.view.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        
+        contentStateVC.view.anchor(
+            top: headerView.view.bottomAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor
+        )
     }
     
     //MARK: - Bind
@@ -80,7 +87,7 @@ final class FavoritesViewController: UIViewController {
                     self?.render(data)
                 case .loading:
                     self?.renderLoading()
-                case let .error(error):
+                case .error(_):
                     self?.renderError(message: "Hubo un error, intenta nuevamente")
                 case .networkError:
                     self?.renderError(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
