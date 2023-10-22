@@ -10,19 +10,6 @@ import UIKit
 final class NewPetViewController: UIViewController {
     
     // MARK: - Private components
-//    private lazy var contentVC: NewPetContentViewController = {
-//        let vc =  NewPetContentViewController(
-//                    viewModel: NewPetViewModel(
-//                        imageService: ImageService(),
-//                        createPetUseCase: CreatePet.composeCreatePetUC(),
-//                        updatePetUseCase: UpdatePet.composeUpdatePetUC(),
-//                        deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC(),
-//                        pet: self.pet
-//                   ))
-//        vc.delegate = self
-//        return vc
-//    }()
-    
     private lazy var contentVC =  NewPetContentViewController(
                                     viewModel: NewPetViewModel(
                                         imageService: ImageService(),
@@ -43,10 +30,9 @@ final class NewPetViewController: UIViewController {
     
     private lazy var xmarkImageView: UIImageView = {
        let iv = UIImageView()
-        iv.image = UIImage(systemName: "xmark")
-//      iv.tintColor = customRGBColor(red: 55, green: 55, blue: 55)
-        iv.tintColor = .systemPink
-        iv.contentMode = .scaleAspectFit
+        iv.image = UIImage(systemName: "chevron.backward")
+        iv.tintColor = .black.withAlphaComponent(0.8)
+        iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         
@@ -65,19 +51,14 @@ final class NewPetViewController: UIViewController {
     }()
     
     
-    
     // MARK: - Internal properties
     weak var coordinator: NewPetCoordinator?
     var pet: Pet?
-    //    init(viewModel: NewMessageViewModel) {
-    //        self.viewModel = viewModel
-    //        super.init(nibName: nil, bundle: nil)
-    //    }
     
-    
+    //MARK: - LifeCycle
     override func viewDidLoad() {
-        super.viewDidLoad()
-//        view.backgroundColor = customRGBColor(red: 58, green: 91, blue: 144)
+        let paddingTop: CGFloat = 15
+        let sidePadding: CGFloat = 20
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         view.addSubview(xmarkImageContainer)
@@ -85,17 +66,41 @@ final class NewPetViewController: UIViewController {
         view.addSubview(titleLabel)
         add(contentVC)
         
-        titleLabel.centerX(inView: view, topAnchor: view.safeAreaLayoutGuide.topAnchor)
+        xmarkImageContainer.centerY(
+            inView: titleLabel,
+            leftAnchor: view.leftAnchor,
+            paddingLeft: sidePadding
+        )
+        xmarkImageContainer.setDimensions(height: 35, width: 45)
         
-        xmarkImageContainer.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, paddingLeft: 15)
-        xmarkImageContainer.setDimensions(height: 30, width: 30)
+        xmarkImageView.center(
+            inView: xmarkImageContainer
+        )
         
-        xmarkImageView.center(inView: xmarkImageContainer)
+        titleLabel.centerX(
+            inView: view,
+            topAnchor: view.safeAreaLayoutGuide.topAnchor,
+            paddingTop: paddingTop
+        )
         
-        contentVC.view.anchor(top: xmarkImageContainer.bottomAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 20)
+        
+        
+        contentVC.view.anchor(
+            top: xmarkImageContainer.bottomAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor,
+            paddingTop: 20
+        )
         
         setupDelegates()
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
     }
 
     private func setupDelegates() {
