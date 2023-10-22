@@ -132,19 +132,19 @@ final class ProfileContentViewController: UIViewController {
             .sink { [weak self] state in
                 switch state {
                 case .loading:
-                    DispatchQueue.main.async {
-                        self?.setLoadingScreen()
-                    }
+                    self?.setLoadingScreen()
                 case .loaded:
+                    self?.view.isUserInteractionEnabled = true
                     self?.profileImageView.image = self?.newImage!
+                    self?.removeLoadingScreen()
                 case .error(let error):
-                    print("error updating profile image: => \(error)")
-                    self?.alert(message: "Hubo un error, intenta de nuevo", title: "Error")
+                    self?.handleError(message: "Hubo un error, intenta de nuevo", title: "Error")
                 case .deleteUserError:
-                    self?.alert(message: "Hubo un error eliminando tu usuario, intenta de nuevo o inicia sesión nuevamente y luego elimina tu cuenta", title: "Error Usuario")
+                    self?.handleError(message: "Hubo un error eliminando tu usuario, intenta de nuevo o inicia sesión nuevamente y luego elimina tu cuenta", title: "Error Usuario")
+                case .networkError:
+                    self?.handleError(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
                 }
-                self?.view.isUserInteractionEnabled = true
-                self?.removeLoadingScreen()
+                
             }.store(in: &cancellables)
     }
     
@@ -257,6 +257,11 @@ final class ProfileContentViewController: UIViewController {
         loadingView.remove()
     }
     
+    private func handleError(message: String, title: String = ""){
+        view.isUserInteractionEnabled = true
+        removeLoadingScreen()
+        alert(message: message, title: title)
+    }
     
     private func deleteUser() {
         dismissModal()

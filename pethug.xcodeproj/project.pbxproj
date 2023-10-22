@@ -42,7 +42,6 @@
 		C42616F52AB29DF4006925DB /* UILabel+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616F42AB29DF4006925DB /* UILabel+Extensions.swift */; };
 		C42616F72AB2A09F006925DB /* UIButton+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616F62AB2A09F006925DB /* UIButton+Extensions.swift */; };
 		C42616F92AB2A6B5006925DB /* GradientButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42616F82AB2A6B5006925DB /* GradientButton.swift */; };
-		C426D25F2AB66E7C00BFA357 /* InAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D25E2AB66E7C00BFA357 /* InAppManager.swift */; };
 		C426D2622AB66F8800BFA357 /* ChildTabCoordinatorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D2612AB66F8800BFA357 /* ChildTabCoordinatorProtocol.swift */; };
 		C426D2642AB66FC600BFA357 /* InAppCoordinator+TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D2632AB66FC600BFA357 /* InAppCoordinator+TabBar.swift */; };
 		C426D2662AB6703E00BFA357 /* HomeTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C426D2652AB6703E00BFA357 /* HomeTabCoordinator.swift */; };
@@ -59,6 +58,8 @@
 		C42D3D9C2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D3D9B2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift */; };
 		C42D3D9E2AB65FF200EBA1B7 /* InAppContainerRootViewController+State.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D3D9D2AB65FF200EBA1B7 /* InAppContainerRootViewController+State.swift */; };
 		C42D3DA12AB660D100EBA1B7 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C42D3DA02AB660D100EBA1B7 /* SideMenuViewController.swift */; };
+		C431F50C2AE499E2003D3FE3 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C431F50B2AE499E2003D3FE3 /* NetworkManager.swift */; };
+		C431F50E2AE4AFFE003D3FE3 /* ForgotPassword+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C431F50D2AE4AFFE003D3FE3 /* ForgotPassword+Types.swift */; };
 		C43261D42AC2213700B70ACA /* UICollectionView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43261D32AC2213700B70ACA /* UICollectionView+Layout.swift */; };
 		C43261D62AC222B900B70ACA /* AddPetTabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43261D52AC222B900B70ACA /* AddPetTabCoordinator.swift */; };
 		C435314C2AB960A10070D7EE /* PetsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C435314B2AB960A10070D7EE /* PetsViewController.swift */; };
@@ -280,7 +281,6 @@
 		C42616F42AB29DF4006925DB /* UILabel+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extensions.swift"; sourceTree = "<group>"; };
 		C42616F62AB2A09F006925DB /* UIButton+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extensions.swift"; sourceTree = "<group>"; };
 		C42616F82AB2A6B5006925DB /* GradientButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientButton.swift; sourceTree = "<group>"; };
-		C426D25E2AB66E7C00BFA357 /* InAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppManager.swift; sourceTree = "<group>"; };
 		C426D2612AB66F8800BFA357 /* ChildTabCoordinatorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChildTabCoordinatorProtocol.swift; sourceTree = "<group>"; };
 		C426D2632AB66FC600BFA357 /* InAppCoordinator+TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InAppCoordinator+TabBar.swift"; sourceTree = "<group>"; };
 		C426D2652AB6703E00BFA357 /* HomeTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabCoordinator.swift; sourceTree = "<group>"; };
@@ -293,6 +293,8 @@
 		C42D3D9B2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InAppContainerRootViewController.swift; sourceTree = "<group>"; };
 		C42D3D9D2AB65FF200EBA1B7 /* InAppContainerRootViewController+State.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "InAppContainerRootViewController+State.swift"; sourceTree = "<group>"; };
 		C42D3DA02AB660D100EBA1B7 /* SideMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
+		C431F50B2AE499E2003D3FE3 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		C431F50D2AE4AFFE003D3FE3 /* ForgotPassword+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ForgotPassword+Types.swift"; sourceTree = "<group>"; };
 		C43261D32AC2213700B70ACA /* UICollectionView+Layout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Layout.swift"; sourceTree = "<group>"; };
 		C43261D52AC222B900B70ACA /* AddPetTabCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetTabCoordinator.swift; sourceTree = "<group>"; };
 		C435314B2AB960A10070D7EE /* PetsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsViewController.swift; sourceTree = "<group>"; };
@@ -868,7 +870,7 @@
 		C445F16B2AB15A8500053BE7 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				C426D25E2AB66E7C00BFA357 /* InAppManager.swift */,
+				C431F50B2AE499E2003D3FE3 /* NetworkManager.swift */,
 			);
 			name = Managers;
 			sourceTree = "<group>";
@@ -1081,6 +1083,7 @@
 			isa = PBXGroup;
 			children = (
 				C479D0912ADF72060028B456 /* ForgotPasswordViewModel.swift */,
+				C431F50D2AE4AFFE003D3FE3 /* ForgotPassword+Types.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1701,6 +1704,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C431F50C2AE499E2003D3FE3 /* NetworkManager.swift in Sources */,
 				C476E2BE2ABA96C40014DEA4 /* FetchPetsUC.swift in Sources */,
 				C476E2C02ABA99760014DEA4 /* PetRepository.swift in Sources */,
 				C426D2642AB66FC600BFA357 /* InAppCoordinator+TabBar.swift in Sources */,
@@ -1747,7 +1751,6 @@
 				C4C8727A2ADC794F007110E2 /* FavoritesViewModel+Types.swift in Sources */,
 				C49F70832ADCE1CC008A0D38 /* Banner.swift in Sources */,
 				C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */,
-				C426D25F2AB66E7C00BFA357 /* InAppManager.swift in Sources */,
 				C435315D2AB986C00070D7EE /* UICollectionView+Factory.swift in Sources */,
 				C42D3D972AB65D8A00EBA1B7 /* InAppTabBarController.swift in Sources */,
 				C43261D42AC2213700B70ACA /* UICollectionView+Layout.swift in Sources */,
@@ -1874,6 +1877,7 @@
 				C43531592AB983ED0070D7EE /* PetsContentViewController+Types.swift in Sources */,
 				C435315B2AB9845D0070D7EE /* Pet.swift in Sources */,
 				C4C872672ADC59BC007110E2 /* UpdatePetModel.swift in Sources */,
+				C431F50E2AE4AFFE003D3FE3 /* ForgotPassword+Types.swift in Sources */,
 				C4F7DFDE2ACCA8F1000D5F76 /* NewPetAffectionCellContentView.swift in Sources */,
 				C4AB87722ACA082C0081451F /* NewPetViewModel.swift in Sources */,
 				C4B1BD262AD4C1F3003311EB /* FilterPetsSendCellContentView.swift in Sources */,

@@ -9,7 +9,6 @@ import Foundation
 import Combine
 import FirebaseFirestore
 import FirebaseAuth
-import Firebase
 
 final class ProfileViewModel {
     //MARK: - Internal Properties
@@ -41,13 +40,17 @@ final class ProfileViewModel {
     //MARK: - Internal Methods
     func updateProfilePic(image: UIImage) async {
         state.send(.loading)
-        
         do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                state.send(.networkError)
+                return
+            }
+            
             if let oldProfilePic = user?.profileImageUrl {
                 imageService.deleteImages(imagesUrl: [oldProfilePic])
             }
             
-            let imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users))
+            let imageUrl = try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users))
             
             try await updateUserUC.execute(imageUrl: imageUrl!)
             

@@ -13,6 +13,7 @@ extension ProfileViewModel {
         case loaded
         case error(PetsError)
         case deleteUserError
+        case networkError
     }
     
 }

@@ -29,6 +29,7 @@ extension FavoritesViewModel {
         case loading
         case loaded([Pet])
         case error(PetsError)
+        case networkError
     }
     
 }

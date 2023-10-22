@@ -14,7 +14,6 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
     weak var parentCoordinator: ApplicationCoordinator?
 
     let rootViewController = InAppContainerRootViewController()
-    let manager = InAppManager()
 
     // MARK: - start
     func start() {

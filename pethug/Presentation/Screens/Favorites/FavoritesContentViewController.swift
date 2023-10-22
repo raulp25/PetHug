@@ -175,36 +175,6 @@ extension FavoritesContentViewController: FavoriteContentDelegate {
         }
     }
     
-    func updatePet(_ pet: FavoritesContentViewController.Item) {
-        switch pet {
-        case .pet(let pet):
-            if let indexToUpdate = dataSource.snapshot().itemIdentifiers.firstIndex(where: { item in
-                switch item {
-                case .pet(let item):
-                    if item.id == pet.id {
-                        return true
-                    }
-                }
-                return false
-            }) {
-                    var snapshot = dataSource.snapshot()
-                    
-                    // Remove the old item
-                    snapshot.deleteItems([snapshot.itemIdentifiers[indexToUpdate]])
-                    
-                    // Insert the updated item at the original index
-                snapshot.insertItems([.pet(pet)], beforeItem: snapshot.itemIdentifiers[indexToUpdate])
-                    
-                    // Apply the updated snapshot on the main thread
-                    DispatchQueue.main.async { [weak self] in
-                        self?.dataSource.apply(snapshot, animatingDifferences: true)
-                    }
-                }
-              
-        }
-        
-    }
-    
 }
 
 

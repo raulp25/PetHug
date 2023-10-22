@@ -78,8 +78,9 @@ class ForgotPasswordViewController: UIViewController {
                     navigationController?.popViewController(animated: true)
                     coordinator?.parentCoordinator?.controllerDidSendResetPasswordLink()
                 case .error(_):
-                    self.sendEmailBtn.isLoading = false
-                    self.alert(message: "Algo salió mal, comprueba tu correo electrónico e intenta de nuevo", title: "Error")
+                    self.handleError(message: "Algo salió mal, comprueba tu correo electrónico e intenta de nuevo", title: "Error")
+                case .networkError:
+                    self.handleError(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }
@@ -104,12 +105,7 @@ class ForgotPasswordViewController: UIViewController {
         // TODO: Create forgot password flow after first release
         print(": => forgot password clicked")
     }
-    
-//    @objc func goToCreateNewAccount() {
-//        view.endEditing(true)
-//        coordinator?.startCreateAccountCoordinator()
-//    }
-   
+       
    
     @objc func keyboardWillShow(sender: NSNotification) {
         guard let userInfo = sender.userInfo,
@@ -158,9 +154,13 @@ class ForgotPasswordViewController: UIViewController {
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    private func handleError(message: String, title: String = ""){
+        sendEmailBtn.isLoading = false
+        alert(message: message, title: title)
+    }
     
     //MARK: - setup
-    func setup() {
+    private func setup() {
         emailTextField.delegate = self
        
         view.addSubview(titleLabel)

@@ -204,10 +204,8 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
         heartImageContainer.isUserInteractionEnabled = false
         
         if viewModel.isLiked {
-            print(":viewmodel si esta like entra condicion")
             
             delegate.didTapDislike(.pet(viewModel.pet)) { [weak self] result in
-                print(":viewmodel si esta like entra condicion RESULTADO \(result)")
                 if result == false {
                     viewModel.isLiked.toggle()
                     DispatchQueue.main.async {

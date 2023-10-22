@@ -55,7 +55,7 @@ final class ErrorView: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(errorMessage)
         
-        titleLabel.center(inView: view)
+        titleLabel.center(inView: view, yConstant: -100)
         titleLabel.setWidth(width)
         errorMessage.centerX(inView: titleLabel, topAnchor: titleLabel.bottomAnchor, paddingTop: 10)
         errorMessage.setWidth(width)

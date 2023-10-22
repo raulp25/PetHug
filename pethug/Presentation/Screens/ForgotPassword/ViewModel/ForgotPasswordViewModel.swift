@@ -9,12 +9,6 @@ import Combine
 import UIKit
 
 struct ForgotPasswordViewModel {
-    enum State {
-        case loading
-        case success
-        case error(PetsError)
-    }
-    
     var state = PassthroughSubject<State, Never>()
     
     private let authService: AuthServiceProtocol
@@ -25,6 +19,11 @@ struct ForgotPasswordViewModel {
     func resetPasswordWith(email: String) async {
         state.send(.loading)
         do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                state.send(.networkError)
+                return
+            }
+            
             try await authService.resetPassword(withEmail: email)
             state.send(.success)
         } catch {

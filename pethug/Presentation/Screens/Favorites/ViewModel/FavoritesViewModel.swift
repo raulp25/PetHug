@@ -70,6 +70,11 @@ final class FavoritesViewModel {
         
         Task {
             do {
+                guard NetworkMonitor.shared.isConnected == true else {
+                    self.state.send(.networkError)
+                    isFetching = false
+                    return
+                }
                 let data = try await fetchFavoritePetsUC.execute()
                 petsSubject.send(data)
                 
@@ -85,6 +90,12 @@ final class FavoritesViewModel {
     func dislikedPet(pet: Pet, completion: @escaping(Bool) -> Void) {
         Task{
             do {
+                guard NetworkMonitor.shared.isConnected == true else {
+                    state.send(.networkError)
+                    completion(false)
+                    return
+                }
+                
                 let pet = try removeLikeUid(pet: pet)
                 try delete(pet: pet)
                 try await dislikedPetUC.execute(data: pet)
