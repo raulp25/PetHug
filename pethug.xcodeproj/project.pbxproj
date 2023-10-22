@@ -104,6 +104,7 @@
 		C45193102ACE8B0E00B80926 /* FetchUserPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */; };
 		C454072D2ADB3BDE00790524 /* BuildQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C454072C2ADB3BDE00790524 /* BuildQuery.swift */; };
 		C45AC0642AE4F0E20025E61D /* LoginViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45AC0632AE4F0E20025E61D /* LoginViewController+Types.swift */; };
+		C45AC0662AE4F3640025E61D /* CreateAccountViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45AC0652AE4F3640025E61D /* CreateAccountViewController+Types.swift */; };
 		C46338252AB2CE54000AF2F6 /* PetsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = C46338242AB2CE54000AF2F6 /* PetsError.swift */; };
 		C467578B2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578A2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift */; };
 		C467578D2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */; };
@@ -344,6 +345,7 @@
 		C451930F2ACE8B0E00B80926 /* FetchUserPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserPetsUC.swift; sourceTree = "<group>"; };
 		C454072C2ADB3BDE00790524 /* BuildQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuildQuery.swift; sourceTree = "<group>"; };
 		C45AC0632AE4F0E20025E61D /* LoginViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoginViewController+Types.swift"; sourceTree = "<group>"; };
+		C45AC0652AE4F3640025E61D /* CreateAccountViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CreateAccountViewController+Types.swift"; sourceTree = "<group>"; };
 		C46338242AB2CE54000AF2F6 /* PetsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsError.swift; sourceTree = "<group>"; };
 		C467578A2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPetGalleryContentViewController+Types.swift"; sourceTree = "<group>"; };
 		C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoControllerCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1113,6 +1115,7 @@
 			children = (
 				C476E2BB2ABA8AA70014DEA4 /* ViewModel */,
 				C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */,
+				C45AC0652AE4F3640025E61D /* CreateAccountViewController+Types.swift */,
 			);
 			path = CreateAccount;
 			sourceTree = "<group>";
@@ -1931,6 +1934,7 @@
 				C445F1602AB1435300053BE7 /* User.swift in Sources */,
 				C42616EF2AB28285006925DB /* AuthButton+ViewModel.swift in Sources */,
 				C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */,
+				C45AC0662AE4F3640025E61D /* CreateAccountViewController+Types.swift in Sources */,
 				C49231902AE461EF003F29A6 /* Modal.swift in Sources */,
 				C44820162AB539B400E72BD2 /* UserModel+DomainMapper.swift in Sources */,
 				C42D3D9C2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift in Sources */,

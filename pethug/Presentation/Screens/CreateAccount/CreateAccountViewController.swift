@@ -176,7 +176,10 @@ class CreateAccountViewController: UIViewController {
                     self.createAccountBtn.isLoading = false
                 case let.error(err):
                     self.createAccountBtn.isLoading = false
-                    self.alert(message: err.localizedDescription, title: "Error")
+                    self.alert(message: "Algo salió mal, verifica el correo electrónico y vuelve a intentarlo", title: "Error")
+                case .networkError:
+                    self.createAccountBtn.isLoading = false
+                    self.alert(message: "Sin conexion a internet, verifica la conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }

@@ -8,13 +8,7 @@
 import UIKit
 import Combine
 
-struct CreateAccountViewModel {
-    enum State {
-        case loading
-        case success
-        case error(PetsError)
-    }
-    
+struct CreateAccountViewModel {    
     var profileImage: UIImage?
     
     var state = PassthroughSubject<State, Never>()
@@ -45,7 +39,10 @@ struct CreateAccountViewModel {
         state.send(.loading)
         
         do {
-            
+            guard NetworkMonitor.shared.isConnected == true else {
+                self.state.send(.networkError)
+                return
+            }
             var imageUrl: String? = nil
             if let image = profileImage {
                 imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users))
