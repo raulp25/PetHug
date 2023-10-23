@@ -181,6 +181,7 @@
 		C4B1BD212AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD202AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift */; };
 		C4B1BD242AD4C19C003311EB /* FilterPetsSendListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD232AD4C19C003311EB /* FilterPetsSendListCellConfiguration.swift */; };
 		C4B1BD262AD4C1F3003311EB /* FilterPetsSendCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B1BD252AD4C1F3003311EB /* FilterPetsSendCellContentView.swift */; };
+		C4B583202AE608D20058D75D /* PetsBreeds.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B5831F2AE608D20058D75D /* PetsBreeds.swift */; };
 		C4B9EB7A2AD203660040ACCE /* PetViewHeaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B9EB792AD203660040ACCE /* PetViewHeaderViewController.swift */; };
 		C4B9EB7C2AD2040D0040ACCE /* PetContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */; };
 		C4BC4A282ABA1A160017428D /* CollectionViewPetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */; };
@@ -422,6 +423,7 @@
 		C4B1BD202AD4C0CF003311EB /* FilterPetsAddressCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsAddressCellContentView.swift; sourceTree = "<group>"; };
 		C4B1BD232AD4C19C003311EB /* FilterPetsSendListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsSendListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4B1BD252AD4C1F3003311EB /* FilterPetsSendCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterPetsSendCellContentView.swift; sourceTree = "<group>"; };
+		C4B5831F2AE608D20058D75D /* PetsBreeds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetsBreeds.swift; sourceTree = "<group>"; };
 		C4B9EB792AD203660040ACCE /* PetViewHeaderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetViewHeaderViewController.swift; sourceTree = "<group>"; };
 		C4B9EB7B2AD2040D0040ACCE /* PetContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetContentViewController.swift; sourceTree = "<group>"; };
 		C4BC4A272ABA1A160017428D /* CollectionViewPetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewPetCell.swift; sourceTree = "<group>"; };
@@ -1293,6 +1295,14 @@
 			path = Send;
 			sourceTree = "<group>";
 		};
+		C4B583212AE608DB0058D75D /* PetsBreeds */ = {
+			isa = PBXGroup;
+			children = (
+				C4B5831F2AE608D20058D75D /* PetsBreeds.swift */,
+			);
+			path = PetsBreeds;
+			sourceTree = "<group>";
+		};
 		C4B9EB782AD2033F0040ACCE /* Pet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1502,6 +1512,7 @@
 		C4CF75002AB25C1900D69185 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C4B583212AE608DB0058D75D /* PetsBreeds */,
 				C47554082AD8CD38008AA12F /* UserDefaults */,
 				C44820252AB5478000E72BD2 /* Firebase */,
 				C46338232AB2CE41000AF2F6 /* Errors */,
@@ -1789,6 +1800,7 @@
 				C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */,
 				C48D9B4F2AC49E3B002EDA90 /* NewPetNameCellContentView.swift in Sources */,
 				C43FAF9A2AD257F300A437C3 /* Badge.swift in Sources */,
+				C4B583202AE608D20058D75D /* PetsBreeds.swift in Sources */,
 				C4D44A1C2ADDE057004D2A53 /* ProfileContentViewController.swift in Sources */,
 				C42616DD2AB277C4006925DB /* ValidatorType.swift in Sources */,
 				C4F7DFDA2ACCA8E2000D5F76 /* NewPetActivityCellContentView.swift in Sources */,

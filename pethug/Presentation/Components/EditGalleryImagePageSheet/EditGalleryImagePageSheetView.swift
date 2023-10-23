@@ -24,7 +24,7 @@ final class EditGalleryImagePageSheetView: UIViewController {
     }()
     
     private lazy var hStackContainer: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [hStackDelete, hStackEdit])
+        let stack = UIStackView(arrangedSubviews: [hStackDelete])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .fillEqually
@@ -125,16 +125,23 @@ final class EditGalleryImagePageSheetView: UIViewController {
     private func configure() {
         let paddingTop = (pageSheetHeight ?? 0) / 3
         view.backgroundColor = .white
-        view.addSubview(titleLabel)
+//        view.addSubview(titleLabel)
         view.addSubview(hStackContainer)
+//
+//        titleLabel.centerX(
+//            inView: view,
+//            topAnchor: view.topAnchor,
+//            paddingTop: paddingTop
+//        )
         
-        titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
-        
-        hStackContainer.centerX(inView: titleLabel, topAnchor: titleLabel.bottomAnchor, paddingTop: 30)
+        hStackContainer.center(
+            inView: view,
+            yConstant: 0
+        )
         
         deleteImage.setDimensions(height: 30, width: 30)
         
-        editImage.setDimensions(height: 30, width: 30)
+//        editImage.setDimensions(height: 30, width: 30)
         
     }
     

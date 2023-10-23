@@ -29,7 +29,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     }()
     
     private lazy var cancelButton: UIButton = {
-        let btn = UIButton.createTextButton(with: "cancel", fontSize: 18)
+        let btn = UIButton.createTextButton(with: "cerrar", fontSize: 18, color: UIColor.orange)
         btn.addTarget(self, action: #selector(didTapCancell), for: .touchUpInside)
         return btn
     }()
@@ -175,183 +175,25 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         }
         
     }
-    func generatePetBreeds(total: Int) -> [Item] {
+    func generatePetBreeds() -> [Item] {
         var breeds = [Item]()
+        
+        var petTypeArr = [String]()
+        
+        switch breedsForType {
+        case .dog:
+            petTypeArr = dog_breeds
+        case .cat:
+            petTypeArr = cat_breeds
+        case .bird:
+            petTypeArr = bird_breeds
+        case .rabbit:
+            petTypeArr = rabbit_breeds
+        case .none:
+            print("")
+        }
 
-        let dog_breeds = [
-            "Labrador Retriever",
-            "German Shepherd",
-            "Golden Retriever",
-            "Bulldog",
-            "Beagle",
-            "Poodle (Standard, Miniature, and Toy)",
-            "Rottweiler",
-            "Yorkshire Terrier",
-            "Boxer",
-            "Dachshund",
-            "Shih Tzu",
-            "Siberian Husky",
-            "Great Dane",
-            "Doberman Pinscher",
-            "Australian Shepherd",
-            "Miniature Schnauzer",
-            "Cavalier King Charles Spaniel",
-            "Chihuahua",
-            "Shetland Sheepdog",
-            "Border Collie",
-            "Australian Cattle Dog",
-            "Dalmatian",
-            "Pug",
-            "Boxer",
-            "Miniature Pinscher",
-            "American Bulldog",
-            "English Bulldog",
-            "Weimaraner",
-            "Pembroke Welsh Corgi",
-            "Bichon Frise",
-            "Shiba Inu",
-            "Alaskan Malamute",
-            "Havanese",
-            "Newfoundland",
-            "Maltese",
-            "Boston Terrier",
-            "Vizsla",
-            "Bernese Mountain Dog",
-            "Staffordshire Bull Terrier",
-            "Rhodesian Ridgeback",
-            "Bullmastiff",
-            "Bloodhound",
-            "West Highland White Terrier (Westie)",
-            "Scottish Terrier (Scottie)",
-            "American Eskimo Dog",
-            "Papillon",
-            "Portuguese Water Dog",
-            "Irish Wolfhound",
-            "Great Pyrenees",
-            "Border Terrier",
-            "Akita",
-            "Shetland Sheepdog",
-            "Chow Chow",
-            "American Staffordshire Terrier",
-            "Collie (Rough or Smooth)",
-            "Borzoi",
-            "Cairn Terrier",
-            "Afghan Hound",
-            "Samoyed",
-            "Whippet",
-            "Bull Terrier",
-            "Basenji",
-            "Chinese Shar-Pei",
-            "Newfoundland",
-            "Basset Hound",
-            "Australian Terrier",
-            "Tibetan Mastiff",
-            "Norwegian Elkhound",
-            "Belgian Malinois",
-            "Cocker Spaniel",
-            "Staffordshire Bull Terrier",
-            "Shih Tzu",
-            "Scottish Terrier",
-            "Soft Coated Wheaten Terrier",
-            "Airedale Terrier",
-            "Leonberger",
-            "American Eskimo Dog",
-            "Coton de Tulear",
-            "Great Pyrenees",
-            "Irish Terrier",
-            "Cardigan Welsh Corgi",
-            "Flat-Coated Retriever",
-            "Belgian Tervuren",
-            "Australian Terrier",
-            "Anatolian Shepherd Dog",
-            "American Water Spaniel",
-            "Tibetan Terrier",
-            "Clumber Spaniel",
-            "Norwegian Elkhound",
-            "Bearded Collie",
-            "Irish Setter",
-            "Japanese Chin",
-            "Irish Water Spaniel",
-            "Kuvasz",
-            "Affenpinscher",
-            "American Foxhound",
-            "Sussex Spaniel",
-            "Scottish Deerhound",
-            "Saluki",
-            "Belgian Laekenois",
-            "Pyrenean Shepherd",
-            "Plott Hound",
-            "Norwegian Lundehund",
-            "Greater Swiss Mountain Dog",
-            "Icelandic Sheepdog",
-            "Bluetick Coonhound",
-            "Lagotto Romagnolo",
-            "Swedish Vallhund",
-            "Xoloitzcuintli (Mexican Hairless Dog)",
-            "Norwegian Buhund",
-            "Otterhound",
-            "Portuguese Podengo",
-            "Pumi",
-            "Sloughi",
-            "Curly-Coated Retriever",
-            "American Hairless Terrier",
-            "Rat Terrier",
-            "Irish Red and White Setter",
-            "Portuguese Sheepdog",
-            "Belgian Sheepdog",
-            "Dutch Shepherd",
-            "Finnish Lapphund",
-            "Shikoku",
-            "Nova Scotia Duck Tolling Retriever",
-            "Norwegian Lundehund",
-            "Schipperke",
-            "Tibetan Mastiff",
-            "Sealyham Terrier",
-            "Rat Terrier",
-            "Petit Basset Griffon Vendéen",
-            "Manchester Terrier",
-            "Lowchen",
-            "Icelandic Sheepdog",
-            "Harrier",
-            "Glen of Imaal Terrier",
-            "Black and Tan Coonhound",
-            "American Water Spaniel",
-            "American Hairless Terrier",
-            "Welsh Terrier",
-            "Sussex Spaniel",
-            "Sloughi",
-            "Shiba Inu",
-            "Redbone Coonhound",
-            "Plott Hound",
-            "Pharaoh Hound",
-            "Norwegian Buhund",
-            "Neapolitan Mastiff",
-            "Manchester Terrier",
-            "Manchester Terrier (Toy)",
-            "Lowchen",
-            "Leonberger",
-            "Glen of Imaal Terrier",
-            "Finnish Lapphund",
-            "Dandie Dinmont Terrier",
-            "Cirneco dell'Etna",
-            "Cesky Terrier",
-            "Bluetick Coonhound",
-            "Biewer Terrier",
-            "Beauceron",
-            "Appenzeller Sennenhund",
-            "American Staffordshire Terrier",
-            "American Foxhound",
-            "American English Coonhound",
-            "Afghan Hound",
-            "Affenpinscher",
-            "Azawakh",
-            "Australian Terrier",
-            "Australian Cattle Dog",
-            "Australian Kelpie",
-            "Australian Shepherd"
-        ]
-
-        for breed in dog_breeds {
+        for breed in petTypeArr {
             breeds.append(.breed(.init(breed: breed)))
         }
         
@@ -361,7 +203,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
         currentSnapData  = [
-            .init(key: .breed, values: generatePetBreeds(total: 20))
+            .init(key: .breed, values: generatePetBreeds())
         ]
         
         snapshot = Snapshot()

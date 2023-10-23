@@ -120,7 +120,7 @@ final class NewPetContentViewController: UIViewController {
         )
         let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
 
-        let intOne:CGFloat = 10, intTwo: CGFloat = 150
+        let intOne:CGFloat = 30, intTwo: CGFloat = 150
         
         if (textFieldBottomY + intOne) > keyboardTopY {
             let textBoxY = convertedTextFieldFrame.origin.y
@@ -130,17 +130,17 @@ final class NewPetContentViewController: UIViewController {
             let horizontalScrollPosition = contentOffset.y
             let height =
                 UIScreen.main.bounds.size.height <= 870 ?
-                    UIScreen.main.bounds.height / 0.86:
+                    UIScreen.main.bounds.height / 0.36:
                         UIScreen.main.bounds.size.height <= 926 ?
-                            UIScreen.main.bounds.height / 0.52:
-                                UIScreen.main.bounds.height / 1.1
+                            UIScreen.main.bounds.height / 0.42:
+                                UIScreen.main.bounds.height / 0.8
             
             collectionView.setContentOffset(CGPoint(x: 0, y:  height), animated: true)
             collectionView.isScrollEnabled = false
         }
-        
+        //For smaller devices - the same on keyboardWillHide
         if UIScreen.main.bounds.size.height <= 700 {
-            collectionView.setContentOffset(CGPoint(x: 0, y: UIScreen.main.bounds.size.height / 0.68), animated: true)
+            collectionView.setContentOffset(CGPoint(x: 0, y: UIScreen.main.bounds.size.height / 0.30), animated: true)
             collectionView.isScrollEnabled = false
         }
     }
@@ -157,9 +157,9 @@ final class NewPetContentViewController: UIViewController {
         else {
             return
         }
-        
+        //For smaller devices
         if UIScreen.main.bounds.size.height <= 700 {
-            collectionView.setContentOffset(CGPoint(x: 0, y: (UIScreen.main.bounds.size.height / 0.68) - 160), animated: true)
+            collectionView.setContentOffset(CGPoint(x: 0, y: (UIScreen.main.bounds.size.height / 0.30) - 160), animated: true)
         }
     }
     

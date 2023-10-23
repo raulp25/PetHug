@@ -15,6 +15,14 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
+    
+    private let captionLabel: UILabel = {
+       let label = UILabel()
+        label.text = "* Datos de contacto e historia del animal"
+        label.font = UIFont.systemFont(ofSize: 11, weight: .light)
+        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
+        return label
+    }()
 
     lazy var textView: CustomTextView = {
         let textView = CustomTextView()
@@ -25,6 +33,14 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
         
         textView.delegate = self
         return textView
+    }()
+    
+    private let characterCountLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.text = "0/1600"
+        return label
     }()
     
     // MARK: - Properties
@@ -55,17 +71,18 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Private actions
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-//        currentConfiguration.viewModel?.delegate?.textViewdDidChange(text: textField.text ?? "")
+    // MARK: - Private functions
+    private func checkMaxLength(_ textView: UITextView) {
+        if (textView.text.count) > 1600 {
+            textView.deleteBackward()
+        }
         
-//        currentConfiguration.viewModel?.formData.info = textField.text
-//        print("textfield did change text viewmodel I N F O: => \(currentConfiguration.viewModel?.formData.info)")
+        currentConfiguration.viewModel?.delegate?.textViewdDidChange(text: textView.text)
+        characterCountLabel.text = "\(textView.text.count)/1600"
     }
     
     func textViewDidChange(_ textView: UITextView) {
-//        currentConfiguration.viewModel?.formData.info = textView.text
-        currentConfiguration.viewModel?.delegate?.textViewdDidChange(text: textView.text)
+        checkMaxLength(textView)
     }
     
     // MARK: - Functions
@@ -81,6 +98,7 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
         if item.info != nil {
             textView.text = item.info
             textView.placeholderLabel.isHidden = true
+            characterCountLabel.text = "\(item.info!.count)/1600"
         }
     }
     
@@ -92,22 +110,56 @@ final class NewPetInfoCellContentView: UIView, UIContentView, UITextViewDelegate
     }()
     
     private func setup() {
-        
-//        tv.delegate = self
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         addSubview(titleLabel)
+        addSubview(captionLabel)
         addSubview(containerView)
-        
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
-        
         containerView.addSubview(textView)
-        containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 30)
+        
+        addSubview(characterCountLabel)
+        
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
+        
+        captionLabel.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
+
+        containerView.anchor(
+            top: captionLabel.bottomAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingTop: 10
+        )
         containerView.setHeight(120)
-        
         containerView.layer.cornerRadius = 10
-        textView.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor , right: containerView.rightAnchor, paddingTop: 10, paddingLeft: 10, paddingBottom: 10, paddingRight: 10)
         
+        textView.anchor(
+            top: containerView.topAnchor,
+            left: containerView.leftAnchor,
+            bottom: containerView.bottomAnchor,
+            right: containerView.rightAnchor,
+            paddingTop: 10,
+            paddingLeft: 10,
+            paddingBottom: 10,
+            paddingRight: 10
+        )
+        
+        characterCountLabel.anchor(
+            top: containerView.bottomAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 5,
+            paddingBottom: 30,
+            paddingRight: 10
+        )
+        characterCountLabel.setHeight(20)
         
     }
     

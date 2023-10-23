@@ -28,8 +28,8 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
     
     private lazy var editImageContainer: UIView = {
        let uv = UIView(withAutolayout: true)
-        uv.backgroundColor = customRGBColor(red: 240, green: 245, blue: 246)
-        uv.layer.cornerRadius = 7
+        uv.backgroundColor = .black.withAlphaComponent(0.4)
+        uv.layer.cornerRadius = 10.5
         uv.isUserInteractionEnabled = true
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLike))
 //        uv.addGestureRecognizer(tapGesture)
@@ -38,22 +38,20 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
     
     private let editImage: UIImageView = {
        let iv = UIImageView()
-        iv.image = UIImage(systemName: "paintbrush.pointed.fill")
-        iv.tintColor = UIColor.red
+        iv.image = UIImage(systemName: "trash.fill")
+        iv.tintColor = UIColor.white
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFit
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
     
-    //MARK: - Private properties
-//    private weak var delegate: GalleryCellDelegate?
     //MARK: - Internal properties
     weak var delegate: GalleryCellDelegate?
     private var galleryImage: GalleryImage? = nil
+    
     //MARK: - LifeCycle
     func configure(with galleryImage: GalleryImage) {
-//        self.delegate = delegate
         configureCellUI(with: galleryImage)
     }
     
@@ -64,26 +62,31 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
         addGestureRecognizer(tapGesture)
         
         addSubview(petImage)
-//        addSubview(editImageContainer)
-//        editImageContainer.addSubview(editImage)
+        addSubview(editImageContainer)
+        editImageContainer.addSubview(editImage)
         
         petImage.fillSuperview()
-//        petImage.setHeight(frame.height / 2.6 * 2)
         
-//        editImageContainer.anchor(bottom: bottomAnchor, right: rightAnchor, paddingBottom: 5, paddingRight: 2)
-//        editImageContainer.setDimensions(height: 17, width: 17)
-//
-//        editImage.center(inView: editImageContainer)
-//        editImage.setDimensions(height: 15, width: 15)
+        editImageContainer.anchor(
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingBottom: 5,
+            paddingRight: 2
+        )
+        editImageContainer.setDimensions(height: 21, width: 21)
+        editImageContainer.isHidden = true
+
+        editImage.center(inView: editImageContainer)
+        editImage.setDimensions(height: 12, width: 12)
         
     }
     
     private func configureCellUI(with galleryImage: GalleryImage) {
-        print("gallery image en celda: => \(galleryImage)")
         if let image = galleryImage.image {
             petImage.image = image
+            editImageContainer.isHidden = false
         } else if galleryImage.isEmpty {
-            petImage.backgroundColor = customRGBColor(red: 238, green: 238, blue: 238)
+            petImage.backgroundColor = customRGBColor(red: 230, green: 230, blue: 230)
         }
         
         self.galleryImage = galleryImage

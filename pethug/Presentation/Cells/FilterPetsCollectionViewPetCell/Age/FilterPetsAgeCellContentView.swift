@@ -118,28 +118,27 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
         
         titleLabel.anchor(
             top: topAnchor,
-            left: leftAnchor,
-            right: rightAnchor
+            left: leftAnchor
+        )
+        
+        ageLabel.centerX(
+            inView: self,
+            topAnchor: titleLabel.bottomAnchor,
+            paddingTop: 10
         )
         
         containerView.anchor(
-            top: titleLabel.bottomAnchor,
+            top: ageLabel.bottomAnchor,
             left: leftAnchor,
+            bottom: bottomAnchor,
             right: rightAnchor,
-            paddingTop: 20
+            paddingTop: 10,
+            paddingBottom: 55
+            
         )
         containerView.setHeight(40)
         
         slider.fillSuperview()
-        
-        ageLabel.anchor(
-            top: containerView.bottomAnchor,
-            left: leftAnchor,
-            bottom: bottomAnchor,
-            right: rightAnchor,
-            paddingTop: 45,
-            paddingBottom: 30
-        )
     }
     
 }
