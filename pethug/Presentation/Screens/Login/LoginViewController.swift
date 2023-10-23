@@ -164,12 +164,10 @@ class LoginViewController: UIViewController {
                     self.loginBtn.isLoading = true
                 case .success:
                     self.loginBtn.isLoading = false
-                case let.error(err):
-                    self.loginBtn.isLoading = false
-                    self.alert(message: err.localizedDescription, title: "Error")
+                case .error(_):
+                    self.handleError(message: "Verifica tu correo y contraseña e intenta de nuevo", title: "Error de Verificación")
                 case .networkError:
-                    self.loginBtn.isLoading = false
-                    self.alert(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
+                    self.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }
@@ -244,6 +242,10 @@ class LoginViewController: UIViewController {
         view.layer.insertSublayer(gradientLayer, at: 0)
     }
     
+    private func handleError(message: String, title: String = "") {
+        loginBtn.isLoading = false
+        alert(message: message, title: title)
+    }
     
     //MARK: - setup
     func setup() {

@@ -28,6 +28,30 @@ final class FilterPetsContentViewController: UIViewController {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+        hideKeyboardWhenTappedAround()
+        configureDataSource()
+        updateSnapShot()
+        
+        viewModel.stateSubject
+            .handleThreadsOperator()
+            .sink { [weak self] state in
+                switch state {
+                case .success:
+                    self?.dismiss(animated: true)
+                default:
+                    print("")
+                }
+
+            }.store(in: &cancellables)
+    }
+    
+    deinit {
+        print("✅ Deinit PetsContentViewController")
+    }
+    
+    //MARK: - Setup
+    private func setup() {
         navigationController?.navigationBar.isHidden = true
         
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
@@ -60,26 +84,6 @@ final class FilterPetsContentViewController: UIViewController {
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
-        
-        hideKeyboardWhenTappedAround()
-        configureDataSource()
-        updateSnapShot()
-        
-        viewModel.stateSubject
-            .handleThreadsOperator()
-            .sink { [weak self] state in
-                switch state {
-                case .success:
-                    self?.dismiss(animated: true)
-                default:
-                    print("")
-                }
-
-            }.store(in: &cancellables)
-    }
-    
-    deinit {
-        print("✅ Deinit PetsContentViewController")
     }
     
    
@@ -315,27 +319,41 @@ extension FilterPetsContentViewController: UICollectionViewDelegate {
     
     
 }
-        
+
 //MARK: - Address search Delegate
 extension FilterPetsContentViewController: FilterPetsAddressDelegate {
     func didTapAddressSelector() {
         let searchController = FilterAddressPopupSearch()
         searchController.delegate = self
+        
         let dummyNavigator = UINavigationController(rootViewController: searchController)
-        dummyView.add(dummyNavigator)
-        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
+
+        dummyNavigator.view.anchor(
+            top: dummyView.view.safeAreaLayoutGuide.topAnchor,
+            left: dummyView.view.leftAnchor,
+            bottom: dummyView.view.keyboardLayoutGuide.topAnchor,
+            right: dummyView.view.rightAnchor,
+            paddingTop: 50,
+            paddingLeft: 30,
+            paddingBottom: 30,
+            paddingRight: 30
+        )
         dummyNavigator.view.layer.cornerRadius = 15
         
         add(dummyView)
+        self.view.bringSubviewToFront(dummyView.view)
+        dummyView.add(dummyNavigator)
         dummyView.view.fillSuperview()
         
         dummyView.view.alpha = 0
-        self.view.bringSubviewToFront(dummyView.view)
-        self.collectionView.isUserInteractionEnabled = false
         dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
+        
+        self.collectionView.isUserInteractionEnabled = false
+        
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
             self.dummyView.view.alpha = 1
         }
+        
         self.view.layoutIfNeeded()
     }
     
@@ -359,8 +377,6 @@ extension FilterPetsContentViewController: FilterAddressPopupSearchDelegate {
                 self.view.layoutIfNeeded()
             })
         }
-        
-        
         
         viewModel.addressState = state
         

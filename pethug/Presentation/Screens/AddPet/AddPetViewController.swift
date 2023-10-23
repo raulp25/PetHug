@@ -85,11 +85,13 @@ final class AddPetViewController: UIViewController {
             .handleThreadsOperator()
             .sink { [weak self] state in
                 switch state {
-                case let .loaded(data, debounce):
-                    self?.render(data, debounce)
                 case .loading:
                     break
-                case let .error(error):
+                case let .loaded(data, debounce):
+                    self?.render(data, debounce)
+                case .empty:
+                    self?.renderEmptyView()
+                case .error(_):
                     self?.renderError(message: "Hubo un error, intenta nuevamente", title: "Error")
                 case .networkError:
                     self?.renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
@@ -111,6 +113,14 @@ final class AddPetViewController: UIViewController {
             contentVc?.delegate = self
             contentStateVC.transition(to: .render(contentVc!))
         }
+    }
+    
+    private func renderEmptyView() {
+        let vc = EmptyDataViewController(title: "Mis animales",
+                                         caption: "Aún no has publicado ningun animal",
+                                         namedImage:  "empty1")
+        
+        contentStateVC.transition(to: .render(vc))
     }
     
     private func renderError(message: String, title: String = "") {

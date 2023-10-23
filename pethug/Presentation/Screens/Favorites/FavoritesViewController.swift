@@ -83,10 +83,12 @@ final class FavoritesViewController: UIViewController {
             .handleThreadsOperator()
             .sink { [weak self] state in
                 switch state {
-                case let .loaded(data):
-                    self?.render(data)
                 case .loading:
                     self?.renderLoading()
+                case let .loaded(data):
+                    self?.render(data)
+                case .empty:
+                    self?.renderEmptyView()
                 case .error(_):
                     self?.renderError(message: "Hubo un error, intenta nuevamente")
                 case .networkError:
@@ -107,6 +109,15 @@ final class FavoritesViewController: UIViewController {
             contentVc?.delegate = self
             contentStateVC.transition(to: .render(contentVc!))
         }
+    }
+    
+    private func renderEmptyView() {
+        guard !(contentStateVC.shownViewController is EmptyDataViewController) else { return }
+        let vc = EmptyDataViewController(title: "Favoritos",
+                                         caption: "Aún no has seleccionado ningun favorito",
+                                         namedImage:  "empty1")
+        
+        contentStateVC.transition(to: .render(vc))
     }
     
     private func renderError(message: String, title: String = "") {

@@ -9,6 +9,7 @@ import UIKit
 
 protocol NewPetBreedDelegate: AnyObject {
     func didTapBreedSelector()
+    func didTapUnkownedBreed()
 }
 
 struct NewPetBreed: Hashable {

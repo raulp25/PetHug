@@ -28,6 +28,7 @@ extension AddPetViewModel {
         
         case loading
         case loaded([Pet], Bool)
+        case empty
         case error(PetsError)
         case networkError
     }

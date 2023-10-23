@@ -73,7 +73,7 @@ final class NewPetContentViewController: UIViewController {
                     })
                 case .loading:
                         self?.setLoadingScreen()
-                case let.error(error):
+                case .error(_):
                         self?.renderError(message: "Hubo un error, intenta nuevamente")
                 case .networkError:
                     self?.renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
@@ -626,7 +626,14 @@ extension NewPetContentViewController: NewPetBreedDelegate {
             self.dummyView.view.alpha = 1
         }
         self.view.layoutIfNeeded()
+    }
+    
+    func didTapUnkownedBreed() {
+        viewModel.breedsState = "Mestizo"
         
+        var snapshot = dataSource.snapshot()
+        snapshot.reloadSections([.breed])
+        dataSource.apply(snapshot, animatingDifferences: false)
     }
 }
 

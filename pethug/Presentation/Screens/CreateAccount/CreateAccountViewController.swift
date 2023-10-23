@@ -174,12 +174,10 @@ class CreateAccountViewController: UIViewController {
                     self.createAccountBtn.isLoading = true
                 case .success:
                     self.createAccountBtn.isLoading = false
-                case let.error(err):
-                    self.createAccountBtn.isLoading = false
-                    self.alert(message: "Algo salió mal, verifica el correo electrónico y vuelve a intentarlo", title: "Error")
+                case .error(_):
+                    self.handleError(message: "Algo salió mal, verifica el correo electrónico y vuelve a intentarlo", title: "Error")
                 case .networkError:
-                    self.createAccountBtn.isLoading = false
-                    self.alert(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
+                    self.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
             }.store(in: &subscriptions)
     }
@@ -276,6 +274,10 @@ class CreateAccountViewController: UIViewController {
         view.frame.origin.y = 0
     }
     
+    private func handleError(message: String, title: String = "") {
+        createAccountBtn.isLoading = false
+        alert(message: message, title: title)
+    }
     
     //MARK: - setup
     func setup() {

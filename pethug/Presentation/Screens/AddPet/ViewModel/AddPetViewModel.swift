@@ -140,9 +140,12 @@ final class AddPetViewModel {
         if !isFirstLoad && !data.isEmpty {
             let debounce = resetPagination ? true : false
             petsSubject.send((data, debounce))
-        } else if isFirstLoad {
-            petsSubject.send((data, false))
+        } else if isFirstLoad && data.isEmpty {
+            state.send(.empty)
             isFirstLoad = false
+        } else if isFirstLoad {
+            isFirstLoad = false
+            petsSubject.send((data, false))
         }
     }
 
