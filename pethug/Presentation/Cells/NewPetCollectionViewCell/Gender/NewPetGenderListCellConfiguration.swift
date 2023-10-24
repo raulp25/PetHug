@@ -23,7 +23,7 @@ struct NewPetGender: Hashable {
     weak var delegate: NewPetGenderDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(gender: Pet.Gender? = nil) {
         self.gender = gender
     }

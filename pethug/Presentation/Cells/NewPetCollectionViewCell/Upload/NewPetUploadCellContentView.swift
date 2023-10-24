@@ -60,7 +60,6 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
     
     // MARK: - Private actions
     @objc private func upload() {
-        print(":clicked upload button => ")
         currentConfiguration.viewModel?.delegate?.didTapUpload()
     }
     
@@ -105,18 +104,27 @@ final class NewPetUploadCellContentView: UIView, UIContentView {
             }).store(in: &cancellables)
     }
     
-    
-
-    
     private func setup() {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        
         addSubview(containerView)
         containerView.addSubview(uploadBtn)
         
-        containerView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingBottom: 10)
+        containerView.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingBottom: 10
+        )
         containerView.setHeight(45)
         
-        uploadBtn.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor)
+        uploadBtn.anchor(
+            top: containerView.topAnchor,
+            left: containerView.leftAnchor,
+            bottom: containerView.bottomAnchor,
+            right: containerView.rightAnchor
+        )
     }
 
 

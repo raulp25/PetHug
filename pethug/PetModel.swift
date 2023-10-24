@@ -12,7 +12,6 @@ import UIKit
 
 
 struct PetModel: Codable {
-    
     @DocumentID var id: String? = UUID().uuidString
     let name: String
     let age: Int

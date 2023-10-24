@@ -8,9 +8,7 @@
 import UIKit
 
 final class NewPetGenderCellContentView: UIView, UIContentView {
-    
     //MARK: - Private components
-    
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Genero (No obligatorio)"
@@ -24,7 +22,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         stack.axis = .vertical
         stack.distribution = .fillEqually
         stack.alignment = .fill
-        //        stack.spacing = 10
         stack.translatesAutoresizingMaskIntoConstraints = true
         return stack
     }()
@@ -34,9 +31,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -55,7 +49,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.dog.rawValue
         return button
     }()
     
@@ -64,9 +57,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -84,14 +74,17 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.cat.rawValue
         return button
     }()
     
-    //MARK: - Private properties
+    enum CurrentChecked: Int {
+        case male = 1
+        case female = 2
+        case unset = 3
+    }
     
-    
-    //MARK: - Internal properties
+    var currentButton: CurrentChecked = .unset
+    var buttons: [UIButton] = []
     
     // MARK: - Properties
     private var currentConfiguration: NewPetGenderListCellConfiguration!
@@ -106,8 +99,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
             apply(configuration: newConfiguration)
         }
     }
-    
-    let containerView = UIView()
     
     // MARK: - LifeCycle
     init(configuration: NewPetGenderListCellConfiguration) {
@@ -129,10 +120,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("✅ Deinit NewPetGalleryContentView")
-    }
-    
     // MARK: - Functions
     private func apply(configuration: NewPetGenderListCellConfiguration) {
         guard currentConfiguration != configuration else {
@@ -140,7 +127,7 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         }
         
         currentConfiguration = configuration
-        //
+        
         guard let item = currentConfiguration.viewModel else { return }
         
         if item.gender != nil {
@@ -166,10 +153,21 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         addSubview(titleLabel)
         addSubview(vStack)
         
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
         titleLabel.setHeight(16)
         
-        vStack.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 20)
+        vStack.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 5,
+            paddingBottom: 20
+        )
         vStack.setHeight(75)
         
         for button in buttons {
@@ -177,14 +175,6 @@ final class NewPetGenderCellContentView: UIView, UIContentView {
         }
     }
     
-    enum CurrentChecked: Int {
-        case male = 1
-        case female = 2
-        case unset = 3
-    }
-    
-    var currentButton: CurrentChecked = .unset
-    var buttons: [UIButton] = []
     
     @objc private func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else {

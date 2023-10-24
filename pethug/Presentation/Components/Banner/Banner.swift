@@ -36,7 +36,6 @@ final class Banner: UIView {
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Adoptar"
-//        label.font = UIFont.systemFont(ofSize: 22, weight: .bold, width: .expanded)
         label.textColor = customRGBColor(red: 255, green: 255, blue: 255)
         
         label.font = UIFont.systemFont(ofSize: 25, weight: .light)
@@ -50,8 +49,6 @@ final class Banner: UIView {
     
     private let captionLabel: UILabel = {
        let label = UILabel()
-//        label.text = "perros"
-//        label.font = UIFont.systemFont(ofSize: 22, weight: .regular, width: .expanded)
         label.textColor = customRGBColor(red: 255, green: 255, blue: 255)
         
         label.font = UIFont.systemFont(ofSize: 25, weight: .light)
@@ -63,19 +60,22 @@ final class Banner: UIView {
         
         return label
     }()
-    private var alignment: Banner.TextAlign!
     
     //MARK: - Private properties
-    
+    private var alignment: Banner.TextAlign!
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }
     
     
-    convenience init(title: String =  "", caption: String = "", imageNamed: String? = nil, textAlign: Banner.TextAlign = .right) {
+    convenience init(
+        title: String =  "",
+        caption: String = "",
+        imageNamed: String? = nil,
+        textAlign: Banner.TextAlign = .right
+    ) {
         self.init(frame: .zero)
-        
         self.titleLabel.text = title
         self.captionLabel.text = caption
         self.alignment = textAlign
@@ -89,11 +89,8 @@ final class Banner: UIView {
     }
     
     
-    //MARK: - Private actions
-    
     //MARK: - Setup
     func setup() {
-        let paddingTop: CGFloat = 15
         let sidePadding: CGFloat = 25
         backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
         layer.cornerRadius = 8
@@ -108,13 +105,13 @@ final class Banner: UIView {
             vStack.centerY(
                 inView: self,
                 leftAnchor: leftAnchor,
-                paddingLeft: 25
+                paddingLeft: sidePadding
             )
         } else {
             vStack.centerY(inView: self)
             vStack.anchor(
                 right: rightAnchor,
-                paddingRight: 25
+                paddingRight: sidePadding
             )
         }
         

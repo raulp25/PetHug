@@ -13,20 +13,10 @@ protocol AddPetViewHeaderDelegate: AnyObject {
 
 final class AddPetViewHeaderViewController: UIViewController {
     //MARK: - Private components
-    private let logoImageView: UIImageView = {
-       let iv = UIImageView()
-        iv.image = UIImage(named: "dog1")
-        iv.tintColor = UIColor.systemPink.withAlphaComponent(0.7)
-        iv.contentMode = .scaleAspectFill
-        iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
-    }()
-    
     private lazy var titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Mis Animales en Adopcion"
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.text = "Mis animales en adopción"
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
@@ -68,8 +58,10 @@ final class AddPetViewHeaderViewController: UIViewController {
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         view.addSubview(titleLabel)
+        
         view.addSubview(plusImageContainer)
         plusImageContainer.addSubview(plusImageView)
+        
         view.sendSubviewToBack(plusImageContainer)
         view.sendSubviewToBack(plusImageView)
         

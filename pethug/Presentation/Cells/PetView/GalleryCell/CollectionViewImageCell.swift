@@ -19,16 +19,8 @@ final class PetViewImageCollectionViewCell: UICollectionViewCell {
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
-//        iv.isUserInteractionEnabled = true
-//        iv.addGestureRecognizer(tapGesture)
         return iv
     }()
-    
-    
-    //MARK: - Private properties
-    //MARK: - Internal properties
     
     //MARK: - LifeCycle
     func configure(with url: String) {
@@ -75,10 +67,6 @@ final class PetViewImageCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    //MARK: - Private Actions
-//    @objc func didTapCell() {
-//    }
-
 }
 
 

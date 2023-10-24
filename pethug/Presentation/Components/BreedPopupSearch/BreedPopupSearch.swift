@@ -14,7 +14,6 @@ protocol PopupSearchDelegate: AnyObject {
 }
 
 class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
-    
     //MARK: - Private  components
     private let searchController = UISearchController(searchResultsController: nil)
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
@@ -53,7 +52,6 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     var breedsForType: Pet.PetType?
    
     //MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white

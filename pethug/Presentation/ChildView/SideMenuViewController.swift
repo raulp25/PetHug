@@ -7,28 +7,11 @@
 
 import UIKit
 
-protocol SideMenuDelegate: AnyObject {
-    func didTapSettings()
-}
-
 final class SideMenuViewController: UIViewController {
     // MARK: - Private Components
-//    private lazy var contentVC = UIHostingController(
-//        rootView: SideMenuView(showSettingsSheet: { [weak self] in
-//            self?.delegate?.didTapSettings()
-//        })
-    private lazy var k: UIViewController = {
-       let uv = UIViewController()
-        uv.view.backgroundColor = UIColor.systemBrown
-        return uv
-    }()
-    
-    
-    private lazy var contentVC = k
-    
-
-    // MARK: - Delegate
-    weak var delegate: SideMenuDelegate?
+    private lazy var contentVC = SideMenuProfileContentViewController(authService: AuthService(),
+                                                              fetchUserUC: FetchUser.composeFetchUserUC()
+                                                             )
 
     // MARK: - Private Properties
     private let customWidth = UIScreen.main.bounds.width * 0.85
@@ -53,7 +36,7 @@ final class SideMenuViewController: UIViewController {
     // MARK: - setup
     private func setup() {
         // self
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
 
         // sideMenuVC
         addChild(contentVC)
@@ -64,7 +47,10 @@ final class SideMenuViewController: UIViewController {
         let sidePadding: CGFloat = 15
         contentVC.view.translatesAutoresizingMaskIntoConstraints = false
         topAnchorConstraint = contentVC.view.topAnchor.constraint(equalTo: view.topAnchor)
-        contentVC.view.pinSides(to: view, padding: sidePadding)
+        contentVC.view.pinSides(
+            to: view,
+            padding: sidePadding
+        )
         contentVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }
 }

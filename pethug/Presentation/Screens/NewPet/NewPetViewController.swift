@@ -83,8 +83,6 @@ final class NewPetViewController: UIViewController {
             paddingTop: paddingTop
         )
         
-        
-        
         contentVC.view.anchor(
             top: xmarkImageContainer.bottomAnchor,
             left: view.leftAnchor,
@@ -109,7 +107,6 @@ final class NewPetViewController: UIViewController {
 
     //MARK: - Actions
     @objc func didTapXmark() {
-        print("clicked xmark: => ")
         dismiss(animated: true)
     }
     

@@ -63,7 +63,6 @@ final class PetContentViewController: UIViewController {
 
             switch section {
             case .gallery:
-                print("dogs section")
                 return .createPetLayout(for: .gallery)
             case .nameLocation:
                 return .createPetLayout(for: .nameLocation)
@@ -145,7 +144,6 @@ final class PetContentViewController: UIViewController {
     
     //MARK: - Setup
     func configureUI() {
-        
         add(headerView)
         view.addSubview(collectionView)
         

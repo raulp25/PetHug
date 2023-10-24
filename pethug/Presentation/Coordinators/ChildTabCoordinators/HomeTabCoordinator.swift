@@ -13,7 +13,7 @@ final class HomeTabCoordinator: ChildTabCoordinator {
     var parentCoordinator: InAppCoordinator?
     
     var rootViewController: UINavigationController = .init()
-    
+    //VieModel class instance gets shared across this module vc's
     let viewModel: PetsViewModel = .init(fetchAllPetsUC:  FetchAllPets.composeFetchAllPetsUC(),
                                          filterAllPetsUC: FilterAllPets.composeFilterAllPetsUC(),
                                          fetchPetsUC:     FetchPets.composeFetchPetsUC(),

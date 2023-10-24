@@ -13,7 +13,7 @@ final class InAppContainerRootViewController: UIViewController {
     // MARK: - Views / Controllers
     lazy var backdropView: UIView = {
         let bdView = UIView(withAutolayout: true)
-        bdView.backgroundColor = UIColor.systemPink
+        bdView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         bdView.alpha = 0
         bdView.isUserInteractionEnabled = false
         bdView.layer.zPosition = CGFloat(Float.greatestFiniteMagnitude)
@@ -59,8 +59,7 @@ final class InAppContainerRootViewController: UIViewController {
 
         mainRightConstraint = mainContainerView.rightAnchor.constraint(equalTo: view.rightAnchor)
         mainRightConstraint.isActive = true
-
-//      backdropView.pin(to: mainContainerView)
+        
         backdropView.fillSuperview()
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -128,15 +127,6 @@ final class InAppContainerRootViewController: UIViewController {
     }
 }
 
-// MARK: - SideMenuDelegate
-extension InAppContainerRootViewController: SideMenuDelegate {
-    func didTapSettings() {
-        coordinator?.startSettingsFlow()
-    }
-}
 
-// MARK: - UIGestureRecognizerDelegate
-// extension InAppContainerRootViewController: UIGestureRecognizerDelegate {
 
-// }
 

@@ -23,11 +23,6 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         return stack
     }()
     
-    private var ageBadge: Badge? = nil
-    private var genderBadge: Badge? = nil
-    private var sizeBadge: Badge? = nil
-    
-    
     private lazy var hStackSecondRow: UIStackView = {
         let stack = UIStackView()
         stack.backgroundColor = .white
@@ -38,6 +33,11 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
+    
+    //MARK: - Private properties
+    private var ageBadge: Badge? = nil
+    private var genderBadge: Badge? = nil
+    private var sizeBadge: Badge? = nil
     
     private var activityBadge: Badge? = nil
     private var socialBadge: Badge? = nil
@@ -61,9 +61,9 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         var genderBadgeIcon = ""
         switch info.gender {
         case .male:
-            genderBadgeIcon = "m.square"
+            genderBadgeIcon = "m.square.fill"
         case .female:
-            genderBadgeIcon = "f.square"
+            genderBadgeIcon = "f.square.fill"
         case .none:
             genderBadgeIcon = "circle.slash"
         }
@@ -71,11 +71,11 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         var sizeBadgeIcon = ""
         switch info.size {
         case .small:
-            sizeBadgeIcon = "s.square"
+            sizeBadgeIcon = "s.square.fill"
         case .medium:
-            sizeBadgeIcon = "m.square"
+            sizeBadgeIcon = "m.square.fill"
         case .large:
-            sizeBadgeIcon = "g.square"
+            sizeBadgeIcon = "g.square.fill"
         case .none:
             sizeBadgeIcon = "circle.slash"
         }

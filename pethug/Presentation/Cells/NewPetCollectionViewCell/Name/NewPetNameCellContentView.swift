@@ -59,11 +59,7 @@ final class NewPetNameCellContentView: UIView, UIContentView {
     
     // MARK: - Private actions
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        currentConfiguration.viewModel?.delegate?.textFieldDidChange(text: textField.text ?? "")
-//        currentConfiguration.viewModel?.formData.name = textField.text
-//        print("textfield did change text viewmodel: => \(currentConfiguration.viewModel?.formData.name)")
-//        currentConfiguration.viewModel?.objectWillChange.send()
-        
+        checkMaxLength(textField)
     }
     
     // MARK: - Functions
@@ -73,17 +69,10 @@ final class NewPetNameCellContentView: UIView, UIContentView {
         }
 
         currentConfiguration = configuration
-//
+
         guard let item = currentConfiguration.viewModel else { return }
         nameTextField.text = item.name ?? ""
-//        print("item en celda: => \(item.formData.name)")
-//        nameLabel.text = item.name
-//        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-//        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-//
-//        imageView.configure(with: item.profileImageUrlString)
     }
-    
     
     let containerView: UIView = {
         let uv = UIView(withAutolayout: true)
@@ -100,6 +89,15 @@ final class NewPetNameCellContentView: UIView, UIContentView {
         
         titleLabel.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, right: containerView.rightAnchor)
         nameTextField.anchor(top: titleLabel.bottomAnchor, left: containerView.leftAnchor, right: containerView.rightAnchor, paddingTop: 10)
+    }
+    
+    
+    private func checkMaxLength(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        if (text.count) > 15 {
+            textField.deleteBackward()
+        }
+        currentConfiguration.viewModel?.delegate?.textFieldDidChange(text: textField.text ?? "")
     }
 
 

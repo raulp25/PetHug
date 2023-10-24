@@ -40,6 +40,8 @@ protocol AuthServiceProtocol {
 
     func updateAuthDisplayName(uid: String, name: String) async throws
     
+    /// Sends reset password link to user.
+    ///
     func resetPassword(withEmail email: String) async throws
 }
 

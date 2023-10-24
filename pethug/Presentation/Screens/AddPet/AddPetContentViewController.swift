@@ -16,6 +16,18 @@ final class AddPetContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     
+    private let titleLabel: UILabel = {
+      let label = UILabel(withAutolayout: true)
+       label.text = "Sube, edita o borra tus animales en adopcion"
+       label.textColor = .black.withAlphaComponent(0.8)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        label.textAlignment = .center
+        label.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
+        label.numberOfLines = 0
+       return label
+   }()
+    
+    
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
@@ -51,10 +63,20 @@ final class AddPetContentViewController: UIViewController {
         
         navigationController?.navigationBar.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(titleLabel)
         view.addSubview(collectionView)
 
-        collectionView.anchor(
+        titleLabel.anchor(
             top: view.topAnchor,
+            left: view.leftAnchor,
+            right: view.rightAnchor,
+            paddingTop: 30
+        )
+        titleLabel.setHeight(60)
+        
+        collectionView.anchor(
+            top: titleLabel.bottomAnchor,
             left: view.leftAnchor,
             bottom: view.bottomAnchor,
             right: view.rightAnchor
@@ -65,7 +87,9 @@ final class AddPetContentViewController: UIViewController {
             bottom: 50,
             right: 0
         )
+        collectionView.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
         collectionView.delegate = self
+        
         configureDataSource()
         updateSnapShot()
     }
@@ -114,18 +138,18 @@ final class AddPetContentViewController: UIViewController {
             
         })
         
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-            guard let self else {
-                return nil
-            }
-
-            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            
-            switch section {
-            case .pets:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            }
-        }
+//        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
+//            guard let self else {
+//                return nil
+//            }
+//
+//            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+//
+//            switch section {
+//            case .pets:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            }
+//        }
     }
         
     // MARK: - Private methods

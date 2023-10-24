@@ -24,14 +24,11 @@ final class NewPetContentViewController: UIViewController {
     private var viewModel: NewPetViewModel
     private var currentSnapData = [SnapData]()
     private var cancellables = Set<AnyCancellable>()
+    
     //MARK: - Internal properties
-//    var snapData: [SnapData] {
-//        didSet {
-////            updateSnapShot()
-//        }
-//    }
-//
     weak var delegate: NewPetContentDelegate?
+    
+    //MARK: - LifeCycle
     init(viewModel: NewPetViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -42,25 +39,44 @@ final class NewPetContentViewController: UIViewController {
     }
     
     deinit {
-        print("✅ Deinit PetsContentViewController")
+        print("✅ Deinit NewPetContentViewController")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         hideKeyboardWhenTappedAround()
         setupKeyboardHiding()
+        setup()
+        bind()
+        configureDataSource()
+        updateSnapShot()
+    }
+    
+    //MARK: - Setup
+    private func setup() {
         navigationController?.navigationBar.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(collectionView)
-        collectionView.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
+        
+        collectionView.anchor(
+            top: view.topAnchor,
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            right: view.rightAnchor,
+            paddingLeft: 0,
+            paddingRight: 0
+        )
         collectionView.contentInset = .init(top: 20, left: 0, bottom: 50, right: 0)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.delegate = self
         collectionView.showsVerticalScrollIndicator = false
         collectionView.dragInteractionEnabled = false
-        configureDataSource()
-        updateSnapShot()
         
+    }
+    
+    //MARK: - Bind
+    private func bind() {
         viewModel.stateSubject
             .handleThreadsOperator()
             .sink { [weak self] state in
@@ -72,9 +88,9 @@ final class NewPetContentViewController: UIViewController {
                         self?.dismiss(animated: true)
                     })
                 case .loading:
-                        self?.setLoadingScreen()
+                    self?.setLoadingScreen()
                 case .error(_):
-                        self?.renderError(message: "Hubo un error, intenta nuevamente")
+                    self?.renderError(message: "Hubo un error, intenta nuevamente")
                 case .networkError:
                     self?.renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
@@ -120,7 +136,7 @@ final class NewPetContentViewController: UIViewController {
         )
         let textFieldBottomY = convertedTextFieldFrame.origin.y + convertedTextFieldFrame.size.height
 
-        let intOne:CGFloat = 30, intTwo: CGFloat = 150
+        let intOne:CGFloat = 55, intTwo: CGFloat = 150
         
         if (textFieldBottomY + intOne) > keyboardTopY {
             let textBoxY = convertedTextFieldFrame.origin.y
@@ -129,12 +145,15 @@ final class NewPetContentViewController: UIViewController {
             let contentOffset = collectionView.contentOffset
             let horizontalScrollPosition = contentOffset.y
             let height =
-                UIScreen.main.bounds.size.height <= 870 ?
-                    UIScreen.main.bounds.height / 0.36:
-                        UIScreen.main.bounds.size.height <= 926 ?
-                            UIScreen.main.bounds.height / 0.42:
-                                UIScreen.main.bounds.height / 0.8
-            
+            UIScreen.main.bounds.size.height <= 820 ?
+                UIScreen.main.bounds.height / 0.37:
+                    UIScreen.main.bounds.size.height <= 870 ?
+                        UIScreen.main.bounds.height / 0.39:
+                            UIScreen.main.bounds.size.height <= 900 ?
+                                UIScreen.main.bounds.height / 0.42:
+                                    UIScreen.main.bounds.size.height <= 926 ?
+                                        UIScreen.main.bounds.height / 0.44:
+                                            UIScreen.main.bounds.height / 0.44
             collectionView.setContentOffset(CGPoint(x: 0, y:  height), animated: true)
             collectionView.isScrollEnabled = false
         }
@@ -144,13 +163,11 @@ final class NewPetContentViewController: UIViewController {
             collectionView.isScrollEnabled = false
         }
     }
-    
-//
+
     @objc func keyboardWillHide(sender: NSNotification) {
         view.endEditing(true)
         collectionView.isScrollEnabled = true
         
-//      Check if sender is UITextView
         guard let userInfo = sender.userInfo,
               let _ = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue,
               let _ = UIResponder.currentFirst() as? UITextView
@@ -289,13 +306,6 @@ final class NewPetContentViewController: UIViewController {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-            <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
-            supplementaryView, string, indexPath in
-                supplementaryView.titleLabel.text = "Adopta a un amigo"
-        }
-
-        
         let newPetNameViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetNameListCellConfiguration>, NewPetName> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
@@ -574,7 +584,6 @@ extension NewPetContentViewController: NewPetSocialInfoDelegate {
 
 extension NewPetContentViewController: NewPetInfoDelegate {
     func textViewdDidChange(text: String) {
-        print("cambio texto a: => \(text)")
         let text = text.count > 0 ? text : nil
         viewModel.infoState = text
     }
@@ -597,7 +606,7 @@ extension NewPetContentViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        guard let item = dataSource.itemIdentifier(for: indexPath) else { return }
+        guard let _ = dataSource.itemIdentifier(for: indexPath) else { return }
         collectionView.deselectItem(at: indexPath, animated: true)
     }
     
@@ -609,18 +618,30 @@ extension NewPetContentViewController: NewPetBreedDelegate {
         let searchController = BreedPopupSearch()
         searchController.delegate = self
         searchController.breedsForType = viewModel.typeState
+        
         let dummyNavigator = UINavigationController(rootViewController: searchController)
-        dummyView.add(dummyNavigator)
-        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
-        dummyNavigator.view.layer.cornerRadius = 15
         
         add(dummyView)
-        dummyView.view.fillSuperview()
-
-        dummyView.view.alpha = 0
         self.view.bringSubviewToFront(dummyView.view)
-        self.collectionView.isUserInteractionEnabled = false
+        dummyView.add(dummyNavigator)
+
+        dummyView.view.fillSuperview()
+        dummyView.view.alpha = 0
         dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
+        
+        dummyNavigator.view.anchor(
+            top: dummyView.view.safeAreaLayoutGuide.topAnchor,
+            left: dummyView.view.leftAnchor,
+            bottom: dummyView.view.keyboardLayoutGuide.topAnchor,
+            right: dummyView.view.rightAnchor,
+            paddingTop: 50,
+            paddingLeft: 30,
+            paddingBottom: 30,
+            paddingRight: 30
+        )
+        dummyNavigator.view.layer.cornerRadius = 15
+        
+        self.collectionView.isUserInteractionEnabled = false
         
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
             self.dummyView.view.alpha = 1
@@ -678,18 +699,31 @@ extension NewPetContentViewController: NewPetAddressDelegate {
     func didTapAddressSelector() {
         let searchController = AddressPopupSearch()
         searchController.delegate = self
+        
         let dummyNavigator = UINavigationController(rootViewController: searchController)
-        dummyView.add(dummyNavigator)
-        dummyNavigator.view.anchor(top: dummyView.view.safeAreaLayoutGuide.topAnchor, left: dummyView.view.leftAnchor, bottom: dummyView.view.keyboardLayoutGuide.topAnchor, right: dummyView.view.rightAnchor, paddingTop: 50, paddingLeft: 30, paddingBottom: 30, paddingRight: 30)
-        dummyNavigator.view.layer.cornerRadius = 15
         
         add(dummyView)
-        dummyView.view.fillSuperview()
-        
-        dummyView.view.alpha = 0
         self.view.bringSubviewToFront(dummyView.view)
-        self.collectionView.isUserInteractionEnabled = false
+        dummyView.add(dummyNavigator)
+        
+        dummyView.view.fillSuperview()
+        dummyView.view.alpha = 0
         dummyView.view.backgroundColor = .black.withAlphaComponent(0.3)
+        
+        dummyNavigator.view.anchor(
+            top: dummyView.view.safeAreaLayoutGuide.topAnchor,
+            left: dummyView.view.leftAnchor,
+            bottom: dummyView.view.keyboardLayoutGuide.topAnchor,
+            right: dummyView.view.rightAnchor,
+            paddingTop: 50,
+            paddingLeft: 30,
+            paddingBottom: 30,
+            paddingRight: 30
+        )
+        dummyNavigator.view.layer.cornerRadius = 15
+        
+        self.collectionView.isUserInteractionEnabled = false
+        
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
             self.dummyView.view.alpha = 1
         }

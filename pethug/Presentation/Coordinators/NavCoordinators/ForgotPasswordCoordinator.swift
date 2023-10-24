@@ -24,7 +24,7 @@ final class ForgotPasswordCoordinator: NavCoordinator {
     }
     
     deinit {
-        print("✅ Deinit CreateAccountCoordinator")
+        print("✅ Deinit ForgotPasswordCoordinator")
     }
 }
 

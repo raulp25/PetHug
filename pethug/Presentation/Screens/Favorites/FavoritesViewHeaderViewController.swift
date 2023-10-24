@@ -29,27 +29,14 @@ final class FavoritesViewHeaderViewController: UIViewController {
     
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Mis animales favoritos"
+        label.text = "Favoritos"
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
     
-    private lazy var filterImageView: UIImageView = {
-       let iv = UIImageView()
-        iv.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
-        iv.tintColor = customRGBColor(red: 55, green: 55, blue: 55)
-        iv.contentMode = .scaleAspectFit
-        iv.clipsToBounds = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapFilter))
-        iv.isUserInteractionEnabled = true
-        iv.addGestureRecognizer(tapGesture)
-        return iv
-    }()
     
     //MARK: - Private properties
     weak var delegate: PetsViewHeaderDelegate?
@@ -57,11 +44,6 @@ final class FavoritesViewHeaderViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
-    }
-    
-    //MARK: - Private actions
-    @objc private func didTapFilter() {
-        delegate?.didTapFilter()
     }
     
     //MARK: - Setup
@@ -72,16 +54,21 @@ final class FavoritesViewHeaderViewController: UIViewController {
         
         view.addSubview(logoImageView)
         view.addSubview(titleLabel)
-        view.addSubview(filterImageView)
         
-        logoImageView.anchor(top: view.topAnchor, left: view.leftAnchor, paddingTop: 0, paddingLeft: sidePadding)
-        logoImageView.setDimensions(height: 60, width: 60)
-        
-        titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
+        titleLabel.centerX(
+            inView: view,
+            topAnchor: view.topAnchor,
+            paddingTop: paddingTop
+        )
         titleLabel.setWidth(150)
         
-        filterImageView.anchor(top: view.topAnchor, right: view.rightAnchor, paddingTop: 10, paddingRight: sidePadding)
-        filterImageView.setDimensions(height: 30, width: 30)
+        logoImageView.anchor(
+            top: view.topAnchor,
+            right: view.rightAnchor,
+            paddingTop: 0,
+            paddingRight: sidePadding
+        )
+        logoImageView.setDimensions(height: 60, width: 70)
     }
     
 }

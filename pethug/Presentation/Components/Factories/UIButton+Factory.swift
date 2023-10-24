@@ -46,7 +46,6 @@ public extension UIButton {
             systemName: newIcon,
             withConfiguration: config
         )?.withTintColor(
-//            newColor ?? (.theme.tintColor ?? .label),
             newColor ?? UIColor.black,
             renderingMode: .alwaysOriginal
         )
@@ -67,7 +66,6 @@ public extension UIButton {
     static func createTextButton(with buttonText: String, fontSize: CGFloat? = nil, color: UIColor? = nil) -> UIButton {
         let button = UIButton(frame: .zero)
         button.setTitle(buttonText, for: .normal)
-//        button.setTitleColor(.theme.tintColor, for: .normal)
         button.setTitleColor( color ?? .black, for: .normal)
         button.titleLabel?.textAlignment = .center
         button.titleLabel?.font = .systemFont(ofSize: fontSize ?? 15, weight: .semibold)
@@ -78,7 +76,6 @@ public extension UIButton {
     static func createSecondaryButton(with buttonText: String) -> UIButton {
         let button = createTextButton(with: buttonText)
         button.layer.borderWidth = 1
-//        button.layer.borderColor = UIColor.theme.border?.cgColor
         button.layer.borderColor = UIColor.purple.cgColor
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 3

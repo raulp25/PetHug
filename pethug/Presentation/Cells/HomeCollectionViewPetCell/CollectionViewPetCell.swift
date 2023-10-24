@@ -179,35 +179,6 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         }
         heartImage.image = UIImage(systemName: viewModel.heartImage)
         
-        
-//        checkLikesWork = DispatchWorkItem(block: {
-//            self.db.collection(viewModel.pet.type.getPath).document(viewModel.pet.id).getDocument { snapshot, error in
-//                let doc = snapshot?.data()
-//                guard let doc = doc else { return }
-//                if let error = error {
-//                    print("error fetching liked pets array: => \(error.localizedDescription)")
-//                    return
-//                }
-//                
-//                if let arrayOfLikes = doc["likedByUsers"] as? [String] {
-//                    if arrayOfLikes.contains(uid) {
-//                        DispatchQueue.main.async {
-//                            viewModel.isLiked = true
-//                            self.heartImage.image = UIImage(systemName: "heart.fill")
-//                        }
-//                    } else {
-//                        DispatchQueue.main.async {
-//                            viewModel.isLiked = false
-//                            self.heartImage.image = UIImage(systemName: "heart")
-//                        }
-//                    }
-//                }
-//            }
-//            
-//            
-//        })
-//        
-//        DispatchQueue.main.async(execute: checkLikesWork!)
         name.text = viewModel.name
         address.text = viewModel.address.rawValue
     }

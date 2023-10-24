@@ -10,17 +10,25 @@ import UIKit
 final class LaunchView: UIView {
     let iconImage: UIImageView = {
         let iv = UIImageView(frame: .zero)
-        iv.image = UIImage(named: "bull")
-        iv.contentMode = .scaleAspectFit
+        iv.image = UIImage(named: "launch3")
+        iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.tintColor = .white
+        iv.backgroundColor = .white
+        iv.layer.cornerRadius = 20
         return iv
     }()
     
-    let title: UILabel = {
-       let label = UILabel()
-        label.text = "Pet Hug"
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
-        return label
+    private let title: UILabel = {
+       let label = UILabel(withAutolayout: true)
+       label.attributedLightBoldColoredText(
+           lightText: "pet",
+           boldText: "hug",
+           colorRegularText: .black,
+           colorBoldText: .white,
+           fontSize: 60
+       )
+       return label
     }()
     
     let subtitle: UILabel = {
@@ -32,38 +40,30 @@ final class LaunchView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
-
-        backgroundColor = customRGBColor(red: 248, green: 111, blue: 14)
+        backgroundColor = customRGBColor(red: 0, green: 171, blue: 187)
         
         addSubview(iconImage)
-        iconImage.centerX(inView: self, topAnchor: topAnchor, paddingTop: (UIScreen.main.bounds.height / 4))
-        iconImage.setDimensions(height: 230, width: 230)
         
-        addSubview(title)
-        title.centerX(inView: iconImage, topAnchor: iconImage.bottomAnchor, paddingTop: 20)
+        iconImage.center(
+            inView: self,
+            yConstant: 0
+        )
+        iconImage.setDimensions(height: 120, width: 120)
         
-        addSubview(subtitle)
-        subtitle.centerX(inView: title, topAnchor: title.bottomAnchor, paddingTop: 0)
         self.iconImage.transform = CGAffineTransform(scaleX: 0, y: 0)
-                self.iconImage.alpha = 0
-        title.alpha = 0
-        title.transform = CGAffineTransform(scaleX: 0, y: 0)
-        subtitle.alpha = 0
-        subtitle.transform = CGAffineTransform(scaleX: 0, y: 0)
-        UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
-            self.iconImage.transform = CGAffineTransform(scaleX: 1, y: 1)
-                    self.iconImage.alpha = 1
-            self.title.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self.subtitle.transform = CGAffineTransform(scaleX: 1, y: 1)
-            self.title.alpha = 1
-            self.subtitle.alpha = 1
-                }) { (_) in
-                    // Animation completion block (if needed)
-                }
-        
+        self.iconImage.alpha = 0
+
+        UIView.animate(
+            withDuration: 0.2,
+            delay: 0.0, options: .curveEaseOut,
+            animations: {
+                self.iconImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self.iconImage.alpha = 1
+            })
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+

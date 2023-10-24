@@ -20,7 +20,7 @@ class SearchBreed: Hashable {
     weak var delegate: SearchBreedDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(breed)
-       }
+    }
     init(breed: String) {
         self.breed = breed
     }

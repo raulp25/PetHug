@@ -54,7 +54,6 @@ class PetViewDescriptionCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCellUI(with description: String) {
-        print("largo del texto: => \(description.count)")
         descriptionLabel.text = description
     }
 }

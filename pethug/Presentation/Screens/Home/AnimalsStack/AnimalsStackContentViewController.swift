@@ -21,13 +21,25 @@ final class AnimalsStackContentViewController: UIViewController {
         let sv = UIScrollView(withAutolayout: true)
         sv.isDirectionalLockEnabled = true
         sv.showsVerticalScrollIndicator = false
-        sv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        sv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
         return sv
     }()
     
     private let containerView: UIView = {
         let uv = UIView(withAutolayout: true)
         return uv
+    }()
+    
+    private let pethugLabel: UILabel = {
+       let label = UILabel(withAutolayout: true)
+       label.attributedLightBoldColoredText(
+           lightText: "pet",
+           boldText: "hug",
+           colorRegularText: .black,
+           colorBoldText: customRGBColor(red: 0, green: 171, blue: 187),
+           fontSize: 30
+       )
+       return label
     }()
     
     private let titleLabel: UILabel = {
@@ -107,7 +119,6 @@ final class AnimalsStackContentViewController: UIViewController {
             }
             
         }
-//        delegate?.didTapFilter()
     }
     
     //MARK: - Setup
@@ -119,7 +130,8 @@ final class AnimalsStackContentViewController: UIViewController {
         
         view.addSubview(scrollView)
         scrollView.addSubview(containerView)
-//        containerView.addSubview(titleLabel)
+
+        containerView.addSubview(pethugLabel)
         containerView.addSubview(allPetsBanner)
         containerView.addSubview(dogsBanner)
         containerView.addSubview(catsBanner)
@@ -141,21 +153,19 @@ final class AnimalsStackContentViewController: UIViewController {
         )
         //Without this containerView gets expanded horizontally which is bad
         containerView.centerX(inView: scrollView)
-//
-//        titleLabel.anchor(
-//            top: containerView.topAnchor,
-//            left: containerView.leftAnchor,
-//            right: containerView.rightAnchor,
-//            paddingLeft: 30
-//        )
         
-//        titleLabel.centerX(inView: containerView, topAnchor: containerView.topAnchor, paddingTop: 10)
-        
-        allPetsBanner.anchor(
+        pethugLabel.anchor(
             top: containerView.topAnchor,
             left: containerView.leftAnchor,
+            paddingTop: 0,
+            paddingLeft: sidePadding
+        )
+        
+        allPetsBanner.anchor(
+            top: pethugLabel.bottomAnchor,
+            left: containerView.leftAnchor,
             right: containerView.rightAnchor,
-            paddingTop: 50,
+            paddingTop: 15,
             paddingLeft: sidePadding,
             paddingRight: sidePadding
         )

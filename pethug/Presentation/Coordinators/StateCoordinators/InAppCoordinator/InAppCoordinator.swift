@@ -23,7 +23,6 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         setUpTabBarChildCoordinators(vc: tabBarVC)
 
         let sideMenuVC = SideMenuViewController()
-        sideMenuVC.delegate = rootViewController
 
         let mainView = tabBarVC.view!
         let sideMenuView = sideMenuVC.view!
@@ -31,9 +30,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         rootViewController.mainContainerView.addSubview(mainView)
         rootViewController.sideMenuContainerView.addSubview(sideMenuView)
 
-//        mainView.pin(to: rootViewController.mainContainerView)
         mainView.fillSuperview()
-//        sideMenuView.pin(to: rootViewController.sideMenuContainerView)
         sideMenuView.fillSuperview()
 
         rootViewController.addChild(tabBarVC)
@@ -61,13 +58,6 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         childCoordinators.append(childCoordinator)
     }
 
-    func startSettingsFlow() {
-        let child = SettingsCoordinator()
-        child.parentCoordinator = self
-        childCoordinators.append(child)
-        child.start()
-    }
-
     // MARK: - setup
     private func setUpTabBarChildCoordinators(vc: UITabBarController) {
         var tabBarVCs = [UINavigationController]()
@@ -90,7 +80,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         let sideMenuPan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
         rootViewController.sideMenuContainerView.addGestureRecognizer(sideMenuPan)
 
-        // all the vc's has the option to show the side menu like messenger
+        // all the vc's have the option to show the side menu
         for coordinator in childCoordinators {
             let pan = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
             let tabVC = coordinator.rootViewController.viewControllers.first
@@ -103,8 +93,6 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         for key in FilterKeys.allCases {
             UserDefaults.standard.removeObject(forKey: key.rawValue)
         }
-        
-        
     }
 
     // MARK: - Private actions

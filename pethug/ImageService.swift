@@ -24,6 +24,9 @@ protocol ImageServiceProtocol {
     /// - Returns image with type ``Data`` or ``Nil``
     func downloadImage(url: String, completion: @escaping (Data?) -> Void)
     
+    /// Delete storage images.
+    /// - Parameters:
+    ///   - imagesUrl:
     func deleteImages(imagesUrl: [String])
 }
 

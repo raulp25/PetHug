@@ -67,13 +67,10 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    //    checkmark.square
+    
     private let maleLabel: UILabel = {
         let label = UILabel()
         label.text = "Macho"
@@ -88,7 +85,6 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.dog.rawValue
         return button
     }()
     
@@ -97,9 +93,6 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .equalSpacing
-        //        stack.spacing = 15
-        //        stack.layoutMargins = .init(top: 10, left: 20, bottom: 10, right: 20)
-        //        stack.isLayoutMarginsRelativeArrangement = true
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -117,7 +110,6 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         button.imageView?.contentMode = .scaleAspectFill
         button.tintColor = .black
         button.addTarget(self, action: #selector(didTapCheckMark), for: .touchUpInside)
-        //        button.tag = CurrentChecked.cat.rawValue
         return button
     }()
     
@@ -171,9 +163,6 @@ final class FilterPetsGenderCellContentView: UIView, UIContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("✅ Deinit NewPetGalleryContentView")
-    }
     
     // MARK: - Functions
     private func apply(configuration: FilterPetsGenderListCellConfiguration) {

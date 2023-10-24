@@ -19,8 +19,6 @@ final class AddPetViewModel {
     weak var navigation: AddPetNavigatable?
     var state = PassthroughSubject<State,Never>()
     
-    //    var fetchPetsUseCase
-    
     //MARK: - Private Properties
     private let imageService: ImageServiceProtocol
     private let fetchUserPetsUC: DefaultFetchUserPetsUC
@@ -33,8 +31,6 @@ final class AddPetViewModel {
     private var isFetching = false
     private var isFirstLoad = true
     var isNetworkOnline = true
-    
-    
     
     //MARK: - Init
     init(
@@ -52,7 +48,7 @@ final class AddPetViewModel {
     }
     
     deinit {
-        print("✅ Deinit PetsViewModel")
+        print("✅ Deinit AddPetViewModel")
     }
     
     // MARK: - Private observers

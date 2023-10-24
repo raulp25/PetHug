@@ -8,7 +8,7 @@
 import UIKit
 
 final class EmptyDataView: UIViewController {
-    
+    //MARK: - Private components
     private lazy var iconView: UIImageView = {
        let iv = UIImageView(withAutolayout: true)
         iv.image = UIImage(systemName: "triangle")
@@ -30,7 +30,7 @@ final class EmptyDataView: UIViewController {
     
     private let captionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Aún no hay Mascotas en los resultados"
+        label.text = "Aún no hay mascotas en los resultados"
         label.textColor = UIColor.lightGray
         label.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         label.textAlignment = .center
@@ -38,11 +38,13 @@ final class EmptyDataView: UIViewController {
         return label
     }()
     
-    var titleTxt: String?
-    var caption: String?
-    var namedImage: String?
-    var systemImage: String?
+    //MARK: - Private properties
+    private var titleTxt: String?
+    private var caption: String?
+    private var namedImage: String?
+    private var systemImage: String?
     
+    //MARK: - LifeCycle
     init(
         title: String? = nil,
         caption: String? = nil,
@@ -65,9 +67,8 @@ final class EmptyDataView: UIViewController {
         setup()
     }
     
-    
+    //MARK: - Setup
     func setup() {
-        let sidesInset = CGFloat(50)
         let width = CGFloat(200)
         
         view.addSubview(iconView)

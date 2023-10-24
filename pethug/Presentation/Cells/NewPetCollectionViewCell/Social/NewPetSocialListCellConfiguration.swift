@@ -23,7 +23,7 @@ struct NewPetSocial: Hashable {
     weak var delegate: NewPetSocialDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(socialLevel: Int? = nil) {
         self.socialLevel = socialLevel
     }

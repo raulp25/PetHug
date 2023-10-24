@@ -7,22 +7,6 @@
 import UIKit
 
 class GradientUIViewButton: UIView {
-    
-//    private lazy var loginButton: UIButton = {
-//        let button = UIButton(type: .system)
-//        button.isEnabled = false
-////        button.startColor = UIColor.black.withAlphaComponent(0.7)
-////        button.endColor =  UIColor.black.withAlphaComponent(0.7)
-////        button.setHeight(50)
-//        button.setTitle("Mielda", for: .normal)
-//        button.setTitleColor(.white, for: .normal)
-//        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-////                button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
-//        return button
-//    }()
-    
-    
-    
     var title: UILabel = {
         let label = UILabel()
         label.text = "Title"
@@ -32,10 +16,8 @@ class GradientUIViewButton: UIView {
         return label
     }()
     
-    
     private var logoImage: UIImageView = {
         let iv = UIImageView()
-//    image: UIImage(systemName: "apple.logo")
         iv.tintColor = .white
         iv.contentMode = .scaleAspectFit
         iv.setDimensions(height: 25, width: 25)
@@ -114,13 +96,8 @@ class GradientUIViewButton: UIView {
         isUserInteractionEnabled = true
         translatesAutoresizingMaskIntoConstraints = false
         addSubview(title)
-//        addSubview(logoImage)
         
         title.center(inView: self)
-        
-//        logoImage.anchor(right: title.leftAnchor, paddingRight: 5)
-//        logoImage.centerY(inView: title)
-        
     }
     
     
@@ -163,12 +140,6 @@ class GradientUIViewButton: UIView {
             view.removeFromSuperview()
         }
     }
-    
-//    func addSubViews(views: [UIView]) {
-//        views.forEach { view in
-//            self.addSubview(view)
-//        }
-//    }
     
 }
 

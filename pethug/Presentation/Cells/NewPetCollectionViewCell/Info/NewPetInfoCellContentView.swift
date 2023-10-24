@@ -197,7 +197,13 @@ class CustomTextView: UITextView {
         showsVerticalScrollIndicator = false
         
         addSubview(placeholderLabel)
-        placeholderLabel.anchor(top: topAnchor, left: leftAnchor, paddingTop: paddingTop ?? 7, paddingLeft: 5)
+        
+        placeholderLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            paddingTop: paddingTop ?? 7,
+            paddingLeft: 5
+        )
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleTextDidChange), name: UITextView.textDidChangeNotification, object: nil)
     }
@@ -206,10 +212,7 @@ class CustomTextView: UITextView {
         fatalError("init(coder:) has not been implemented")
     }
     
-
-    
     //MARK: - Observed functions
-    
     @objc func handleTextDidChange() {
         placeholderLabel.isHidden = !text.isEmpty
     }

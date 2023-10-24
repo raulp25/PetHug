@@ -39,13 +39,17 @@ final class Badge: UIView {
     var captionText: String? = nil
     var iconImageName: String? = nil
     
-    
+    //MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: .zero)
     }
     
     
-     convenience init(titleText: String? = nil, captionText: String? = nil, iconImageName: String? = nil) {
+     convenience init(
+        titleText: String? = nil,
+        captionText: String? = nil,
+        iconImageName: String? = nil
+     ) {
          self.init(frame: .zero)
          configureUI(titleText: titleText, captionText: captionText, iconImageName: iconImageName)
      }
@@ -54,9 +58,9 @@ final class Badge: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    //MARK: - Config
     func configureUI(titleText: String? = nil, captionText: String? = nil, iconImageName: String? = nil) {
-        backgroundColor = customRGBColor(red: 254, green: 246, blue: 235, alpha: 0.7)
+        backgroundColor = customRGBColor(red: 254, green: 246, blue: 235, alpha: 1)
         
         addSubview(titleLabel)
         titleLabel.centerX(inView: self, topAnchor: topAnchor, paddingTop: 5)

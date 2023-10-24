@@ -31,7 +31,6 @@ final class ApplicationCoordinator: Coordinator {
     //MARK: - Setup / listen
     func start() {
         window.rootViewController = LaunchViewController()
-//        window.rootViewController = LoginViewController()
         bindAuthChangesToSession()
         
         $session
@@ -56,23 +55,20 @@ final class ApplicationCoordinator: Coordinator {
     }
     
     //MARK: - Private methods
-    
     private func setUpCoordinator(with state: SessionState) {
         var childCoordinator: StateCoordinator?
-        
         switch state {
         case .signedOut:
-            print("state signedOut setUpCoordinator(): => \(state)")
             let coordinator = LoginCoordinator()
             window.rootViewController = coordinator.rootViewController
             childCoordinator = coordinator
         case .signedInButNotVerified:
-            print("state signedInButNotVerified setUpCoordinator(): => \(state)")
+            //states signedInButNotVerified and signedIn are the same,
+            //we have them both in case we add another flow when user email is not verified
             let coordinator = InAppCoordinator()
             window.rootViewController = coordinator.rootViewController
             childCoordinator = coordinator
         case .signedIn:
-            print("state signedIn setUpCoordinator(): => \(state)")
             let coordinator = InAppCoordinator()
             window.rootViewController = coordinator.rootViewController
             childCoordinator = coordinator
@@ -88,7 +84,6 @@ final class ApplicationCoordinator: Coordinator {
     
     
     //MARK: - bind
-    
     private func bindAuthChangesToSession() {
         authService
             .observeAuthChanges()

@@ -7,10 +7,9 @@
 
 import UIKit
 import PhotosUI
+import CropViewController
 
 final class NewPetGalleryCellContentView: UIView, UIContentView {
-    
-    
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     private let titleLabel: UILabel = {
@@ -33,7 +32,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
     private var work: DispatchWorkItem?
-    
+    private var editImageItem: NewPetGalleryCellContentView.Item!
     //MARK: - Internal properties
     private var currentSnapData: [SnapData] = [.init(key: .gallery, values: [
         .image(.init(image: UIImage(systemName: "pencil")!))
@@ -43,11 +42,6 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
             currentConfiguration.viewModel?.delegate?.galleryDidChange(images: images)
         }
     }
-//    var snapData: [SnapData] {
-//        didSet {
-////            updateSnapShot()
-//        }
-//    }
     
     // MARK: - Properties
     private var currentConfiguration: NewPetGalleryListCellConfiguration!
@@ -63,59 +57,15 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         }
     }
     
-    let containerView = UIView()
-    
     // MARK: - LifeCycle
     init(configuration: NewPetGalleryListCellConfiguration) {
         super.init(frame: .zero)
-
         // create the content view UI
         setup()
         configureDataSource()
         updateSnapShot()
         // apply the configuration (set data to UI elements / define custom content view appearance)
         apply(configuration: configuration)
-        
-        translatesAutoresizingMaskIntoConstraints = true
-        isUserInteractionEnabled = true
-        addSubview(titleLabel)
-        addSubview(collectionView)
-        addSubview(captionLabel)
-        
-        let sideInsets = CGFloat(40)
-        titleLabel.anchor(
-            top: topAnchor,
-            left: leftAnchor,
-            right: rightAnchor,
-            paddingLeft: sideInsets
-        )
-        titleLabel.setHeight(14)
-        
-        collectionView.anchor(
-            top: titleLabel.bottomAnchor,
-            left: leftAnchor,
-            right: rightAnchor,
-            paddingTop: 10
-        )
-        
-        collectionView.setHeight(90)
-        
-        captionLabel.anchor(
-            top: collectionView.bottomAnchor,
-            left: leftAnchor,
-            bottom: bottomAnchor,
-            right: rightAnchor,
-            paddingTop: 10,
-            paddingLeft: sideInsets,
-            paddingBottom: 20
-        )
-        
-        collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
-        collectionView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
-        collectionView.showsHorizontalScrollIndicator = false
-        
-        
-
     }
     
     @available(*, unavailable) required init?(coder _: NSCoder) {
@@ -134,7 +84,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         }
 
         currentConfiguration = configuration
-//
+
         guard let item = currentConfiguration.viewModel else { return }
         
         if !item.imagesToEdit.isEmpty {
@@ -174,10 +124,47 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     
     private func setup() {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        
+        translatesAutoresizingMaskIntoConstraints = true
+        isUserInteractionEnabled = true
+        addSubview(titleLabel)
+        addSubview(collectionView)
+        addSubview(captionLabel)
+        
+        let sideInsets = CGFloat(40)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingLeft: sideInsets
+        )
+        titleLabel.setHeight(14)
+        
+        collectionView.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            right: rightAnchor,
+            paddingTop: 10
+        )
+        
+        collectionView.setHeight(90)
+        
+        captionLabel.anchor(
+            top: collectionView.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 10,
+            paddingLeft: sideInsets,
+            paddingBottom: 20
+        )
+        
+        collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+        collectionView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        collectionView.showsHorizontalScrollIndicator = false
     }
     
     //MARK: - CollectionView layout
-//   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
             guard let self else { fatalError() }
@@ -198,15 +185,6 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-            <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
-            supplementaryView, string, indexPath in
-                supplementaryView.titleLabel.text = "Adopta a un amigo"
-        }
-        
-///        FOR EDIT PET INSTEAD OF PASSING UIIMAGE directly, WE PASS A VIEWMODEL THAT HAS A IMAGEURLSTRING[String] AND A IMAGEFROMDEVICE[UIIMAGE] PRPERTYS and we
-///       place the condition inside the cell if the image from device isnt nil we render with uiimage named
         let selectetPhotoViewCellRegistration = UICollectionView.CellRegistration<SelectPhotoControllerCollectionViewCell, String> { cell, _, model in
             cell.configure(delegate: self)
         }
@@ -215,7 +193,6 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
             cell.configure(with: model)
             cell.delegate = self
         }
-        
         
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
@@ -232,32 +209,30 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         
     // MARK: - Private methods
     private func updateSnapShot(animated: Bool = true) {
-//        currentSnapData  = [.init(key: .gallery, values: [
-//            .image(.init(image: UIImage(systemName: "pencil")!))
-//        ])]
-//        snapData  = [.init(key: .pets, values: generatePet(total: 21))]
-        
         snapshot = Snapshot()
         snapshot.appendSections(currentSnapData.map {
-//            print(": section=> \($0.key)")
             return $0.key
         })
-//        snapshot.appendSections(snapData.map {
-//            print(": section=> \($0.key)")
-//            return $0.key
-//        })
-        
-        print("currentSnapData: => \(currentSnapData)")
-//        print("currentSnapData: => \(snapData)")
         
         for datum in currentSnapData {
             snapshot.appendItems(datum.values, toSection: datum.key)
         }
-//        for datum in snapData {
-//            snapshot.appendItems(datum.values, toSection: datum.key)
-//        }
-//        print("snapshot en updateSnapshot(): => \(snapshot)")
+        
         dataSource.apply(snapshot, animatingDifferences: animated)
+    }
+    
+    private func showCrop(image: UIImage) {
+        let vc = CropViewController(croppingStyle: .default, image: image)
+        vc.aspectRatioPreset = .presetSquare
+        vc.aspectRatioLockEnabled = true
+        vc.toolbarPosition = .bottom
+        vc.doneButtonTitle = "Continuar"
+        vc.cancelButtonTitle = "Cancelar"
+        vc.delegate = self
+        //We need to dismiss the GalleryPageSheet that was previously presented by the viewmodel navigation
+        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: {
+            self.currentConfiguration.viewModel?.navigation?.present(vc, animated: true)
+        })
     }
 
 }
@@ -294,6 +269,7 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
         picker.sourceType = .camera
         picker.allowsEditing = true
         picker.delegate = self
+        //We need to dismiss the GalleryPageSheet that was previously presented by the viewmodel navigation
         currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: {
             self.currentConfiguration.viewModel?.navigation?.present(picker, animated: true)
         })
@@ -305,6 +281,7 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
         
         let phPicker = PHPickerViewController(configuration: config)
         phPicker.delegate = self
+        //We need to dismiss the GalleryPageSheet that was previously presented by the viewmodel navigation
         currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: {
             self.currentConfiguration.viewModel?.navigation?.present(phPicker, animated: true)
         })
@@ -315,14 +292,15 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
 ///MARK: - Delete / Edit image PageSheet
 extension NewPetGalleryCellContentView: GalleryCellDelegate {
     func didTapCell(_ cell: Item) {
-        guard let item = dataSource.indexPath(for: cell) else { return }
+        guard let indexPath = dataSource.indexPath(for: cell) else { return }
         
         let height = CGFloat(153)
         
         let controller = EditGalleryImagePageSheetView()
         controller.pageSheetHeight = height
         controller.delegate = self
-        controller.cellIndexPath = item
+        controller.cellIndexPath = indexPath
+        
         let nav = UINavigationController(rootViewController: controller)
         nav.modalPresentationStyle = .pageSheet
         
@@ -347,19 +325,10 @@ extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
             if let sectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }),
                let itemIndex = currentSnapData[sectionIndex].values.firstIndex(where: { $0 == item })
             {
-                print("itemindex 787: => \(itemIndex)")
-                print("currentSnapData[sectionIndex].values antes 787: => \(currentSnapData[sectionIndex].values.count)")
-                print("[images] antes 787: => \(currentSnapData[sectionIndex].values.count)")
-                print("/////////////////////////////////////////////////////////////////////")
                 // Remove the item from currentSnapData
                 currentSnapData[sectionIndex].values.remove(at: itemIndex)
                 images.remove(at: itemIndex - 1)
                 
-//                var snapshot = dataSource.snapshot()
-//                snapshot.deleteItems([item])
-                print("currentSnapData[sectionIndex].value despues 787: => \(currentSnapData[sectionIndex].values.count)")
-                print("[images] despues 787: => \(currentSnapData[sectionIndex].values.count)")
-                print("\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\")
                 var snapshot = Snapshot()
                 snapshot.appendSections([.gallery])
                 snapshot.appendItems(currentSnapData[sectionIndex].values)
@@ -368,11 +337,47 @@ extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
         }
     }
     
-    func didTapEdit() {
-        //TODO We'll need a third party to crop "edit" the images
+    func didTapEdit(cell indexPath: IndexPath) {
+        if let item = dataSource.itemIdentifier(for: indexPath) {
+            
+            editImageItem = item
+            
+            if let sectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }),
+               let item = currentSnapData[sectionIndex].values.first(where: { $0 == item })
+            {
+                switch item {
+                case .image(let image):
+                    guard let image = image.image else { return }
+                    showCrop(image: image)
+                }
+            }
+        }
     }
 }
 
+extension NewPetGalleryCellContentView: CropViewControllerDelegate {
+    func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
+        cropViewController.dismiss(animated: false)
+    }
+    
+    func cropViewController(_ cropViewController: CropViewController, didCropToImage image: UIImage, withRect cropRect: CGRect, angle: Int) {
+        cropViewController.dismiss(animated: false)
+        
+        if let sectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }),
+           let itemIndex = currentSnapData[sectionIndex].values.firstIndex(where: { $0 == editImageItem })
+        {
+            // Remove the item from currentSnapData
+            let newImage: NewPetGalleryCellContentView.Item = .image(.init(image: image))
+            currentSnapData[sectionIndex].values[itemIndex] = newImage
+            images[itemIndex - 1] = image
+            
+            var snapshot = Snapshot()
+            snapshot.appendSections([.gallery])
+            snapshot.appendItems(currentSnapData[sectionIndex].values)
+            dataSource.apply(snapshot, animatingDifferences: false)
+        }
+    }
+}
 
 //MARK: - Picker Camera Delegate
 extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -394,7 +399,7 @@ extension NewPetGalleryCellContentView: UIImagePickerControllerDelegate, UINavig
             snapshot.appendItems(currentSnapData[gallerySectionIndex].values, toSection: .gallery)
             dataSource.apply(snapshot, animatingDifferences: true)
             
-           }
+        }
     }
 }
 

@@ -13,7 +13,6 @@ func buildQuery(for options: FilterOptions, collection: String) -> Query {
     
     query = db.collection(collection)
     
-        
         if options.age.min != 0 ||
            options.age.max != 25 {
             

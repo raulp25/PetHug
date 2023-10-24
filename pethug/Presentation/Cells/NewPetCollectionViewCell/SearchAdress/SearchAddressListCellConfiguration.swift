@@ -8,7 +8,6 @@
 import UIKit
 
 protocol SearchAddressDelegate: AnyObject {
-//    func textViewdDidChange(text: String)
     func didTapCell(state: Pet.State)
 }
 

@@ -104,7 +104,11 @@ final class NewPetSocialCellContentView: UIView, UIContentView {
         addSubview(socialLabel)
         addSubview(slider)
         
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
         
         socialLabel.anchor(
             top: titleLabel.bottomAnchor,

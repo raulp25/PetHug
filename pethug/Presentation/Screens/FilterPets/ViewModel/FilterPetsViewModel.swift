@@ -35,9 +35,7 @@ class FilterPetsViewModel {
                 switch state {
                 case .valid:
                     self.isValidSubject.send(true)
-                    print("is valid 666")
                 case .invalid:
-                            print("is inValid 666")
                     self.isValidSubject.send(false)
                 }
             }).store(in: &cancellables)
@@ -122,7 +120,6 @@ class FilterPetsViewModel {
     
     private func setInitialValues() {
         if let savedFilterOptions = retrieveFilterOptionsFromUserDefaults() {
-            print("savedFilterOptions: => \(savedFilterOptions)")
             currentFilterOptions = savedFilterOptions
             
             genderState   = savedFilterOptions.gender

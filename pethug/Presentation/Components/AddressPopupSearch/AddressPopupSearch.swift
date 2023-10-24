@@ -13,14 +13,12 @@ protocol AddressPopupSearchDelegate: AnyObject {
 }
 
 class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
-    
     //MARK: - Private  components
     private let searchController = UISearchController(searchResultsController: nil)
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Nombre del animal / Título para darle mas duro a joanna por atras dale pa"
         label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         label.numberOfLines = 0
@@ -28,7 +26,7 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     }()
     
     private lazy var cancelButton: UIButton = {
-        let btn = UIButton.createTextButton(with: "cancel", fontSize: 18)
+        let btn = UIButton.createTextButton(with: "cerrar", fontSize: 18, color: UIColor.orange)
         btn.addTarget(self, action: #selector(didTapCancell), for: .touchUpInside)
         return btn
     }()
@@ -45,7 +43,6 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     var delegate: AddressPopupSearchDelegate?
    
     //MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -90,18 +87,32 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
         view.addSubview(cancelButton)
         view.addSubview(collectionView)
         
-        collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: cancelButton.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 23, paddingRight: 23)
+        collectionView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            left: view.leftAnchor,
+            bottom: cancelButton.topAnchor,
+            right: view.rightAnchor,
+            paddingTop: 0,
+            paddingLeft: 23,
+            paddingRight: 23
+        )
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.showsVerticalScrollIndicator = false
         collectionView.layer.borderColor = customRGBColor(red: 220, green: 220, blue: 220).cgColor
         collectionView.layer.borderWidth = 1
-        cancelButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, paddingLeft: 23, paddingBottom: 5, paddingRight: 23)
+        
+        cancelButton.anchor(
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            paddingLeft: 23,
+            paddingBottom: 5,
+            paddingRight: 23
+        )
     }
     
 
     func didPresentSearchController(_ searchController: UISearchController) {
-        print(": => didPresentSearchController()")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0, execute: {
             searchController.searchBar.becomeFirstResponder()
         })
@@ -129,14 +140,6 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-        <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
-            supplementaryView, string, indexPath in
-            supplementaryView.titleLabel.text = "Adopta a un amigo"
-        }
-        
-        
         let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchAddressListCellConfiguration>, SearchAddress> { cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
@@ -151,20 +154,6 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
             }
             
         })
-        
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-            guard let self else {
-                return nil
-            }
-            
-            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            
-            switch section {
-            case .state:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            }
-        }
-        
     }
     
     

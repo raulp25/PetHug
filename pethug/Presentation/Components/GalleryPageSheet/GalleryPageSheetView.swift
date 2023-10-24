@@ -13,7 +13,6 @@ protocol GalleryPageSheetDelegate: AnyObject {
 }
 
 final class GalleryPageSheetView: UIViewController {
-    
     //MARK: - Private components
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -107,7 +106,6 @@ final class GalleryPageSheetView: UIViewController {
         configure()
     }
     
-    
     //MARK: - Private Actions
      @objc private func didTapCamera() {
          delegate?.didTapCamera()
@@ -123,12 +121,21 @@ final class GalleryPageSheetView: UIViewController {
     private func configure() {
         let paddingTop = (pageSheetHeight ?? 0) / 3
         view.backgroundColor = .white
+        
         view.addSubview(titleLabel)
         view.addSubview(hStackContainer)
         
-        titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
+        titleLabel.centerX(
+            inView: view,
+            topAnchor: view.topAnchor,
+            paddingTop: paddingTop
+        )
         
-        hStackContainer.centerX(inView: titleLabel, topAnchor: titleLabel.bottomAnchor, paddingTop: 30)
+        hStackContainer.centerX(
+            inView: titleLabel,
+            topAnchor: titleLabel.bottomAnchor,
+            paddingTop: 30
+        )
         
         cameraImage.setDimensions(height: 30, width: 30)
         

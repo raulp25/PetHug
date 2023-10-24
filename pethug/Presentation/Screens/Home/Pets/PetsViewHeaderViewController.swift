@@ -41,7 +41,7 @@ final class PetsViewHeaderViewController: UIViewController {
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Animales"
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()

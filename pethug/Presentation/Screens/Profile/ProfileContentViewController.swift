@@ -13,32 +13,14 @@ import SDWebImage
 
 final class ProfileContentViewController: UIViewController {
     //MARK: - Private components
+    private let headerView = ProfileViewHeaderViewController()
     private let dummyView = DummyView()
     private let loadingView = LoadingViewController(spinnerColors: [customRGBColor(red: 255, green: 176, blue: 42)])
-    
-    private let titleLabel: UILabel = {
-       let label = UILabel()
-        label.text = "General"
-        label.font = UIFont.systemFont(ofSize: 50, weight: .light, width: .expanded)
-        label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
-        
-        
-//        label.font = UIFont.systemFont(ofSize: 55, weight: .light, width: .expanded)
-//        let attributedText = NSMutableAttributedString(string: "Perfil")
-//        let letterSpacing: CGFloat = 2.5
-//        attributedText.addAttribute(.kern, value: letterSpacing, range: NSRange(location: 0, length: attributedText.length))
-//        label.attributedText = attributedText
-        
-        return label
-    }()
     
     lazy var containerView: UIView = {
         let uv = UIView(withAutolayout: true)
         uv.backgroundColor = .white
         uv.layer.cornerRadius = 10
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
-//        uv.isUserInteractionEnabled = true
-//        uv.addGestureRecognizer(tapGesture)
         return uv
     }()
     
@@ -68,10 +50,6 @@ final class ProfileContentViewController: UIViewController {
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapProfilePic))
-//        iv.isUserInteractionEnabled = true
-//        iv.addGestureRecognizer(tapGesture)
         return iv
     }()
     
@@ -111,6 +89,7 @@ final class ProfileContentViewController: UIViewController {
     //MARK: - Internal properties
     weak var coordinator: ProfileTabCoordinator?
     
+    //MARK: - LifeCycle
     init(authService: AuthServiceProtocol, fetchUserUC: DefaultFetchUserUC) {
         self.authService = authService
         self.fetchUserUC = fetchUserUC
@@ -126,7 +105,11 @@ final class ProfileContentViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: true)
         fetchUser()
         setup()
-        
+        bind()
+    }
+    
+    //MARK: - Bind
+    func bind() {
         viewModel.state
             .handleThreadsOperator()
             .sink { [weak self] state in
@@ -179,22 +162,33 @@ final class ProfileContentViewController: UIViewController {
     private func setup() {
         view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
         
-        view.addSubview(titleLabel)
+        add(headerView)
+        
         view.addSubview(containerView)
         containerView.addSubview(profileImageView)
         containerView.addSubview(cameraIcon)
+        
         view.addSubview(logoutBtn)
         view.addSubview(deleteAccBtn)
+
         
-        titleLabel.anchor(
-            top: view.safeAreaLayoutGuide.topAnchor,
+        headerView.view.anchor(
+            top: view.topAnchor,
             left: view.leftAnchor,
-            paddingLeft: 30
+            right: view.rightAnchor,
+            //Responsive for se 3rd gen
+            paddingTop:
+                UIScreen.main.bounds.size.height <= 700 ?
+                40 :
+                    UIScreen.main.bounds.size.height <= 926 ?
+                    60 :
+                        75
         )
+        headerView.view.setHeight(70)
         
         containerView.centerX(
             inView: view,
-            topAnchor: titleLabel.bottomAnchor,
+            topAnchor: headerView.view.bottomAnchor,
             paddingTop: 150
         )
         containerView.setDimensions(height: 145, width: 145)
@@ -248,7 +242,6 @@ final class ProfileContentViewController: UIViewController {
     }
     
     private func setLoadingScreen() {
-        print("se llama loading view: => ")
         view.isUserInteractionEnabled = false
         
         add(loadingView)
@@ -305,7 +298,6 @@ final class ProfileContentViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapModalScreen))
         dummyView.view.isUserInteractionEnabled = true
         dummyView.view.addGestureRecognizer(tapGesture)
-        
         
         deleteAccView.center(
             inView: dummyView.view

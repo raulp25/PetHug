@@ -19,10 +19,8 @@ final class SearchBreedCellContentView: UIView, UIContentView {
         return uv
     }()
     
-    
     private let breedLabel: UILabel = {
        let label = UILabel()
-        label.text = "Coquer Spaniel Danish y joanna camacho pasandonos de largo mi rey"
         label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         label.numberOfLines = 1
@@ -41,7 +39,6 @@ final class SearchBreedCellContentView: UIView, UIContentView {
         return iv
     }()
 
-    
     // MARK: - Properties
     private var currentConfiguration: SearchBreedListCellConfiguration!
     var configuration: UIContentConfiguration {
@@ -76,7 +73,6 @@ final class SearchBreedCellContentView: UIView, UIContentView {
     }
     
     @objc func didTapCell() {
-        print(": =>didtap cell objc ")
         guard let viewModel = currentConfiguration.viewModel else { return }
         currentConfiguration.viewModel?.delegate?.didTapCell(breed:  viewModel.breed)
     }
@@ -88,32 +84,47 @@ final class SearchBreedCellContentView: UIView, UIContentView {
         }
 
         currentConfiguration = configuration
-//
+        
         guard let item = currentConfiguration.viewModel else { return }
-//        nameLabel.text = item.name
         breedLabel.text = item.breed
-//        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-//        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-//
-//        imageView.configure(with: item.profileImageUrlString)
     }
     
     
     private func setup() {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        
         addSubview(containerView)
-        containerView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         containerView.addSubview(breedLabel)
         containerView.addSubview(chevronImageView)
-        containerView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 10, paddingBottom: 10)
-        containerView.setHeight(20)
         
-//        containerView.layer.cornerRadius = 20
-        chevronImageView.centerY(inView: containerView)
-        chevronImageView.anchor(right: containerView.rightAnchor, paddingRight: 10)
+        containerView.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 10,
+            paddingBottom: 10
+        )
+        containerView.setHeight(20)
+        containerView.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        
+        chevronImageView.centerY(
+            inView: containerView
+        )
+        chevronImageView.anchor(
+            right: containerView.rightAnchor,
+            paddingRight: 10
+        )
         chevronImageView.setDimensions(height: 20, width: 20)
-        breedLabel.centerY(inView: containerView)
-        breedLabel.anchor(left: containerView.leftAnchor, right: chevronImageView.leftAnchor, paddingLeft: 10)
+        
+        breedLabel.centerY(
+            inView: containerView
+        )
+        breedLabel.anchor(
+            left: containerView.leftAnchor,
+            right: chevronImageView.leftAnchor,
+            paddingLeft: 10
+        )
     }
     
     

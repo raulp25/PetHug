@@ -17,11 +17,9 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
         return label
     }()
     
-    
     lazy var containerView: UIView = {
         let uv = UIView(withAutolayout: true)
         uv.backgroundColor = .white
-        
         //isUserInteractionEnabled is handled by the apply() fn
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
         uv.addGestureRecognizer(tapGesture)
@@ -106,10 +104,6 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Private actions
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-//        currentConfiguration.viewModel?.delegate?.textViewdDidChange(text: textField.text ?? "")
-    }
-    
     @objc func didTapCell() {
         print(": =>didtap cell objc ")
         currentConfiguration.viewModel?.delegate?.didTapBreedSelector()
@@ -129,23 +123,16 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
         }
 
         currentConfiguration = configuration
-//
+
         guard let item = currentConfiguration.viewModel else { return }
         containerView.isUserInteractionEnabled = item.petType != nil ? true : false
         
-        ///TODO Logic for setting the breeds depending on the pet type
-        print("item pettype == nil ?: => \(item.petType)")
         if item.petType == nil {
             breedLabel.text =  "Eliga un tipo de animal para continuar"
             unknownBreedCheckMarkButton.isUserInteractionEnabled = false
         } else {
             updateButtonUIForBrredState(item.currentBreed)
         }
-//        nameLabel.text = item.name
-//        nameLabel.font = .systemFont(ofSize: 18, weight: .semibold)
-//        nameLabel.textColor = UIColor.blue.withAlphaComponent(0.7)
-//
-//        imageView.configure(with: item.profileImageUrlString)
     }
     
 

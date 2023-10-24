@@ -202,7 +202,6 @@ final class FilterPetsAddressCellContentView: UIView, UIContentView {
     }
     
     @objc func didTapCell() {
-        print(": =>didtap cell objc ")
         currentConfiguration.viewModel?.delegate?.didTapAddressSelector()
     }
     

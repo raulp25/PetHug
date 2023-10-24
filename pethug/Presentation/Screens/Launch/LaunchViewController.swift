@@ -11,14 +11,13 @@ import UIKit
 final class LaunchViewController: UIViewController {
     
     //MARK: - Properties
-    
-    var countDown: Double = 1
+    var countDown: Double = 1.5
     
     //MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .red
+        view.backgroundColor = customRGBColor(red: 0, green: 171, blue: 187)
         setup()
     }
     

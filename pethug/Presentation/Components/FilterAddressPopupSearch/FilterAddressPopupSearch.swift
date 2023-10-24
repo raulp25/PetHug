@@ -13,7 +13,6 @@ protocol FilterAddressPopupSearchDelegate: AnyObject {
 }
 
 class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchControllerDelegate, UISearchBarDelegate {
-    
     //MARK: - Private  components
     private let searchController = UISearchController(searchResultsController: nil)
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())

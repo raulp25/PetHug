@@ -26,7 +26,7 @@ struct NewPetSocialInfo: Hashable {
     weak var delegate: NewPetSocialInfoDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(socialInfo: SocialInfo) {
         self.socialInfo = socialInfo
     }

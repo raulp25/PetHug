@@ -61,17 +61,13 @@ final class NewPetSocialInfoCellContentView: UIView, UIContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Private actions
-    
-    
-    
+
     // MARK: - Functions
     private func apply(configuration: NewPetSocialInfoListCellConfiguration) {
         guard currentConfiguration != configuration else { return }
         
         currentConfiguration = configuration
         guard let item = currentConfiguration.viewModel else { return }
-        print("socialinfo: => \(item.socialInfo)")
         configureCellUI(with: item.socialInfo)
         
     }

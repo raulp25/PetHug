@@ -24,7 +24,7 @@ struct NewPetAddress: Hashable {
     weak var delegate: NewPetAddressDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(address: Pet.State?) {
         self.address = address
     }

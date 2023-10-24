@@ -14,5 +14,4 @@ struct User: Codable {
     let email: String
     let bio: String?
     let profileImageUrl: String?
-//    var isCurrentUser: Bool?
 }

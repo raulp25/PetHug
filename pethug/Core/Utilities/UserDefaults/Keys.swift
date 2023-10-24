@@ -7,6 +7,10 @@
 
 import Foundation
 
+enum OnboardingKey: String {
+    case showOnboarding
+}
+
 enum FilterKeys: String, CaseIterable {
     case filterType
     case filterGender

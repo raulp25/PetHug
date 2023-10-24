@@ -127,10 +127,14 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         return button
     }()
     
-    //MARK: - Private properties
+    enum CurrentChecked: Int {
+        case dog = 1
+        case cat = 2
+        case bird = 3
+        case rabbit = 4
+    }
     
-    
-    //MARK: - Internal properties
+    var buttons: [UIButton] = []
     
     // MARK: - Properties
     private var currentConfiguration: NewPetTypeListCellConfiguration!
@@ -168,10 +172,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("✅ Deinit NewPetGalleryContentView")
-    }
-    
     // MARK: - Functions
     private func apply(configuration: NewPetTypeListCellConfiguration) {
         guard currentConfiguration != configuration else {
@@ -179,7 +179,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
         }
         
         currentConfiguration = configuration
-        //
         guard let item = currentConfiguration.viewModel else { return }
         if item.type != nil {
             switch item.type {
@@ -230,15 +229,6 @@ final class NewPetTypeCellContentView: UIView, UIContentView {
             button.setHeight(height)
         }
     }
-    
-    enum CurrentChecked: Int {
-        case dog = 1
-        case cat = 2
-        case bird = 3
-        case rabbit = 4
-    }
-    
-    var buttons: [UIButton] = []
     
     @objc func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else {

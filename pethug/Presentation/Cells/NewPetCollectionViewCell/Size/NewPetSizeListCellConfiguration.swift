@@ -22,7 +22,7 @@ struct NewPetSize: Hashable {
     weak var delegate: NewPetSizeDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(size: Pet.Size? = nil) {
         self.size = size
     }

@@ -30,18 +30,18 @@ extension User: DictionaryLiteralMapper {
             "profileImageUrl": profileImageUrl
         ]
     }
-    
-   //MARK: - Checar si podemos usar este metodo de encode y despues decode para transformar en object literal
-    func dict() throws -> [String: Any] {
-        let data = try JSONEncoder().encode(self)
-        return try castDataToDict(data: data)
-    }
-
-    private func castDataToDict(data: Data) throws -> [String: Any] {
-        guard let dict = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] else {
-            //MARK: cambiar este error
-            throw URLError(.badURL)
-        }
-        return dict
-    }
 }
+    
+//   //MARK: - Maybe usefull in the future
+//    func dict() throws -> [String: Any] {
+//        let data = try JSONEncoder().encode(self)
+//        return try castDataToDict(data: data)
+//    }
+//
+//    private func castDataToDict(data: Data) throws -> [String: Any] {
+//        guard let dict = try JSONSerialization.jsonObject(with: data, options: .fragmentsAllowed) as? [String: Any] else {
+//            throw URLError(.badURL)
+//        }
+//        return dict
+//    }
+//

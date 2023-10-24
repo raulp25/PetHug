@@ -12,11 +12,9 @@ protocol SelectPhotoCellDelegate: AnyObject {
 }
 
 final class SelectPhotoControllerCollectionViewCell: UICollectionViewCell {
-    
     //MARK: - Private components
-    private lazy var petImage: UIImageView = {
+    private lazy var cameraImage: UIImageView = {
        let iv = UIImageView(image: UIImage(systemName: "camera.fill"))
-        let k = Int(arc4random_uniform(6))
         iv.backgroundColor = .clear
         iv.tintColor = .orange
         iv.clipsToBounds = true
@@ -31,11 +29,29 @@ final class SelectPhotoControllerCollectionViewCell: UICollectionViewCell {
     //MARK: - LifeCycle
     func configure(delegate: SelectPhotoCellDelegate? = nil) {
         self.delegate = delegate
+        cameraImage.image = UIImage(systemName: "camera.fill")
     }
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
-        
+       setup()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        cameraImage.image = nil
+    }
+    
+    //MARK: - Actions
+    @objc func didTapIcon(_ sender: UITapGestureRecognizer) {
+        delegate?.didTapSelectPhoto()
+    }
+    
+    //MARK: - Setup
+    func setup() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapIcon))
         addGestureRecognizer(tapGesture)
         
@@ -43,26 +59,12 @@ final class SelectPhotoControllerCollectionViewCell: UICollectionViewCell {
         dummyView.backgroundColor = customRGBColor(red: 238, green: 238, blue: 238)
         dummyView.layer.cornerRadius = 10
         addSubview(dummyView)
-        addSubview(petImage)
+        addSubview(cameraImage)
         
         dummyView.fillSuperview()
         
-        petImage.center(inView: self)
-        petImage.setDimensions(height: 40, width: 40)
+        cameraImage.center(inView: self)
+        cameraImage.setDimensions(height: 40, width: 40)
     }
-    
-    
-    override func prepareForReuse() {
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    //MARK: - Actions
-    @objc func didTapIcon(_ sender: UITapGestureRecognizer) {
-        delegate?.didTapSelectPhoto()
-    }
-
 }
 

@@ -343,6 +343,7 @@ final class DefaultPetDataSource: PetDataSource {
         let uid = AuthService().uid
         let petFirebaseEntinty = data.toFirebaseEntity()
         let dataModel = petFirebaseEntinty.toDictionaryLiteral()
+        
         try await db.collection(path)
                     .document(data.id)
                     .setData(dataModel)
@@ -359,6 +360,7 @@ final class DefaultPetDataSource: PetDataSource {
     func createPetInSingle(collection path: String, data: Pet) async throws{
         let petFirebaseEntinty = data.toFirebaseEntity()
         let dataModel = petFirebaseEntinty.toDictionaryLiteral()
+        
         try await db.collection(path)
                     .document(data.id)
                     .setData(dataModel)
@@ -454,46 +456,14 @@ final class DefaultPetDataSource: PetDataSource {
         let dataModel = petFirebaseEntinty.toDictionaryLiked()
         
         try await db.collection(data.type.getPath)
-                    .document(data.id)
-                    .updateData(dataModel)
-        //We dont need it anymore cause we changed the approach
-//        try await db.collection("users")
-//            .document(data.owneruid)
-//                    .collection("pets")
-//                    .document(data.id)
-//                    .updateData(dataModel)
-
+            .document(data.id)
+            .updateData(dataModel)
     }
-    //We dont need it anymore cause we changed the approach
-//    func addPetToUserLikedPets(data: Pet) async throws {
-//        let uid = AuthService().uid
-//        let petFirebaseEntinty = data.toFirebaseEntity()
-//        let dataModel = petFirebaseEntinty.toObjectLiteral()
-//
-//        try await db.collection("users")
-//                    .document(uid)
-//                    .collection("likedPets")
-//                    .document(data.id)
-//                    .setData(dataModel)
-//    }
+    
     //MARK: - Dislike
     func dislikePet(data: Pet) async throws {
-        
         try await updateOwnerPetLikes(data: data)
-        
-        try await removePetFromUserLikedPets(data: data)
     }
-    
-    func removePetFromUserLikedPets(data: Pet) async throws {
-        let uid = AuthService().uid
-        
-        try await db.collection("users")
-                    .document(uid)
-                    .collection("likedPets")
-                    .document(data.id)
-                    .delete()
-    }
-    
 }
 
 

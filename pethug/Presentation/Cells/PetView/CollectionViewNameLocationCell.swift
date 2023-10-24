@@ -38,10 +38,6 @@ final class PetViewNameLocationCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
-    
-    //MARK: - Private properties
-    //MARK: - Internal properties
-    
     //MARK: - LifeCycle
     func configure(with nameLocationData: NameLocationData) {
         configureCellUI(with: nameLocationData)
@@ -88,10 +84,6 @@ final class PetViewNameLocationCollectionViewCell: UICollectionViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    //MARK: - Private Actions
-//    @objc func didTapCell() {
-//    }
 
 }
 

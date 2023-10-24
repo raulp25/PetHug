@@ -8,13 +8,7 @@
 import UIKit
 import Combine
 
-//protocol PetsViewControllerDelegate: AnyObject {
-//    func didTap(recipient: Any)
-////    func didTap(_: Any)
-//}
-
 final class FavoritesViewController: UIViewController {
-    
     //MARK: - Private components
     private lazy var contentStateVC = ContentStateViewController()
     private lazy var contentVc: FavoritesContentViewController? = nil
@@ -55,7 +49,6 @@ final class FavoritesViewController: UIViewController {
         add(headerView)
         add(contentStateVC)
         
-        headerView.view.setHeight(70)
         headerView.view.anchor(
             top: view.topAnchor,
             left: view.leftAnchor,
@@ -67,6 +60,7 @@ final class FavoritesViewController: UIViewController {
                     60 :
                         75
         )
+        headerView.view.setHeight(40)
         
         contentStateVC.view.anchor(
             top: headerView.view.bottomAnchor,

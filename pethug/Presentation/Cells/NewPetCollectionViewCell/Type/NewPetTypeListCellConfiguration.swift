@@ -22,8 +22,8 @@ struct NewPetType: Hashable {
     var type: Pet.PetType? = nil
     weak var delegate: NewPetTypeDelegate?
     func hash(into hasher: inout Hasher) {
-           hasher.combine(id)
-       }
+        hasher.combine(id)
+    }
     init(type: Pet.PetType? = nil) {
         self.type = type
     }

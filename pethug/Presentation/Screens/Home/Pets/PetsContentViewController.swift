@@ -12,7 +12,6 @@ protocol PetsContentViewControllerDelegate: AnyObject {
     func didLike(pet: Pet, completion: @escaping (Bool) -> Void)
     func didDislike(pet: Pet, completion: @escaping (Bool) -> Void)
     func executeFetch()
-//    func didTap(_:  Any)
 }
 
 final class PetsContentViewController: UIViewController {
@@ -71,41 +70,12 @@ final class PetsContentViewController: UIViewController {
         updateSnapShot()
     }
     
-//    func generatePet(total: Int) -> [Item] {
-//        var pets = [Item]()
-//        var counter = 0
-//        for number in 0...total {
-//            let k = Int(arc4random_uniform(6))
-//            pets.append(.pet(.init(
-//                id: "32de\(counter)",
-//                name: "Laruent\(counter)",
-//                gender: .female,
-//                size: .small,
-//                breed: "Pomeranian\(counter)",
-//                imagesUrls: ["firebase/fakeURL"],
-//                type: .bird,
-//                age: 5,
-//                activityLevel: 8,
-//                socialLevel: 8,
-//                affectionLevel: 9,
-//                address: .Campeche,
-//                info: "Lets goy cowboys",
-//                isLiked: false,
-//                timestamp: Timestamp(date: Date())
-//            )))
-//            counter += 1
-//        }
-//
-//        return pets
-//    }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     //MARK: - CollectionView layout
-//   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
             guard let self else { fatalError() }
@@ -125,14 +95,6 @@ final class PetsContentViewController: UIViewController {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-            <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
-            supplementaryView, string, indexPath in
-                supplementaryView.titleLabel.text = "Adopta a un amigo"
-        }
-
-        
         let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { cell, _, model in
             cell.configure(with: model, delegate: self)
         }
@@ -146,19 +108,6 @@ final class PetsContentViewController: UIViewController {
             }
             
         })
-        
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-            guard let self else {
-                return nil
-            }
-
-            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            
-            switch section {
-            case .pets:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            }
-        }
     }
         
     // MARK: - Private methods
@@ -168,23 +117,11 @@ final class PetsContentViewController: UIViewController {
             return $0.key
         })
         
-        var val:  [PetsContentViewController.Item]!
         for datum in snapData {
             snapshot.appendItems(datum.values, toSection: datum.key)
-            print("snapdata values: => \(datum.values)")
-            val = datum.values
         }
-        
-        for mas in val {
-            switch mas{
-            case .pet(let pet):
-                print(": => \(pet.id)")
-            }
-        }
-        
 
         dataSource.apply(snapshot, animatingDifferences: animated)
-        
     }
 }
 
@@ -199,7 +136,6 @@ extension PetsContentViewController: UICollectionViewDelegate {
         let distance: Float = 10
         
         if y > height + distance {
-            print(":exceeds the limit y \(y) > height + distance \(height + distance) ")
             delegate?.executeFetch()
         }
     }

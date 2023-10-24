@@ -36,7 +36,7 @@ class SearchAddress: Hashable {
     weak var delegate: SearchAddressDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(address)
-       }
+    }
     init(address: String) {
         self.address = address
     }

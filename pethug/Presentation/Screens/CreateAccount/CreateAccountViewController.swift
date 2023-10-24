@@ -133,7 +133,6 @@ class CreateAccountViewController: UIViewController {
     }()
     
     
-    
     //MARK: - Private properties
     private var viewModel = CreateAccountViewModel(
                             authService: AuthService(),
@@ -199,7 +198,6 @@ class CreateAccountViewController: UIViewController {
             let validPassword = passwordTextField.isValidText()  else {
             return
         }
-        print("create account ()")
         Task {
             await viewModel.crateAccount(
                 username: validUsername,
@@ -208,15 +206,6 @@ class CreateAccountViewController: UIViewController {
             )
         }
         
-    }
-    
-    @objc private func forgotPassword() {
-        // TODO: Create forgot password flow after first release
-        print(": => forgot password clicked")
-    }
-    
-    @objc func goBackToLogin() {
-//        coordinator?.startCreateAccountCoordinator()
     }
     
     //MARK: - Private Methods

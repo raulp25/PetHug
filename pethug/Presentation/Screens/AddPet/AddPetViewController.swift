@@ -39,7 +39,6 @@ final class AddPetViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("viewwill appear: =>")
         if viewModel.isNetworkOnline == false {
             viewModel.fetchUserPets(resetPagination: true)
         }
@@ -67,7 +66,7 @@ final class AddPetViewController: UIViewController {
                     60 :
                         75
         )
-        headerView.view.setHeight(70)
+        headerView.view.setHeight(40)
         headerView.delegate = self
         
         contentStateVC.view.anchor(

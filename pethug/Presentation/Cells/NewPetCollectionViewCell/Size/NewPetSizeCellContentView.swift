@@ -8,9 +8,7 @@
 import UIKit
 
 final class NewPetSizeCellContentView: UIView, UIContentView {
-    
     //MARK: - Private components
-    
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "Tamańo (No obligatorio)"
@@ -104,10 +102,15 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
         return button
     }()
     
-    //MARK: - Private properties
+    enum CurrentChecked: Int {
+        case small = 1
+        case medium = 2
+        case large = 3
+        case unset = 4
+    }
     
-    
-    //MARK: - Internal properties
+    var currentButton: CurrentChecked = .unset
+    var buttons: [UIButton] = []
     
     // MARK: - Properties
     private var currentConfiguration: NewPetSizeListCellConfiguration!
@@ -143,10 +146,6 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("✅ Deinit NewPetGalleryContentView")
-    }
-    
     // MARK: - Functions
     private func apply(configuration: NewPetSizeListCellConfiguration) {
         guard currentConfiguration != configuration else {
@@ -154,7 +153,7 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
         }
         
         currentConfiguration = configuration
-        //
+        
         guard let item = currentConfiguration.viewModel else { return }
         if item.size != nil {
             switch item.size {
@@ -203,16 +202,6 @@ final class NewPetSizeCellContentView: UIView, UIContentView {
             button.setHeight(height)
         }
     }
-
-    enum CurrentChecked: Int {
-        case small = 1
-        case medium = 2
-        case large = 3
-        case unset = 4
-    }
-    
-    var currentButton: CurrentChecked = .unset
-    var buttons: [UIButton] = []
     
     @objc func didTapCheckMark(_ sender: UIButton) {
         guard let checked = CurrentChecked(rawValue: sender.tag) else {

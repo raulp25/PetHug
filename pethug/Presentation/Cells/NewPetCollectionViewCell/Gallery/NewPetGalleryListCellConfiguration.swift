@@ -25,7 +25,7 @@ struct NewPetGallery: Hashable {
     weak var navigation: NewPetContentViewController?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(imagesToEdit: [String] = [], imageService: ImageService? = nil) {
         self.imagesToEdit = imagesToEdit
         self.imageService = imageService
@@ -44,7 +44,6 @@ struct NewPetGallery: Hashable {
                        imageService.downloadImage(url: imageUrl) { imageData in
                            if let imageData = imageData, let image = UIImage(data: imageData) {
                                images.append(image)
-//                               completion([image])
                            }
                            // Move on to the next image download
                            downloadNextImage(index: index + 1)
@@ -54,7 +53,6 @@ struct NewPetGallery: Hashable {
                
                // Start the sequential downloads with the first image
                downloadNextImage(index: 0)
-            
         }
     }
 }

@@ -17,18 +17,9 @@ class NewPetViewModel {
     private let updatePetUseCase: DefaultUpdatePetUC
     private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
     private let uid = AuthService().uid
-    //MARK: - Internal Properties
     private var pet: Pet?
-//    init(imageService: ImageServiceProtocol, createPetUseCase: DefaultCreatePetUC, updatePetUseCase: DefaultUpdatePetUC, deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC) {
-//        self.imageService = imageService
-//        self.createPetUseCase = createPetUseCase
-//        self.updatePetUseCase = updatePetUseCase
-//        self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
-//        observeValidation()
-//
-//        //        mockDecodePetModel()
-//    }
-    
+
+    //MARK: - Init
     init(
         imageService: ImageServiceProtocol,
         createPetUseCase: DefaultCreatePetUC,
@@ -87,8 +78,8 @@ class NewPetViewModel {
     @Published var affectionState:   Int? = nil
     @Published var medicalInfoState: MedicalInfo
     @Published var socialInfoState:  SocialInfo
-    @Published var addressState: Pet.State? = nil
-    @Published var infoState:    String? = nil
+    @Published var addressState:     Pet.State? = nil
+    @Published var infoState:        String? = nil
     
     var imagesToEditState: [String] = []
     var isEdit = false
@@ -105,7 +96,7 @@ class NewPetViewModel {
             }
         }).store(in: &cancellables)
     }
-    ///Agregar de nuevo las variables de isValidSubject  y stateSubject al send button
+    
     var formValidationState: AnyPublisher<State, Never> {
         return Publishers.CombineLatest4(
             Publishers.CombineLatest4($nameState, $galleryState, $typeState, $breedsState),
@@ -140,21 +131,21 @@ class NewPetViewModel {
     }
     
     func validateForm(
-        name: String?,
-        gallery: [UIImage],
-        type: Pet.PetType?,
-        breed: String?,
-        gender: Pet.Gender?,
-        size: Pet.Size?,
-        age: Int?,
-        activity: Int?,
-        social: Int?,
+        name:      String?,
+        gallery:   [UIImage],
+        type:      Pet.PetType?,
+        breed:     String?,
+        gender:    Pet.Gender?,
+        size:      Pet.Size?,
+        age:       Int?,
+        activity:  Int?,
+        social:    Int?,
         affection: Int?,
-        address: Pet.State?,
-        info: String?
+        address:   Pet.State?,
+        info:      String?
     ) -> State{
         
-        if name == nil      ||
+        if name == nil       ||
             gallery.isEmpty  ||
             type == nil      ||
             breed == nil     ||
@@ -288,7 +279,7 @@ class NewPetViewModel {
     
     //Recursively Upload images in sequence to respect the order in which the user selected the images
     func uploadNextImage(index: Int, imagesUrls: inout [String]) async throws {
-        guard let typeState = typeState else { return }
+        guard let _ = typeState else { return }
         let path = "/userImages:\(uid)/"
         
         guard index < galleryState.count else { return }

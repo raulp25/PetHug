@@ -25,7 +25,7 @@ class NewPetUpload: Hashable {
     weak var delegate: NewPetUploadDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init() {
     }
 }

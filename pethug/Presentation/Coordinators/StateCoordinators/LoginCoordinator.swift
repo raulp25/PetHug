@@ -18,13 +18,20 @@ final class LoginCoordinator: NSObject, StateCoordinator {
     
     override init() {
         rootViewController.navigationBar.tintColor = .white
-        //Changes SLR
-//        let app = UINavigationBarAppearance()
-//        app.shadowImage = UIImage()
-//        app.shadowColor = nil
-//        app.backgroundEffect = nil
-//
-//        UINavigationBar.appearance().standardAppearance = app
+    }
+    
+    func checkIsNewUser() {
+        let showOnboardingKey = OnboardingKey.showOnboarding.rawValue
+        if UserDefaults.standard.bool(forKey: showOnboardingKey) == false {
+            startOnboarding()
+        }
+    }
+    
+    func startOnboarding() {
+        let vc = OnboardingContentViewController()
+        
+        vc.modalPresentationStyle = .fullScreen
+        rootViewController.present(vc, animated: true)
     }
     
     func start() {
@@ -33,6 +40,7 @@ final class LoginCoordinator: NSObject, StateCoordinator {
         rootViewController.delegate = self
         rootViewController.pushViewController(vc, animated: true)
         
+        checkIsNewUser()
     }
     
     func startCreateAccountCoordinator() {

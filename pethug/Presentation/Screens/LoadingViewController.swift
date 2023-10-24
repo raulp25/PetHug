@@ -24,9 +24,7 @@ final class LoadingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
-//        view.backgroundColor = .blue
         view.addSubview(spinner)
         
         spinner.translatesAutoresizingMaskIntoConstraints = false

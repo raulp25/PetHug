@@ -50,7 +50,6 @@ final class PetsViewController: UIViewController {
         add(headerView)
         add(contentStateVC)
         
-        headerView.view.setHeight(70)
         headerView.view.anchor(
             top: view.topAnchor,
             left: view.leftAnchor,
@@ -62,6 +61,7 @@ final class PetsViewController: UIViewController {
                     60 :
                         75
         )
+        headerView.view.setHeight(70)
         headerView.delegate = self
         
         contentStateVC.view.anchor(
@@ -134,7 +134,7 @@ extension PetsViewController: PetsViewHeaderDelegate {
 extension PetsViewController: PetsContentViewControllerDelegate {
     func executeFetch() {
         if viewModel.isFilterMode() {
-            //No arguments cause at this point the options has been set by the filter options form module
+            //No arguments passed cause at this point the options has been set by the filter pets vc
             viewModel.fetchPetsWithFilter()
         } else {
             viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: false)

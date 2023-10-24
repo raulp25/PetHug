@@ -9,11 +9,10 @@ import UIKit
 
 protocol EditGalleryImagePageSheetDelegate: AnyObject {
     func didTapDelete(cell indexPath: IndexPath)
-    func didTapEdit()
+    func didTapEdit(cell indexPath: IndexPath)
 }
 
 final class EditGalleryImagePageSheetView: UIViewController {
-    
     //MARK: - Private components
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -24,7 +23,7 @@ final class EditGalleryImagePageSheetView: UIViewController {
     }()
     
     private lazy var hStackContainer: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [hStackDelete])
+        let stack = UIStackView(arrangedSubviews: [hStackEdit, hStackDelete])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .fillEqually
@@ -37,7 +36,7 @@ final class EditGalleryImagePageSheetView: UIViewController {
         let stack = UIStackView(arrangedSubviews: [deleteImage, deleteLabel])
         stack.axis = .horizontal
         stack.alignment = .center
-        stack.distribution = .equalSpacing
+        stack.distribution = .fillProportionally
         stack.spacing = 5
         stack.translatesAutoresizingMaskIntoConstraints = false
         
@@ -69,8 +68,8 @@ final class EditGalleryImagePageSheetView: UIViewController {
         let stack = UIStackView(arrangedSubviews: [editImage, editLabel])
         stack.axis = .horizontal
         stack.alignment = .center
-        stack.distribution = .equalSpacing
-        stack.spacing = 5
+        stack.distribution = .fillProportionally
+        stack.spacing = 6
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapEdit))
@@ -108,7 +107,6 @@ final class EditGalleryImagePageSheetView: UIViewController {
         configure()
     }
     
-    
     //MARK: - Private Actions
      @objc private func didTapDelete() {
          guard let cellIndexPath = cellIndexPath else { return }
@@ -117,7 +115,8 @@ final class EditGalleryImagePageSheetView: UIViewController {
     }
     
      @objc private func didTapEdit() {
-         delegate?.didTapEdit()
+         guard let cellIndexPath = cellIndexPath else { return }
+         delegate?.didTapEdit(cell: cellIndexPath)
          dismiss(animated: true)
     }
     
@@ -125,23 +124,25 @@ final class EditGalleryImagePageSheetView: UIViewController {
     private func configure() {
         let paddingTop = (pageSheetHeight ?? 0) / 3
         view.backgroundColor = .white
-//        view.addSubview(titleLabel)
-        view.addSubview(hStackContainer)
-//
-//        titleLabel.centerX(
-//            inView: view,
-//            topAnchor: view.topAnchor,
-//            paddingTop: paddingTop
-//        )
         
-        hStackContainer.center(
+        view.addSubview(titleLabel)
+        view.addSubview(hStackContainer)
+        
+        titleLabel.centerX(
             inView: view,
-            yConstant: 0
+            topAnchor: view.topAnchor,
+            paddingTop: paddingTop
+        )
+        
+        hStackContainer.centerX(
+            inView: titleLabel,
+            topAnchor: titleLabel.bottomAnchor,
+            paddingTop: 30
         )
         
         deleteImage.setDimensions(height: 30, width: 30)
         
-//        editImage.setDimensions(height: 30, width: 30)
+        editImage.setDimensions(height: 30, width: 30)
         
     }
     

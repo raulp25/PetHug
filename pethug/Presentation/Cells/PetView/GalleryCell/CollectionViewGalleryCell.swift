@@ -45,11 +45,6 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-//
-//    override func viewDidLayoutSubviews() {
-//        pageControl.transform = CGAffineTransform(scaleX: 2, y: 2)
-//    }
     
     //MARK: - CollectionView layout
     func createLayout() -> UICollectionViewCompositionalLayout {
@@ -77,7 +72,6 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        
         let imageCellRegistration = UICollectionView.CellRegistration<PetViewImageCollectionViewCell, String> { cell, _, model in
             cell.configure(with: model)
         }
@@ -110,7 +104,6 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     
     //MARK: - Setup
     func configureUI() {
-
         addSubview(collectionView)
         addSubview(pageControl)
         

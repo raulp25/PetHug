@@ -104,7 +104,11 @@ final class NewPetActivityCellContentView: UIView, UIContentView {
         addSubview(activityLabel)
         addSubview(slider)
         
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
         
         activityLabel.anchor(
             top: titleLabel.bottomAnchor,

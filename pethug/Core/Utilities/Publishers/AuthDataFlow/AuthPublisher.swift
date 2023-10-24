@@ -32,11 +32,9 @@ extension Publishers {
                 
                 // if user exists
                 if let user {
-                    print("REVISA SI EL USER ESTA LOGEADO O NO: => true")
                     // check if email is verified and return state
                     _ = subscriber.receive(user.isEmailVerified ? .signedIn : .signedInButNotVerified)
                 } else {
-                    print("REVISA SI EL USER ESTA LOGEADO O NO: => false")
                     // if not user
                     _ = subscriber.receive(.signedOut)
                 }

@@ -65,7 +65,17 @@ class ForgotPasswordViewController: UIViewController {
         setupKeyboardHiding()
         hideKeyboardWhenTappedAround()
         setup()
-        
+        bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+    
+    //MARK: - Bind
+    func bind() {
         viewModel.state
             .handleThreadsOperator()
             .sink { [weak self] currentState in
@@ -85,12 +95,6 @@ class ForgotPasswordViewController: UIViewController {
             }.store(in: &subscriptions)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-    }
-    
     
     //MARK: - Actions
     @objc func resetPassword() {
@@ -100,12 +104,6 @@ class ForgotPasswordViewController: UIViewController {
             await viewModel.resetPasswordWith(email: email)
         }
     }
-    
-    @objc private func forgotPassword() {
-        // TODO: Create forgot password flow after first release
-        print(": => forgot password clicked")
-    }
-       
    
     @objc func keyboardWillShow(sender: NSNotification) {
         guard let userInfo = sender.userInfo,

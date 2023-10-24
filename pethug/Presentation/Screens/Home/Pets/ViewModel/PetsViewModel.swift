@@ -89,11 +89,10 @@ final class PetsViewModel {
         } else {
             applyFetchPets(collection: collection, resetFilterQueries: resetFilterQueries)
         }
-        
     }
     
+    //MARK: - Private methods
     private func applyFetchAllPets(resetFilterQueries: Bool) {
-        print("entra applyfetchallpets: => ")
         if resetFilterQueries {
             resetFilterData()
         }
@@ -153,7 +152,6 @@ final class PetsViewModel {
     
     //filterOptions gets set inmediatly after setting the filter options in the app so the next time we
     //call this function we dont need to set again the filter options
-    
     private func applyFilterToAllPets(options: FilterOptions?, resetFilterQueries: Bool) {
         filterMode = true
         if options != nil {
@@ -235,13 +233,13 @@ final class PetsViewModel {
     }
     
     //If not the first load and the results are not empty, send the data.
-    //Otherwise, if it's the first load with new filter options, mark isFirstLoad as false and send data whether is empty or not.
+    //Otherwise, if it's the first load with new filter options and data is empty set empty state or send the data
     private func handleResult(_ data: [Pet]) {
         if !isFirstLoad && !data.isEmpty {
             petsSubject.send(data)
         } else if isFirstLoad && data.isEmpty {
-            state.send(.empty)
             isFirstLoad = false
+            state.send(.empty)
         } else if isFirstLoad {
             isFirstLoad = false
             petsSubject.send(data)
@@ -347,7 +345,6 @@ final class PetsViewModel {
             return updatePet
         }
         
-        
         throw PetsError.defaultCustom("Pet index wasn't found")
     }
     
@@ -359,14 +356,12 @@ final class PetsViewModel {
         }
         
         if let index = pet.likedByUsers.firstIndex(of: uid) {
-                var updatedPet = pet
-                updatedPet.likedByUsers.remove(at: index)
-                return updatedPet
-            } else {
-                throw PetsError.defaultCustom("User's UID not found in likedByUsers")
-            }
-        
-        
+            let updatedPet = pet
+            updatedPet.likedByUsers.remove(at: index)
+            return updatedPet
+        } else {
+            throw PetsError.defaultCustom("User's UID not found in likedByUsers")
+        }
     }
     
     func dislikedPet(pet: Pet, completion: @escaping(Bool) -> Void) {

@@ -23,7 +23,7 @@ struct NewPetAffection: Hashable {
     weak var delegate: NewPetAffectionDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(affectionLevel: Int? = nil) {
         self.affectionLevel = affectionLevel
     }

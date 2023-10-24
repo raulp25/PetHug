@@ -18,12 +18,10 @@ protocol UserDataSource {
     func deleteUser() async throws
 }
 
-
 // MARK: - Implementation -
 final class DefaultUserDataSource: UserDataSource {
-    
     private let db = Firestore.firestore()
-    // theres no need to return nothing since throwing would indicate that something went wrong
+
     func registerUser(user: User) async throws {
         let data = user.toDictionaryLiteral()
         try await db.collection(.getPath(for: .users)).document(user.id).setData(data)
@@ -49,10 +47,13 @@ final class DefaultUserDataSource: UserDataSource {
     
     func deleteUser() async throws {
         guard let user = Auth.auth().currentUser else { throw PetsError.defaultCustom("") }
+        
         try await db.collection(.getPath(for: .users)).document(user.uid).delete()
+        
         try await db.collection(.getPath(for: .deletedUsers))
                     .document(user.uid)
                     .setData(["userId": user.uid])
+        
         try await user.delete()
     }
     

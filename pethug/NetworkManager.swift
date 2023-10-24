@@ -22,21 +22,7 @@ final class NetworkMonitor {
     public func startMonitoring() {
         monitor.start(queue: queue)
         monitor.pathUpdateHandler = { [weak self] path in
-            
-            if path.status == .requiresConnection {
-                print("status is requires conneciton: => \(path.status == .requiresConnection)")
-            }
-                if path.status == .satisfied {
-                    print(" status is satisfied: =>          \(path.status == .satisfied)")
-                }
-                    if path.status == .unsatisfied {
-                        print("status is unsatisfied: =>         \(path.status == .unsatisfied)")
-                    }
-            
-            
-            
             self?.isConnected = path.status == .satisfied
-            
         }
     }
     

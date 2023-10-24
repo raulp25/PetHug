@@ -18,6 +18,17 @@ final class FavoritesContentViewController: UIViewController {
     //MARK: - Private components
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     
+    private let titleLabel: UILabel = {
+      let label = UILabel(withAutolayout: true)
+       label.text = "Mis animales favoritos"
+       label.textColor = .black.withAlphaComponent(0.8)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        label.textAlignment = .center
+        label.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
+        label.numberOfLines = 0
+       return label
+   }()
+    
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
@@ -49,21 +60,31 @@ final class FavoritesContentViewController: UIViewController {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.addSubview(titleLabel)
         view.addSubview(collectionView)
 
-        collectionView.anchor(
+        titleLabel.anchor(
             top: view.topAnchor,
+            left: view.leftAnchor,
+            right: view.rightAnchor,
+            paddingTop: 30
+        )        
+        titleLabel.setHeight(60)
+        
+        collectionView.anchor(
+            top: titleLabel.bottomAnchor,
             left: view.leftAnchor,
             bottom: view.bottomAnchor,
             right: view.rightAnchor
         )
-        
         collectionView.contentInset = .init(
             top: 20,
             left: 0,
             bottom: 50,
             right: 0
         )
+        collectionView.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
         
         configureDataSource()
         updateSnapShot()
@@ -97,7 +118,6 @@ final class FavoritesContentViewController: UIViewController {
 
         
         let petViewCellRegistration = UICollectionView.CellRegistration<FavoriteControllerCollectionViewCell, Pet> { cell, _, model in
-            print("llama cellregistration: =")
             cell.configure(with: model, delegate: self)
         }
         
@@ -110,19 +130,19 @@ final class FavoritesContentViewController: UIViewController {
             }
             
         })
-        
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-            guard let self else {
-                return nil
-            }
-
-            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            
-            switch section {
-            case .pets:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            }
-        }
+//        
+//        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
+//            guard let self else {
+//                return nil
+//            }
+//
+//            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
+//            
+//            switch section {
+//            case .pets:
+//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
+//            }
+//        }
     }
         
     // MARK: - Private methods

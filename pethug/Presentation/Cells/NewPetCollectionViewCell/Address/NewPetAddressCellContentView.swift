@@ -78,12 +78,7 @@ final class NewPetAddressCellContentView: UIView, UIContentView {
     }
     
     // MARK: - Private actions
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-//        currentConfiguration.viewModel?.delegate?.textViewdDidChange(text: textField.text ?? "")
-    }
-    
     @objc func didTapCell() {
-        print(": =>didtap cell objc ")
         currentConfiguration.viewModel?.delegate?.didTapAddressSelector()
     }
     
@@ -103,21 +98,45 @@ final class NewPetAddressCellContentView: UIView, UIContentView {
     private func setup() {
         backgroundColor = customRGBColor(red: 246, green: 246, blue: 246)
         addSubview(titleLabel)
+        
         addSubview(containerView)
-        
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
-        
         containerView.addSubview(addressLabel)
         containerView.addSubview(chevronImageView)
-        containerView.anchor(top: titleLabel.bottomAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 5, paddingBottom: 30)
-        containerView.setHeight(40)
         
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
+        
+        containerView.anchor(
+            top: titleLabel.bottomAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingTop: 5,
+            paddingBottom: 30
+        )
+        containerView.setHeight(40)
         containerView.layer.cornerRadius = 10
-        chevronImageView.centerY(inView: containerView)
-        chevronImageView.anchor(right: containerView.rightAnchor, paddingRight: 5)
+        
+        chevronImageView.centerY(
+            inView: containerView
+        )
+        chevronImageView.anchor(
+            right: containerView.rightAnchor,
+            paddingRight: 5
+        )
         chevronImageView.setDimensions(height: 20, width: 20)
-        addressLabel.centerY(inView: containerView)
-        addressLabel.anchor(left: containerView.leftAnchor, right: chevronImageView.leftAnchor, paddingLeft: 10)
+        
+        addressLabel.centerY(
+            inView: containerView
+        )
+        addressLabel.anchor(
+            left: containerView.leftAnchor,
+            right: chevronImageView.leftAnchor,
+            paddingLeft: 10
+        )
     }
     
     

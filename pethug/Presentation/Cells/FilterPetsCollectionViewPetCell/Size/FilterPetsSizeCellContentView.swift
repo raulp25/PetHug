@@ -148,8 +148,6 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
     }()
     private let sizeKey = FilterKeys.filterSize.rawValue
     
-    //MARK: - Internal properties
-    
     // MARK: - Properties
     private var currentConfiguration: FilterPetsSizeListCellConfiguration!
     var configuration: UIContentConfiguration {
@@ -180,10 +178,6 @@ final class FilterPetsSizeCellContentView: UIView, UIContentView {
     
     @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    deinit {
-        print("✅ Deinit NewPetGalleryContentView")
     }
     
     // MARK: - Functions

@@ -8,7 +8,6 @@
 import UIKit
 
 protocol FilterPetsAddressDelegate: AnyObject {
-//    func textViewdDidChange(text: String)
     func didTapAddressSelector()
     func didTapAllCountry()
 }

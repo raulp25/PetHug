@@ -25,9 +25,8 @@ class Pet: Codable, Hashable {
     
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
-    ///Using data(as Pet.self) cant be because it wont recongize nil values
-    ///change it tomorrow
+    }
+    
     let id: String
     let name: String
     let gender: Gender?
@@ -90,7 +89,7 @@ class Pet: Codable, Hashable {
         self.likedByUsers   = likedByUsers
     }
     
-    //Cant decode Timestamp and null values at the same time so this is the solution
+    //Can't decode Timestamp and null values at the same time so this is the solution
     init(dictionary: [String: Any]) {
         self.id             = dictionary["id"]             as? String ?? ""
         self.name           = dictionary["name"]           as? String ?? ""
@@ -129,53 +128,6 @@ class Pet: Codable, Hashable {
                                           femaleCatFriendly: false)
         }
     }
-    //Became useless, delete it at the end of project
-//    required init(from decoder: Decoder) throws {
-//            let container = try decoder.container(keyedBy: CodingKeys.self)
-//
-//            self.id             = try container.decode(String.self,    forKey: .id)
-//            self.name           = try container.decode(String.self,    forKey: .name)
-//            self.breed          = try container.decode(String.self,    forKey: .breed)
-//            self.imagesUrls     = try container.decode([String].self,  forKey: .imagesUrls)
-//            self.age            = try container.decode(Int.self,       forKey: .age)
-//            self.activityLevel  = try container.decode(Int.self,       forKey: .activityLevel)
-//            self.socialLevel    = try container.decode(Int.self,       forKey: .socialLevel)
-//            self.affectionLevel = try container.decode(Int.self,       forKey: .affectionLevel)
-//            self.info           = try container.decode(String.self,    forKey: .info)
-//            self.isLiked        = try container.decode(Bool.self,      forKey: .isLiked)
-//            self.timestamp      = try container.decode(Timestamp.self, forKey: .timestamp)
-//            self.owneruid       = try container.decode(String.self,    forKey: .owneruid)
-//            self.likedByUsers   = try container.decode([String].self,    forKey: .likedByUsers)
-//
-//            let typeString = try container.decode(String.self, forKey: .type)
-//            if let petType = PetType(rawValue: typeString) {
-//                self.type = petType
-//            } else {
-//                throw DecodingError.dataCorruptedError(forKey: .type, in: container, debugDescription: "Invalid type value")
-//            }
-//
-//            let genderString = try container.decode(String.self, forKey: .gender)
-//            if let genderType = Gender(rawValue: genderString) {
-//                self.gender = genderType
-//            } else {
-//                throw DecodingError.dataCorruptedError(forKey: .gender, in: container, debugDescription: "Invalid type value")
-//            }
-//
-//            let sizeString = try container.decode(String.self, forKey: .size)
-//            if let size = Size(rawValue: sizeString) {
-//                self.size = size
-//            } else {
-//                throw DecodingError.dataCorruptedError(forKey: .size, in: container, debugDescription: "Invalid size value")
-//            }
-//
-//            let addressString = try container.decode(String.self, forKey: .address)
-//            if let address = State(rawValue: addressString) {
-//                self.address = address
-//            } else {
-//                throw DecodingError.dataCorruptedError(forKey: .address, in: container, debugDescription: "Invalid address value")
-//            }
-//
-//        }
 }
 
 extension Pet {
@@ -278,28 +230,3 @@ extension Pet {
     }
     
 }
-
-//Having all the breeds would be colossal and inefficient
-//enum DogBreed: String, Codable {
-//    case goldenRetriever
-//    case labradorRetriever
-//    // Add more dog breeds here
-//}
-//
-//enum CatBreed: String, Codable {
-//    case persian
-//    case siamese
-//    // Add more cat breeds here
-//}
-//
-//enum BirdBreed: String, Codable {
-//    case colibri
-//    case tucan
-//}
-//
-//enum RabbitBreed: String, Codable {
-//    case americanFuzzyLop
-//    case hollandLop
-//}
-
-

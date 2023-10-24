@@ -10,13 +10,11 @@ import UIKit
 protocol GalleryCellDelegate: AnyObject {
     func didTapCell(_ cell: NewPetGalleryCellContentView.Item)
 }
-///Did tap row collectionview built in method
+
 final class GalleryControllerCollectionViewCell: UICollectionViewCell {
-    
     //MARK: - Private components
     let petImage: UIImageView = {
        let iv = UIImageView()
-        let k = Int(arc4random_uniform(6))
         iv.backgroundColor = customRGBColor(red: 0, green: 61, blue: 44)
         iv.clipsToBounds = true
         iv.isUserInteractionEnabled = true
@@ -31,14 +29,12 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
         uv.backgroundColor = .black.withAlphaComponent(0.4)
         uv.layer.cornerRadius = 10.5
         uv.isUserInteractionEnabled = true
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLike))
-//        uv.addGestureRecognizer(tapGesture)
         return uv
     }()
     
     private let editImage: UIImageView = {
        let iv = UIImageView()
-        iv.image = UIImage(systemName: "trash.fill")
+        iv.image = UIImage(systemName: "paintbrush.pointed.fill")
         iv.tintColor = UIColor.white
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFit
@@ -57,7 +53,30 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
     
     override init(frame: CGRect = .zero) {
         super.init(frame: frame)
+        setup()
+    }
+    
+    private func configureCellUI(with galleryImage: GalleryImage) {
+        if let image = galleryImage.image {
+            petImage.image = image
+            editImageContainer.isHidden = false
+        } else if galleryImage.isEmpty {
+            petImage.backgroundColor = customRGBColor(red: 230, green: 230, blue: 230)
+        }
         
+        self.galleryImage = galleryImage
+    }
+    
+    override func prepareForReuse() {
+        petImage.image = nil
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Setup
+    func setup() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapCell))
         addGestureRecognizer(tapGesture)
         
@@ -78,27 +97,6 @@ final class GalleryControllerCollectionViewCell: UICollectionViewCell {
 
         editImage.center(inView: editImageContainer)
         editImage.setDimensions(height: 12, width: 12)
-        
-    }
-    
-    private func configureCellUI(with galleryImage: GalleryImage) {
-        if let image = galleryImage.image {
-            petImage.image = image
-            editImageContainer.isHidden = false
-        } else if galleryImage.isEmpty {
-            petImage.backgroundColor = customRGBColor(red: 230, green: 230, blue: 230)
-        }
-        
-        self.galleryImage = galleryImage
-    }
-    
-    override func prepareForReuse() {
-        petImage.image = nil
-        
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     //MARK: - Private actions

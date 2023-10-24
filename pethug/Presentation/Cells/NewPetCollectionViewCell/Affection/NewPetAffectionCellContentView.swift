@@ -103,7 +103,11 @@ final class NewPetAffectionCellContentView: UIView, UIContentView {
         addSubview(affectionLabel)
         addSubview(slider)
         
-        titleLabel.anchor(top: topAnchor, left: leftAnchor, right: rightAnchor)
+        titleLabel.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            right: rightAnchor
+        )
         
         affectionLabel.anchor(
             top: titleLabel.bottomAnchor,

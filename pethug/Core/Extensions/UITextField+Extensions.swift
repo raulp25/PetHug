@@ -10,7 +10,6 @@ import UIKit
 
 // MARK: - Edit placeHolder font
 extension UITextField {
-//    func changePlaceholderText(placeholderText: String, font: UIFont, color: UIColor = .theme.placeholder ?? .gray) {
     func changePlaceholderText(placeholderText: String, font: UIFont, color: UIColor = .gray) {
         self.attributedPlaceholder = NSAttributedString(
             string: placeholderText,

@@ -23,7 +23,7 @@ struct NewPetActivity: Hashable {
     weak var delegate: NewPetActivityDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(activityLevel: Int? = nil) {
         self.activityLevel = activityLevel
     }

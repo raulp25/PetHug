@@ -20,7 +20,7 @@ class LoginViewController: UIViewController {
         sv.isDirectionalLockEnabled = true
         sv.showsVerticalScrollIndicator = false
         sv.isScrollEnabled = true
-        sv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
+        sv.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 30, right: 0)
         return sv
     }()
     
@@ -173,7 +173,6 @@ class LoginViewController: UIViewController {
     }
     //MARK: - Actions
     @objc func login() {
-        print(": => login clicked")
         guard
             let _ = emailTextField.isValidText(),
             let _ = passwordTextField.isValidText() else {
@@ -185,7 +184,6 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func forgotPassword() {
-        print(": => forgot password clicked")
         navigation?.didTapForgotPassword()
     }
     
@@ -261,6 +259,7 @@ class LoginViewController: UIViewController {
         containerView.addSubview(childContainerView)
         
         childContainerView.addSubview(blurView)
+        childContainerView.sendSubviewToBack(blurView)
         childContainerView.addSubview(vStack)
         childContainerView.addSubview(forgotPasswordContainerView)
         forgotPasswordContainerView.addSubview(forgotPasswordBtn)
@@ -310,7 +309,7 @@ class LoginViewController: UIViewController {
         
         blurView.fillSuperview()
         blurView.effect = blurEffect
-        childContainerView.sendSubviewToBack(blurView)
+        
         
         vStack.anchor(
             top: childContainerView.topAnchor,
@@ -328,7 +327,9 @@ class LoginViewController: UIViewController {
         )
         forgotPasswordContainerView.setDimensions(height: 30, width: 200)
         
-        forgotPasswordBtn.center(inView: forgotPasswordContainerView)
+        forgotPasswordBtn.center(
+            inView: forgotPasswordContainerView
+        )
         
         loginBtn.centerX(
             inView: childContainerView,
