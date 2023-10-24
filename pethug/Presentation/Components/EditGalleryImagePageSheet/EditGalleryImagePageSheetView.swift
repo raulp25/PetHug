@@ -23,7 +23,7 @@ final class EditGalleryImagePageSheetView: UIViewController {
     }()
     
     private lazy var hStackContainer: UIStackView = {
-        let stack = UIStackView(arrangedSubviews: [hStackEdit, hStackDelete])
+        let stack = UIStackView(arrangedSubviews: [hStackDelete, hStackEdit])
         stack.axis = .horizontal
         stack.alignment = .center
         stack.distribution = .fillEqually

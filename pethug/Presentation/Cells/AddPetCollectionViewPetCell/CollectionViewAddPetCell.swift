@@ -24,16 +24,8 @@ final class AddPetControllerCollectionViewCell: UICollectionViewCell {
             title: "",
             image: nil,
             options: .destructive ,
-            preferredElementSize: .large,
+            preferredElementSize: .medium,
             children: [
-                UIAction(
-                    title: "Editar",
-                    image: UIImage(systemName: "pencil"),
-                    handler: { [weak self] (_) in
-                        guard let viewModel = self?.viewModel else { return }
-                        self?.delegate?.didTapEdit(pet: .pet(viewModel.pet))
-                }),
-                
                 UIAction(
                     title: "Eliminar",
                     image: UIImage(systemName: "trash"),
@@ -41,6 +33,14 @@ final class AddPetControllerCollectionViewCell: UICollectionViewCell {
                     handler: { [weak self] (_) in
                         guard let viewModel = self?.viewModel else { return }
                         self?.delegate?.didTapDelete(pet: .pet(viewModel.pet), pet: viewModel.id)
+                }),
+                
+                UIAction(
+                    title: "Editar",
+                    image: UIImage(systemName: "pencil"),
+                    handler: { [weak self] (_) in
+                        guard let viewModel = self?.viewModel else { return }
+                        self?.delegate?.didTapEdit(pet: .pet(viewModel.pet))
                 })
             ]
         )

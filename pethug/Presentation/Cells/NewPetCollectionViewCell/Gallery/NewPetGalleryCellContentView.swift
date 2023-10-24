@@ -225,6 +225,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         let vc = CropViewController(croppingStyle: .default, image: image)
         vc.aspectRatioPreset = .presetSquare
         vc.aspectRatioLockEnabled = true
+        vc.resetAspectRatioEnabled = false
         vc.toolbarPosition = .bottom
         vc.doneButtonTitle = "Continuar"
         vc.cancelButtonTitle = "Cancelar"
