@@ -66,12 +66,10 @@ final class FilterPetsSendCellContentView: UIView, UIContentView {
     
     // MARK: - Private actions
     @objc private func resetFields() {
-        print(":clicked upload button => ")
         currentConfiguration.viewModel?.delegate?.didTapResetFields()
     }
     
     @objc private func upload() {
-        print(":clicked upload button => ")
         currentConfiguration.viewModel?.delegate?.didTapSend()
     }
     

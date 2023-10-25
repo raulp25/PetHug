@@ -131,8 +131,13 @@ class GradientUIViewButton: UIView {
         }
         
         addSubview(logoImage)
-        logoImage.anchor(right: title.leftAnchor, paddingRight: 5)
-        logoImage.centerY(inView: title)
+        logoImage.centerY(
+            inView: title
+        )
+        logoImage.anchor(
+            right: title.leftAnchor,
+            paddingRight: 5
+        )
     }
     
     func removeViewsFromSuperView(views: [UIView]) {

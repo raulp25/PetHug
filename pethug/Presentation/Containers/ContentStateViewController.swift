@@ -25,7 +25,7 @@ final class ContentStateViewController: UIViewController {
         add(vc)
         shownViewController = vc
         state = newState
-        vc.view.anchor(top: view.topAnchor, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor)
+        vc.view.fillSuperview()
         UIView.animate(withDuration: 1.0, delay: 0, options: .curveEaseOut) {
             vc.view.alpha = 1
         }

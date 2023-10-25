@@ -172,7 +172,6 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
 
             switch section {
             case .gallery:
-                print("dogs section")
                 return .createNewPetGalleryLayout()
             }
             
@@ -356,6 +355,7 @@ extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
     }
 }
 
+//MARK: - CropViewController Delegate
 extension NewPetGalleryCellContentView: CropViewControllerDelegate {
     func cropViewController(_ cropViewController: CropViewController, didFinishCancelled cancelled: Bool) {
         cropViewController.dismiss(animated: false)

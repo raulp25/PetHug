@@ -320,7 +320,7 @@ final class PetsViewModel {
     func likedPet(pet: Pet, completion: @escaping(Bool) -> Void)  {
         Task{
             do {
-                let pet = try addLikeUid(pet: pet)
+                let pet = try addLike(pet: pet)
                 try await likedPetUC.execute(data: pet)
                 completion(true)
             } catch {
@@ -330,7 +330,7 @@ final class PetsViewModel {
         }
     }
     
-    func addLikeUid(pet: Pet) throws -> Pet{
+    func addLike(pet: Pet) throws -> Pet{
         let uid = AuthService().uid
         
         if pet.likedByUsers.contains(uid) {
@@ -339,6 +339,7 @@ final class PetsViewModel {
         
         let updatePet = pet
         updatePet.likedByUsers.append(uid)
+        updatePet.likesTimestamps.append(.init(uid: uid, timestamp: Timestamp(date: Date())))
         
         if let index = pets.firstIndex(where: { pet in pet.id == updatePet.id }) {
             pets[index] = updatePet
@@ -355,9 +356,13 @@ final class PetsViewModel {
             throw PetsError.defaultCustom("User's uid was not found in likedByUsers")
         }
         
-        if let index = pet.likedByUsers.firstIndex(of: uid) {
+        
+        if let index = pet.likedByUsers.firstIndex(of: uid),
+           let timestampIndex = pet.likesTimestamps.firstIndex(where: { $0.uid == uid })
+        {
             let updatedPet = pet
             updatedPet.likedByUsers.remove(at: index)
+            updatedPet.likesTimestamps.remove(at: timestampIndex)
             return updatedPet
         } else {
             throw PetsError.defaultCustom("User's UID not found in likedByUsers")

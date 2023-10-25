@@ -209,7 +209,6 @@ extension ForgotPasswordViewController: AuthTextFieldDelegate {
         if textField == emailTextField {
             resetPassword()
             textField.textField.resignFirstResponder()
-            print(": => keyboard continue button login clicked textfieldShouldReturn")
         }
         return true
     }

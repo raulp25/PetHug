@@ -10,7 +10,7 @@ import FirebaseFirestoreSwift
 import Firebase
 import UIKit
 
-
+//type [[String: Any]] breaks conformance to codable/decodable
 struct PetModel: Codable {
     @DocumentID var id: String? = UUID().uuidString
     let name: String
@@ -31,4 +31,5 @@ struct PetModel: Codable {
     var timestamp: Timestamp
     var owneruid: String
     var likedByUsers: [String]
+    var likesTimestamps: [LikeTimetamp]
 }

@@ -89,7 +89,6 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
     
     //MARK: - LifeCycle
     func configure(with pet: Pet, delegate: FavoriteContentDelegate? = nil) {
-        print("llama cellconfigure: => ")
         viewModel = .init(pet: pet)
         self.delegate = delegate
         guard viewModel != nil else { return }
@@ -199,7 +198,6 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
     @objc private func didTapLike(_ sender: UITapGestureRecognizer) {
         guard let viewModel = viewModel else { return }
         guard let delegate = delegate else { return }
-        print(":viewmodel isliked => \(viewModel.isLiked)")
         
         heartImageContainer.isUserInteractionEnabled = false
         

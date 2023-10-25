@@ -105,7 +105,6 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
     
     // MARK: - Private actions
     @objc func didTapCell() {
-        print(": =>didtap cell objc ")
         currentConfiguration.viewModel?.delegate?.didTapBreedSelector()
     }
     
@@ -117,7 +116,6 @@ final class NewPetBreedCellContentView: UIView, UIContentView {
     
     // MARK: - Functions
     private func apply(configuration: NewPetBreedListCellConfiguration) {
-        print("currentConfiguration != configuration 552: => \(currentConfiguration != configuration)")
         guard currentConfiguration != configuration else {
             return
         }

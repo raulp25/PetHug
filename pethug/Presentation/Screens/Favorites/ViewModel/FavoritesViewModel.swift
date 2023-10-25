@@ -102,7 +102,7 @@ final class FavoritesViewModel {
                 }
                 
                 let pet = try removeLikeUid(pet: pet)
-                try delete(pet: pet)
+                try deleteLiked(pet: pet)
                 try await dislikedPetUC.execute(data: pet)
                 completion(true)
             } catch {
@@ -119,16 +119,19 @@ final class FavoritesViewModel {
             throw PetsError.defaultCustom("User's uid was not found in likedByUsers")
         }
         
-        if let index = pet.likedByUsers.firstIndex(of: uid) {
+        if let index = pet.likedByUsers.firstIndex(of: uid),
+           let timestampIndex = pet.likesTimestamps.firstIndex(where: { $0.uid == uid })
+        {
             let updatedPet = pet
             updatedPet.likedByUsers.remove(at: index)
+            updatedPet.likesTimestamps.remove(at: timestampIndex)
             return updatedPet
         } else {
             throw PetsError.defaultCustom("User's UID not found in likedByUsers")
         }
     }
     
-    func delete(pet: Pet) throws {
+    func deleteLiked(pet: Pet) throws {
         if let index = pets.firstIndex(where: { $0.id == pet.id }) {
             pets.remove(at: index)
         } else {

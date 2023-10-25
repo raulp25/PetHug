@@ -20,7 +20,7 @@ final class LoginCoordinator: NSObject, StateCoordinator {
         rootViewController.navigationBar.tintColor = .white
     }
     
-    func checkIsNewUser() {
+    func showOnboarding() {
         let showOnboardingKey = OnboardingKey.showOnboarding.rawValue
         if UserDefaults.standard.bool(forKey: showOnboardingKey) == false {
             startOnboarding()
@@ -40,7 +40,7 @@ final class LoginCoordinator: NSObject, StateCoordinator {
         rootViewController.delegate = self
         rootViewController.pushViewController(vc, animated: true)
         
-        checkIsNewUser()
+        showOnboarding()
     }
     
     func startCreateAccountCoordinator() {

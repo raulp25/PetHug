@@ -95,7 +95,6 @@ public extension UIButton {
     static func createCustomIconImage(customIcon: String, size: CGFloat, color: UIColor = UIColor.gray.withAlphaComponent(0.8)) -> UIButton {
         let button = UIButton()
         if let image = UIImage(systemName: customIcon)?.withRenderingMode(.alwaysOriginal) {
-            print("customIcon: => \(customIcon)")
             button.setImage(image, for: .normal)
             button.setImageTintColor(color)
         }

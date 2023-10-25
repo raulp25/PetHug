@@ -90,7 +90,6 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     
     //MARK: - LifeCycle
     func configure(with pet: Pet, delegate: PetContentDelegate? = nil) {
-        print("llama cellconfigure: => ")
         viewModel = .init(pet: pet)
         self.delegate = delegate
         guard viewModel != nil else { return }
@@ -204,14 +203,11 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
     @objc private func didTapLike(_ sender: UITapGestureRecognizer) {
         guard let viewModel = viewModel else { return }
         guard let delegate = delegate else { return }
-        print(":viewmodel isliked => \(viewModel.isLiked)")
         
         heartImageContainer.isUserInteractionEnabled = false
         
         if !viewModel.isLiked {
-            print(":viewmodel no es ta like entra condicion")
             delegate.didTapLike(viewModel.pet) { [weak self] result in
-                print(":viewmodel no es ta like entra condicion RESULTADO \(result)")
                 if result == false {
                     viewModel.isLiked.toggle()
                     DispatchQueue.main.async {
@@ -225,10 +221,7 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         }
         
         if viewModel.isLiked {
-            print(":viewmodel si esta like entra condicion")
-            
             delegate.didTapDislike(viewModel.pet) { [weak self] result in
-                print(":viewmodel si esta like entra condicion RESULTADO \(result)")
                 if result == false {
                     viewModel.isLiked.toggle()
                     DispatchQueue.main.async {

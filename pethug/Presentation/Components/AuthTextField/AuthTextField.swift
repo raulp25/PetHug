@@ -161,8 +161,6 @@ final class AuthTextField: UIView {
         textField.tintColor = viewModel.color ?? .black.withAlphaComponent(0.7)
         textField.isSecureTextEntry = viewModel.isSecure
         
-        print(" textfield auth is secure \(viewModel.isSecure)")
-
         floatingLabel.text = viewModel.placeholder
 
         if viewModel.type == .date {
@@ -401,13 +399,11 @@ final class AuthTextField: UIView {
     private func animateErrorLabel(validationState: ValidationState) {
         UIView.animate(withDuration: 0.25) {
             if case let .error(errorState) = validationState {
-                print("animate error label executes =>~")
                 self.errorLabel.text = errorState.description
                 guard self.errorLabel.isHidden == true else { return } // stack acts wierd if you set the same hide/show state
                 self.errorLabel.isHidden = false
 
             } else if case .valid = validationState {
-                print("animate error label executes second condition=>~")
                 self.errorLabel.text = nil
                 guard self.errorLabel.isHidden == false else { return }
                 self.errorLabel.isHidden = true

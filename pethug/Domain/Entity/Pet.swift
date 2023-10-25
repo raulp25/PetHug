@@ -46,6 +46,7 @@ class Pet: Codable, Hashable {
     let timestamp: Timestamp
     var owneruid: String
     var likedByUsers: [String]
+    var likesTimestamps: [LikeTimetamp]
     
     init(
         id: String,
@@ -66,7 +67,8 @@ class Pet: Codable, Hashable {
         isLiked: Bool,
         timestamp: Timestamp,
         owneruid: String,
-        likedByUsers: [String]
+        likedByUsers: [String],
+        likesTimestamps: [LikeTimetamp]
     ) {
         self.id             = id
         self.name           = name
@@ -87,6 +89,7 @@ class Pet: Codable, Hashable {
         self.timestamp      = timestamp
         self.owneruid       = owneruid
         self.likedByUsers   = likedByUsers
+        self.likesTimestamps = likesTimestamps
     }
     
     //Can't decode Timestamp and null values at the same time so this is the solution
@@ -127,6 +130,14 @@ class Pet: Codable, Hashable {
                                           maleCatFriendly: false,
                                           femaleCatFriendly: false)
         }
+        
+        if let likesTimpestampsData = dictionary["likesTimestamps"] as? [[String: Any]] {
+            self.likesTimestamps = likesTimpestampsData.map({ LikeTimetamp(fromDictionary: $0) })
+            
+        } else {
+            self.likesTimestamps = []
+        }
+        
     }
 }
 
@@ -229,4 +240,27 @@ extension Pet {
         }
     }
     
+}
+
+
+struct LikeTimetamp: Hashable, Codable, Equatable {
+    var uid: String
+    var timestamp: Timestamp
+    
+    init(uid: String, timestamp: Timestamp) {
+        self.uid = uid
+        self.timestamp = timestamp
+    }
+    
+    init(fromDictionary dictionary: [String: Any]) {
+        self.uid = dictionary["uid"] as? String ?? ""
+        self.timestamp = dictionary["timestamp"] as? Timestamp ?? Timestamp(date: Date())
+    }
+    
+    func toObjectLiteral() -> [String: Any] {
+        return [
+            "uid": uid,
+            "timestamp": timestamp
+        ]
+    }
 }

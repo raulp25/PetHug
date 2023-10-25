@@ -193,7 +193,8 @@ class NewPetViewModel {
                 isLiked: false,
                 timestamp: Timestamp(date: Date()),
                 owneruid: AuthService().uid,
-                likedByUsers: []
+                likedByUsers: [],
+                likesTimestamps: []
             )
             
             let _ = try await executeCreatePet(pet: pet)
@@ -243,28 +244,14 @@ class NewPetViewModel {
                 isLiked: currentPet.isLiked,
                 timestamp: currentPet.timestamp,
                 owneruid: currentPet.owneruid,
-                likedByUsers: currentPet.likedByUsers
+                likedByUsers: currentPet.likedByUsers,
+                likesTimestamps: currentPet.likesTimestamps
             )
             
-            let dispatchGroup = DispatchGroup()
-            
-            dispatchGroup.enter()
             let _ = try await executeUpdatePet(pet: pet)
-            dispatchGroup.leave()
-            
-            if currentPet.type != pet.type {
-                dispatchGroup.enter()
-                try await deleteFromRepeated(collection: currentPet.type.getPath, id: pet.id)
-                dispatchGroup.leave()
-            }
-            
-            dispatchGroup.enter()
+
             imageService.deleteImages(imagesUrl: currentPet.imagesUrls)
-            dispatchGroup.leave()
-            
-            dispatchGroup.notify(queue: .main){ [weak self] in
-                self?.stateSubject.send(.success)
-            }
+            stateSubject.send(.success)
             
         } catch {
             stateSubject.send(.error(.default(error)))

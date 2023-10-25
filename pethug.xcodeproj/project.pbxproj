@@ -750,8 +750,6 @@
 				C445F14B2AB13B3F00053BE7 /* Domain */,
 				C445F14C2AB13B5900053BE7 /* Presentation */,
 				C445F1192AB1391A00053BE7 /* AppDelegate.swift */,
-				C426D26C2AB671D100BFA357 /* DummyView.swift */,
-				C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */,
 				C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */,
 				C445F1222AB1391B00053BE7 /* Assets.xcassets */,
 				C4685C0E2AD87F68003366F2 /* GoogleService-Info.plist */,
@@ -1521,6 +1519,8 @@
 				C42616D32AB274A1006925DB /* Factories */,
 				C42616F22AB282DF006925DB /* SpinnerView.swift */,
 				C42616F82AB2A6B5006925DB /* GradientButton.swift */,
+				C426D26C2AB671D100BFA357 /* DummyView.swift */,
+				C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";

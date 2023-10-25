@@ -69,15 +69,25 @@ final class Badge: UIView {
         
         if captionText != nil {
             addSubview(captionLabel)
-            captionLabel.centerX(inView: self, topAnchor: titleLabel.bottomAnchor, paddingTop: 0)
+            
+            captionLabel.centerX(
+                inView: self,
+                topAnchor: titleLabel.bottomAnchor,
+                paddingTop: 0
+            )
             captionLabel.text = captionText
             captionLabel.setHeight(30)
         }
         
         if iconImageName != nil {
             addSubview(iconImageView)
+            
             iconImageView.image = UIImage(systemName: iconImageName ?? "house")
-            iconImageView.centerX(inView: self, topAnchor: titleLabel.bottomAnchor, paddingTop: 0)
+            iconImageView.centerX(
+                inView: self,
+                topAnchor: titleLabel.bottomAnchor,
+                paddingTop: 0
+            )
             iconImageView.setDimensions(height: 25, width: 25)
         }
     }

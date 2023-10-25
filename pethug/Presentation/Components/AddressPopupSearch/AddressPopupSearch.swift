@@ -65,7 +65,6 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     
     //MARK: - Private actions
     @objc func didTapCancell() {
-        print(": => didTapCancell from popup")
         delegate?.didTapCancellSearchAddress()
     }
     

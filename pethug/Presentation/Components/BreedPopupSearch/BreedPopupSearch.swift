@@ -20,7 +20,6 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Nombre del animal / Título para darle mas duro a joanna por atras dale pa"
         label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         label.numberOfLines = 0
@@ -39,15 +38,9 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     }
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
+    private var currentSnapData = [SnapData]()
     
     //MARK: - Internal Properties
-    private var currentSnapData = [SnapData]() {
-        didSet {
-            print("cambio currentsnap data checar")
-        }
-    }
-    
-    
     var delegate: PopupSearchDelegate?
     var breedsForType: Pet.PetType?
    
@@ -74,7 +67,6 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     
     //MARK: - Private actions
     @objc func didTapCancell() {
-        print(": => didTapCancell from popup")
         delegate?.didTapCancell()
     }
     
@@ -96,19 +88,32 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         view.addSubview(cancelButton)
         view.addSubview(collectionView)
 
-        collectionView.anchor(top: view.safeAreaLayoutGuide.topAnchor, left: view.leftAnchor, bottom: cancelButton.topAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 23, paddingRight: 23)
+        collectionView.anchor(
+            top: view.safeAreaLayoutGuide.topAnchor,
+            left: view.leftAnchor,
+            bottom: cancelButton.topAnchor,
+            right: view.rightAnchor,
+            paddingTop: 0,
+            paddingLeft: 23,
+            paddingRight: 23
+        )
         collectionView.contentInset = .init(top: 0, left: 0, bottom: 0, right: 0)
         collectionView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         collectionView.showsVerticalScrollIndicator = false
         collectionView.layer.borderColor = customRGBColor(red: 220, green: 220, blue: 220).cgColor
         collectionView.layer.borderWidth = 1
         
-        cancelButton.anchor(left: view.leftAnchor, bottom: view.bottomAnchor, paddingLeft: 23, paddingBottom: 5, paddingRight: 23)
+        cancelButton.anchor(
+            left: view.leftAnchor,
+            bottom: view.bottomAnchor,
+            paddingLeft: 23,
+            paddingBottom: 5,
+            paddingRight: 23
+        )
     }
     
 
     func didPresentSearchController(_ searchController: UISearchController) {
-        print(": => didPresentSearchController()")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0, execute: {
             searchController.searchBar.becomeFirstResponder()
         })

@@ -19,7 +19,6 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
     
     private let titleLabel: UILabel = {
        let label = UILabel()
-        label.text = "Nombre del animal / Título para darle mas duro a joanna por atras dale pa"
         label.font = UIFont.systemFont(ofSize: 14.3, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         label.numberOfLines = 0
@@ -52,7 +51,7 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
         configureSearchController()
         configureUI()
         configureDataSource()
-        updateSnapShot()
+//        updateSnapShot()
         
     }
     
@@ -68,7 +67,6 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
     
     //MARK: - Private actions
     @objc func didTapCancell() {
-        print(": => didTapCancell from popup")
         delegate?.didTapCancellSearchAddress()
     }
     
@@ -116,7 +114,6 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
     
 
     func didPresentSearchController(_ searchController: UISearchController) {
-        print(": => didPresentSearchController()")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0, execute: {
             searchController.searchBar.becomeFirstResponder()
         })

@@ -30,7 +30,12 @@ final class PetViewHeaderViewController: UIViewController {
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
         
         view.addSubview(titleLabel)
-        titleLabel.centerX(inView: view, topAnchor: view.topAnchor, paddingTop: paddingTop)
+        
+        titleLabel.centerX(
+            inView: view,
+            topAnchor: view.topAnchor,
+            paddingTop: paddingTop
+        )
     }
     
 }

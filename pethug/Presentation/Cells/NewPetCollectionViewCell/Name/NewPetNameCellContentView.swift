@@ -81,14 +81,32 @@ final class NewPetNameCellContentView: UIView, UIContentView {
     
     private func setup() {
         backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        
         addSubview(containerView)
         containerView.addSubview(titleLabel)
         containerView.addSubview(nameTextField)
-        containerView.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingBottom: 10)
+        
+        containerView.anchor(
+            top: topAnchor,
+            left: leftAnchor,
+            bottom: bottomAnchor,
+            right: rightAnchor,
+            paddingBottom: 10
+        )
         containerView.setHeight(50)
         
-        titleLabel.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, right: containerView.rightAnchor)
-        nameTextField.anchor(top: titleLabel.bottomAnchor, left: containerView.leftAnchor, right: containerView.rightAnchor, paddingTop: 10)
+        titleLabel.anchor(
+            top: containerView.topAnchor,
+            left: containerView.leftAnchor,
+            right: containerView.rightAnchor
+        )
+        
+        nameTextField.anchor(
+            top: titleLabel.bottomAnchor,
+            left: containerView.leftAnchor,
+            right: containerView.rightAnchor,
+            paddingTop: 10
+        )
     }
     
     

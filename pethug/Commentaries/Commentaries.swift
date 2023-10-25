@@ -368,11 +368,11 @@ import Foundation
 ///Decoding / encoding
 //func mockDecodePetModel() {
 //    print("corre mock pet model decode 789: => ")
-//    let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna Camacho", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
+//    let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
 //
 //    let petModelData: [String: Any] = [
 //        "id": "3323-ews3",
-//        "name": "Joanna Camacho",
+//        "name": "Joanna",
 //        "age": 22,
 //        "gender": "female",
 //        "size": "small",
@@ -425,7 +425,7 @@ import Foundation
 //    for doc in docs {
 //            let petModelData: [String: Any] = [
 //                "id": "3323-ews3",
-//                "name": "Joanna Camacho",
+//                "name": "Joanna",
 //                "age": 22,
 //                "gender": "female",
 //                "size": "small",
@@ -448,7 +448,7 @@ import Foundation
         
 //            let petModelData: [String: Any] = [
 //                "id": "3323-ews3",
-//                "name": "Joanna Camacho",
+//                "name": "Joanna",
 //                "age": 22,
 //                "gender": "female",
 //                "size": "small",
@@ -615,6 +615,7 @@ import Foundation
 //}
 
 ///~~~~~~~~~~~~~~~~~~~~~~~
+///Parallel running
 ///WithThrowingTaskGroup usef
 //
 /// func createPet() async {
@@ -671,6 +672,117 @@ import Foundation
 //    } catch {
 //        stateSubject.send(.error(.default(error)))
 //    }
+
+
+////-------------------------------
+///2nd example withThrowingTaskGroup
+///  func updatePet(data: Pet, oldCollection: String) async throws -> Bool {
+//let collection = data.type.getPath
+//
+//if collection != oldCollection {
+//
+//    try await handlePetChangedType(oldCollection: oldCollection, data: data)
+//
+//} else {
+//
+//    let uid = AuthService().uid
+//    let petFirebaseEntinty = data.toFirebaseEntity()
+//    let dataModel = petFirebaseEntinty.toDictionaryUpdate()
+//
+//    try await withThrowingTaskGroup(of: Void.self) { group in
+//
+//        group.addTask { [weak self] in
+//            try await self?.db.collection(collection)
+//                .document(data.id)
+//                .updateData(dataModel)
+//        }
+//        group.addTask { [weak self] in
+//            try await self?.db.collection("users")
+//                .document(uid)
+//                .collection("pets")
+//                .document(data.id)
+//                .updateData(dataModel)
+//        }
+//
+//        for try await _ in group {}
+//    }
+//}
+//
+//return true
+//
+//}
+//
+//func handlePetChangedType(oldCollection: String, data: Pet) async throws {
+//let uid = AuthService().uid
+//let petFirebaseEntinty = data.toFirebaseEntity()
+//let updatedPet = petFirebaseEntinty.toDictionaryUpdate()
+//let collection = data.type.getPath
+//
+//try await withThrowingTaskGroup(of: Void.self) { group in
+//
+//    group.addTask { [weak self] in
+//        let _ = try await self?.deletePetFromRepeated(collection: oldCollection, docId: data.id)
+//    }
+//    group.addTask { [weak self] in
+//        try await self?.db.collection("users")
+//            .document(uid)
+//            .collection("pets")
+//            .document(data.id)
+//            .updateData(updatedPet)
+//    }
+//
+//    group.addTask { [weak self] in
+//        try await self?.createPetInSingle(collection: collection, data: data)
+//    }
+//
+//    for try await _ in group {}
+//}
+//}
+//3rd example
+/////  try await withThrowingTaskGroup(of: Void.self) { group in
+//
+//group.addTask { [weak self] in
+//    let _ = try await self?.executeUpdatePet(pet: pet)
+//}
+//group.addTask { [weak self] in
+//    try await self?.deleteFromRepeated(collection: currentPet.type.getPath, id: pet.id)
+//}
+//
+//for try await _ in group {}
+//}
+//
+//imageService.deleteImages(imagesUrl: currentPet.imagesUrls)
+//stateSubject.send(.success)
+
+//3rd example Async let
+//func fetchAllPets(resetFilterQueries: Bool) async throws -> [Pet] {
+//    async let dogsSnapshot    = try applyFetchAllPets(collection: .getPath(for: .dogs),
+//                                                      resetFilterQueries: resetFilterQueries,
+//                                                      query: &dogsQuery,
+//                                                      documents: &dogsdocuments)
+//
+//    async let catsSnapshot    = try applyFetchAllPets(collection: .getPath(for: .cats),
+//                                                      resetFilterQueries: resetFilterQueries,
+//                                                      query: &catsQuery,
+//                                                      documents: &catsdocuments)
+//
+//    async let birdsSnapshot   = try applyFetchAllPets(collection: .getPath(for: .birds),
+//                                                      resetFilterQueries: resetFilterQueries,
+//                                                      query: &birdsQuery,
+//                                                      documents: &birdsdocuments)
+//
+//    async let rabbitsSnapshot = try applyFetchAllPets(collection: .getPath(for: .rabbits),
+//                                                      resetFilterQueries: resetFilterQueries,
+//                                                      query: &rabbitsQuery,
+//                                                      documents: &rabbitsdocuments)
+//
+//    let results = try await [dogsSnapshot, catsSnapshot, birdsSnapshot, rabbitsSnapshot]
+//
+//    let pets: [Pet] = results[0] + results[1] + results[2] + results[3]
+//
+//    return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
+//}
+
 
 
 ///~~~==========================================================
@@ -751,11 +863,11 @@ import Foundation
 //
 ////    func mockDecodePetModel() {
 ////        print("corre mock pet model decode 789: => ")
-////        let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna Camacho", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
+////        let petModel: PetModel = PetModel(id: "3323-ews3", name: "Joanna", age: 22, gender: "female", size: "small", breed: "Dachshund", imagesUrls: ["firebase.com/ImageExampleMyCousin"], type: "dog", address: "Sinaloa", isLiked: false)
 ////
 ////        let petModelData: [String: Any] = [
 ////            "id": "3323-ews3",
-////            "name": "Joanna Camacho",
+////            "name": "Joanna",
 ////            "age": 22,
 ////            "gender": "female",
 ////            "size": "small",

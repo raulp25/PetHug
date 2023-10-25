@@ -28,7 +28,8 @@ extension Pet: DomainMapper {
             isLiked: isLiked,
             timestamp: timestamp,
             owneruid: owneruid,
-            likedByUsers: likedByUsers
+            likedByUsers: likedByUsers,
+            likesTimestamps: likesTimestamps
         )
     }
 }
@@ -54,7 +55,8 @@ extension Pet: DictionaryLiteralMapper {
             "isLiked": isLiked,
             "timestamp": timestamp,
             "owneruid": owneruid,
-            "likedByUsers": likedByUsers
+            "likedByUsers": likedByUsers,
+            "likesTimestamps": likesTimestamps
         ]
     }
 }
@@ -82,7 +84,8 @@ extension Pet: FirebaseMapper {
             isLiked: false,
             timestamp: timestamp,
             owneruid: owneruid,
-            likedByUsers: likedByUsers
+            likedByUsers: likedByUsers,
+            likesTimestamps: likesTimestamps
         )
     }
 }
@@ -108,7 +111,8 @@ extension PetModel: DictionaryLiteralMapper {
             "isLiked": isLiked,
             "timestamp": timestamp,
             "owneruid": owneruid,
-            "likedByUsers": likedByUsers
+            "likedByUsers": likedByUsers,
+            "likesTimestamps": likesTimestamps.map({ $0.toObjectLiteral() })
         ]
     }
 }
@@ -138,7 +142,8 @@ extension PetModel: DictionaryUpdateMapper {
 extension PetModel: DictionaryLikedMapper {
     func toDictionaryLiked() -> [String: Any] {
         return [
-            "likedByUsers": likedByUsers
+            "likedByUsers": likedByUsers,
+            "likesTimestamps": likesTimestamps.map({ $0.toObjectLiteral() })
         ]
     }
 }

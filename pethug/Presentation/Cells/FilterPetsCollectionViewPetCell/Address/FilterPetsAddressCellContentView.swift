@@ -141,7 +141,10 @@ final class FilterPetsAddressCellContentView: UIView, UIContentView {
         containerView.addSubview(chevronImageView)
         addSubview(hStackAll)
         
-        headerLabel.centerX(inView: self, topAnchor: topAnchor)
+        headerLabel.centerX(
+            inView: self,
+            topAnchor: topAnchor
+        )
         
         titleLabel.anchor(
             top: headerLabel.bottomAnchor,

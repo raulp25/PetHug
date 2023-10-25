@@ -335,7 +335,15 @@ final class DefaultPetDataSource: PetDataSource {
 
         }
         
-        return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
+        func sortPets() -> [Pet] {
+            return pets.sorted { (pet1, pet2) in
+                let likeTimestamp1 = pet1.likesTimestamps.first { $0.uid == uid }
+                let likeTimestamp2 = pet2.likesTimestamps.first { $0.uid == uid }
+                return likeTimestamp1?.timestamp.dateValue() ?? Date() > likeTimestamp2?.timestamp.dateValue() ?? Date()
+            }
+        }
+        
+        return sortPets()
     }
     
     //MARK: - Create
@@ -446,6 +454,7 @@ final class DefaultPetDataSource: PetDataSource {
                     .delete()
         return true
     }
+    
     //MARK: - Like
     func likePet(data: Pet) async throws {
         try await updateOwnerPetLikes(data: data)
