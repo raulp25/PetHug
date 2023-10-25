@@ -9,43 +9,35 @@ import UIKit
 
 final class ProfileViewHeaderViewController: UIViewController {
     //MARK: - Private components
-    
     private let titleLabel: UILabel = {
        let label = UILabel()
         label.text = "General"
-        label.font = UIFont.systemFont(ofSize: 35, weight: .light)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 15, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
     
     
     //MARK: - Private properties
-    weak var delegate: FilterPetsViewHeaderDelegate?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
     }
     
-    //MARK: - Private actions
-    @objc private func didTapChevron() {
-        delegate?.didTapIcon()
-    }
-    
     //MARK: - Setup
     func setup() {
-        let paddingTop: CGFloat = 15
-        let sidePadding: CGFloat = 20
-        view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
+        let paddingTop: CGFloat = 25
+        view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
         
         view.addSubview(titleLabel)
         
-        titleLabel.centerY(
+        titleLabel.center(
             inView: view,
-            leftAnchor: view.leftAnchor,
-            paddingLeft: 25
+            yConstant: paddingTop
         )
-        
+        titleLabel.setWidth(150)
     }
     
 }

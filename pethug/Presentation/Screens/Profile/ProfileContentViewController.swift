@@ -160,7 +160,7 @@ final class ProfileContentViewController: UIViewController {
     
     //MARK: - Setup
     private func setup() {
-        view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
+        view.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
         
         add(headerView)
         
@@ -181,10 +181,10 @@ final class ProfileContentViewController: UIViewController {
                 UIScreen.main.bounds.size.height <= 700 ?
                 40 :
                     UIScreen.main.bounds.size.height <= 926 ?
-                    60 :
-                        75
+                    0 :
+                        0
         )
-        headerView.view.setHeight(70)
+        headerView.view.setHeight(130)
         
         containerView.centerX(
             inView: view,
