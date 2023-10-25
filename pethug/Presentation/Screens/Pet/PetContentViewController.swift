@@ -15,6 +15,7 @@ final class PetContentViewController: UIViewController {
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
+    private var cachedPageNumber = 0
     
     //MARK: - Internal properties
     var snapData: [SnapData]
@@ -48,7 +49,6 @@ final class PetContentViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if !(NetworkMonitor.shared.isConnected) {
             alert(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
         }
@@ -81,9 +81,12 @@ final class PetContentViewController: UIViewController {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        
-        let galleryCellRegistration = UICollectionView.CellRegistration<PetViewGalleryCollectionViewCell, [String]> { cell, _, model in
+        // Inside this gallery cell we have a nested collectionView because we have a UIPageControl anchored
+        let galleryCellRegistration = UICollectionView.CellRegistration<PetViewGalleryCollectionViewCell, [String]> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.images = model
+            cell.cachedPageNumber = cachedPageNumber
+            cell.delegate = self
         }
         
         let nameLocationCellRegistration = UICollectionView.CellRegistration<PetViewNameLocationCollectionViewCell, NameLocationData> { cell, _, model in
@@ -167,6 +170,42 @@ final class PetContentViewController: UIViewController {
             right: view.rightAnchor
         )
     }
+    
+    //MARK: - Private methods
+    private func savePhoto(_ image: UIImage) {
+        UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+    }
+    
+    @objc private func image(_ image: UIImage, didFinishSavingWithError err: Error?, contextInfo: UnsafeRawPointer) {
+        if let err = err {
+            alert(message: "Error al guardar imagen", title: "Error")
+        } else {
+            alert(message: "Imagen guardada exitosamente", title: "Listo")
+        }
+    }
+    
+    func showActionSheet(withTitle title: String, message: String, completion: @escaping(Bool) -> Void) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        alert.addAction(UIAlertAction(title: "Guardar", style: .default, handler: { _ in completion(true) }))
+        alert.addAction(.init(title: "Cancelar", style: .destructive, handler: { _ in completion(false) }))
+        
+        present(alert, animated: true, completion: nil)
+    }
+
 }
 
+extension PetContentViewController: PetViewGalleryCellDelegate {
+    func didTapCell(image: UIImage) {
+        showActionSheet(withTitle: "Guardar imagen", message: "La imagen se guardara en tu galeria") { [weak self] save in
+            if save {
+                self?.savePhoto(image)
+            }
+        }
+    }
+    
+    func didPageChanged(to page: Int) {
+        cachedPageNumber = page
+    }
+}
 

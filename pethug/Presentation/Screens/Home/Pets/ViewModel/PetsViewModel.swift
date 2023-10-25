@@ -83,8 +83,18 @@ final class PetsViewModel {
     }
     
     //MARK: - Internal Methods
-    // Fetch pets without filter options
+    // Coordinates fetch pets
     func fetchPets(collection: String, resetFilterQueries: Bool) {
+        filterMode = false
+        
+        guard !isFetching else { return }
+        isFetching = true
+        
+        // Reset state variables when performing the first fetch
+        if resetFilterQueries {
+            resetData()
+        }
+        
         if collection == .getPath(for: .allPets) {
             applyFetchAllPets(resetFilterQueries: resetFilterQueries) // Fetch all pets collections
         } else {
@@ -92,12 +102,32 @@ final class PetsViewModel {
         }
     }
     
-    // Coordinates the filter process
+    // Coordinates fetch pets with filter options
     func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
+        filterMode = true
+        
+        guard !isFetching else { return }
+        isFetching = true
+        
+        if isFirstLoad {
+            state.send(.loading)
+        }
+        
+        // Reset state variables when performing the first fetch
+        if resetFilterQueries {
+            resetData()
+        }
+        // If new filter options are provided, update the filterOptions variable
+        if options != nil {
+            filterOptions = options
+        }
+        
+        guard let filterOptions = filterOptions else { return }
+        
         if self.collection == .getPath(for: .allPets) {
-            applyFilterToAllPets(options: options, resetFilterQueries: resetFilterQueries) // Fetch all pets collections with filter options
+            applyFilterToAllPets(options: filterOptions, resetFilterQueries: resetFilterQueries) // Fetch all pets collections with filter options
         } else {
-            applyFilter(options: options, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection with filter options
+            applyFilter(options: filterOptions, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection with filter options
         }
     }
     
@@ -105,6 +135,11 @@ final class PetsViewModel {
     func likedPet(pet: Pet, completion: @escaping(Bool) -> Void)  {
         Task{
             do {
+                guard NetworkMonitor.shared.isConnected == true else {
+                    self.state.send(.networkError)
+                    isFetching = false
+                    return
+                }
                 let pet = try addLike(pet: pet) // Update pets array
                 try await likedPetUC.execute(data: pet) // Update in db
                 completion(true)
@@ -118,6 +153,10 @@ final class PetsViewModel {
     func dislikedPet(pet: Pet, completion: @escaping(Bool) -> Void) {
         Task{
             do {
+                guard NetworkMonitor.shared.isConnected == true else {
+                    self.state.send(.networkError)
+                    return
+                }
                 let pet = try removeLikeUid(pet: pet)
                 try await dislikedPetUC.execute(data: pet)
                 completion(true)
@@ -134,13 +173,6 @@ final class PetsViewModel {
     
     //MARK: - Private methods
     private func applyFetchAllPets(resetFilterQueries: Bool) {
-        // Reset state variables when performing the first fetch
-        if resetFilterQueries {
-            resetData()
-        }
-        guard !isFetching else { return }
-        isFetching = true
-
         Task {
             do {
                 guard NetworkMonitor.shared.isConnected == true else {
@@ -158,14 +190,6 @@ final class PetsViewModel {
     }
     
     private func applyFetchPets(collection: String, resetFilterQueries: Bool) {
-        // Reset state variables when performing the first fetch
-        if resetFilterQueries {
-            resetData()
-        }
-        
-        guard !isFetching else { return }
-        isFetching = true
-        
         Task {
             do {
                 guard NetworkMonitor.shared.isConnected == true else {
@@ -185,25 +209,7 @@ final class PetsViewModel {
     
     //MARK: - Filter pets
     // The viewModel instance is shared, so we update the filterOptions when new options are provided.
-    private func applyFilterToAllPets(options: FilterOptions?, resetFilterQueries: Bool) {
-        filterMode = true
-        // If new filter options are provided, update the filterOptions variable
-        if options != nil {
-            filterOptions = options
-        }
-        // Reset state variables when performing the first fetch
-        if resetFilterQueries {
-            resetData()
-        }
-        
-        if isFirstLoad {
-            state.send(.loading)
-        }
-        
-        guard let filterOptions = filterOptions else { return }
-        guard !isFetching else { return }
-        isFetching = true
-        
+    private func applyFilterToAllPets(options: FilterOptions, resetFilterQueries: Bool) {
         Task {
             do {
                 guard NetworkMonitor.shared.isConnected == true else {
@@ -211,7 +217,7 @@ final class PetsViewModel {
                     isFetching = false
                     return
                 }
-                let data = try await filterAllPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries) // Fetch pets
+                let data = try await filterAllPetsUC.execute(options: options, resetFilterQueries: resetFilterQueries) // Fetch pets
                 handleResult(data)
             } catch {
                 handleError(error)
@@ -222,25 +228,7 @@ final class PetsViewModel {
     }
     
     // The viewModel instance is shared, so we update the filterOptions when new options are provided.
-    private func applyFilter(options: FilterOptions?, resetFilterQueries: Bool) {
-        filterMode = true
-        // If new filter options are provided, update the filterOptions variable
-        if options != nil {
-            filterOptions = options
-        }
-        // Reset state variables when performing the first fetch
-        if resetFilterQueries {
-            resetData()
-        }
-        
-        if isFirstLoad {
-            state.send(.loading)
-        }
-        
-        guard let filterOptions = filterOptions else { return }
-        guard !isFetching else { return }
-        isFetching = true
-        
+    private func applyFilter(options: FilterOptions, resetFilterQueries: Bool) {
         Task {
             do {
                 guard NetworkMonitor.shared.isConnected == true else {
@@ -249,7 +237,7 @@ final class PetsViewModel {
                     return
                 }
                 let data = try await filterPetsUC.execute(collection: collection,
-                                                          options: filterOptions,
+                                                          options: options,
                                                           resetFilterQueries: resetFilterQueries
                                                           ) // Fetch pets
                 handleResult(data)

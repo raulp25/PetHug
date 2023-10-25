@@ -51,7 +51,7 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
         configureSearchController()
         configureUI()
         configureDataSource()
-//        updateSnapShot()
+        updateSnapShot()
         
     }
     
@@ -140,43 +140,21 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
     
     
     //MARK: - CollectionView dataSource
-    private func configureDataSource() {
-        
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-        <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
-            supplementaryView, string, indexPath in
-            supplementaryView.titleLabel.text = "Adopta a un amigo"
-        }
-        
-        
-        let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterSearchAddressListCellConfiguration>, FilterSearchAddress> { cell, _, model in
+    private func configureDataSource() { // Cell registration
+        let filterViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterSearchAddressListCellConfiguration>, FilterSearchAddress> { cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }
         
-        
+        // dataSource init
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
             case let .state(address):
-                return collectionView.dequeueConfiguredReusableCell(using: titleViewCellRegistration, for: indexPath, item: address)
+                return collectionView.dequeueConfiguredReusableCell(using: filterViewCellRegistration, for: indexPath, item: address)
             }
             
         })
-        
-        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-            guard let self else {
-                return nil
-            }
-            
-            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-            
-            switch section {
-            case .state:
-                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-            }
-        }
-        
     }
     
     

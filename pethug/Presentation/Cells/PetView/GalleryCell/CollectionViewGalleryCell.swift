@@ -8,6 +8,10 @@
 import UIKit
 import SDWebImage
 
+protocol PetViewGalleryCellDelegate: AnyObject {
+    func didTapCell(image: UIImage)
+    func didPageChanged(to page: Int)
+}
 
 final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     //MARK: - Private components
@@ -22,6 +26,7 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
             configureUI()
             configureDataSource()
             updateSnapShot()
+            collectionView.scrollToItem(at: IndexPath(item: currentPage, section: 0), at: .centeredHorizontally, animated: true)
         }
     }
     private var currentPage = 0 {
@@ -36,6 +41,15 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
             snapData = [.init(key: .image, values: images.map({ .image($0) }))]
         }
     }
+    var cachedPageNumber: Int = 0 {
+        didSet {
+            // When the cached page number is updated, this variable ensures that the current page
+            // (currentPage) and the collectionView's scroll position are synchronized to the cached page.
+            currentPage = cachedPageNumber
+            collectionView.scrollToItem(at: IndexPath(item: cachedPageNumber, section: 0), at: .left, animated: false)
+        }
+    }
+    weak var delegate: PetViewGalleryCellDelegate?
     
     //MARK: - LifeCycle
     override init(frame: CGRect) {
@@ -55,12 +69,20 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
             switch section {
             case .image:
                 let section: NSCollectionLayoutSection = .createPetLayout(for: .galleryImage)
-                
+                //Update the current page when scrolled
                 section.visibleItemsInvalidationHandler = { [weak self] visibleItems, point, environment in
+                    // Determine the current page based on the last visible item
                     let currentPage = visibleItems.last?.indexPath.row
                     
                     if let currentPage = currentPage{
                         self?.currentPage = currentPage
+                        // We need this delay to ensure that the cached page number is used
+                        // to scroll to the last cell seen by the user, preventing it from resetting to 0 when the
+                        // main parent collectionView reset this nested collectonView, otherwise the visible cell will
+                        // be the first one each time main parent collectionView reset this nested collectonView
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute:  {
+                            self?.delegate?.didPageChanged(to: currentPage)
+                        })
                     }
                 }
 
@@ -71,11 +93,14 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     }
     
     //MARK: - CollectionView dataSource
-    private func configureDataSource() {
-        let imageCellRegistration = UICollectionView.CellRegistration<PetViewImageCollectionViewCell, String> { cell, _, model in
+    private func configureDataSource() { // Cell registration
+        // imageCell
+        let imageCellRegistration = UICollectionView.CellRegistration<PetViewImageCollectionViewCell, String> { [weak self]  cell, _, model in
+            guard let self = self else { return }
             cell.configure(with: model)
+            cell.delegate = self
         }
-        
+        // dataSource init
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
@@ -99,8 +124,6 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
         
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
-    
-    
     
     //MARK: - Setup
     func configureUI() {
@@ -131,3 +154,8 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
     
 }
 
+extension PetViewGalleryCollectionViewCell: PetViewImageCellDelegate {
+    func didTapCell(image: UIImage) {
+        delegate?.didTapCell(image: image)
+    }
+}

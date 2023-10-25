@@ -310,7 +310,8 @@ final class NewPetContentViewController: UIViewController {
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }
-        
+        // Inside this gallery cell we have a nested collectionView where we handle our delegate methods
+        // to avoid making this VC super massive
         let newPetGalleryViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<NewPetGalleryListCellConfiguration>, NewPetGallery> { [weak self] cell, _, model in
             cell.viewModel = model
             cell.viewModel?.delegate = self

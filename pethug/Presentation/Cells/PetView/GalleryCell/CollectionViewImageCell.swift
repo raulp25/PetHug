@@ -8,6 +8,9 @@
 import UIKit
 import SDWebImage
 
+protocol PetViewImageCellDelegate: AnyObject {
+    func didTapCell(image: UIImage)
+}
 
 final class PetViewImageCollectionViewCell: UICollectionViewCell {
     
@@ -19,8 +22,15 @@ final class PetViewImageCollectionViewCell: UICollectionViewCell {
         iv.clipsToBounds = true
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapImage))
+        iv.isUserInteractionEnabled = true
+        iv.addGestureRecognizer(tapGesture)
         return iv
     }()
+    
+    //MARK: - Internal properties
+    weak var delegate: PetViewImageCellDelegate?
     
     //MARK: - LifeCycle
     func configure(with url: String) {
@@ -65,6 +75,12 @@ final class PetViewImageCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Private actions
+    @objc private func didTapImage() {
+        guard let image = petImage.image else { return }
+        delegate?.didTapCell(image: image)
     }
     
 }

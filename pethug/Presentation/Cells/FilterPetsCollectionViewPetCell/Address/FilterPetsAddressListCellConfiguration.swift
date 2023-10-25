@@ -24,7 +24,7 @@ struct FilterPetsAddress: Hashable {
     weak var delegate: FilterPetsAddressDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init(address: FilterState? = nil) {
         self.address = address
     }
