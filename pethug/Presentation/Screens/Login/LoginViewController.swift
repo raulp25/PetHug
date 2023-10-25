@@ -117,7 +117,9 @@ class LoginViewController: UIViewController {
     
     private lazy var createAccountBtn: UIButton = {
         let btn = UIButton(type: .system)
-        btn.attributedRegularBoldColoredText(regularText: "No tienes cuenta?", boldText: " Registrate", color: .white, fontSize: 16)
+        btn.attributedRegularBoldColoredText(regularText: "No tienes cuenta?",
+                                             boldText: " Registrate",
+                                             color: .white, fontSize: 16)
         btn.addTarget(self, action: #selector(goToCreateNewAccount), for: .touchUpInside)
         return btn
     }()
@@ -363,6 +365,7 @@ extension LoginViewController: AuthTextFieldDelegate {
             passwordTextField.textField.becomeFirstResponder()
         } else {
             textField.textField.resignFirstResponder()
+            //Login
             login()
         }
         return false

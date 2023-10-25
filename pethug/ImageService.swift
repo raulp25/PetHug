@@ -31,7 +31,7 @@ protocol ImageServiceProtocol {
 }
 
 final class ImageService: ImageServiceProtocol {
-
+    //MARK: - Uplaod
     func uploadImage(image: UIImage, path: String) async throws -> String? {
         guard let imageData = image.jpegData(compressionQuality: 0.50) else { return nil}
         let filename = NSUUID().uuidString
@@ -43,7 +43,7 @@ final class ImageService: ImageServiceProtocol {
         
         return result
     }
-    
+    //MARK: - Download
     func downloadImage(url: String, completion: @escaping (_ dataImage: Data?) -> Void) {
         Storage.storage().reference(forURL: url).getData(maxSize: 10 * 1024 * 1024) { dataImage, error in
             if let error = error?.localizedDescription {
@@ -56,7 +56,7 @@ final class ImageService: ImageServiceProtocol {
         }
     }
     
-    
+    //MARK: - Delete
     func deleteImages(imagesUrl: [String]) {
         let storage = Storage.storage()
         let dispatchGroup = DispatchGroup()

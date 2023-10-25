@@ -35,7 +35,7 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
        let uv = UIView(withAutolayout: true)
         uv.layer.cornerRadius = 7
         uv.isUserInteractionEnabled = true
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapLike))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapDisLike))
         uv.addGestureRecognizer(tapGesture)
         return uv
     }()
@@ -82,10 +82,9 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
     //MARK: - Private properties
     private var viewModel: FavoriteCellViewModel?
     private weak var delegate: FavoriteContentDelegate?
+    
     //MARK: - Internal properties
     var liked = false
-    
-    var action: ((_ cellId: String) -> Void)? = nil
     
     //MARK: - LifeCycle
     func configure(with pet: Pet, delegate: FavoriteContentDelegate? = nil) {
@@ -150,9 +149,10 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
     private var db = Firestore.firestore()
     private func configureCellUI(with viewModel: FavoriteCellViewModel) {
         
-        
+        // Download image
          work = DispatchWorkItem(block: {
              let imageDownloader = ImageService()
+             // Donwload pet image
              imageDownloader.downloadImage(url: viewModel.petImage) { image in
                  if let image = image {
                      DispatchQueue.main.async {
@@ -167,6 +167,7 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
         
         DispatchQueue.main.async(execute: work!)
         
+        // Check if user likes this pet
         let uid = AuthService().uid
         if viewModel.pet.likedByUsers.contains(uid) {
             viewModel.isLiked = true
@@ -195,19 +196,21 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
         delegate?.didTapCell(pet: viewModel.pet)
     }
     
-    @objc private func didTapLike(_ sender: UITapGestureRecognizer) {
+    //Dislike pet tapped
+    @objc private func didTapDisLike(_ sender: UITapGestureRecognizer) {
         guard let viewModel = viewModel else { return }
         guard let delegate = delegate else { return }
         
         heartImageContainer.isUserInteractionEnabled = false
         
         if viewModel.isLiked {
-            
             delegate.didTapDislike(.pet(viewModel.pet)) { [weak self] result in
+                // In case something goes wrong with the process we still update the UI
+                // to let the user know his attempted action was received
                 if result == false {
-                    viewModel.isLiked.toggle()
+                    viewModel.isLiked.toggle()// Toggle liked state
                     DispatchQueue.main.async {
-                        self?.heartImage.image = UIImage(systemName: viewModel.heartImage)
+                        self?.heartImage.image = UIImage(systemName: viewModel.heartImage) // Update image
                     }
                 }
                 DispatchQueue.main.async {

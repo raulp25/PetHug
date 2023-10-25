@@ -24,7 +24,7 @@ struct ForgotPasswordViewModel {
                 return
             }
             
-            try await authService.resetPassword(withEmail: email)
+            try await authService.resetPassword(withEmail: email) //Reset password
             state.send(.success)
         } catch {
             state.send(.error(.default(error)))

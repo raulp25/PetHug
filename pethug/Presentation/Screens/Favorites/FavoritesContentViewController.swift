@@ -10,8 +10,6 @@ import Firebase
 protocol FavoritesContentViewControllerDelegate: AnyObject {
     func didTap(pet: Pet)
     func didDislike(pet: Pet, completion: @escaping (Bool) -> Void)
-    func executeFetch()
-//    func didTap(_:  Any)
 }
 
 final class FavoritesContentViewController: UIViewController {
@@ -19,20 +17,21 @@ final class FavoritesContentViewController: UIViewController {
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     
     private let titleLabel: UILabel = {
-      let label = UILabel(withAutolayout: true)
-       label.text = "Mis animales favoritos"
-       label.textColor = .black.withAlphaComponent(0.8)
+        let label = UILabel(withAutolayout: true)
+        label.text = "Mis animales favoritos"
+        label.textColor = .black.withAlphaComponent(0.8)
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.textAlignment = .center
         label.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
         label.numberOfLines = 0
-       return label
-   }()
+        return label
+    }()
     
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
     private var isMounted = false
+    
     //MARK: - Internal properties
     var snapData: [SnapData] {
         didSet {
@@ -52,12 +51,19 @@ final class FavoritesContentViewController: UIViewController {
     }
     
     deinit {
-        print("✅ Deinit PetsContentViewController")
+        print("✅ Deinit FavoritesContentViewController")
     }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setup()
+        configureDataSource()
+        updateSnapShot()
+    }
+    
+    //MARK: - Setup
+    func setup() {
         navigationController?.navigationBar.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -69,7 +75,7 @@ final class FavoritesContentViewController: UIViewController {
             left: view.leftAnchor,
             right: view.rightAnchor,
             paddingTop: 30
-        )        
+        )
         titleLabel.setHeight(60)
         
         collectionView.anchor(
@@ -85,13 +91,10 @@ final class FavoritesContentViewController: UIViewController {
             right: 0
         )
         collectionView.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
-        
-        configureDataSource()
-        updateSnapShot()
     }
     
     //MARK: - CollectionView layout
-    func createLayout() -> UICollectionViewCompositionalLayout {
+    func createLayout() -> UICollectionViewCompositionalLayout { //Create layout
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
             guard let self else { fatalError() }
             let section = self.dataSource.snapshot().sectionIdentifiers[sectionIndex]
@@ -109,19 +112,12 @@ final class FavoritesContentViewController: UIViewController {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-            <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
-            supplementaryView, string, indexPath in
-                supplementaryView.titleLabel.text = "Adopta a un amigo"
-        }
-
-        
+        // petCell
         let petViewCellRegistration = UICollectionView.CellRegistration<FavoriteControllerCollectionViewCell, Pet> { cell, _, model in
             cell.configure(with: model, delegate: self)
         }
         
-        
+        // dataSource init
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
@@ -130,19 +126,6 @@ final class FavoritesContentViewController: UIViewController {
             }
             
         })
-//        
-//        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-//            guard let self else {
-//                return nil
-//            }
-//
-//            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-//            
-//            switch section {
-//            case .pets:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            }
-//        }
     }
         
     // MARK: - Private methods
@@ -166,12 +149,12 @@ extension FavoritesContentViewController: FavoriteContentDelegate {
     func didTapCell(pet: Pet) {
         delegate?.didTap(pet: pet)
     }
-    
+    // Dislike pet
     func didTapDislike(_ item: Item, completion: @escaping (Bool) -> Void) {
         if let delegate = delegate {
             switch item {
             case .pet(let pet):
-                delegate.didDislike(pet: pet, completion: { [self] result in
+                delegate.didDislike(pet: pet, completion: { result in // Delegate
                     if result == true {
                         completion(true)
                     } else {
@@ -180,7 +163,8 @@ extension FavoritesContentViewController: FavoriteContentDelegate {
                 })
             }
         }
-        
+        // Update the UI independently if Delegate hadn't success disliking the pet
+        // to let the user know his attempted action was received
         if let sectionIndex = snapData.firstIndex(where: { $0.key == .pets }),
            let itemIndex = snapData[sectionIndex].values.firstIndex(where: { $0 == item })
         {

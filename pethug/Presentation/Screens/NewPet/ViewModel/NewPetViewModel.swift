@@ -31,9 +31,10 @@ class NewPetViewModel {
         self.createPetUseCase = createPetUseCase
         self.updatePetUseCase = updatePetUseCase
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
+        
         self.pet = pet
         self.isEdit = pet != nil
-    
+        
         self.imagesToEditState = pet?.imagesUrls ?? []
         self.nameState      = pet?.name
         self.galleryState   = []
@@ -144,7 +145,7 @@ class NewPetViewModel {
         address:   Pet.State?,
         info:      String?
     ) -> State{
-        
+        //Gender and Size remain unchecked as they are optional
         if name == nil       ||
             gallery.isEmpty  ||
             type == nil      ||
@@ -172,7 +173,7 @@ class NewPetViewModel {
             }
             var imagesUrls = [String]()
             
-            try await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
+            try await uploadNextImage(index: 0, imagesUrls: &imagesUrls) //Upload images
             
             let pet = Pet(
                 id: UUID().uuidString,
@@ -197,7 +198,7 @@ class NewPetViewModel {
                 likesTimestamps: []
             )
             
-            let _ = try await executeCreatePet(pet: pet)
+            let _ = try await executeCreatePet(pet: pet) // Create pet
             
             stateSubject.send(.success)
             
@@ -223,7 +224,7 @@ class NewPetViewModel {
             }
             var imagesUrls = [String]()
             
-            try await uploadNextImage(index: 0, imagesUrls: &imagesUrls)
+            try await uploadNextImage(index: 0, imagesUrls: &imagesUrls) // Upload images
             guard let currentPet = pet else { return }
             let pet = Pet(
                 id: currentPet.id,
@@ -248,9 +249,9 @@ class NewPetViewModel {
                 likesTimestamps: currentPet.likesTimestamps
             )
             
-            let _ = try await executeUpdatePet(pet: pet)
+            let _ = try await executeUpdatePet(pet: pet) // Update pet
 
-            imageService.deleteImages(imagesUrl: currentPet.imagesUrls)
+            imageService.deleteImages(imagesUrl: currentPet.imagesUrls) // Delete old images
             stateSubject.send(.success)
             
         } catch {
@@ -264,7 +265,7 @@ class NewPetViewModel {
         return try await updatePetUseCase.execute(data: pet, oldCollection: path)
     }
     
-    //Recursively Upload images in sequence to respect the order in which the user selected the images
+    // Recursively upload images to preserve their order of selection
     func uploadNextImage(index: Int, imagesUrls: inout [String]) async throws {
         guard let _ = typeState else { return }
         let path = "/userImages:\(uid)/"
@@ -281,6 +282,7 @@ class NewPetViewModel {
         
         
     }
+    
     //Delete pet from old collection when user changes its type, eg: change from pet -> to bird
     func deleteFromRepeated(collection path: String, id: String) async throws {
         _ = try await deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id)

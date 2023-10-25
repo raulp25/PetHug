@@ -131,14 +131,17 @@ final class AddPetViewController: UIViewController {
 }
 
 extension AddPetViewController: AddPetViewHeaderDelegate {
+    // Start create new pet flow
     func action() {
         viewModel.navigation?.startAddPetFlow()
     }
 }
 extension AddPetViewController: AddPetContentViewControllerDelegate {
+    // Fetch when pagination occurs
     func executeFetch() {
         viewModel.fetchUserPets()
     }
+    
     func didTapEdit(pet: Pet) {
         if !(NetworkMonitor.shared.isConnected) {
             renderError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
@@ -146,6 +149,7 @@ extension AddPetViewController: AddPetContentViewControllerDelegate {
         }
         viewModel.navigation?.startEditPetFlow(pet: pet)
     }
+    
     func didTapDelete(collection path: String, id: String) async  -> Bool {
             let result = await viewModel.deletePet(collection: path, id: id)
             return result

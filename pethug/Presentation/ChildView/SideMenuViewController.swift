@@ -35,7 +35,6 @@ final class SideMenuViewController: UIViewController {
 
     // MARK: - setup
     private func setup() {
-        // self
         view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
 
         // sideMenuVC

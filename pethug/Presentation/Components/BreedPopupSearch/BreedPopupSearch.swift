@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PopupSearchDelegate: AnyObject {
+protocol BreedPopupSearchDelegate: AnyObject {
     func didSelectBreed(breed: String)
     func didTapCancell()
 }
@@ -41,7 +41,7 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
     private var currentSnapData = [SnapData]()
     
     //MARK: - Internal Properties
-    var delegate: PopupSearchDelegate?
+    var delegate: BreedPopupSearchDelegate?
     var breedsForType: Pet.PetType?
    
     //MARK: - Lifecycle

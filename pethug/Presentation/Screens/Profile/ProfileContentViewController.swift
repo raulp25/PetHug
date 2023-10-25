@@ -281,7 +281,7 @@ final class ProfileContentViewController: UIViewController {
             })
         }
     }
-    
+    //Delete acc modal
     private func showModal(){
         let deleteAccView = Modal(leftButtonAction: cancel,
                                   rightButtonAction: deleteUser,
@@ -312,6 +312,7 @@ final class ProfileContentViewController: UIViewController {
     }
 }
 
+//MARK: - PHPickerViewControllerDelegate
 extension ProfileContentViewController: PHPickerViewControllerDelegate {
     func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
         coordinator?.rootViewController.dismiss(animated: true)

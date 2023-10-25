@@ -14,7 +14,6 @@ final class CreateAccountCoordinator: NavCoordinator {
     
     init(rootViewController: UINavigationController) {
         self.rootViewController = rootViewController
-        rootViewController.interactivePopGestureRecognizer?.isEnabled = false
     }
     
     func start() {

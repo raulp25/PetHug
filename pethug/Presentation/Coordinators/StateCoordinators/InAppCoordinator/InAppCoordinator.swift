@@ -91,7 +91,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
     
     private func resetUserDefaultsKeys() {
         for key in FilterKeys.allCases {
-            UserDefaults.standard.removeObject(forKey: key.rawValue)
+            UserDefaults.standard.removeObject(forKey: key.rawValue) //Remove Filter screen options
         }
     }
 

@@ -29,7 +29,7 @@ final class AddPetViewModel {
     private let petsSubject = PassthroughSubject<([Pet], Bool), PetsError>()
     private var pets: [Pet] = []
     private var isFetching = false
-    private var isFirstLoad = true
+    private var isFirstLoad = true // Flag indicates if the pagination process has started
     var isNetworkOnline = true
     
     //MARK: - Init
@@ -74,6 +74,7 @@ final class AddPetViewModel {
     func fetchUserPets(resetPagination: Bool = false) {
         guard !isFetching else { return }
         
+        // Reset state variables when performing new fech after creating/updating pet
         if resetPagination {
             resetPets()
         }
@@ -92,8 +93,8 @@ final class AddPetViewModel {
                 }
                 
                 isNetworkOnline = true  
-                let data = try await fetchUserPetsUC.execute(with: resetPagination)
-                handleFetchedPets(data, resetPagination: resetPagination)
+                let data = try await fetchUserPetsUC.execute(with: resetPagination) // Fetch user pets
+                handleFetchedPets(data, resetPagination: resetPagination) // Handle results
             } catch {
                 handleFetchError(error)
             }
@@ -111,12 +112,12 @@ final class AddPetViewModel {
             if let pet = pets.first(where: { $0.id == id}) {
                 await withThrowingTaskGroup(of: Void.self) { [unowned self] group in
                     group.addTask{ self.imageService.deleteImages(imagesUrl: pet.imagesUrls) }
-                    group.addTask { let _ = try await self.deletePetUC.execute(collection: path, docId: id) }
-                    group.addTask { let _ = try await self.deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id) }
+                    group.addTask { let _ = try await self.deletePetUC.execute(collection: path, docId: id) } // Delete from owner user collection
+                    group.addTask { let _ = try await self.deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id) } // Delete from pet collection
                 }
                 
                 if let index = pets.firstIndex(where: { $0.id == id }) {
-                    pets.remove(at: index)
+                    pets.remove(at: index) // Remove from pets array
                 }
                 return true
             }
@@ -133,13 +134,13 @@ final class AddPetViewModel {
     }
 
     private func handleFetchedPets(_ data: [Pet], resetPagination: Bool) {
-        if !isFirstLoad && !data.isEmpty {
+        if !isFirstLoad && !data.isEmpty { // If we have started the pagination process and data is not empty
             let debounce = resetPagination ? true : false
             petsSubject.send((data, debounce))
-        } else if isFirstLoad && data.isEmpty {
+        } else if isFirstLoad && data.isEmpty { // If we haven't start the pagination process and data is empty
             state.send(.empty)
             isFirstLoad = false
-        } else if isFirstLoad {
+        } else if isFirstLoad { // If we haven't start the pagination process and data isn't empty
             isFirstLoad = false
             petsSubject.send((data, false))
         }

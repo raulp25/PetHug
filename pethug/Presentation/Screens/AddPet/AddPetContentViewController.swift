@@ -17,20 +17,20 @@ final class AddPetContentViewController: UIViewController {
     private lazy var collectionView: UICollectionView = .createDefaultCollectionView(layout: createLayout())
     
     private let titleLabel: UILabel = {
-      let label = UILabel(withAutolayout: true)
-       label.text = "Sube, edita o borra tus animales en adopcion"
-       label.textColor = .black.withAlphaComponent(0.8)
+        let label = UILabel(withAutolayout: true)
+        label.text = "Sube, edita o borra tus animales en adopcion"
+        label.textColor = .black.withAlphaComponent(0.8)
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
         label.textAlignment = .center
         label.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
         label.numberOfLines = 0
-       return label
-   }()
-    
+        return label
+    }()
     
     //MARK: - Private properties
     private var dataSource: DataSource!
     private var snapshot: Snapshot!
+    
     //MARK: - Internal properties
     weak var delegate: AddPetContentViewControllerDelegate?
     var snapData: [SnapData] {
@@ -38,7 +38,7 @@ final class AddPetContentViewController: UIViewController {
             updateSnapShot()
         }
     }
-    
+    // This Flag is set after create/update pet to scroll cv to top
     var debounce = false {
         didSet {
             scrollTopCollectionView()
@@ -55,12 +55,18 @@ final class AddPetContentViewController: UIViewController {
     }
     
     deinit {
-        print("✅ Deinit PetsContentViewController")
+        print("✅ Deinit AddpetContentViewController")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        setup()
+        configureDataSource()
+        updateSnapShot()
+    }
+    
+    //MARK: - Setup
+    func setup() {
         navigationController?.navigationBar.isHidden = true
         view.translatesAutoresizingMaskIntoConstraints = false
         
@@ -89,13 +95,9 @@ final class AddPetContentViewController: UIViewController {
         )
         collectionView.backgroundColor = customRGBColor(red: 252, green: 252, blue: 252)
         collectionView.delegate = self
-        
-        configureDataSource()
-        updateSnapShot()
     }
 
     //MARK: - CollectionView layout
-//   We have the sectionProvider prop just in case
     func createLayout() -> UICollectionViewCompositionalLayout {
         let layout = UICollectionViewCompositionalLayout { [weak self] sectionIndex, layoutEnv in
             guard let self else { fatalError() }
@@ -114,21 +116,13 @@ final class AddPetContentViewController: UIViewController {
     
     
     //MARK: - CollectionView dataSource
-    private func configureDataSource() {
-        
-        let headerRegistration = UICollectionView.SupplementaryRegistration
-            <DummySectionHeader>(elementKind: UICollectionView.elementKindSectionHeader) {
-            supplementaryView, string, indexPath in
-                supplementaryView.titleLabel.text = "Sube, edita o borra tus animales en adopcion"
-                supplementaryView.titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
-        }
-
-        
+    private func configureDataSource() { // Cell registration
+        // PetViewCell
         let petViewCellRegistration = UICollectionView.CellRegistration<AddPetControllerCollectionViewCell, Pet> { cell, _, model in
             cell.configure(with: model, delegate: self)
         }
         
-        
+        // dataSource init
         dataSource = .init(collectionView: collectionView, cellProvider: { collectionView, indexPath, model in
             
             switch model {
@@ -137,19 +131,6 @@ final class AddPetContentViewController: UIViewController {
             }
             
         })
-        
-//        dataSource.supplementaryViewProvider = { [weak self] collectionView, _, indexPath -> UICollectionReusableView? in
-//            guard let self else {
-//                return nil
-//            }
-//
-//            let section = self.dataSource.snapshot().sectionIdentifiers[indexPath.section]
-//
-//            switch section {
-//            case .pets:
-//                return collectionView.dequeueConfiguredReusableSupplementary(using: headerRegistration, for: indexPath)
-//            }
-//        }
     }
         
     // MARK: - Private methods
@@ -172,7 +153,7 @@ final class AddPetContentViewController: UIViewController {
         guard debounce else { return }
         collectionView.alpha = 0
         collectionView.setContentOffset(CGPoint(x: 0, y: 0), animated: false)
-        //Gives dataSource time to visually apply changes without user seeing the process
+        // Gives dataSource time to visually apply changes without user seeing the process
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: { [weak self] in
             self?.collectionView.alpha = 1
             self?.debounce = false
@@ -182,6 +163,7 @@ final class AddPetContentViewController: UIViewController {
 
 
 extension AddPetContentViewController: UICollectionViewDelegate {
+    //Pagination process
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offset = scrollView.contentOffset
         let bounds = scrollView.bounds
@@ -191,9 +173,9 @@ extension AddPetContentViewController: UICollectionViewDelegate {
         let height: Float = Float(size.height)
         let distance: Float = 10
         
-        if y > height + distance {
+        if y > height + distance { // Check if collection view scroll position exceeds the limit
             if NetworkMonitor.shared.isConnected == true {
-                delegate?.executeFetch()
+                delegate?.executeFetch() // Fetch with pagination
             }
         }
     }
@@ -218,11 +200,11 @@ extension AddPetContentViewController: AddPetContentDelegate {
             let path = pet.type.getPath
             
             Task {
-                let result = await delegate.didTapDelete(collection: path, id: id)
+                let result = await delegate.didTapDelete(collection: path, id: id) // Delegate
                 
                 if let sectionIndex = snapData.firstIndex(where: { $0.key == .pets }),
                    let itemIndex = snapData[sectionIndex].values.firstIndex(where: { $0 == item }),
-                   result == true
+                   result == true // If delegate deleted pet succesfully
                 {
                     snapData[sectionIndex].values.remove(at: itemIndex)
                     

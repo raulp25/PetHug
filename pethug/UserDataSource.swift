@@ -21,12 +21,12 @@ protocol UserDataSource {
 // MARK: - Implementation -
 final class DefaultUserDataSource: UserDataSource {
     private let db = Firestore.firestore()
-
+    //MARK: - Register
     func registerUser(user: User) async throws {
         let data = user.toDictionaryLiteral()
         try await db.collection(.getPath(for: .users)).document(user.id).setData(data)
     }
-    
+    //MARK: - Get
     func fetchUser() async throws -> User {
         let uid = AuthService().uid
         let snapshot = try await db.collection(.getPath(for: .users)).document(uid).getDocument()
@@ -35,7 +35,7 @@ final class DefaultUserDataSource: UserDataSource {
         
         return doc
     }
-    
+    //MARK: - Update
     func updateUser(imageUrl: String) async throws {
         let uid = AuthService().uid
         let dataModel =  ["profileImageUrl": imageUrl]
@@ -44,7 +44,7 @@ final class DefaultUserDataSource: UserDataSource {
                     .document(uid)
                     .updateData(dataModel)
     }
-    
+    //MARK: - Delete
     func deleteUser() async throws {
         guard let user = Auth.auth().currentUser else { throw PetsError.defaultCustom("") }
         

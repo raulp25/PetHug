@@ -73,7 +73,7 @@ final class DefaultPetDataSource: PetDataSource {
 
         let pets: [Pet] = results[0] + results[1] + results[2] + results[3]
         
-        return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
+        return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() } //Sort by most recent
     }
     
     func applyFetchAllPets(
@@ -219,7 +219,7 @@ final class DefaultPetDataSource: PetDataSource {
 
         let pets: [Pet] = results[0] + results[1] + results[2] + results[3]
         
-        return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() }
+        return pets.sorted { $0.timestamp.dateValue() > $1.timestamp.dateValue() } //Sort by most recent
     }
     
     func applyFetchAllPets(
@@ -339,7 +339,7 @@ final class DefaultPetDataSource: PetDataSource {
             return pets.sorted { (pet1, pet2) in
                 let likeTimestamp1 = pet1.likesTimestamps.first { $0.uid == uid }
                 let likeTimestamp2 = pet2.likesTimestamps.first { $0.uid == uid }
-                return likeTimestamp1?.timestamp.dateValue() ?? Date() > likeTimestamp2?.timestamp.dateValue() ?? Date()
+                return likeTimestamp1?.timestamp.dateValue() ?? Date() > likeTimestamp2?.timestamp.dateValue() ?? Date() //Sort by most recent
             }
         }
         

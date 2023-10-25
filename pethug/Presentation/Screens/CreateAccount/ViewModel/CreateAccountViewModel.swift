@@ -15,20 +15,18 @@ struct CreateAccountViewModel {
     
     private let authService: AuthServiceProtocol
     private let imageService: ImageServiceProtocol
-    private let useCase: DefaultRegisterUserUC
+    private let registerUserUC: DefaultRegisterUserUC
     
-    init(authService: AuthServiceProtocol, imageService: ImageServiceProtocol, useCase: DefaultRegisterUserUC) {
+    init(
+        authService: AuthServiceProtocol,
+        imageService: ImageServiceProtocol,
+        registerUserUC: DefaultRegisterUserUC
+    ) {
         self.authService = authService
         self.imageService = imageService
-        self.useCase = useCase
+        self.registerUserUC = registerUserUC
     }
     
-//    func k() {
-//        state.send(.loading)
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute:{
-//            state.send(.success)
-//        })
-//    }
     
     func crateAccount(username: String?, email: String?, password: String?) async {
         guard let username, let email, let password else {
@@ -45,10 +43,10 @@ struct CreateAccountViewModel {
             }
             var imageUrl: String? = nil
             if let image = profileImage {
-                imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users))
+                imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users)) //Upload image
             }
             
-            let uid = try await authService.createAccounWith(email: email, password: password)
+            let uid = try await authService.createAccounWith(email: email, password: password) //Create account
             
             let userNew = User(
                 id: uid,
@@ -58,7 +56,7 @@ struct CreateAccountViewModel {
                 profileImageUrl: imageUrl
             )
             
-            try await registerUser(user: userNew)
+            try await registerUser(user: userNew) //Register user
             
             state.send(.success)
             
@@ -68,7 +66,7 @@ struct CreateAccountViewModel {
     }
     
     private func registerUser(user: User) async throws {
-        try await useCase.execute(user: user)
+        try await registerUserUC.execute(user: user)
     }
     
     

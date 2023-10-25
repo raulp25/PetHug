@@ -43,7 +43,6 @@ final class NewPetContentViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         hideKeyboardWhenTappedAround()
         setupKeyboardHiding()
         setup()
@@ -144,6 +143,7 @@ final class NewPetContentViewController: UIViewController {
             
             let contentOffset = collectionView.contentOffset
             let horizontalScrollPosition = contentOffset.y
+            //Responsive height measures
             let height =
             UIScreen.main.bounds.size.height <= 820 ?
                 UIScreen.main.bounds.height / 0.37:
@@ -157,7 +157,7 @@ final class NewPetContentViewController: UIViewController {
             collectionView.setContentOffset(CGPoint(x: 0, y:  height), animated: true)
             collectionView.isScrollEnabled = false
         }
-        //For smaller devices - the same on keyboardWillHide
+        //Responsive height measure for smaller devices (SE 3rd gen) - the same on keyboardWillHide
         if UIScreen.main.bounds.size.height <= 700 {
             collectionView.setContentOffset(CGPoint(x: 0, y: UIScreen.main.bounds.size.height / 0.30), animated: true)
             collectionView.isScrollEnabled = false
@@ -174,7 +174,7 @@ final class NewPetContentViewController: UIViewController {
         else {
             return
         }
-        //For smaller devices
+        //Responsive height measure For smaller devices (SE 3rd gen)
         if UIScreen.main.bounds.size.height <= 700 {
             collectionView.setContentOffset(CGPoint(x: 0, y: (UIScreen.main.bounds.size.height / 0.30) - 160), animated: true)
         }
@@ -485,6 +485,7 @@ final class NewPetContentViewController: UIViewController {
         }
         dataSource.apply(snapshot, animatingDifferences: animated)
     }
+    
     private func setLoadingScreen() {
         view.isUserInteractionEnabled = false
         
@@ -506,7 +507,7 @@ final class NewPetContentViewController: UIViewController {
         
     }
 }
-
+//MARK: - Cells protocols
 extension NewPetContentViewController: NewPetNameDelegate {
     func textFieldDidChange(text: String) {
         let text = text.count > 0 ? text : nil
@@ -600,7 +601,7 @@ extension NewPetContentViewController: NewPetUploadDelegate {
     }
 }
 
-
+//MARK: - UICollectionViewDelegate
 extension NewPetContentViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -611,8 +612,10 @@ extension NewPetContentViewController: UICollectionViewDelegate {
     
     
 }
-        
+
+//MARK: - NewPetBreedDelegate
 extension NewPetContentViewController: NewPetBreedDelegate {
+    //Opens breeds list modal
     func didTapBreedSelector() {
         let searchController = BreedPopupSearch()
         searchController.delegate = self
@@ -648,6 +651,7 @@ extension NewPetContentViewController: NewPetBreedDelegate {
         self.view.layoutIfNeeded()
     }
     
+    // User selected unknown breed
     func didTapUnkownedBreed() {
         viewModel.breedsState = "Mestizo"
         
@@ -657,9 +661,9 @@ extension NewPetContentViewController: NewPetBreedDelegate {
     }
 }
 
-//MARK: - Breed search Delegate
-extension NewPetContentViewController: PopupSearchDelegate {
-    
+//MARK: - BreedPopupSearchDelegate - Breed search results
+extension NewPetContentViewController: BreedPopupSearchDelegate {
+    // User selected a breed
     func didSelectBreed(breed: String) {
         UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
             self.dummyView.view.alpha = 0
@@ -677,7 +681,7 @@ extension NewPetContentViewController: PopupSearchDelegate {
         snapshot.reloadSections([.breed])
         dataSource.apply(snapshot, animatingDifferences: false)
     }
-    
+    // Cancelled search
     func didTapCancell() {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
             self.dummyView.view.alpha = 0
@@ -693,8 +697,9 @@ extension NewPetContentViewController: PopupSearchDelegate {
 }
 
 
-//MARK: - Address search Delegate
+//MARK: - NewPetAddressDelegate
 extension NewPetContentViewController: NewPetAddressDelegate {
+    //Opens addresses list modal
     func didTapAddressSelector() {
         let searchController = AddressPopupSearch()
         searchController.delegate = self
@@ -729,8 +734,9 @@ extension NewPetContentViewController: NewPetAddressDelegate {
         self.view.layoutIfNeeded()
     }
 }
-
+//MARK: - AddressPopupSearchDelegate - Address search results
 extension NewPetContentViewController: AddressPopupSearchDelegate {
+    // User selected an address
     func didSelectState(state: Pet.State) {
         UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
             self.dummyView.view.alpha = 0
@@ -748,7 +754,7 @@ extension NewPetContentViewController: AddressPopupSearchDelegate {
         snapshot.reloadSections([.address])
         dataSource.apply(snapshot, animatingDifferences: false)
     }
-    
+    // Cancelled search
     func didTapCancellSearchAddress() {
         UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
             self.dummyView.view.alpha = 0

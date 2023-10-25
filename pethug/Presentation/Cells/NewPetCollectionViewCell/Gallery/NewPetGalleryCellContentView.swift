@@ -33,13 +33,12 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     private var snapshot: Snapshot!
     private var work: DispatchWorkItem?
     private var editImageItem: NewPetGalleryCellContentView.Item!
-    //MARK: - Internal properties
     private var currentSnapData: [SnapData] = [.init(key: .gallery, values: [
-        .image(.init(image: UIImage(systemName: "pencil")!))
+        .image(.init(image: nil)) //This is set to show the camera icon cell
     ])]
     private var images: [UIImage] = [] {
         didSet {
-            currentConfiguration.viewModel?.delegate?.galleryDidChange(images: images)
+            currentConfiguration.viewModel?.delegate?.galleryDidChange(images: images) //Send/update images to viewModel
         }
     }
     
@@ -88,7 +87,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         guard let item = currentConfiguration.viewModel else { return }
         
         if !item.imagesToEdit.isEmpty {
-            //Set the initial gray placeholder squares until loading the images finish
+            //Set the initial gray background placeholder for cells until loading the images finish
             if let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) {
                 var array = [GalleryImage]()
                 for _ in 0..<item.imagesToEdit.count {
@@ -99,7 +98,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
                 updateSnapShot()
             }
             
-            //Load pet images
+            //Load pet images and update dataSource
             work = DispatchWorkItem(block: {
                 item.getImagetImagesSequentially(stringUrlArray: item.imagesToEdit) { [weak self] images in
                     if !images.isEmpty {
@@ -237,7 +236,7 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
 
 }
 
-///MARK: - Camera / Gallery PageSheet
+///MARK: - SelectPhotoCellDelegate - Camera / Gallery PageSheet
 extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
     func didTapSelectPhoto() {
         
@@ -262,7 +261,7 @@ extension NewPetGalleryCellContentView: SelectPhotoCellDelegate {
     }
 }
 
-///MARK: - Did select camera / gallery action Delegate
+///MARK: - GalleryPageSheetDelegate- Did select camera / gallery actions
 extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
     func didTapCamera() {
         let picker = UIImagePickerController()
@@ -289,7 +288,7 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
 }
 
 
-///MARK: - Delete / Edit image PageSheet
+///MARK: - GalleryCellDelegate - Delete / Edit image PageSheet
 extension NewPetGalleryCellContentView: GalleryCellDelegate {
     func didTapCell(_ cell: Item) {
         guard let indexPath = dataSource.indexPath(for: cell) else { return }
@@ -317,7 +316,7 @@ extension NewPetGalleryCellContentView: GalleryCellDelegate {
     }
 }
 
-///MARK: - Did select delete / edit image action Delegate
+///MARK: - EditGalleryImagePageSheetDelegate - Did select delete / edit image actionS
 extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
     func didTapDelete(cell indexPath: IndexPath) {
         if let item = dataSource.itemIdentifier(for: indexPath) {
@@ -325,9 +324,9 @@ extension NewPetGalleryCellContentView: EditGalleryImagePageSheetDelegate {
             if let sectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }),
                let itemIndex = currentSnapData[sectionIndex].values.firstIndex(where: { $0 == item })
             {
-                // Remove the item from currentSnapData
-                currentSnapData[sectionIndex].values.remove(at: itemIndex)
-                images.remove(at: itemIndex - 1)
+                
+                currentSnapData[sectionIndex].values.remove(at: itemIndex) // Remove the item from currentSnapData
+                images.remove(at: itemIndex - 1) // Remove the image in viewModel
                 
                 var snapshot = Snapshot()
                 snapshot.appendSections([.gallery])
@@ -367,10 +366,10 @@ extension NewPetGalleryCellContentView: CropViewControllerDelegate {
         if let sectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }),
            let itemIndex = currentSnapData[sectionIndex].values.firstIndex(where: { $0 == editImageItem })
         {
-            // Remove the item from currentSnapData
+            
             let newImage: NewPetGalleryCellContentView.Item = .image(.init(image: image))
-            currentSnapData[sectionIndex].values[itemIndex] = newImage
-            images[itemIndex - 1] = image
+            currentSnapData[sectionIndex].values[itemIndex] = newImage // Update the item from currentSnapData
+            images[itemIndex - 1] = image // Update the image in viewModel
             
             var snapshot = Snapshot()
             snapshot.appendSections([.gallery])
@@ -412,7 +411,7 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
         guard let gallerySectionIndex = currentSnapData.firstIndex(where: { $0.key == .gallery }) else { return }
         
         snapshot = dataSource.snapshot()
-        
+        // Recursively save images to preserve their order of selection
         func downloadNextImage(index: Int) {
             if index >= results.count || images.count >= 8 {
                 snapshot.appendItems(currentSnapData[gallerySectionIndex].values, toSection: .gallery)
@@ -430,9 +429,9 @@ extension NewPetGalleryCellContentView: PHPickerViewControllerDelegate {
                     }
                     
                     if let image = object as? UIImage {
-                        self?.currentSnapData[gallerySectionIndex].values.append(.image(.init(image: image)))
+                        self?.currentSnapData[gallerySectionIndex].values.append(.image(.init(image: image))) // save in currentSnapData
                         
-                        self?.images.append(image)
+                        self?.images.append(image) // Save in viewModel
                         
                         
                         downloadNextImage(index: index + 1)

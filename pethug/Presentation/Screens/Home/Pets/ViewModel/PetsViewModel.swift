@@ -20,7 +20,7 @@ final class PetsViewModel {
     var state = PassthroughSubject<State,Never>()
     var collection: String = .getPath(for: .allPets) {
         didSet {
-            resetFilterData()
+            resetData() // When collection changes reset data
         }
     }
     
@@ -29,7 +29,7 @@ final class PetsViewModel {
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
     private var pets: [Pet] = []
     private var isFetching = false
-    private var isFirstLoad = true
+    private var isFirstLoad = true // Flag indicates if the pagination process has started
     private let fetchAllPetsUC: DefaultFetchAllPetsUC
     private let filterAllPetsUC: DefaultFilterAllPetsUC
     private let fetchPetsUC: DefaultFetchPetsUC
@@ -37,7 +37,7 @@ final class PetsViewModel {
     private let likedPetUC: DefaultLikePetUC
     private let dislikedPetUC: DefaultDisLikePetUC
     private var filterOptions: FilterOptions? = nil
-    private var filterMode = false
+    private var filterMode = false // Flag indicating if we are requesting a fetch with fitler options
     
     init(
         fetchAllPetsUC: DefaultFetchAllPetsUC,
@@ -83,18 +83,60 @@ final class PetsViewModel {
     }
     
     //MARK: - Internal Methods
+    // Fetch pets without filter options
     func fetchPets(collection: String, resetFilterQueries: Bool) {
         if collection == .getPath(for: .allPets) {
-            applyFetchAllPets(resetFilterQueries: resetFilterQueries)
+            applyFetchAllPets(resetFilterQueries: resetFilterQueries) // Fetch all pets collections
         } else {
-            applyFetchPets(collection: collection, resetFilterQueries: resetFilterQueries)
+            applyFetchPets(collection: collection, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection
         }
+    }
+    
+    // Coordinates the filter process
+    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
+        if self.collection == .getPath(for: .allPets) {
+            applyFilterToAllPets(options: options, resetFilterQueries: resetFilterQueries) // Fetch all pets collections with filter options
+        } else {
+            applyFilter(options: options, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection with filter options
+        }
+    }
+    
+    
+    func likedPet(pet: Pet, completion: @escaping(Bool) -> Void)  {
+        Task{
+            do {
+                let pet = try addLike(pet: pet) // Update pets array
+                try await likedPetUC.execute(data: pet) // Update in db
+                completion(true)
+            } catch {
+                print("error liking pet: => \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+    
+    func dislikedPet(pet: Pet, completion: @escaping(Bool) -> Void) {
+        Task{
+            do {
+                let pet = try removeLikeUid(pet: pet)
+                try await dislikedPetUC.execute(data: pet)
+                completion(true)
+            } catch {
+                print("error liking pet: => \(error.localizedDescription)")
+                completion(false)
+            }
+        }
+    }
+    
+    func isFilterMode() -> Bool {
+        return filterMode
     }
     
     //MARK: - Private methods
     private func applyFetchAllPets(resetFilterQueries: Bool) {
+        // Reset state variables when performing the first fetch
         if resetFilterQueries {
-            resetFilterData()
+            resetData()
         }
         guard !isFetching else { return }
         isFetching = true
@@ -106,7 +148,7 @@ final class PetsViewModel {
                     isFetching = false
                     return
                 }
-                let data = try await fetchAllPetsUC.execute(resetFilterQueries: resetFilterQueries)
+                let data = try await fetchAllPetsUC.execute(resetFilterQueries: resetFilterQueries) // Fetch pets
                 handleResult(data)
             } catch {
                 handleError(error)
@@ -116,8 +158,9 @@ final class PetsViewModel {
     }
     
     private func applyFetchPets(collection: String, resetFilterQueries: Bool) {
+        // Reset state variables when performing the first fetch
         if resetFilterQueries {
-            resetFilterData()
+            resetData()
         }
         
         guard !isFetching else { return }
@@ -130,7 +173,7 @@ final class PetsViewModel {
                     isFetching = false
                     return
                 }
-                let data = try await fetchPetsUC.execute(fetchCollection: collection, resetFilterQueries: resetFilterQueries)
+                let data = try await fetchPetsUC.execute(fetchCollection: collection, resetFilterQueries: resetFilterQueries) // Fetch pets
                 handleResult(data)
             } catch {
                 handleError(error)
@@ -140,26 +183,17 @@ final class PetsViewModel {
         }
     }
     
-    //Coordinates the filter process
-    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
-        if self.collection == .getPath(for: .allPets) {
-            applyFilterToAllPets(options: options, resetFilterQueries: resetFilterQueries)
-        } else {
-            applyFilter(options: options, resetFilterQueries: resetFilterQueries)
-        }
-    }
-    
-    
-    //filterOptions gets set inmediatly after setting the filter options in the app so the next time we
-    //call this function we dont need to set again the filter options
+    //MARK: - Filter pets
+    // The viewModel instance is shared, so we update the filterOptions when new options are provided.
     private func applyFilterToAllPets(options: FilterOptions?, resetFilterQueries: Bool) {
         filterMode = true
+        // If new filter options are provided, update the filterOptions variable
         if options != nil {
             filterOptions = options
         }
-        
+        // Reset state variables when performing the first fetch
         if resetFilterQueries {
-            resetFilterData()
+            resetData()
         }
         
         if isFirstLoad {
@@ -177,7 +211,7 @@ final class PetsViewModel {
                     isFetching = false
                     return
                 }
-                let data = try await filterAllPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries)
+                let data = try await filterAllPetsUC.execute(options: filterOptions, resetFilterQueries: resetFilterQueries) // Fetch pets
                 handleResult(data)
             } catch {
                 handleError(error)
@@ -187,14 +221,16 @@ final class PetsViewModel {
         }
     }
     
+    // The viewModel instance is shared, so we update the filterOptions when new options are provided.
     private func applyFilter(options: FilterOptions?, resetFilterQueries: Bool) {
         filterMode = true
+        // If new filter options are provided, update the filterOptions variable
         if options != nil {
             filterOptions = options
         }
-        
+        // Reset state variables when performing the first fetch
         if resetFilterQueries {
-            resetFilterData()
+            resetData()
         }
         
         if isFirstLoad {
@@ -215,7 +251,7 @@ final class PetsViewModel {
                 let data = try await filterPetsUC.execute(collection: collection,
                                                           options: filterOptions,
                                                           resetFilterQueries: resetFilterQueries
-                                                          )
+                                                          ) // Fetch pets
                 handleResult(data)
             } catch {
                 handleError(error)
@@ -227,20 +263,19 @@ final class PetsViewModel {
     
    
     //Resets the filter data and marks it as the first load when new filter options are applied.
-    private func resetFilterData() {
-        isFirstLoad = true //Indicates that a new search has begun with new filter options
+    private func resetData() {
+        isFirstLoad = true //Indicates that pagination process hasn't started yet
         pets = []
     }
     
-    //If not the first load and the results are not empty, send the data.
-    //Otherwise, if it's the first load with new filter options and data is empty set empty state or send the data
+    
     private func handleResult(_ data: [Pet]) {
-        if !isFirstLoad && !data.isEmpty {
+        if !isFirstLoad && !data.isEmpty { // If we have started the pagination process and data is not empty
             petsSubject.send(data)
-        } else if isFirstLoad && data.isEmpty {
+        } else if isFirstLoad && data.isEmpty { // If we haven't started the pagination process and data is empty
             isFirstLoad = false
             state.send(.empty)
-        } else if isFirstLoad {
+        } else if isFirstLoad { // If we haven't started the pagination process and data isn't empty
             isFirstLoad = false
             petsSubject.send(data)
         }
@@ -251,9 +286,6 @@ final class PetsViewModel {
         state.send(.error(.default(error)))
     }
     
-    func isFilterMode() -> Bool {
-        return filterMode
-    }
     
     
 //    private func createMockPet() {
@@ -316,21 +348,7 @@ final class PetsViewModel {
 //        }
 //    }
     
-    
-    func likedPet(pet: Pet, completion: @escaping(Bool) -> Void)  {
-        Task{
-            do {
-                let pet = try addLike(pet: pet)
-                try await likedPetUC.execute(data: pet)
-                completion(true)
-            } catch {
-                print("error liking pet: => \(error.localizedDescription)")
-                completion(false)
-            }
-        }
-    }
-    
-    func addLike(pet: Pet) throws -> Pet{
+  private func addLike(pet: Pet) throws -> Pet{
         let uid = AuthService().uid
         
         if pet.likedByUsers.contains(uid) {
@@ -349,7 +367,9 @@ final class PetsViewModel {
         throw PetsError.defaultCustom("Pet index wasn't found")
     }
     
-    func removeLikeUid(pet: Pet) throws -> Pet {
+
+    
+    private func removeLikeUid(pet: Pet) throws -> Pet {
         let uid = AuthService().uid
         
         if !pet.likedByUsers.contains(uid) {
@@ -368,20 +388,6 @@ final class PetsViewModel {
             throw PetsError.defaultCustom("User's UID not found in likedByUsers")
         }
     }
-    
-    func dislikedPet(pet: Pet, completion: @escaping(Bool) -> Void) {
-        Task{
-            do {
-                let pet = try removeLikeUid(pet: pet)
-                try await dislikedPetUC.execute(data: pet)
-                completion(true)
-            } catch {
-                print("error liking pet: => \(error.localizedDescription)")
-                completion(false)
-            }
-        }
-    }
-    
     
     
     

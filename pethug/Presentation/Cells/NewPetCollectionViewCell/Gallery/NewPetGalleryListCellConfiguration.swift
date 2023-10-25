@@ -31,13 +31,13 @@ struct NewPetGallery: Hashable {
         self.imageService = imageService
     }
     
+    // Downloads cell images
     func getImagetImagesSequentially(stringUrlArray: [String], completion: @escaping([UIImage]) -> Void) {
         if !imagesToEdit.isEmpty, let imageService = imageService {
             var images = [UIImage]()
             
             func downloadNextImage(index: Int) {
                    if index >= stringUrlArray.count {
-                       // All downloads are complete, call the completion handler
                        completion(images)
                    } else {
                        let imageUrl = stringUrlArray[index]
@@ -45,13 +45,11 @@ struct NewPetGallery: Hashable {
                            if let imageData = imageData, let image = UIImage(data: imageData) {
                                images.append(image)
                            }
-                           // Move on to the next image download
                            downloadNextImage(index: index + 1)
                        }
                    }
                }
-               
-               // Start the sequential downloads with the first image
+
                downloadNextImage(index: 0)
         }
     }

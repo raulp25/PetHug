@@ -96,6 +96,7 @@ final class FavoritesViewController: UIViewController {
         let snapData: [FavoritesContentViewController.SnapData] = [
             .init(key: .pets, values: data.map { .pet($0) })
         ]
+        
         if contentStateVC.shownViewController == contentVc {
             contentVc?.snapData = snapData
         } else {
@@ -127,14 +128,12 @@ final class FavoritesViewController: UIViewController {
 
 
 extension FavoritesViewController: FavoritesContentViewControllerDelegate {
-    func executeFetch() {
-        viewModel.fetchFavoritePets()
-    }
-    
+    //Tapped pet
     func didTap(pet: Pet) {
         viewModel.navigation?.tapped(pet: pet)
     }
     
+    //Dislike pet
     func didDislike(pet: Pet, completion: @escaping (Bool) -> Void) {
         viewModel.dislikedPet(pet: pet) { result in
             if result == true {

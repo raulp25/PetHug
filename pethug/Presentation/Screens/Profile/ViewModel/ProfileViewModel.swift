@@ -47,10 +47,10 @@ final class ProfileViewModel {
             }
             
             if let oldProfilePic = user?.profileImageUrl {
-                imageService.deleteImages(imagesUrl: [oldProfilePic])
+                imageService.deleteImages(imagesUrl: [oldProfilePic]) // Delete image
             }
             
-            let imageUrl = try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users))
+            let imageUrl = try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users)) // Upload image
             
             try await updateUserUC.execute(imageUrl: imageUrl!)
             

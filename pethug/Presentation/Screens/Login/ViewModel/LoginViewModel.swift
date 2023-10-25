@@ -28,7 +28,7 @@ struct LoginViewModel {
                 self.state.send(.networkError)
                 return
             }
-            try await authService.signIn(email: email, password: password)
+            try await authService.signIn(email: email, password: password) //Login
         } catch {
             state.send(.error(.default(error)))
         }

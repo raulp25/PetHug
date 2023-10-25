@@ -172,6 +172,7 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         
         DispatchQueue.main.async(execute: work!)
         
+        // Check if user likes pet
         let uid = AuthService().uid
         if viewModel.pet.likedByUsers.contains(uid) {
             viewModel.isLiked = true
@@ -205,9 +206,10 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         guard let delegate = delegate else { return }
         
         heartImageContainer.isUserInteractionEnabled = false
-        
+        // Like pet
         if !viewModel.isLiked {
             delegate.didTapLike(viewModel.pet) { [weak self] result in
+                // If like process was unsuccessful reset like state
                 if result == false {
                     viewModel.isLiked.toggle()
                     DispatchQueue.main.async {
@@ -220,8 +222,10 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
             }
         }
         
+        //Dislike pet
         if viewModel.isLiked {
             delegate.didTapDislike(viewModel.pet) { [weak self] result in
+                // If like process was unsuccessful reset like state
                 if result == false {
                     viewModel.isLiked.toggle()
                     DispatchQueue.main.async {

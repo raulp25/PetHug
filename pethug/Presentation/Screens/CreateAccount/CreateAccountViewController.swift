@@ -137,7 +137,7 @@ class CreateAccountViewController: UIViewController {
     private var viewModel = CreateAccountViewModel(
                             authService: AuthService(),
                             imageService: ImageService(),
-                            useCase: RegisterUser.composeRegisterUserUC()
+                            registerUserUC: RegisterUser.composeRegisterUserUC()
                         )
     private var subscriptions = Set<AnyCancellable>()
     
@@ -270,14 +270,12 @@ class CreateAccountViewController: UIViewController {
     
     //MARK: - setup
     func setup() {
-        let paddintTop = UIScreen.main.bounds.height * 0.05
         let sidePadding: CGFloat = 20
         
         usernameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
     
-        
         view.addSubview(containerView)
         containerView.addSubview(childContainerView)
         
@@ -312,7 +310,7 @@ class CreateAccountViewController: UIViewController {
             top: childContainerView.topAnchor,
             left: childContainerView.leftAnchor,
             right: childContainerView.rightAnchor,
-            //Responsive for se 3rd gen
+            //Responsive for SE 3rd gen
             paddingTop: UIScreen.main.bounds.size.height < 700 ? -120 : -100,
             paddingLeft: 35,
             paddingRight: 35,
@@ -327,7 +325,7 @@ class CreateAccountViewController: UIViewController {
         )
         titleLabel.anchor(
             bottom: formContainerView.topAnchor,
-            //Responsive for se 3rd gen
+            //Responsive for SE 3rd gen
             paddingBottom: UIScreen.main.bounds.size.height < 700 ? 10 : 50
         )
         
