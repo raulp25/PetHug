@@ -20,6 +20,15 @@ final class LoginCoordinator: NSObject, StateCoordinator {
         rootViewController.navigationBar.tintColor = .white
     }
     
+    func start() {
+        vc.coordinator = self
+        vc.navigation = self 
+        rootViewController.delegate = self
+        rootViewController.pushViewController(vc, animated: true)
+        
+        showOnboarding()
+    }
+    
     func showOnboarding() {
         let showOnboardingKey = OnboardingKey.showOnboarding.rawValue
         if UserDefaults.standard.bool(forKey: showOnboardingKey) == false {
@@ -32,15 +41,6 @@ final class LoginCoordinator: NSObject, StateCoordinator {
         
         vc.modalPresentationStyle = .fullScreen
         rootViewController.present(vc, animated: true)
-    }
-    
-    func start() {
-        vc.coordinator = self
-        vc.navigation = self 
-        rootViewController.delegate = self
-        rootViewController.pushViewController(vc, animated: true)
-        
-        showOnboarding()
     }
     
     func startCreateAccountCoordinator() {

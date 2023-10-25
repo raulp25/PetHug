@@ -6,7 +6,7 @@
 //
 
 import FirebaseFirestore
-
+//Build query to fetch with filter options
 func buildQuery(for options: FilterOptions, collection: String) -> Query {
     let db = Firestore.firestore()
     var query: Query
@@ -31,7 +31,6 @@ func buildQuery(for options: FilterOptions, collection: String) -> Query {
         }
         
         
-        
         if options.gender != .all {
             query = query.whereField("gender", isEqualTo: options.gender.rawValue)
             
@@ -42,8 +41,6 @@ func buildQuery(for options: FilterOptions, collection: String) -> Query {
             query = query.whereField("size", isEqualTo: options.size.rawValue)
             
         }
-        
-       
         
         if let address = options.address,
                address != .AllCountry {
