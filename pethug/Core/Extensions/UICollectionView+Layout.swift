@@ -193,7 +193,7 @@ extension NSCollectionLayoutSection {
             return firstSection
         case .nameLocation:
             let secondSection = NSCollectionLayoutSection(group: secondSectionGroup)
-            secondSection.contentInsets = NSDirectionalEdgeInsets(top:  20, leading: 30, bottom: 0, trailing: 30)
+            secondSection.contentInsets = NSDirectionalEdgeInsets(top:  30, leading: 30, bottom: 0, trailing: 30)
             
             return secondSection
         case .info:

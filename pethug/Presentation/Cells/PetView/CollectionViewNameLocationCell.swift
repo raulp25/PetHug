@@ -15,7 +15,7 @@ final class PetViewNameLocationCollectionViewCell: UICollectionViewCell {
     private let nameLabel: UILabel = {
        let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: 24, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 28, weight: .bold)
         label.textColor = customRGBColor(red: 70, green: 70, blue: 70)
         return label
     }()
@@ -23,18 +23,18 @@ final class PetViewNameLocationCollectionViewCell: UICollectionViewCell {
     private let breedLabel: UILabel = {
        let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.textAlignment = .center
-        label.textColor = customRGBColor(red: 255, green: 176, blue: 42)
+        label.textColor = customRGBColor(red: 250, green: 169, blue: 30)
         return label
     }()
     
     private let addressLabel: UILabel = {
        let label = UILabel()
         label.numberOfLines = 1
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         label.textAlignment = .center
-        label.textColor = customRGBColor(red: 255, green: 176, blue: 42)
+        label.textColor = customRGBColor(red: 250, green: 169, blue: 30)
         return label
     }()
     

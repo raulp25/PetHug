@@ -61,9 +61,9 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         var genderBadgeIcon = ""
         switch info.gender {
         case .male:
-            genderBadgeIcon = "m.square.fill"
+            genderBadgeIcon = "m.square"
         case .female:
-            genderBadgeIcon = "f.square.fill"
+            genderBadgeIcon = "f.square"
         case .none:
             genderBadgeIcon = "circle.slash"
         }
@@ -71,13 +71,13 @@ final class PetViewInfoCollectionViewCell: UICollectionViewCell {
         var sizeBadgeIcon = ""
         switch info.size {
         case .small:
-            sizeBadgeIcon = "s.square.fill"
+            sizeBadgeIcon = "s.square"
         case .medium:
-            sizeBadgeIcon = "m.square.fill"
+            sizeBadgeIcon = "m.square"
         case .large:
-            sizeBadgeIcon = "g.square.fill"
+            sizeBadgeIcon = "g.square"
         case .none:
-            sizeBadgeIcon = "circle.slash"
+            sizeBadgeIcon = "nosign"
         }
         
         ageBadge    = Badge(titleText: "Edad", captionText: String(info.age), iconImageName: nil)

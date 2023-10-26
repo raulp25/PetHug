@@ -11,7 +11,7 @@ class PetViewDescriptionCollectionViewCell: UICollectionViewCell {
     let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 19, weight: .bold)
         label.text = "Descripción"
         return label
     }()
@@ -54,6 +54,6 @@ class PetViewDescriptionCollectionViewCell: UICollectionViewCell {
     }
     
     func configureCellUI(with description: String) {
-        descriptionLabel.text = description
+        descriptionLabel.text = description.count > 0 ? description : "No hay descripción"
     }
 }

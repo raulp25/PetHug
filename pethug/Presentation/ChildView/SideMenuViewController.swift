@@ -35,7 +35,7 @@ final class SideMenuViewController: UIViewController {
 
     // MARK: - setup
     private func setup() {
-        view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
+        view.backgroundColor = customRGBColor(red: 0, green: 171, blue: 187)
 
         // sideMenuVC
         addChild(contentVC)
@@ -47,8 +47,7 @@ final class SideMenuViewController: UIViewController {
         contentVC.view.translatesAutoresizingMaskIntoConstraints = false
         topAnchorConstraint = contentVC.view.topAnchor.constraint(equalTo: view.topAnchor)
         contentVC.view.pinSides(
-            to: view,
-            padding: sidePadding
+            to: view
         )
         contentVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
     }

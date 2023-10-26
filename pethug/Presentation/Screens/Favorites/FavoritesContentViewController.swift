@@ -35,7 +35,7 @@ final class FavoritesContentViewController: UIViewController {
     //MARK: - Internal properties
     var snapData: [SnapData] {
         didSet {
-            updateSnapShot(animated: false)
+            updateSnapShot(animated: true)
         }
     }
 

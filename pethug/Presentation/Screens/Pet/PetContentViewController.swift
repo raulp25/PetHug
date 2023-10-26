@@ -188,7 +188,7 @@ final class PetContentViewController: UIViewController {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         
         alert.addAction(UIAlertAction(title: "Guardar", style: .default, handler: { _ in completion(true) }))
-        alert.addAction(.init(title: "Cancelar", style: .destructive, handler: { _ in completion(false) }))
+        alert.addAction(.init(title: "Cancelar", style: .cancel, handler: { _ in completion(false) }))
         
         present(alert, animated: true, completion: nil)
     }

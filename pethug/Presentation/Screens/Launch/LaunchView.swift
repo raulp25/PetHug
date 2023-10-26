@@ -22,11 +22,11 @@ final class LaunchView: UIView {
     private let title: UILabel = {
        let label = UILabel(withAutolayout: true)
        label.attributedLightBoldColoredText(
-           lightText: "pet",
+           lightText: "Pet",
            boldText: "hug",
            colorRegularText: .black,
            colorBoldText: .white,
-           fontSize: 60
+           fontSize: 38
        )
        return label
     }()
@@ -43,12 +43,19 @@ final class LaunchView: UIView {
         backgroundColor = customRGBColor(red: 0, green: 171, blue: 187)
         
         addSubview(iconImage)
+        addSubview(title)
         
         iconImage.center(
             inView: self,
-            yConstant: 0
+            yConstant: -20
         )
         iconImage.setDimensions(height: 120, width: 120)
+        
+        title.centerX(
+            inView: iconImage,
+            topAnchor: iconImage.bottomAnchor,
+            paddingTop: 5
+        )
         
         self.iconImage.transform = CGAffineTransform(scaleX: 0, y: 0)
         self.iconImage.alpha = 0

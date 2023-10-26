@@ -12,16 +12,42 @@ import SDWebImage
 
 final class SideMenuProfileContentViewController: UIViewController {
     //MARK: - Private components
+    private lazy var pethugContainer: UIView = {
+       let uv = UIView(withAutolayout: true)
+        uv.isUserInteractionEnabled = true
+        uv.backgroundColor = customRGBColor(red: 0, green: 171, blue: 187)
+        return uv
+    }()
+    
+    let iconImage: UIImageView = {
+        let iv = UIImageView(frame: .zero)
+        iv.image = UIImage(named: "launch3")
+        iv.contentMode = .scaleAspectFill
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.tintColor = .white
+        iv.backgroundColor = .white
+        iv.layer.cornerRadius = 20
+        return iv
+    }()
+    
+    
     private let pethugLabel: UILabel = {
        let label = UILabel(withAutolayout: true)
        label.attributedLightBoldColoredText(
-           lightText: "pet",
+           lightText: "Pet",
            boldText: "hug",
            colorRegularText: .black,
-           colorBoldText: customRGBColor(red: 0, green: 171, blue: 187),
-           fontSize: 30
+           colorBoldText: .white,
+           fontSize: 20
        )
        return label
+    }()
+    
+    private let borderBottom: UIView = {
+        let uv = UIView()
+        uv.backgroundColor = customRGBColor(red: 200, green: 200, blue: 200)
+        uv.layer.cornerRadius = 10
+        return uv
     }()
     
     private let titleLabel: UILabel = {
@@ -57,7 +83,7 @@ final class SideMenuProfileContentViewController: UIViewController {
         btn.setTitle("Cerrar sesión", for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 11, weight: .light)
         btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = customRGBColor(red: 250, green: 166, blue: 15)
+        btn.backgroundColor = .black
         btn.layer.cornerRadius = 15
         btn.addTarget(self, action: #selector(didTapSingOut), for: .touchUpInside)
         return btn
@@ -87,8 +113,6 @@ final class SideMenuProfileContentViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        fetchUser()
         setup()
         
         viewModel.state
@@ -110,44 +134,48 @@ final class SideMenuProfileContentViewController: UIViewController {
             }.store(in: &cancellables)
     }
     
-    //MARK: - Private actions
-    @objc private func didTapSingOut() {
-        guard NetworkMonitor.shared.isConnected == true else {
-            handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
-            return
-        }
-        try! AuthService().signOut()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        fetchUser()
     }
     
     //MARK: - Setup
     private func setup() {
         view.backgroundColor = customRGBColor(red: 245, green: 245, blue: 245)
         
-//        view.addSubview(titleLabel)
-        view.addSubview(pethugLabel)
+        view.addSubview(pethugContainer)
+        pethugContainer.addSubview(pethugLabel)
+        pethugContainer.addSubview(iconImage)
         
         view.addSubview(containerView)
         containerView.addSubview(profileImageView)
         
         view.addSubview(logoutBtn)
         
+        pethugContainer.anchor(
+            top: view.topAnchor,
+            left: view.leftAnchor,
+            right: view.rightAnchor
+        )
+        pethugContainer.setHeight(130)
+        
+        iconImage.center(
+            inView: pethugContainer,
+            yConstant: -20
+        )
+        iconImage.setDimensions(height: 60, width: 60)
+        
         pethugLabel.centerX(
-            inView: view,
-            topAnchor: view.topAnchor,
-            paddingTop: 30
+            inView: iconImage,
+            topAnchor: iconImage.bottomAnchor,
+            paddingTop: 5
         )
         
-//        titleLabel.centerY(
-//            inView: view,
-//            leftAnchor: view.leftAnchor,
-//            paddingLeft: 2,
-//            constant: -80
-//        )
-        
         containerView.anchor(
-            top: pethugLabel.bottomAnchor,
+            top: pethugContainer.bottomAnchor,
             left: view.leftAnchor,
-            paddingTop: 25,
+            paddingTop: 35,
             paddingLeft: 20
         )
         containerView.setDimensions(height: 80, width: 80)
@@ -164,6 +192,15 @@ final class SideMenuProfileContentViewController: UIViewController {
         )
         logoutBtn.setDimensions(height: 32, width: 145)
         
+    }
+    
+    //MARK: - Private actions
+    @objc private func didTapSingOut() {
+        guard NetworkMonitor.shared.isConnected == true else {
+            handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
+            return
+        }
+        try! AuthService().signOut()
     }
     
     //MARK: - Private methods

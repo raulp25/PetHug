@@ -53,6 +53,8 @@ final class AuthTextField: UIView {
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         textField.font = .systemFont(ofSize: 17, weight: .regular)
         textField.invalidateIntrinsicContentSize()
+        textField.spellCheckingType = .no
+        textField.autocorrectionType = .no
         return textField
     }()
 

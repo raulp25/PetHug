@@ -58,7 +58,7 @@ final class ProfileContentViewController: UIViewController {
         btn.setTitle("Cerrar sesión", for: .normal)
         btn.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .light)
         btn.setTitleColor(.white, for: .normal)
-        btn.backgroundColor = customRGBColor(red: 250, green: 166, blue: 15)
+        btn.backgroundColor = .black
         btn.layer.cornerRadius = 8
         btn.addTarget(self, action: #selector(didTapSingOut), for: .touchUpInside)
         return btn

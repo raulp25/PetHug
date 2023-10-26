@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import SwiftUI
 
 final class LaunchViewController: UIViewController {
     
@@ -28,4 +29,23 @@ final class LaunchViewController: UIViewController {
         launchView.fillSuperview()
     }
     
+}
+
+struct LaunchViewRepresentable: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> LaunchViewController {
+        LaunchViewController()
+    }
+    
+    func updateUIViewController(_ uiViewController: LaunchViewController, context: Context) {
+        
+    }
+    
+typealias UIViewControllerType = LaunchViewController
+
+}
+
+struct ViewController_Previews4: PreviewProvider {
+    static var previews: some View {
+        LaunchViewRepresentable()
+    }
 }
