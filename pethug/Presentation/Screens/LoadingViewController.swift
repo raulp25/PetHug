@@ -36,8 +36,8 @@ final class LoadingViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        DispatchQueue.main.async {
-            self.spinner.isAnimating = true
+        DispatchQueue.main.async { [weak self] in
+            self?.spinner.isAnimating = true
         }
     }
 }

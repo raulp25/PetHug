@@ -305,8 +305,8 @@ final class ProfileContentViewController: UIViewController {
         deleteAccView.setDimensions(height: 200, width: view.frame.size.width - 100)
         deleteAccView.layer.cornerRadius = 15
         
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 1
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) { [weak self] in
+            self?.dummyView.view.alpha = 1
         }
         self.view.layoutIfNeeded()
     }

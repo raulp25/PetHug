@@ -390,27 +390,27 @@ final class AuthTextField: UIView {
             }
         }
 
-        UIView.animate(withDuration: 0.1) {
-            self.floatingLabel.transform = floatingTransform
-            self.textField.transform = textFieldTransform
-            self.floatingLabel.font = floatingLabelFont
-            self.layoutIfNeeded()
+        UIView.animate(withDuration: 0.1) { [weak self] in
+            self?.floatingLabel.transform = floatingTransform
+            self?.textField.transform = textFieldTransform
+            self?.floatingLabel.font = floatingLabelFont
+            self?.layoutIfNeeded()
         }
     }
 
     private func animateErrorLabel(validationState: ValidationState) {
-        UIView.animate(withDuration: 0.25) {
+        UIView.animate(withDuration: 0.25) { [weak self] in
             if case let .error(errorState) = validationState {
-                self.errorLabel.text = errorState.description
-                guard self.errorLabel.isHidden == true else { return } // stack acts wierd if you set the same hide/show state
-                self.errorLabel.isHidden = false
+                self?.errorLabel.text = errorState.description
+                guard self?.errorLabel.isHidden == true else { return } // stack acts wierd if you set the same hide/show state
+                self?.errorLabel.isHidden = false
 
             } else if case .valid = validationState {
-                self.errorLabel.text = nil
-                guard self.errorLabel.isHidden == false else { return }
-                self.errorLabel.isHidden = true
+                self?.errorLabel.text = nil
+                guard self?.errorLabel.isHidden == false else { return }
+                self?.errorLabel.isHidden = true
             }
-            self.layoutIfNeeded()
+            self?.layoutIfNeeded()
         }
     }
 }

@@ -55,9 +55,9 @@ final class PetViewImageCollectionViewCell: UICollectionViewCell {
     private func configureCellUI(with url: String) {
          work = DispatchWorkItem(block: {
              let imageDownloader = ImageService()
-             imageDownloader.downloadImage(url: url) { image in
+             imageDownloader.downloadImage(url: url) { [weak self] image in
                  if let image = image {
-                     self.petImage.image = UIImage(data: image)
+                     self?.petImage.image = UIImage(data: image)
                  }
              }
 //             let url = URL(string: url)

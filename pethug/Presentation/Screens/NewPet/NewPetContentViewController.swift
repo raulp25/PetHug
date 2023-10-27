@@ -646,8 +646,8 @@ extension NewPetContentViewController: NewPetBreedDelegate {
         
         self.collectionView.isUserInteractionEnabled = false
         
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 1
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) { [weak self] in
+            self?.dummyView.view.alpha = 1
         }
         self.view.layoutIfNeeded()
     }
@@ -666,13 +666,13 @@ extension NewPetContentViewController: NewPetBreedDelegate {
 extension NewPetContentViewController: BreedPopupSearchDelegate {
     // User selected a breed
     func didSelectBreed(breed: String) {
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 0
+        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) { [weak self] in
+            self?.dummyView.view.alpha = 0
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.dummyView.remove()
-                self.collectionView.isUserInteractionEnabled = true
-                self.view.layoutIfNeeded()
+                self?.dummyView.remove()
+                self?.collectionView.isUserInteractionEnabled = true
+                self?.view.layoutIfNeeded()
             })
         }
         
@@ -684,13 +684,13 @@ extension NewPetContentViewController: BreedPopupSearchDelegate {
     }
     // Cancelled search
     func didTapCancell() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
-            self.dummyView.view.alpha = 0
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) { [weak self] in
+            self?.dummyView.view.alpha = 0
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-                self.dummyView.remove()
-                self.collectionView.isUserInteractionEnabled = true
-                self.view.layoutIfNeeded()
+                self?.dummyView.remove()
+                self?.collectionView.isUserInteractionEnabled = true
+                self?.view.layoutIfNeeded()
             })
         }
         
@@ -729,8 +729,8 @@ extension NewPetContentViewController: NewPetAddressDelegate {
         
         self.collectionView.isUserInteractionEnabled = false
         
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 1
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) { [weak self] in
+            self?.dummyView.view.alpha = 1
         }
         self.view.layoutIfNeeded()
     }
@@ -739,13 +739,13 @@ extension NewPetContentViewController: NewPetAddressDelegate {
 extension NewPetContentViewController: AddressPopupSearchDelegate {
     // User selected an address
     func didSelectState(state: Pet.State) {
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 0
+        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) { [weak self] in
+            self?.dummyView.view.alpha = 0
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.dummyView.remove()
-                self.collectionView.isUserInteractionEnabled = true
-                self.view.layoutIfNeeded()
+                self?.dummyView.remove()
+                self?.collectionView.isUserInteractionEnabled = true
+                self?.view.layoutIfNeeded()
             })
         }
         
@@ -757,13 +757,13 @@ extension NewPetContentViewController: AddressPopupSearchDelegate {
     }
     // Cancelled search
     func didTapCancellSearchAddress() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
-            self.dummyView.view.alpha = 0
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) { [weak self] in
+            self?.dummyView.view.alpha = 0
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-                self.dummyView.remove()
-                self.collectionView.isUserInteractionEnabled = true
-                self.view.layoutIfNeeded()
+                self?.dummyView.remove()
+                self?.collectionView.isUserInteractionEnabled = true
+                self?.view.layoutIfNeeded()
             })
         }
         

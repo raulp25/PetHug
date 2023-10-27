@@ -155,8 +155,8 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
              // Donwload pet image
              imageDownloader.downloadImage(url: viewModel.petImage) { image in
                  if let image = image {
-                     DispatchQueue.main.async {
-                         self.petImage.image = UIImage(data: image)
+                     DispatchQueue.main.async { [weak self] in
+                         self?.petImage.image = UIImage(data: image)
                      }
                  }
              }

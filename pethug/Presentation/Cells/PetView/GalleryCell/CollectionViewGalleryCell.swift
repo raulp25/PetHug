@@ -70,18 +70,18 @@ final class PetViewGalleryCollectionViewCell: UICollectionViewCell {
             case .image:
                 let section: NSCollectionLayoutSection = .createPetLayout(for: .galleryImage)
                 //Update the current page when scrolled
-                section.visibleItemsInvalidationHandler = { [weak self] visibleItems, point, environment in
+                section.visibleItemsInvalidationHandler = { visibleItems, point, environment in
                     // Determine the current page based on the last visible item
                     let currentPage = visibleItems.last?.indexPath.row
                     
                     if let currentPage = currentPage{
-                        self?.currentPage = currentPage
+                        self.currentPage = currentPage
                         // We need this delay to ensure that the cached page number is used
                         // to scroll to the last cell seen by the user, preventing it from resetting to 0 when the
                         // main parent collectionView reset this nested collectonView, otherwise the visible cell will
                         // be the first one each time main parent collectionView reset this nested collectonView
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute:  {
-                            self?.delegate?.didPageChanged(to: currentPage)
+                            self.delegate?.didPageChanged(to: currentPage)
                         })
                     }
                 }

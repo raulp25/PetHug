@@ -139,7 +139,8 @@ class AddressPopupSearch: UIViewController, UISearchResultsUpdating, UISearchCon
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchAddressListCellConfiguration>, SearchAddress> { cell, _, model in
+        let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchAddressListCellConfiguration>, SearchAddress> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }

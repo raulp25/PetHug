@@ -149,7 +149,8 @@ class BreedPopupSearch: UIViewController, UISearchResultsUpdating, UISearchContr
         }
         
         
-        let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchBreedListCellConfiguration>, SearchBreed> { cell, _, model in
+        let titleViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<SearchBreedListCellConfiguration>, SearchBreed> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }

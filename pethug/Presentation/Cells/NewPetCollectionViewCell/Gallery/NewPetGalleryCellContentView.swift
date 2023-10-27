@@ -183,7 +183,8 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        let selectetPhotoViewCellRegistration = UICollectionView.CellRegistration<SelectPhotoControllerCollectionViewCell, String> { cell, _, model in
+        let selectetPhotoViewCellRegistration = UICollectionView.CellRegistration<SelectPhotoControllerCollectionViewCell, String> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.configure(delegate: self)
         }
         
@@ -229,8 +230,8 @@ final class NewPetGalleryCellContentView: UIView, UIContentView {
         vc.cancelButtonTitle = "Cancelar"
         vc.delegate = self
         //We need to dismiss the GalleryPageSheet that was previously presented by the viewmodel navigation
-        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: {
-            self.currentConfiguration.viewModel?.navigation?.present(vc, animated: true)
+        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: { [weak self] in
+            self?.currentConfiguration.viewModel?.navigation?.present(vc, animated: true)
         })
     }
 
@@ -269,8 +270,8 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
         picker.allowsEditing = true
         picker.delegate = self
         //We need to dismiss the GalleryPageSheet that was previously presented by the viewmodel navigation
-        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: {
-            self.currentConfiguration.viewModel?.navigation?.present(picker, animated: true)
+        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: { [weak self] in
+            self?.currentConfiguration.viewModel?.navigation?.present(picker, animated: true)
         })
     }
     
@@ -281,8 +282,8 @@ extension NewPetGalleryCellContentView: GalleryPageSheetDelegate {
         let phPicker = PHPickerViewController(configuration: config)
         phPicker.delegate = self
         //We need to dismiss the GalleryPageSheet that was previously presented by the viewmodel navigation
-        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: {
-            self.currentConfiguration.viewModel?.navigation?.present(phPicker, animated: true)
+        currentConfiguration.viewModel?.navigation?.dismiss(animated: true, completion: { [weak self] in
+            self?.currentConfiguration.viewModel?.navigation?.present(phPicker, animated: true)
         })
     }
 }

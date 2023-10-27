@@ -141,7 +141,9 @@ class FilterAddressPopupSearch: UIViewController, UISearchResultsUpdating, UISea
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() { // Cell registration
-        let filterViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterSearchAddressListCellConfiguration>, FilterSearchAddress> { cell, _, model in
+        let filterViewCellRegistration = UICollectionView.CellRegistration<ListCollectionViewCell<FilterSearchAddressListCellConfiguration>, FilterSearchAddress> { [weak self] cell, _, model in
+            guard let self = self else { return }
+            
             cell.viewModel = model
             cell.viewModel?.delegate = self
         }

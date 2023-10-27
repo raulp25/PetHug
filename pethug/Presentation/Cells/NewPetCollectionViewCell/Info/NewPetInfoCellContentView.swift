@@ -191,7 +191,7 @@ class CustomTextView: UITextView {
     
     override init(frame: CGRect, textContainer: NSTextContainer?) {
         super.init(frame: frame, textContainer: textContainer)
-        self.delegate = self //
+        self.delegate = self 
         translatesAutoresizingMaskIntoConstraints = true
         isScrollEnabled = true
         showsVerticalScrollIndicator = false

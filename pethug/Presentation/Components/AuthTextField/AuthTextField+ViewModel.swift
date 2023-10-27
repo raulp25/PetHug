@@ -10,9 +10,7 @@ import UIKit
 extension AuthTextField {
     struct ViewModel {
         // MARK: - Constants
-//        let eyeIcon = "custom-eye"
         let eyeIcon = "eye"
-//        let eyeSlashIcon = "custom-eye.slash"
         let eyeSlashIcon = "eye.slash"
         let xmarkIcon = "xmark"
         let warningIcon = "exclamationmark.circle"
@@ -40,12 +38,10 @@ extension AuthTextField {
         // Colors
 
         var tintColor: UIColor {
-//            type != .date ? .theme.tintColor! : .clear
             type != .date ? .orange : .red
         }
 
         var floatingLabelColor: UIColor {
-//            type == .date ? .theme.floatingLabel! : .theme.placeholder!
             type == .date ? .orange : .lightGray
         }
 
@@ -147,7 +143,6 @@ extension AuthTextField {
             if case .error = validationState {
                 return UIColor.red.cgColor
             } else {
-//                let color: UIColor? = focusState == .focused ? .theme.activeBorder : .theme.border
                 let color: UIColor? = focusState == .focused ? .systemPink : .lightGray
                 return color!.cgColor
             }

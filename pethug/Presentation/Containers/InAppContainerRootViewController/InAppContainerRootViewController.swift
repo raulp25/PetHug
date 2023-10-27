@@ -116,8 +116,9 @@ final class InAppContainerRootViewController: UIViewController {
 
     private func performAnimations() {
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut) {
-            self.backdropView.alpha = self.sideMenuState == .open ? 1 : 0
-            self.view.layoutIfNeeded()
+            [weak self] in
+            self?.backdropView.alpha = self?.sideMenuState == .open ? 1 : 0
+            self?.view.layoutIfNeeded()
         }
     }
 

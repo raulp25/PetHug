@@ -95,7 +95,8 @@ final class PetsContentViewController: UIViewController {
     
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
-        let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { cell, _, model in
+        let petViewCellRegistration = UICollectionView.CellRegistration<PetControllerCollectionViewCell, Pet> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.configure(with: model, delegate: self)
         }
         

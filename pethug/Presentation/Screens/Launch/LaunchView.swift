@@ -63,9 +63,9 @@ final class LaunchView: UIView {
         UIView.animate(
             withDuration: 0.2,
             delay: 0.0, options: .curveEaseOut,
-            animations: {
-                self.iconImage.transform = CGAffineTransform(scaleX: 1, y: 1)
-                self.iconImage.alpha = 1
+            animations: { [weak self] in
+                self?.iconImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+                self?.iconImage.alpha = 1
             })
     }
     

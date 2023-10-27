@@ -88,12 +88,13 @@ class NewPetViewModel {
     var stateSubject = PassthroughSubject<LoadingState, Never>()
     
     func observeValidation() {
-        formValidationState.sink(receiveValue: { state in
+        formValidationState
+            .sink(receiveValue: { [weak self] state in
             switch state {
             case .valid:
-                self.isValidSubject.send(true)
+                self?.isValidSubject.send(true)
             case .invalid:
-                self.isValidSubject.send(false)
+                self?.isValidSubject.send(false)
             }
         }).store(in: &cancellables)
     }

@@ -319,8 +319,8 @@ extension FilterPetsContentViewController: FilterPetsAddressDelegate {
         
         self.collectionView.isUserInteractionEnabled = false
         
-        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 1
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseOut) { [weak self] in
+            self?.dummyView.view.alpha = 1
         }
         
         self.view.layoutIfNeeded()
@@ -337,13 +337,13 @@ extension FilterPetsContentViewController: FilterPetsAddressDelegate {
 
 extension FilterPetsContentViewController: FilterAddressPopupSearchDelegate {
     func didSelectState(state: FilterState) {
-        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) {
-            self.dummyView.view.alpha = 0
+        UIView.animate(withDuration: 0.15, delay: 0, options: .curveEaseOut) { [weak self] in
+            self?.dummyView.view.alpha = 0
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-                self.dummyView.remove()
-                self.collectionView.isUserInteractionEnabled = true
-                self.view.layoutIfNeeded()
+                self?.dummyView.remove()
+                self?.collectionView.isUserInteractionEnabled = true
+                self?.view.layoutIfNeeded()
             })
         }
         
@@ -355,13 +355,13 @@ extension FilterPetsContentViewController: FilterAddressPopupSearchDelegate {
     }
     
     func didTapCancellSearchAddress() {
-        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) {
-            self.dummyView.view.alpha = 0
+        UIView.animate(withDuration: 0.1, delay: 0, options: .curveLinear) { [weak self] in
+            self?.dummyView.view.alpha = 0
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.05, execute: {
-                self.dummyView.remove()
-                self.collectionView.isUserInteractionEnabled = true
-                self.view.layoutIfNeeded()
+                self?.dummyView.remove()
+                self?.collectionView.isUserInteractionEnabled = true
+                self?.view.layoutIfNeeded()
             })
         }
         

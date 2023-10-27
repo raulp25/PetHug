@@ -113,7 +113,8 @@ final class FavoritesContentViewController: UIViewController {
     //MARK: - CollectionView dataSource
     private func configureDataSource() {
         // petCell
-        let petViewCellRegistration = UICollectionView.CellRegistration<FavoriteControllerCollectionViewCell, Pet> { cell, _, model in
+        let petViewCellRegistration = UICollectionView.CellRegistration<FavoriteControllerCollectionViewCell, Pet> { [weak self] cell, _, model in
+            guard let self = self else { return }
             cell.configure(with: model, delegate: self)
         }
         
