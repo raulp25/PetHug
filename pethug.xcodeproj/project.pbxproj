@@ -94,6 +94,7 @@
 		C44820222AB5424900E72BD2 /* UserDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820212AB5424900E72BD2 /* UserDataSource.swift */; };
 		C44820282AB54ABA00E72BD2 /* DictionaryMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820272AB54AB900E72BD2 /* DictionaryMapper.swift */; };
 		C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */; };
+		C449A37C2AEB4E4C002F340B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C449A37B2AEB4E4C002F340B /* GoogleService-Info.plist */; };
 		C44A15662AE300E300658B2F /* FilterAllPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A15652AE300E300658B2F /* FilterAllPetsUC.swift */; };
 		C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */; };
 		C44DFD402AC639B20045DD7A /* NewPetUploadCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */; };
@@ -112,7 +113,6 @@
 		C467578D2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */; };
 		C467578F2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C467578E2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift */; };
 		C4680D0B2AD778A2003ABD3E /* MultiSlider in Frameworks */ = {isa = PBXBuildFile; productRef = C4680D0A2AD778A2003ABD3E /* MultiSlider */; };
-		C4685C0F2AD87F68003366F2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4685C0E2AD87F68003366F2 /* GoogleService-Info.plist */; };
 		C470DBFB2AE068A40002DE09 /* NewPetMedicalInfoListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C470DBFA2AE068A40002DE09 /* NewPetMedicalInfoListCellConfiguration.swift */; };
 		C470DBFD2AE068AE0002DE09 /* NewPetSocialInfoListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C470DBFC2AE068AE0002DE09 /* NewPetSocialInfoListCellConfiguration.swift */; };
 		C470DBFF2AE06A870002DE09 /* NewPetMedicalInfoCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C470DBFE2AE06A870002DE09 /* NewPetMedicalInfoCellContentView.swift */; };
@@ -337,6 +337,7 @@
 		C44820212AB5424900E72BD2 /* UserDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataSource.swift; sourceTree = "<group>"; };
 		C44820272AB54AB900E72BD2 /* DictionaryMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryMapper.swift; sourceTree = "<group>"; };
 		C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToModelMapper.swift; sourceTree = "<group>"; };
+		C449A37B2AEB4E4C002F340B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C44A15652AE300E300658B2F /* FilterAllPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAllPetsUC.swift; sourceTree = "<group>"; };
 		C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadListCellConfiguration.swift; sourceTree = "<group>"; };
 		C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadCellContentView.swift; sourceTree = "<group>"; };
@@ -354,7 +355,6 @@
 		C467578A2AC4DE7A00A7B810 /* NewPetGalleryContentViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewPetGalleryContentViewController+Types.swift"; sourceTree = "<group>"; };
 		C467578C2AC4E0BF00A7B810 /* SelectPhotoControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPhotoControllerCollectionViewCell.swift; sourceTree = "<group>"; };
 		C467578E2AC4E50800A7B810 /* GalleryControllerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryControllerCollectionViewCell.swift; sourceTree = "<group>"; };
-		C4685C0E2AD87F68003366F2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C470DBFA2AE068A40002DE09 /* NewPetMedicalInfoListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetMedicalInfoListCellConfiguration.swift; sourceTree = "<group>"; };
 		C470DBFC2AE068AE0002DE09 /* NewPetSocialInfoListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSocialInfoListCellConfiguration.swift; sourceTree = "<group>"; };
 		C470DBFE2AE06A870002DE09 /* NewPetMedicalInfoCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetMedicalInfoCellContentView.swift; sourceTree = "<group>"; };
@@ -752,7 +752,7 @@
 				C445F1192AB1391A00053BE7 /* AppDelegate.swift */,
 				C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */,
 				C445F1222AB1391B00053BE7 /* Assets.xcassets */,
-				C4685C0E2AD87F68003366F2 /* GoogleService-Info.plist */,
+				C449A37B2AEB4E4C002F340B /* GoogleService-Info.plist */,
 				C445F1272AB1391B00053BE7 /* Info.plist */,
 			);
 			path = pethug;
@@ -1748,8 +1748,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C449A37C2AEB4E4C002F340B /* GoogleService-Info.plist in Resources */,
 				C445F1232AB1391B00053BE7 /* Assets.xcassets in Resources */,
-				C4685C0F2AD87F68003366F2 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2117,6 +2117,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 75SHBQ42MK;
@@ -2136,8 +2137,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugin;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugin.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -2153,6 +2154,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 75SHBQ42MK;
@@ -2172,8 +2174,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugin;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.slr.pethugin.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
