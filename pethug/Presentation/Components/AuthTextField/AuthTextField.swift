@@ -255,7 +255,7 @@ final class AuthTextField: UIView {
 
         textField.textPublisher()
             .removeDuplicates()
-            .debounce(for: 0.3, scheduler: RunLoop.main)
+            .debounce(for: 0, scheduler: RunLoop.main)
             .validateText(validationType: validationType)
             .assign(to: &$validationState)
 
