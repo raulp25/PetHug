@@ -1,0 +1,29 @@
+{
+  "configurations" : [
+    {
+      "id" : "7E0F984A-E4E1-4BAC-AA9E-A65957CA9E42",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:pethug.xcodeproj",
+      "identifier" : "C445F1152AB1391A00053BE7",
+      "name" : "pethug"
+    }
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:pethug.xcodeproj",
+        "identifier" : "C4748FEE2AED661100951FF5",
+        "name" : "pethugTests"
+      }
+    }
+  ],
+  "version" : 1
+}

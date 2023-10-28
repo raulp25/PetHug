@@ -14,7 +14,7 @@ protocol PetsNavigatable: AnyObject {
     func tappedFilter()
 }
 
-final class PetsViewModel {
+class PetsViewModel {
     //MARK: - Internal Properties
     weak var navigation: PetsNavigatable?
     var state = PassthroughSubject<State,Never>()
@@ -27,17 +27,17 @@ final class PetsViewModel {
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
-    private var pets: [Pet] = []
-    private var isFetching = false
-    private var isFirstLoad = true // Flag indicates if the pagination process has started
+    private(set) var pets: [Pet] = []
+    private(set) var isFetching = false
+    private(set) var isFirstLoad = true // Flag indicates if the pagination process has started
     private let fetchAllPetsUC: DefaultFetchAllPetsUC
     private let filterAllPetsUC: DefaultFilterAllPetsUC
     private let fetchPetsUC: DefaultFetchPetsUC
     private let filterPetsUC: DefaultFilterPetsUC
     private let likedPetUC: DefaultLikePetUC
     private let dislikedPetUC: DefaultDisLikePetUC
-    private var filterOptions: FilterOptions? = nil
-    private var filterMode = false // Flag indicating if we are requesting a fetch with fitler options
+    private(set) var filterOptions: FilterOptions? = nil
+    private(set) var filterMode = false // Flag indicating if we are requesting a fetch with fitler options
     
     init(
         fetchAllPetsUC: DefaultFetchAllPetsUC,
@@ -84,7 +84,7 @@ final class PetsViewModel {
     
     //MARK: - Internal Methods
     // Coordinates fetch pets
-    func fetchPets(collection: String, resetFilterQueries: Bool) {
+    func fetchPets(collection: String, resetFilterQueries: Bool) async {
         filterMode = false
         
         guard !isFetching else { return }
@@ -96,7 +96,7 @@ final class PetsViewModel {
         }
         
         if collection == .getPath(for: .allPets) {
-            applyFetchAllPets(resetFilterQueries: resetFilterQueries) // Fetch all pets collections
+            await applyFetchAllPets(resetFilterQueries: resetFilterQueries) // Fetch all pets collections
         } else {
             applyFetchPets(collection: collection, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection
         }
@@ -175,12 +175,10 @@ final class PetsViewModel {
     }
     
     //MARK: - Private methods
-    private func applyFetchAllPets(resetFilterQueries: Bool) {
+    private func applyFetchAllPets(resetFilterQueries: Bool) async {
         defer {
             isFetching = false
         }
-        
-        Task {
             do {
                 guard NetworkMonitor.shared.isConnected == true else {
                     self.state.send(.networkError)
@@ -191,7 +189,7 @@ final class PetsViewModel {
             } catch {
                 handleError(error)
             }
-        }
+        
     }
     
     private func applyFetchPets(collection: String, resetFilterQueries: Bool) {
@@ -266,10 +264,13 @@ final class PetsViewModel {
     
     
     private func handleResult(_ data: [Pet]) {
+        defer {
+            isFirstLoad = false
+        }
+        
         if !isFirstLoad && !data.isEmpty { // If we have started the pagination process and data is not empty
             petsSubject.send(data)
         } else if isFirstLoad && data.isEmpty { // If we haven't started the pagination process and data is empty
-            isFirstLoad = false
             state.send(.empty)
         } else if isFirstLoad { // If we haven't started the pagination process and data isn't empty
             isFirstLoad = false

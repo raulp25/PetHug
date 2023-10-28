@@ -33,7 +33,9 @@ final class PetsViewController: UIViewController {
         bind()
         setup()
         print("view didload fetchpets ejecuta 788: => ")
-        viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
+        Task {
+            await viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
+        }
     }
     
     
@@ -138,7 +140,9 @@ extension PetsViewController: PetsContentViewControllerDelegate {
             //No arguments passed cause at this point the options has been set by the filter pets vc
             viewModel.fetchPetsWithFilter()
         } else {
-            viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: false)
+            Task {
+                await viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: false)
+            }
         }
     }
     
