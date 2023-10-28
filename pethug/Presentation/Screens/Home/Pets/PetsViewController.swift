@@ -165,11 +165,13 @@ extension PetsViewController: PetsContentViewControllerDelegate {
     }
     
     func didDislike(pet: Pet, completion: @escaping (Bool) -> Void) {
-        viewModel.dislikedPet(pet: pet) { result in
-            if result == true {
-                completion(true)
-            } else {
-                completion(false)
+        Task{
+            await viewModel.dislikedPet(pet: pet) { result in
+                if result == true {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
             }
         }
     }
