@@ -98,12 +98,12 @@ class PetsViewModel {
         if collection == .getPath(for: .allPets) {
             await applyFetchAllPets(resetFilterQueries: resetFilterQueries) // Fetch all pets collections
         } else {
-            applyFetchPets(collection: collection, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection
+            await applyFetchPets(collection: collection, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection
         }
     }
     
     // Coordinates fetch pets with filter options
-    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) {
+    func fetchPetsWithFilter(options: FilterOptions? = nil, resetFilterQueries: Bool = false) async {
         filterMode = true
         
         guard !isFetching else { return }
@@ -125,32 +125,31 @@ class PetsViewModel {
         guard let filterOptions = filterOptions else { return }
         
         if self.collection == .getPath(for: .allPets) {
-            applyFilterToAllPets(options: filterOptions, resetFilterQueries: resetFilterQueries) // Fetch all pets collections with filter options
+            await applyFilterToAllPets(options: filterOptions, resetFilterQueries: resetFilterQueries) // Fetch all pets collections with filter options
         } else {
-            applyFilter(options: filterOptions, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection with filter options
+            await applyFilter(options: filterOptions, resetFilterQueries: resetFilterQueries) // Fetch specific pet collection with filter options
         }
     }
     
     
-    func likedPet(pet: Pet, completion: @escaping(Bool) -> Void)  {
+    func likedPet(pet: Pet, completion: @escaping(Bool) -> Void) async {
         defer {
             isFetching = false
         }
         
-        Task{
-            do {
-                guard NetworkMonitor.shared.isConnected == true else {
-                    self.state.send(.networkError)
-                    return
-                }
-                let pet = try addLike(pet: pet) // Update pets array
-                try await likedPetUC.execute(data: pet) // Update in db
-                completion(true)
-            } catch {
-                print("error liking pet: => \(error.localizedDescription)")
-                completion(false)
+        do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                self.state.send(.networkError)
+                return
             }
+            let pet = try addLike(pet: pet) // Update pets array
+            try await likedPetUC.execute(data: pet) // Update in db
+            completion(true)
+        } catch {
+            print("error liking pet: => \(error.localizedDescription)")
+            completion(false)
         }
+        
     }
     
     func dislikedPet(pet: Pet, completion: @escaping(Bool) -> Void) {
@@ -179,79 +178,71 @@ class PetsViewModel {
         defer {
             isFetching = false
         }
-            do {
-                guard NetworkMonitor.shared.isConnected == true else {
-                    self.state.send(.networkError)
-                    return
-                }
-                let data = try await fetchAllPetsUC.execute(resetFilterQueries: resetFilterQueries) // Fetch pets
-                handleResult(data)
-            } catch {
-                handleError(error)
+        do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                self.state.send(.networkError)
+                return
             }
+            let data = try await fetchAllPetsUC.execute(resetFilterQueries: resetFilterQueries) // Fetch pets
+            handleResult(data)
+        } catch {
+            handleError(error)
+        }
         
     }
     
-    private func applyFetchPets(collection: String, resetFilterQueries: Bool) {
+    private func applyFetchPets(collection: String, resetFilterQueries: Bool) async {
         defer {
             isFetching = false
         }
         
-        Task {
-            do {
-                guard NetworkMonitor.shared.isConnected == true else {
-                    self.state.send(.networkError)
-                    return
-                }
-                let data = try await fetchPetsUC.execute(fetchCollection: collection, resetFilterQueries: resetFilterQueries) // Fetch pets
-                handleResult(data)
-            } catch {
-                handleError(error)
+        do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                self.state.send(.networkError)
+                return
             }
+            let data = try await fetchPetsUC.execute(fetchCollection: collection, resetFilterQueries: resetFilterQueries) // Fetch pets
+            handleResult(data)
+        } catch {
+            handleError(error)
         }
+        
     }
     
     //MARK: - Filter pets
     // The viewModel instance is shared, so we update the filterOptions when new options are provided.
-    private func applyFilterToAllPets(options: FilterOptions, resetFilterQueries: Bool) {
+    private func applyFilterToAllPets(options: FilterOptions, resetFilterQueries: Bool) async {
         defer {
             isFetching = false
         }
-        
-        Task {
-            do {
-                guard NetworkMonitor.shared.isConnected == true else {
-                    self.state.send(.networkError)
-                    return
-                }
-                let data = try await filterAllPetsUC.execute(options: options, resetFilterQueries: resetFilterQueries) // Fetch pets
-                handleResult(data)
-            } catch {
-                handleError(error)
+        do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                self.state.send(.networkError)
+                return
             }
+            let data = try await filterAllPetsUC.execute(options: options, resetFilterQueries: resetFilterQueries) // Fetch pets
+            handleResult(data)
+        } catch {
+            handleError(error)
         }
     }
     
     // The viewModel instance is shared, so we update the filterOptions when new options are provided.
-    private func applyFilter(options: FilterOptions, resetFilterQueries: Bool) {
+    private func applyFilter(options: FilterOptions, resetFilterQueries: Bool) async {
         defer {
             isFetching = false
         }
-        
-        Task {
-            do {
-                guard NetworkMonitor.shared.isConnected == true else {
-                    self.state.send(.networkError)
-                    return
-                }
-                let data = try await filterPetsUC.execute(collection: collection,
-                                                          options: options,
-                                                          resetFilterQueries: resetFilterQueries
-                                                          ) // Fetch pets
-                handleResult(data)
-            } catch {
-                handleError(error)
+        do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                self.state.send(.networkError)
+                return
             }
+            let data = try await filterPetsUC.execute(collection: collection,
+                                                      options: options,
+                                                      resetFilterQueries: resetFilterQueries) // Fetch pets
+            handleResult(data)
+        } catch {
+            handleError(error)
         }
     }
     

@@ -267,7 +267,9 @@ extension FilterPetsContentViewController: FilterPetsAgeDelegate {
 extension FilterPetsContentViewController: FilterPetsSendDelegate {
     func didTapSend() {
         viewModel.saveFilterOptions()
-        coordinator?.viewModel.fetchPetsWithFilter(options: viewModel.filterOptions, resetFilterQueries: true)
+        Task {
+            await coordinator?.viewModel.fetchPetsWithFilter(options: viewModel.filterOptions, resetFilterQueries: true)
+        }
         navigationController?.popViewController(animated: true)
     }
     

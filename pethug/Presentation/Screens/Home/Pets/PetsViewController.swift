@@ -138,7 +138,9 @@ extension PetsViewController: PetsContentViewControllerDelegate {
     func executeFetch() {
         if viewModel.isFilterMode() {
             //No arguments passed cause at this point the options has been set by the filter pets vc
-            viewModel.fetchPetsWithFilter()
+            Task {
+                await viewModel.fetchPetsWithFilter()
+            }
         } else {
             Task {
                 await viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: false)
@@ -151,14 +153,15 @@ extension PetsViewController: PetsContentViewControllerDelegate {
     }
     
     func didLike(pet: Pet, completion: @escaping (Bool) -> Void) {
-        viewModel.likedPet(pet: pet) { result in
-            if result == true {
-                completion(true)
-            } else {
-                completion(false)
+        Task {
+            await viewModel.likedPet(pet: pet) { result in
+                if result == true {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
             }
         }
-        
     }
     
     func didDislike(pet: Pet, completion: @escaping (Bool) -> Void) {
