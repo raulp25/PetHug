@@ -80,6 +80,9 @@ final class AddPetViewModel {
         }
         
         isFetching = true
+        defer {
+            isFetching = false
+        }
         
         state.send(.loading)
         
@@ -87,7 +90,6 @@ final class AddPetViewModel {
             do {
                 guard NetworkMonitor.shared.isConnected == true else {
                     state.send(.networkError)
-                    isFetching = false
                     isNetworkOnline = false
                     return
                 }
@@ -98,8 +100,6 @@ final class AddPetViewModel {
             } catch {
                 handleFetchError(error)
             }
-            
-            isFetching = false
         }
     }
     

@@ -66,13 +66,16 @@ final class FavoritesViewModel {
         if resetData {
             pets = []
         }
+        
         isFetching = true
+        defer {
+            isFetching = false
+        }
         
         Task {
             do {
                 guard NetworkMonitor.shared.isConnected == true else {
                     self.state.send(.networkError)
-                    isFetching = false
                     return
                 }
                 let data = try await fetchFavoritePetsUC.execute()
@@ -86,8 +89,6 @@ final class FavoritesViewModel {
             } catch {
                 state.send(.error(.default(error)))
             }
-            
-            isFetching = false
         }
     }
     
