@@ -1059,7 +1059,7 @@
 		C4748FF02AED661100951FF5 /* pethugTests */ = {
 			isa = PBXGroup;
 			children = (
-				C48E33BC2AED838E001B6C92 /* CoreMocks */,
+				C48E33BC2AED838E001B6C92 /* EntityMocks */,
 				C4748FE42AED645600951FF5 /* Pets */,
 				C4748FE52AED647B00951FF5 /* DefaultPetsRepository */,
 			);
@@ -1293,12 +1293,12 @@
 			path = Gallery;
 			sourceTree = "<group>";
 		};
-		C48E33BC2AED838E001B6C92 /* CoreMocks */ = {
+		C48E33BC2AED838E001B6C92 /* EntityMocks */ = {
 			isa = PBXGroup;
 			children = (
 				C48E33BD2AED83AF001B6C92 /* PetMock.swift */,
 			);
-			path = CoreMocks;
+			path = EntityMocks;
 			sourceTree = "<group>";
 		};
 		C492318E2AE461E6003F29A6 /* Modal */ = {
