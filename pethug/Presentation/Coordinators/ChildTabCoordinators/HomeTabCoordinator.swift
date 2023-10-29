@@ -19,7 +19,8 @@ final class HomeTabCoordinator: ChildTabCoordinator {
                                          fetchPetsUC:     FetchPets.composeFetchPetsUC(),
                                          filterPetsUC:    FilterPets.composeFilterPetsUC(),
                                          likedPetUC:      LikePet.composeLikePetUC(),
-                                         dislikePetUC:    DisLikePet.composeDisLikePetUC()
+                                         dislikePetUC:    DisLikePet.composeDisLikePetUC(),
+                                         authService:     AuthService()
                                     )
     
     func start() {

@@ -83,7 +83,7 @@ enum FilterState: String, Codable, Hashable, CaseIterable {
     case Zacatecas
 }
 
-struct FilterOptions: Codable {
+struct FilterOptions: Codable, Equatable {
     let gender: FilterGender
     let size: FilterSize
     let age: FilterAgeRange

@@ -36,6 +36,7 @@ class PetsViewModel {
     private let filterPetsUC: DefaultFilterPetsUC
     private let likedPetUC: DefaultLikePetUC
     private let dislikedPetUC: DefaultDisLikePetUC
+    private let authService: AuthServiceProtocol
     private(set) var filterOptions: FilterOptions? = nil
     private(set) var filterMode = false // Flag indicating if we are requesting a fetch with fitler options
     
@@ -45,7 +46,8 @@ class PetsViewModel {
         fetchPetsUC: DefaultFetchPetsUC,
         filterPetsUC: DefaultFilterPetsUC,
         likedPetUC: DefaultLikePetUC,
-        dislikePetUC: DefaultDisLikePetUC
+        dislikePetUC: DefaultDisLikePetUC,
+        authService: AuthServiceProtocol
     ) {
         self.fetchAllPetsUC = fetchAllPetsUC
         self.filterAllPetsUC = filterAllPetsUC
@@ -53,6 +55,7 @@ class PetsViewModel {
         self.filterPetsUC = filterPetsUC
         self.likedPetUC = likedPetUC
         self.dislikedPetUC = dislikePetUC
+        self.authService = authService
         observeState()
         
 //        Task {
@@ -110,6 +113,7 @@ class PetsViewModel {
         isFetching = true
         
         if isFirstLoad {
+            //Send loading state
             state.send(.loading)
         }
         
@@ -133,10 +137,6 @@ class PetsViewModel {
     
     
     func likedPet(pet: Pet, completion: @escaping(Bool) -> Void) async {
-        defer {
-            isFetching = false
-        }
-        
         do {
             guard NetworkMonitor.shared.isConnected == true else {
                 self.state.send(.networkError)
@@ -336,7 +336,7 @@ class PetsViewModel {
 //    }
     
   private func addLike(pet: Pet) throws -> Pet{
-        let uid = AuthService().uid
+        let uid = authService.uid
         
         if pet.likedByUsers.contains(uid) {
             return pet
@@ -357,7 +357,7 @@ class PetsViewModel {
 
     
     private func removeLikeUid(pet: Pet) throws -> Pet {
-        let uid = AuthService().uid
+        let uid = authService.uid
         
         if !pet.likedByUsers.contains(uid) {
             throw PetsError.defaultCustom("User's uid was not found in likedByUsers")

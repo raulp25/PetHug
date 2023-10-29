@@ -34,7 +34,5 @@ let petMock: Pet = .init(id: "mockId",
                          isLiked: false,
                          timestamp: Timestamp(date: Date()),
                          owneruid: "xsne65k-e83-55",
-                         likedByUsers: ["MRsroti-M1-SLR"],
-                         likesTimestamps: [
-                            .init(uid: "MRsroti-M1-SLR", timestamp: Timestamp(date: Date()))
-                         ])
+                         likedByUsers: [],
+                         likesTimestamps: [])
