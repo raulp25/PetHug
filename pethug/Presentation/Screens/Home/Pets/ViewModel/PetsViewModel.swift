@@ -177,6 +177,7 @@ class PetsViewModel {
         defer {
             isFetching = false
         }
+        
         do {
             guard NetworkMonitor.shared.isConnected == true else {
                 self.state.send(.networkError)

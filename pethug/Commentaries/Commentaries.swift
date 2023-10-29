@@ -1537,3 +1537,71 @@ import Foundation
 //    return section
 //}
 //}
+
+
+////~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+///Tests
+///
+//two expectations
+//func test_with_successful_dislike_pet_request() async {
+//
+//    let expectation = XCTestExpectation(description: "likedPet async task")
+//    let expectation2 = XCTestExpectation(description: "dislikedPet async task")
+//
+//    let collection: String = .getPath(for: .dogs)
+//
+//    defer {
+//        XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
+//        XCTAssertFalse(vm.isFirstLoad, "The view model isFirstLoad state should be false")
+//        XCTAssertNil(vm.filterOptions, "The view model filter options should be nil")
+//        XCTAssertFalse(vm.filterMode, "The view model filter mode state should be false")
+//        XCTAssertEqual(vm.collection, collection, "The view model collection state should be \(collection)")
+//        XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
+//
+//        XCTAssertFalse(vm.pets[0].likedByUsers.contains(authServiceMock.uid), "The view model pet[0].likedByUsers should not contain the owneruid")
+//        XCTAssertTrue(vm.pets[0].likesTimestamps.isEmpty, "The view model pet[0].likesTimestamps should be empty")
+//    }
+//
+//    XCTAssertEqual(vm.pets, [], "The view model pets state should be empty")
+//    XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
+//    XCTAssertTrue(vm.isFirstLoad, "The view model isFirstLoad state should be true")
+//    XCTAssertNil(vm.filterOptions, "The view model filter options should be nil")
+//    XCTAssertFalse(vm.filterMode, "The view model filter mode state should be false")
+//
+//    vm.collection = collection
+//    XCTAssertEqual(vm.collection, collection, "The view model collection state should be \(collection)")
+//
+//    await vm.fetchPets(collection: collection, resetFilterQueries: true)
+//
+//    XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
+//    XCTAssertFalse(vm.isFirstLoad, "The view model isFirstLoad state should be false")
+//    XCTAssertNil(vm.filterOptions, "The view model filter options should be nil")
+//    XCTAssertFalse(vm.filterMode, "The view model filter mode state should be false")
+//    XCTAssertEqual(vm.collection, collection, "The view model collection state should be \(collection)")
+//
+//    XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
+//    XCTAssertEqual(vm.pets[0], petMock, "The view model pet[0] state should be equal to petMock")
+//
+//    await vm.likedPet(pet: vm.pets[0], completion: { result in
+//        expectation.fulfill()
+//        XCTAssertTrue(result, "Result value should be true")
+//    })
+//
+//    await fulfillment(of: [expectation], timeout: 2.0)
+//
+//    XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
+//    XCTAssertFalse(vm.isFirstLoad, "The view model isFirstLoad state should be false")
+//    XCTAssertNil(vm.filterOptions, "The view model filter options should be nil")
+//    XCTAssertFalse(vm.filterMode, "The view model filter mode state should be false")
+//    XCTAssertEqual(vm.collection, collection, "The view model collection state should be \(collection)")
+//    XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
+//
+//    XCTAssertTrue(vm.pets[0].likedByUsers.contains(authServiceMock.uid), "The view model pet[0].likedByUsers should contain the owneruid")
+//
+//    await vm.dislikedPet(pet: vm.pets[0]) { result in
+//        expectation2.fulfill()
+//        XCTAssertTrue(result, "Result value should be true")
+//    }
+//
+//    await fulfillment(of: [expectation2], timeout: 2.0)
+//}
