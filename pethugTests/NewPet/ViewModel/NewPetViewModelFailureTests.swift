@@ -1,21 +1,19 @@
 //
-//  NewPetViewModelSuccessTests.swift
+//  NewPetViewModelFailureTests.swift
 //  pethugTests
 //
-//  Created by Raul Pena on 29/10/23.
+//  Created by Raul Pena on 30/10/23.
 //
 
 import XCTest
-import UIKit
 import Combine
 
 @testable import pethug
 
-
-class NewPetViewModelSuccessTests: XCTestCase {
-    private var imageServiceMock: ImageServiceSuccessMock!
-    private var defaultPetDataSource: DefaultPetDataSourceSuccessMock!
-    private var defaultPetRepositoryMock: DefaultPetRepositorySuccessMock!
+class NewPetViewModelFailureTests: XCTestCase {
+    private var imageServiceMock: ImageServiceFailureMock!
+    private var defaultPetDataSource: DefaultPetDataSourceFailureMock!
+    private var defaultPetRepositoryMock: DefaultPetRepositoryFailureMock!
     private var authServiceMock: AuthServiceProtocol!
     
     /* Create two instances of NewPetViewModel for different use cases:
@@ -35,9 +33,9 @@ class NewPetViewModelSuccessTests: XCTestCase {
     private var editStateSpy: stateValueSpy!
     
     override func setUp() {
-        imageServiceMock = ImageServiceSuccessMock()
-        defaultPetDataSource = DefaultPetDataSourceSuccessMock()
-        defaultPetRepositoryMock = DefaultPetRepositorySuccessMock(petDataSource: defaultPetDataSource)
+        imageServiceMock = ImageServiceFailureMock()
+        defaultPetDataSource = DefaultPetDataSourceFailureMock()
+        defaultPetRepositoryMock = DefaultPetRepositoryFailureMock(petDataSource: defaultPetDataSource)
         authServiceMock = AuthServiceSuccessMock()
         
         vm = NewPetViewModel(imageService: imageServiceMock,
@@ -65,14 +63,56 @@ class NewPetViewModelSuccessTests: XCTestCase {
         isValidFormSpy = nil
         stateSpy = nil
         editStateSpy = nil
+        NetworkMonitor.shared.connect()
     }
     
     //MARK: - From validation
     
-    func test_with_formValidation_result_is_true() {
+    func test_with_formValidation_result_is_false() {
         
         defer {
-            XCTAssertTrue(isValidFormSpy.value, "The published value should be true")
+            XCTAssertFalse(isValidFormSpy.value, "The published value should be false")
+        }
+        
+        XCTAssertFalse(isValidFormSpy.value, "The published value should be false")
+        
+        // Valid state
+        vm.nameState      = "Terry A. Davis"
+        vm.galleryState   = [UIImage(systemName: "pencil")!]
+        vm.typeState      = .bird
+        vm.breedsState    = "Dachshund"
+        vm.genderState    = .female
+        vm.sizeState      = .small
+        vm.ageState       = 15
+        vm.activityState  = 5
+        vm.socialState    = 6
+        vm.affectionState = 420
+        vm.addressState   = .MexicoCity
+        vm.infoState      = "Pet info"
+        
+        XCTAssertTrue(isValidFormSpy.value, "The published value should be true")
+        
+        // Make the form invalid by having nil values
+        vm.nameState      = "Terry A. Davis"
+        vm.galleryState   = [UIImage(systemName: "pencil")!]
+        vm.typeState      = nil
+        vm.breedsState    = "Dachshund"
+        vm.genderState    = .female
+        vm.sizeState      = .small
+        vm.ageState       = nil
+        vm.activityState  = nil
+        vm.socialState    = nil
+        vm.affectionState = 420
+        vm.addressState   = .MexicoCity
+        vm.infoState      = "Pet info"
+    }
+    
+    //MARK: - Create pet
+    
+    func test_with_failure_create_pet() async throws {
+        
+        defer {
+            XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong)], "The published value should be equal to [.error(.someThingWentWrong)]")
         }
         
         XCTAssertFalse(isValidFormSpy.value, "The published value should be false")
@@ -89,14 +129,17 @@ class NewPetViewModelSuccessTests: XCTestCase {
         vm.affectionState = 7
         vm.addressState   = .MexicoCity
         vm.infoState      = "Pet info"
+        
+        XCTAssertTrue(isValidFormSpy.value, "The published value should be true")
+        
+        await vm.createPet()
     }
     
-    //MARK: - Create pet
-    
-    func test_with_successful_create_pet() async throws {
+    func test_with_networkFailure_create_pet() async throws {
+        NetworkMonitor.shared.disconnect()
         
         defer {
-            XCTAssertEqual(stateSpy.values, [.loading, .success], "The published value should be equal to [.loading, .success]")
+            XCTAssertEqual(stateSpy.values, [.networkError], "The published value should be equal to [.networkError]")
         }
         
         XCTAssertFalse(isValidFormSpy.value, "The published value should be false")
@@ -121,14 +164,25 @@ class NewPetViewModelSuccessTests: XCTestCase {
     
     //MARK: - Update Pet
     
-    func test_with_successful_update_pet() async throws {
+    func test_with_failure_update_pet() async throws {
         
         defer {
-            XCTAssertEqual(editStateSpy.values, [.loading, .success], "The published value should be equal to [.loading, .success]")
+            XCTAssertEqual(editStateSpy.values, [.error(.someThingWentWrong)], "The published value should be equal to [.error(.someThingWentWrong)]")
         }
         
         await editStateVM.updatePet()
     }
+    
+    func test_with_networkFailure_update_pet() async throws {
+        NetworkMonitor.shared.disconnect()
+        
+        defer {
+            XCTAssertEqual(editStateSpy.values, [.networkError], "The published value should be equal to [.networkError]")
+        }
+        
+        await editStateVM.updatePet()
+    }
+    
 }
 
 //MARK: - Combine publisher Spy
@@ -141,12 +195,12 @@ private class stateValueSpy {
         cancellable = publisher
             .sink(receiveValue: { [weak self] state in
                 switch state {
-                case .loading:
-                    self?.values.append(.loading)
-                case .success:
-                    self?.values.append(.success)
+                case .error(_):
+                    self?.values.append(.error(.someThingWentWrong))
+                case .networkError:
+                    self?.values.append(.networkError)
                 default:
-                    print("error log")
+                    print("not an error log")
                 }
         })
     }

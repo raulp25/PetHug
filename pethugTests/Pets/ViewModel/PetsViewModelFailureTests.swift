@@ -461,8 +461,6 @@ class PetsViewModelFailureTests: XCTestCase {
     func test_with_networkFailure_like_pet_request() async {
         NetworkMonitor.shared.disconnect()
         
-        let expectation = XCTestExpectation(description: "Failure likedPet async task")
-        
         defer {
             XCTAssertEqual(spy.values, 2, "The published values should be equal to 2")
             
@@ -499,9 +497,7 @@ class PetsViewModelFailureTests: XCTestCase {
     
     func test_with_networkFailure_dislike_pet_request() async {
         NetworkMonitor.shared.disconnect()
-        
-        let expectation = XCTestExpectation(description: "likedPet async task")
-        
+    
         defer {
             XCTAssertEqual(spy.values, 2, "The published values should be equal to 2")
             

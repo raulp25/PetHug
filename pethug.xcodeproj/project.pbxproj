@@ -149,6 +149,7 @@
 		C480DBC32AD37219005F707C /* CollectionViewSocialCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */; };
 		C480DBC62AD3985F005F707C /* CollectionViewImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC52AD3985F005F707C /* CollectionViewImageCell.swift */; };
 		C480DBC82AD398C9005F707C /* CollectionViewGalleryCell+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C480DBC72AD398C9005F707C /* CollectionViewGalleryCell+Types.swift */; };
+		C4820C542AF0036800B5D4DE /* NewPetViewModelFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4820C532AF0036800B5D4DE /* NewPetViewModelFailureTests.swift */; };
 		C482908A2AB381D800DE6227 /* CreateAccountCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */; };
 		C482908D2AB391C600DE6227 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */; };
 		C482908F2AB39DDE00DE6227 /* CreateAccountViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */; };
@@ -416,6 +417,7 @@
 		C480DBC22AD37219005F707C /* CollectionViewSocialCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewSocialCell.swift; sourceTree = "<group>"; };
 		C480DBC52AD3985F005F707C /* CollectionViewImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewImageCell.swift; sourceTree = "<group>"; };
 		C480DBC72AD398C9005F707C /* CollectionViewGalleryCell+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CollectionViewGalleryCell+Types.swift"; sourceTree = "<group>"; };
+		C4820C532AF0036800B5D4DE /* NewPetViewModelFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewModelFailureTests.swift; sourceTree = "<group>"; };
 		C48290892AB381D800DE6227 /* CreateAccountCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountCoordinator.swift; sourceTree = "<group>"; };
 		C482908C2AB391C600DE6227 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		C482908E2AB39DDE00DE6227 /* CreateAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModel.swift; sourceTree = "<group>"; };
@@ -1726,6 +1728,7 @@
 			isa = PBXGroup;
 			children = (
 				C4D3EDB82AEF3FF700AB4B28 /* NewPetViewModelSuccessTests.swift */,
+				C4820C532AF0036800B5D4DE /* NewPetViewModelFailureTests.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -2245,6 +2248,7 @@
 				C48E33CA2AEDBE85001B6C92 /* DefaultPetDataSourceMock.swift in Sources */,
 				C48E33C52AEDA94F001B6C92 /* AuthServiceMock.swift in Sources */,
 				C4C9CAB02AEF261F00A927DB /* PetsViewModelFailureTests.swift in Sources */,
+				C4820C542AF0036800B5D4DE /* NewPetViewModelFailureTests.swift in Sources */,
 				C48E33BE2AED83AF001B6C92 /* PetMock.swift in Sources */,
 				C4F1E96D2AED67D6001CCBE0 /* DefaultPetRepositoryMock.swift in Sources */,
 				C4D3EDB92AEF3FF700AB4B28 /* NewPetViewModelSuccessTests.swift in Sources */,
