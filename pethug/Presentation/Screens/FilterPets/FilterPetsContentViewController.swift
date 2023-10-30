@@ -32,7 +32,6 @@ final class FilterPetsContentViewController: UIViewController {
         hideKeyboardWhenTappedAround()
         configureDataSource()
         updateSnapShot()
-        bind()
     }
     
     deinit {
@@ -74,22 +73,6 @@ final class FilterPetsContentViewController: UIViewController {
         collectionView.showsVerticalScrollIndicator = false
         collectionView.delegate = self
     }
-    
-    //MARK: - Bind
-    func bind() {
-        viewModel.stateSubject
-            .handleThreadsOperator()
-            .sink { [weak self] state in
-                switch state {
-                case .success:
-                    self?.dismiss(animated: true)
-                default:
-                    print("")
-                }
-
-            }.store(in: &cancellables)
-    }
-    
    
     //MARK: - Private Actions}
     @objc func didTapXmark() {

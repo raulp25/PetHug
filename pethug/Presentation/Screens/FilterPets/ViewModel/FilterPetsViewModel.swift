@@ -10,12 +10,6 @@ import Firebase
 import Combine
 
 class FilterPetsViewModel {
-    
-    init() {
-        setInitialValues()
-        observeValidation()
-    }
-
     //MARK: - Form Validation
     private var cancellables = Set<AnyCancellable>()
     @Published var genderState:   FilterGender  = .all
@@ -24,11 +18,15 @@ class FilterPetsViewModel {
     @Published var addressState:  FilterState?   = nil
     
     var isValidSubject = CurrentValueSubject<Bool, Never>(false)
-    var stateSubject = PassthroughSubject<LoadingState, Never>()
     
     var filterOptions: FilterOptions!
     private var currentFilterOptions: FilterOptions? = nil
-    private var filterKey = "filterOptions"
+    private var filterKey = FilterKeys.filterOptions.rawValue
+    
+    init() {
+        setInitialValues()
+        observeValidation()
+    }
     
     private func observeValidation() {
             formValidationState

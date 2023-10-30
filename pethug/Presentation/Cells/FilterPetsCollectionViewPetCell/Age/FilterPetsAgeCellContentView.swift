@@ -77,12 +77,6 @@ final class FilterPetsAgeCellContentView: UIView, UIContentView {
 
         // apply the configuration (set data to UI elements / define custom content view appearance)
         apply(configuration: configuration)
-        
-        if let savedCheckedRawValue = UserDefaults.standard.value(forKey: ageKey) as? FilterAgeRange {
-            slider.value = [CGFloat(savedCheckedRawValue.min), CGFloat(savedCheckedRawValue.max)]
-        } else {
-            
-        }
     }
     
     @available(*, unavailable) required init?(coder _: NSCoder) {

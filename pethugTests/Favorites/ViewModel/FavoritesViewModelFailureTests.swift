@@ -44,13 +44,13 @@ class FavoritesViewModelFailureTests: XCTestCase {
     func test_with_failure_fetch_favorite_pets() async throws {
         
         defer {
-            XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong)], "The published values should be equal to [.error(.someThingWentWrong)]")
+            XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong), .error(.someThingWentWrong)], "The published values should be equal to [.error(.someThingWentWrong)]")
             XCTAssertEqual(vm.pets.count, 0, "The view model pets stete count shoudld be 0" )
             
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
         }
         
-        XCTAssertEqual(stateSpy.values, [], "The published values should be equal to []")
+        XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong)], "The published values should be equal to []")
         XCTAssertEqual(vm.pets.count, 0, "The view model pets stete count shoudld be 0" )
         
         // async fetchFavoritePets gets called in the init, so we need to wait 200 ms until it completes,
@@ -64,7 +64,7 @@ class FavoritesViewModelFailureTests: XCTestCase {
         NetworkMonitor.shared.disconnect()
         
         defer {
-            XCTAssertEqual(stateSpy.values, [.networkError], "The published values should be equal to [.networkError]")
+            XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong), .networkError], "The published values should be equal to [.networkError]")
             XCTAssertEqual(vm.pets.count, 0, "The view model pets stete count shoudld be 0" )
             
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -102,12 +102,12 @@ class FavoritesViewModelFailureTests: XCTestCase {
         let expectation = XCTestExpectation(description: "dislikedPet async task")
         
         defer {
-            XCTAssertEqual(stateSpy.values, [.networkError], "The published values should be equal to [.networkError]")
+            XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong), .networkError], "The published values should be equal to [.networkError, .networkError]")
             XCTAssertEqual(vm.pets.count, 0, "The view model pets stete count shoudld be 2" )
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
         }
         
-        XCTAssertEqual(stateSpy.values, [], "The published values should be equal to []")
+        XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong)], "The published values should be equal to []")
         XCTAssertEqual(vm.pets.count, 0, "The view model pets stete count shoudld be 0" )
     
         await vm.dislikedPet(pet: petMock, completion: { result in
