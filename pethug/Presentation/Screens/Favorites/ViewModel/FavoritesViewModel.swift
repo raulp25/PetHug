@@ -21,21 +21,25 @@ final class FavoritesViewModel {
     //MARK: - Private Properties
     private var subscriptions = Set<AnyCancellable>()
     private let petsSubject = PassthroughSubject<[Pet], PetsError>()
-    private var pets: [Pet] = []
+    private(set) var pets: [Pet] = []
     
-    private var isFetching = false
-    private var isFirstLoad = true
+    private(set) var isFetching = false
     private let fetchFavoritePetsUC: DefaultFetchFavoritePetsUC
     private let dislikedPetUC: DefaultDisLikePetUC
+    private let authService: AuthServiceProtocol
     
     init(
         fetchFavoritePetsUC: DefaultFetchFavoritePetsUC,
-        dislikePetUC: DefaultDisLikePetUC
+        dislikePetUC: DefaultDisLikePetUC,
+        authService: AuthServiceProtocol
     ) {
         self.fetchFavoritePetsUC = fetchFavoritePetsUC
         self.dislikedPetUC = dislikePetUC
+        self.authService = authService
         observeState()
-        fetchFavoritePets()
+        Task {
+            await fetchFavoritePets()
+        }
     }
     
     deinit {
@@ -55,13 +59,14 @@ final class FavoritesViewModel {
             } receiveValue: { [weak self] pets in
                 guard let self = self else { return }
                 self.pets.append(contentsOf: pets)
+                print("pets en petsubject 222: => \(pets)")
                 self.state.send(.loaded(self.pets))
             }.store(in: &subscriptions)
         
     }
     
     //MARK: - Internal Methods
-    func fetchFavoritePets(resetData: Bool = false) {
+    func fetchFavoritePets(resetData: Bool = false) async {
         guard !isFetching else { return }
         if resetData {
             pets = []
@@ -72,49 +77,46 @@ final class FavoritesViewModel {
             isFetching = false
         }
         
-        Task {
-            do {
-                guard NetworkMonitor.shared.isConnected == true else {
-                    self.state.send(.networkError)
-                    return
-                }
-                let data = try await fetchFavoritePetsUC.execute()
-                
-                if data.isEmpty {
-                    state.send(.empty)
-                } else {
-                    petsSubject.send(data)
-                }
-                
-            } catch {
-                state.send(.error(.default(error)))
+        do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                self.state.send(.networkError)
+                return
             }
+            let data = try await fetchFavoritePetsUC.execute()
+            
+            if data.isEmpty {
+                print("data is empty : => \(data)")
+                state.send(.empty)
+            } else {
+                petsSubject.send(data)
+            }
+            
+        } catch {
+            state.send(.error(.default(error)))
         }
     }
     
     
-    func dislikedPet(pet: Pet, completion: @escaping(Bool) -> Void) {
-        Task{
-            do {
-                guard NetworkMonitor.shared.isConnected == true else {
-                    state.send(.networkError)
-                    completion(false)
-                    return
-                }
-                
-                let pet = try removeLikeUid(pet: pet)
-                try deleteLiked(pet: pet)
-                try await dislikedPetUC.execute(data: pet)
-                completion(true)
-            } catch {
-                print("error liking pet: => \(error.localizedDescription)")
+    func dislikedPet(pet: Pet, completion: @escaping(Bool) -> Void) async {
+        do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                state.send(.networkError)
                 completion(false)
+                return
             }
+            
+            let pet = try removeLikeUid(pet: pet)
+            try deleteLiked(pet: pet)
+            try await dislikedPetUC.execute(data: pet)
+            completion(true)
+        } catch {
+            print("error liking pet: => \(error.localizedDescription)")
+            completion(false)
         }
     }
     
     func removeLikeUid(pet: Pet) throws -> Pet {
-        let uid = AuthService().uid
+        let uid = authService.uid
         
         if !pet.likedByUsers.contains(uid) {
             throw PetsError.defaultCustom("User's uid was not found in likedByUsers")

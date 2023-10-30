@@ -10,6 +10,8 @@ import FirebaseFirestore
 
 @testable import pethug
 
+//MARK: - Success Mock
+
 final class DefaultPetDataSourceSuccessMock: PetDataSource {
     internal var db = Firestore.firestore()
     internal var query: Query!
@@ -85,10 +87,17 @@ final class DefaultPetDataSourceSuccessMock: PetDataSource {
         
         return pets
     }
+    
     //Fetch Liked pets
+    var favoriteCallsCount = 0
     func fetchFavoritePets() async throws -> [Pet] {
+        favoriteCallsCount += 1
+        // Send empty state
+        if favoriteCallsCount > 2 {
+            return []
+        }
+        // Send non-empty state
         let pets: [Pet] = [petMock]
-        
         return pets
     }
     
@@ -124,6 +133,7 @@ final class DefaultPetDataSourceSuccessMock: PetDataSource {
     func dislikePet(data: Pet) async throws { }
 }
 
+//MARK: - Failure Mock
 
 final class DefaultPetDataSourceFailureMock: PetDataSource {
     internal var db = Firestore.firestore()

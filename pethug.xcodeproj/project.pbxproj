@@ -78,6 +78,7 @@
 		C43FAF952AD2382800A437C3 /* CollectionViewNameLocationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FAF942AD2382800A437C3 /* CollectionViewNameLocationCell.swift */; };
 		C43FAF972AD2472300A437C3 /* CollectionViewInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FAF962AD2472300A437C3 /* CollectionViewInfoCell.swift */; };
 		C43FAF9A2AD257F300A437C3 /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43FAF992AD257F300A437C3 /* Badge.swift */; };
+		C443631A2AF0335D00DBFD68 /* FavoritesViewModelFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44363192AF0335D00DBFD68 /* FavoritesViewModelFailureTests.swift */; };
 		C445F11A2AB1391A00053BE7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F1192AB1391A00053BE7 /* AppDelegate.swift */; };
 		C445F11C2AB1391A00053BE7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */; };
 		C445F1232AB1391B00053BE7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C445F1222AB1391B00053BE7 /* Assets.xcassets */; };
@@ -161,6 +162,7 @@
 		C483EBA22AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483EBA12AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift */; };
 		C483EBA42AC55C11005E8BE2 /* NewPetSizeCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C483EBA32AC55C11005E8BE2 /* NewPetSizeCellContentView.swift */; };
 		C48B0F672AF019BC00CB14CF /* AddPetViewModelFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48B0F662AF019BC00CB14CF /* AddPetViewModelFailureTests.swift */; };
+		C48B0F6B2AF025E400CB14CF /* FavoritesViewModelSuccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48B0F6A2AF025E400CB14CF /* FavoritesViewModelSuccessTests.swift */; };
 		C48D9B462AC49BBB002EDA90 /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B452AC49BBB002EDA90 /* ListCollectionViewCell.swift */; };
 		C48D9B482AC49BCC002EDA90 /* ContentConfigurable.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B472AC49BCC002EDA90 /* ContentConfigurable.swift */; };
 		C48D9B4B2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C48D9B4A2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift */; };
@@ -346,6 +348,7 @@
 		C43FAF942AD2382800A437C3 /* CollectionViewNameLocationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewNameLocationCell.swift; sourceTree = "<group>"; };
 		C43FAF962AD2472300A437C3 /* CollectionViewInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewInfoCell.swift; sourceTree = "<group>"; };
 		C43FAF992AD257F300A437C3 /* Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
+		C44363192AF0335D00DBFD68 /* FavoritesViewModelFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModelFailureTests.swift; sourceTree = "<group>"; };
 		C445F1162AB1391A00053BE7 /* pethug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pethug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C445F1192AB1391A00053BE7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C445F11B2AB1391A00053BE7 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -431,6 +434,7 @@
 		C483EBA12AC55BC1005E8BE2 /* NewPetSizeListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSizeListCellConfiguration.swift; sourceTree = "<group>"; };
 		C483EBA32AC55C11005E8BE2 /* NewPetSizeCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetSizeCellContentView.swift; sourceTree = "<group>"; };
 		C48B0F662AF019BC00CB14CF /* AddPetViewModelFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPetViewModelFailureTests.swift; sourceTree = "<group>"; };
+		C48B0F6A2AF025E400CB14CF /* FavoritesViewModelSuccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritesViewModelSuccessTests.swift; sourceTree = "<group>"; };
 		C48D9B452AC49BBB002EDA90 /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
 		C48D9B472AC49BCC002EDA90 /* ContentConfigurable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentConfigurable.swift; sourceTree = "<group>"; };
 		C48D9B4A2AC49D87002EDA90 /* NewPetNameListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetNameListCellConfiguration.swift; sourceTree = "<group>"; };
@@ -1077,6 +1081,7 @@
 		C4748FF02AED661100951FF5 /* pethugTests */ = {
 			isa = PBXGroup;
 			children = (
+				C48B0F682AF025B400CB14CF /* Favorites */,
 				C4820C552AF00D0A00B5D4DE /* AddPet */,
 				C4D3EDBA2AEF430300AB4B28 /* ImageService */,
 				C4D3EDB52AEF3F9C00AB4B28 /* NewPet */,
@@ -1276,6 +1281,23 @@
 				C483EBA32AC55C11005E8BE2 /* NewPetSizeCellContentView.swift */,
 			);
 			path = Size;
+			sourceTree = "<group>";
+		};
+		C48B0F682AF025B400CB14CF /* Favorites */ = {
+			isa = PBXGroup;
+			children = (
+				C48B0F692AF025BC00CB14CF /* ViewModel */,
+			);
+			path = Favorites;
+			sourceTree = "<group>";
+		};
+		C48B0F692AF025BC00CB14CF /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C48B0F6A2AF025E400CB14CF /* FavoritesViewModelSuccessTests.swift */,
+				C44363192AF0335D00DBFD68 /* FavoritesViewModelFailureTests.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		C48D9B442AC49B63002EDA90 /* GenericListCell */ = {
@@ -2269,9 +2291,11 @@
 				C4D3EDBF2AEF437100AB4B28 /* ImageServiceMock.swift in Sources */,
 				C48E33CA2AEDBE85001B6C92 /* DefaultPetDataSourceMock.swift in Sources */,
 				C48E33C52AEDA94F001B6C92 /* AuthServiceMock.swift in Sources */,
+				C443631A2AF0335D00DBFD68 /* FavoritesViewModelFailureTests.swift in Sources */,
 				C4C9CAB02AEF261F00A927DB /* PetsViewModelFailureTests.swift in Sources */,
 				C4820C542AF0036800B5D4DE /* NewPetViewModelFailureTests.swift in Sources */,
 				C48E33BE2AED83AF001B6C92 /* PetMock.swift in Sources */,
+				C48B0F6B2AF025E400CB14CF /* FavoritesViewModelSuccessTests.swift in Sources */,
 				C4820C582AF00E0800B5D4DE /* AddPetViewModelSuccessTests.swift in Sources */,
 				C48B0F672AF019BC00CB14CF /* AddPetViewModelFailureTests.swift in Sources */,
 				C4F1E96D2AED67D6001CCBE0 /* DefaultPetRepositoryMock.swift in Sources */,

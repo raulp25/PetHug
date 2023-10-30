@@ -16,7 +16,8 @@ final class FavoriteTabCoordinator: ChildTabCoordinator {
     
     func start() {
         let viewModel: FavoritesViewModel = .init(fetchFavoritePetsUC: FetchFavoritePets.composeFetchFavoritePetsUC(),
-                                                  dislikePetUC: DisLikePet.composeDisLikePetUC()
+                                                  dislikePetUC: DisLikePet.composeDisLikePetUC(),
+                                                  authService: AuthService()
                                              )
         viewModel.navigation = self
         let vc = FavoritesViewController(viewModel: viewModel)

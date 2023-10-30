@@ -65,7 +65,7 @@ class AddPetViewModelFailureTests: XCTestCase {
         NetworkMonitor.shared.disconnect()
         
         defer {
-            XCTAssertEqual(stateSpy.values, [.networkError], "The published values should be equal to [.error(.someThingWentWrong)]")
+            XCTAssertEqual(stateSpy.values, [.networkError], "The published values should be equal to [.networkError]")
             XCTAssertFalse(vm.isNetworkOnline, "The view model isNetworkOnline state should be false")
             XCTAssertEqual(vm.pets.count, 0, "The view model pets stete count shoudld be 0" )
             
@@ -107,7 +107,7 @@ class AddPetViewModelFailureTests: XCTestCase {
         
         defer {
             XCTAssertFalse(result, "The view model result from deleting a pet should be false")
-            XCTAssertEqual(stateSpy.values, [.networkError], "The published values should be equal to [.error(.someThingWentWrong)]")
+            XCTAssertEqual(stateSpy.values, [.networkError], "The published values should be equal to [.networkError]")
             XCTAssertEqual(vm.pets.count, 0, "The view model pets stete count shoudld be 0" )
             
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")

@@ -37,7 +37,9 @@ final class FavoritesViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchFavoritePets(resetData: true)
+        Task {
+            await viewModel.fetchFavoritePets(resetData: true)
+        }
     }
     
     // MARK: - setup
@@ -135,11 +137,13 @@ extension FavoritesViewController: FavoritesContentViewControllerDelegate {
     
     //Dislike pet
     func didDislike(pet: Pet, completion: @escaping (Bool) -> Void) {
-        viewModel.dislikedPet(pet: pet) { result in
-            if result == true {
-                completion(true)
-            } else {
-                completion(false)
+        Task {
+            await viewModel.dislikedPet(pet: pet) { result in
+                if result == true {
+                    completion(true)
+                } else {
+                    completion(false)
+                }
             }
         }
     }
