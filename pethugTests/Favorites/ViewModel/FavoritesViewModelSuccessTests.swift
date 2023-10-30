@@ -14,7 +14,7 @@ import Firebase
 @testable import pethug
 
 //This tests will pass if they are run in solitary because of the multiple Task.sleep
-// and probably issues with M1 chips or xcode itself 
+// and probably issues with M1 chips or xcode itself
 
 class FavoritesViewModelSuccessTests: XCTestCase {
     

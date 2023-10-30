@@ -119,6 +119,8 @@ class AddPetViewModelSuccessTests: XCTestCase {
     }
 }
 
+//MARK: - Combine publisher Spy
+
 private class StateValueSpy {
     private(set) var values = [Pet]()
     private(set) var booleans = [Bool]()

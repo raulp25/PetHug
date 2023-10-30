@@ -22,13 +22,16 @@ struct LoginViewModel {
             state.send(.error(.someThingWentWrong))
             return
         }
+        
         state.send(.loading)
+        
         do {
             guard NetworkMonitor.shared.isConnected == true else {
                 self.state.send(.networkError)
                 return
             }
             try await authService.signIn(email: email, password: password) //Login
+            
         } catch {
             state.send(.error(.default(error)))
         }

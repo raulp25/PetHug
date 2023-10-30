@@ -42,6 +42,8 @@ class FilterPetsViewModelSuccessTests: XCTestCase {
         vm.addressState   = .Colima
     }
 }
+
+//MARK: - Combine publisher Spy
  
 private class ValidValueSpy {
     private(set) var value: Bool = false

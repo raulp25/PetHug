@@ -56,7 +56,6 @@ private class ValidValueSpy {
     init(_ publisher: AnyPublisher<Bool, Never>) {
         cancellable = publisher
             .sink(receiveValue: { [weak self] state in
-                print("value 2: => \(state)")
                 self?.value = state
         })
     }

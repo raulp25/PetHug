@@ -96,6 +96,8 @@
 		C448202A2AB54B4E00E72BD2 /* ToModelMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */; };
 		C449A37C2AEB4E4C002F340B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C449A37B2AEB4E4C002F340B /* GoogleService-Info.plist */; };
 		C44A15662AE300E300658B2F /* FilterAllPetsUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44A15652AE300E300658B2F /* FilterAllPetsUC.swift */; };
+		C44B08432AF074C200C927B2 /* LoginViewModelSuccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B08422AF074C200C927B2 /* LoginViewModelSuccessTests.swift */; };
+		C44B08452AF077D300C927B2 /* LoginViewModelFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B08442AF077D300C927B2 /* LoginViewModelFailureTests.swift */; };
 		C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */; };
 		C44DFD402AC639B20045DD7A /* NewPetUploadCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */; };
 		C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */; };
@@ -369,6 +371,8 @@
 		C44820292AB54B4E00E72BD2 /* ToModelMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToModelMapper.swift; sourceTree = "<group>"; };
 		C449A37B2AEB4E4C002F340B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C44A15652AE300E300658B2F /* FilterAllPetsUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAllPetsUC.swift; sourceTree = "<group>"; };
+		C44B08422AF074C200C927B2 /* LoginViewModelSuccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelSuccessTests.swift; sourceTree = "<group>"; };
+		C44B08442AF077D300C927B2 /* LoginViewModelFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelFailureTests.swift; sourceTree = "<group>"; };
 		C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadListCellConfiguration.swift; sourceTree = "<group>"; };
 		C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadCellContentView.swift; sourceTree = "<group>"; };
 		C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummySectionHeader.swift; sourceTree = "<group>"; };
@@ -989,6 +993,23 @@
 			name = Protocols;
 			sourceTree = "<group>";
 		};
+		C44B08402AF074A100C927B2 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				C44B08412AF074AC00C927B2 /* ViewModel */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		C44B08412AF074AC00C927B2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C44B08422AF074C200C927B2 /* LoginViewModelSuccessTests.swift */,
+				C44B08442AF077D300C927B2 /* LoginViewModelFailureTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		C44DFD3C2AC638B60045DD7A /* Upload */ = {
 			isa = PBXGroup;
 			children = (
@@ -1083,6 +1104,7 @@
 		C4748FF02AED661100951FF5 /* pethugTests */ = {
 			isa = PBXGroup;
 			children = (
+				C44B08402AF074A100C927B2 /* Login */,
 				C4F8B15F2AF0480C0008F2FC /* FilterPets */,
 				C48B0F682AF025B400CB14CF /* Favorites */,
 				C4820C552AF00D0A00B5D4DE /* AddPet */,
@@ -2307,6 +2329,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4D3EDBF2AEF437100AB4B28 /* ImageServiceMock.swift in Sources */,
+				C44B08432AF074C200C927B2 /* LoginViewModelSuccessTests.swift in Sources */,
 				C48E33CA2AEDBE85001B6C92 /* DefaultPetDataSourceMock.swift in Sources */,
 				C48E33C52AEDA94F001B6C92 /* AuthServiceMock.swift in Sources */,
 				C443631A2AF0335D00DBFD68 /* FavoritesViewModelFailureTests.swift in Sources */,
@@ -2315,6 +2338,7 @@
 				C48E33BE2AED83AF001B6C92 /* PetMock.swift in Sources */,
 				C48B0F6B2AF025E400CB14CF /* FavoritesViewModelSuccessTests.swift in Sources */,
 				C4820C582AF00E0800B5D4DE /* AddPetViewModelSuccessTests.swift in Sources */,
+				C44B08452AF077D300C927B2 /* LoginViewModelFailureTests.swift in Sources */,
 				C46CFB8A2AF04D8C00A56165 /* FilterPetsViewModelFailureTests.swift in Sources */,
 				C48B0F672AF019BC00CB14CF /* AddPetViewModelFailureTests.swift in Sources */,
 				C4F1E96D2AED67D6001CCBE0 /* DefaultPetRepositoryMock.swift in Sources */,
