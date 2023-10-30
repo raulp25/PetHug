@@ -1332,7 +1332,7 @@
 		C48E33C32AEDA92B001B6C92 /* AuthService */ = {
 			isa = PBXGroup;
 			children = (
-				C48E33C42AEDA94F001B6C92 /* AuthServiceMock.swift */,
+				C4D3EDB42AEF3D2B00AB4B28 /* Mocks */,
 			);
 			path = AuthService;
 			sourceTree = "<group>";
@@ -1348,7 +1348,7 @@
 		C48E33C72AEDBD9C001B6C92 /* DefaultPetDataSource */ = {
 			isa = PBXGroup;
 			children = (
-				C48E33C92AEDBE85001B6C92 /* DefaultPetDataSourceMock.swift */,
+				C4D3EDB32AEF3D1F00AB4B28 /* Mocks */,
 			);
 			path = DefaultPetDataSource;
 			sourceTree = "<group>";
@@ -1699,6 +1699,22 @@
 				C42616E22AB2788A006925DB /* Validator.swift */,
 			);
 			path = Validation;
+			sourceTree = "<group>";
+		};
+		C4D3EDB32AEF3D1F00AB4B28 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C48E33C92AEDBE85001B6C92 /* DefaultPetDataSourceMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		C4D3EDB42AEF3D2B00AB4B28 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C48E33C42AEDA94F001B6C92 /* AuthServiceMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		C4D44A1D2ADDE05F004D2A53 /* Profile */ = {
