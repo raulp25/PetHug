@@ -16,6 +16,7 @@ final class NewPetViewController: UIViewController {
                                         createPetUseCase: CreatePet.composeCreatePetUC(),
                                         updatePetUseCase: UpdatePet.composeUpdatePetUC(),
                                         deletePetFromRepeatedCollectionUC: DeletePetFromRepeatedCollection.composeDeletePetFromRepeatedCollectionUC(),
+                                        authService: AuthService(),
                                         pet: self.pet
                                    ))
     

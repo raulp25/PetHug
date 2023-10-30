@@ -230,6 +230,8 @@
 		C4CF74FF2AB25B8700D69185 /* DisabledTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */; };
 		C4CF75032AB25C5B00D69185 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75022AB25C5B00D69185 /* Constants.swift */; };
 		C4CF75062AB25CE100D69185 /* ValidationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4CF75052AB25CE100D69185 /* ValidationState.swift */; };
+		C4D3EDB92AEF3FF700AB4B28 /* NewPetViewModelSuccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3EDB82AEF3FF700AB4B28 /* NewPetViewModelSuccessTests.swift */; };
+		C4D3EDBF2AEF437100AB4B28 /* ImageServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D3EDBE2AEF437100AB4B28 /* ImageServiceMock.swift */; };
 		C4D44A1A2ADDDFF4004D2A53 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */; };
 		C4D44A1C2ADDE057004D2A53 /* ProfileContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */; };
 		C4D44A1F2ADDE5A3004D2A53 /* FetchUserUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A1E2ADDE5A3004D2A53 /* FetchUserUC.swift */; };
@@ -496,6 +498,8 @@
 		C4CF74FE2AB25B8700D69185 /* DisabledTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisabledTextField.swift; sourceTree = "<group>"; };
 		C4CF75022AB25C5B00D69185 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C4CF75052AB25CE100D69185 /* ValidationState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationState.swift; sourceTree = "<group>"; };
+		C4D3EDB82AEF3FF700AB4B28 /* NewPetViewModelSuccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetViewModelSuccessTests.swift; sourceTree = "<group>"; };
+		C4D3EDBE2AEF437100AB4B28 /* ImageServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageServiceMock.swift; sourceTree = "<group>"; };
 		C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentViewController.swift; sourceTree = "<group>"; };
 		C4D44A1E2ADDE5A3004D2A53 /* FetchUserUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserUC.swift; sourceTree = "<group>"; };
@@ -1035,8 +1039,7 @@
 		C4748FE42AED645600951FF5 /* Pets */ = {
 			isa = PBXGroup;
 			children = (
-				C4748FF82AED664C00951FF5 /* PetsViewModelSuccessTests.swift */,
-				C4C9CAAF2AEF261F00A927DB /* PetsViewModelFailureTests.swift */,
+				C4D3EDB72AEF3FCE00AB4B28 /* ViewModel */,
 			);
 			path = Pets;
 			sourceTree = "<group>";
@@ -1068,6 +1071,8 @@
 		C4748FF02AED661100951FF5 /* pethugTests */ = {
 			isa = PBXGroup;
 			children = (
+				C4D3EDBA2AEF430300AB4B28 /* ImageService */,
+				C4D3EDB52AEF3F9C00AB4B28 /* NewPet */,
 				C48E33C62AEDBD89001B6C92 /* Repositories */,
 				C48E33C82AEDBDB4001B6C92 /* DataSources */,
 				C48E33C12AEDA913001B6C92 /* AuthService */,
@@ -1317,16 +1322,8 @@
 			isa = PBXGroup;
 			children = (
 				C48E33C32AEDA92B001B6C92 /* AuthService */,
-				C48E33C22AEDA91C001B6C92 /* Mocks */,
 			);
 			path = AuthService;
-			sourceTree = "<group>";
-		};
-		C48E33C22AEDA91C001B6C92 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Mocks;
 			sourceTree = "<group>";
 		};
 		C48E33C32AEDA92B001B6C92 /* AuthService */ = {
@@ -1713,6 +1710,55 @@
 			isa = PBXGroup;
 			children = (
 				C48E33C42AEDA94F001B6C92 /* AuthServiceMock.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		C4D3EDB52AEF3F9C00AB4B28 /* NewPet */ = {
+			isa = PBXGroup;
+			children = (
+				C4D3EDB62AEF3FB700AB4B28 /* ViewModel */,
+			);
+			path = NewPet;
+			sourceTree = "<group>";
+		};
+		C4D3EDB62AEF3FB700AB4B28 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4D3EDB82AEF3FF700AB4B28 /* NewPetViewModelSuccessTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C4D3EDB72AEF3FCE00AB4B28 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4C9CAAF2AEF261F00A927DB /* PetsViewModelFailureTests.swift */,
+				C4748FF82AED664C00951FF5 /* PetsViewModelSuccessTests.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C4D3EDBA2AEF430300AB4B28 /* ImageService */ = {
+			isa = PBXGroup;
+			children = (
+				C4D3EDBB2AEF431100AB4B28 /* ImageService */,
+			);
+			path = ImageService;
+			sourceTree = "<group>";
+		};
+		C4D3EDBB2AEF431100AB4B28 /* ImageService */ = {
+			isa = PBXGroup;
+			children = (
+				C4D3EDBD2AEF434600AB4B28 /* Mocks */,
+			);
+			path = ImageService;
+			sourceTree = "<group>";
+		};
+		C4D3EDBD2AEF434600AB4B28 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C4D3EDBE2AEF437100AB4B28 /* ImageServiceMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2195,11 +2241,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4D3EDBF2AEF437100AB4B28 /* ImageServiceMock.swift in Sources */,
 				C48E33CA2AEDBE85001B6C92 /* DefaultPetDataSourceMock.swift in Sources */,
 				C48E33C52AEDA94F001B6C92 /* AuthServiceMock.swift in Sources */,
 				C4C9CAB02AEF261F00A927DB /* PetsViewModelFailureTests.swift in Sources */,
 				C48E33BE2AED83AF001B6C92 /* PetMock.swift in Sources */,
 				C4F1E96D2AED67D6001CCBE0 /* DefaultPetRepositoryMock.swift in Sources */,
+				C4D3EDB92AEF3FF700AB4B28 /* NewPetViewModelSuccessTests.swift in Sources */,
 				C48E33C02AED99CF001B6C92 /* FilterOptionsMock.swift in Sources */,
 				C4748FF92AED664C00951FF5 /* PetsViewModelSuccessTests.swift in Sources */,
 			);

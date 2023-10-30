@@ -13,7 +13,7 @@ extension NewPetViewModel {
         case invalid
     }
 
-    enum LoadingState {
+    enum LoadingState: Equatable {
         case loading
         case success
         case error(PetsError)

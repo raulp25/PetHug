@@ -8,7 +8,20 @@
 import UIKit
 
 /// Default error.
-enum PetsError: Error, LocalizedError {
+enum PetsError: Error, LocalizedError, Equatable {
+    static func == (lhs: PetsError, rhs: PetsError) -> Bool {
+            switch (lhs, rhs) {
+            case (.default(let lhsError), .default(let rhsError)):
+                return lhsError.localizedDescription == rhsError.localizedDescription
+            case (.defaultCustom(let lhsString), .defaultCustom(let rhsString)):
+                return lhsString == rhsString
+            case (.someThingWentWrong, .someThingWentWrong):
+                return true
+            default:
+                return false
+            }
+        }
+    
     case `default`(_ error: Error)
     case defaultCustom(_ string: String)
     case someThingWentWrong

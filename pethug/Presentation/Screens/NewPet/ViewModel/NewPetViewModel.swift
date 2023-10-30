@@ -16,7 +16,7 @@ class NewPetViewModel {
     private let createPetUseCase: DefaultCreatePetUC
     private let updatePetUseCase: DefaultUpdatePetUC
     private let deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC
-    private let uid = AuthService().uid
+    private let authService: AuthServiceProtocol
     private var pet: Pet?
 
     //MARK: - Init
@@ -25,12 +25,14 @@ class NewPetViewModel {
         createPetUseCase: DefaultCreatePetUC,
         updatePetUseCase: DefaultUpdatePetUC,
         deletePetFromRepeatedCollectionUC: DefaultDeletePetFromRepeatedCollectionUC,
+        authService: AuthServiceProtocol,
         pet: Pet? = nil
     ) {
         self.imageService     = imageService
         self.createPetUseCase = createPetUseCase
         self.updatePetUseCase = updatePetUseCase
         self.deletePetFromRepeatedCollectionUC = deletePetFromRepeatedCollectionUC
+        self.authService = authService
         
         self.pet = pet
         self.isEdit = pet != nil
@@ -194,7 +196,7 @@ class NewPetViewModel {
                 socialInfo: socialInfoState,
                 isLiked: false,
                 timestamp: Timestamp(date: Date()),
-                owneruid: AuthService().uid,
+                owneruid: authService.uid,
                 likedByUsers: [],
                 likesTimestamps: []
             )
@@ -269,7 +271,7 @@ class NewPetViewModel {
     // Recursively upload images to preserve their order of selection
     func uploadNextImage(index: Int, imagesUrls: inout [String]) async throws {
         guard let _ = typeState else { return }
-        let path = "/userImages:\(uid)/"
+        let path = "/userImages:\(authService.uid)/"
         
         guard index < galleryState.count else { return }
         
@@ -282,11 +284,6 @@ class NewPetViewModel {
         try await uploadNextImage(index: index + 1, imagesUrls: &imagesUrls)
         
         
-    }
-    
-    //Delete pet from old collection when user changes its type, eg: change from pet -> to bird
-    func deleteFromRepeated(collection path: String, id: String) async throws {
-        _ = try await deletePetFromRepeatedCollectionUC.execute(collection: path, docId: id)
     }
     
 }

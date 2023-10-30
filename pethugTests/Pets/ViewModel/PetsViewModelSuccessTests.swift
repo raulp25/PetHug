@@ -23,7 +23,7 @@ class PetsViewModelSuccessTests: XCTestCase {
     override func setUp() {
         defaultPetDataSource = DefaultPetDataSourceSuccessMock()
         defaultPetRepositoryMock = DefaultPetRepositorySuccessMock(petDataSource: defaultPetDataSource)
-        authServiceMock = AuthServiceMock()
+        authServiceMock = AuthServiceSuccessMock()
         vm = PetsViewModel(fetchAllPetsUC: DefaultFetchAllPetsUC(petRepository: defaultPetRepositoryMock),
                            filterAllPetsUC: DefaultFilterAllPetsUC(petRepository: defaultPetRepositoryMock),
                            fetchPetsUC: DefaultFetchPetsUC(petRepository: defaultPetRepositoryMock),
