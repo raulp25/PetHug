@@ -30,9 +30,9 @@ class NewPetViewModelSuccessTests: XCTestCase {
     private var vm: NewPetViewModel!
     private var editStateVM: NewPetViewModel!
     
-    private var isValidFormSpy: validValueSpy!
-    private var stateSpy: stateValueSpy!
-    private var editStateSpy: stateValueSpy!
+    private var isValidFormSpy: ValidValueSpy!
+    private var stateSpy: StateValueSpy!
+    private var editStateSpy: StateValueSpy!
     
     override func setUp() {
         imageServiceMock = ImageServiceSuccessMock()
@@ -54,9 +54,9 @@ class NewPetViewModelSuccessTests: XCTestCase {
                                       authService: authServiceMock,
                                       pet: petMock)
         
-        isValidFormSpy = validValueSpy(vm.isValidSubject.eraseToAnyPublisher())
-        stateSpy = stateValueSpy(vm.stateSubject.eraseToAnyPublisher())
-        editStateSpy = stateValueSpy(editStateVM.stateSubject.eraseToAnyPublisher())
+        isValidFormSpy = ValidValueSpy(vm.isValidSubject.eraseToAnyPublisher())
+        stateSpy = StateValueSpy(vm.stateSubject.eraseToAnyPublisher())
+        editStateSpy = StateValueSpy(editStateVM.stateSubject.eraseToAnyPublisher())
     }
     
     override func tearDown() {
@@ -133,7 +133,7 @@ class NewPetViewModelSuccessTests: XCTestCase {
 
 //MARK: - Combine publisher Spy
 
-private class stateValueSpy {
+private class StateValueSpy {
     private(set) var values = [NewPetViewModel.LoadingState]()
     private var cancellable: AnyCancellable?
     
@@ -153,7 +153,7 @@ private class stateValueSpy {
 }
 
  
-private class validValueSpy {
+private class ValidValueSpy {
     private(set) var value: Bool = false
     private var cancellable: AnyCancellable?
     

@@ -18,7 +18,7 @@ class PetsViewModelSuccessTests: XCTestCase {
     private var authServiceMock: AuthServiceProtocol!
     private var vm: PetsViewModel!
     
-    private var spy: ValueSpy!
+    private var stateSpy: StateValueSpy!
     
     override func setUp() {
         defaultPetDataSource = DefaultPetDataSourceSuccessMock()
@@ -32,12 +32,12 @@ class PetsViewModelSuccessTests: XCTestCase {
                            dislikePetUC: DefaultDisLikePetUC(petRepository: defaultPetRepositoryMock),
                            authService: authServiceMock)
         
-       spy = ValueSpy(vm.state.eraseToAnyPublisher())
+       stateSpy = StateValueSpy(vm.state.eraseToAnyPublisher())
     }
     
     override func tearDown() {
         vm = nil
-        spy = nil
+        stateSpy = nil
     }
   
     //MARK: - Fetch pets
@@ -47,7 +47,7 @@ class PetsViewModelSuccessTests: XCTestCase {
         let collection: String = .getPath(for: .allPets)
         
         defer {
-            XCTAssertEqual(spy.values, [petMock], "The published values should be equal to 1")
+            XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to 1")
             XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
             
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -73,7 +73,7 @@ class PetsViewModelSuccessTests: XCTestCase {
           let collection: String = .getPath(for: .birds)
           
           defer {
-              XCTAssertEqual(spy.values, [petMock], "The published values should be equal to 1")
+              XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to 1")
               XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
               
               XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -103,7 +103,7 @@ class PetsViewModelSuccessTests: XCTestCase {
         let collection: String = .getPath(for: .allPets)
         
         defer {
-            XCTAssertEqual(spy.values, [petMock], "The published values should be equal to 1")
+            XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to 1")
             XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
             
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -130,7 +130,7 @@ class PetsViewModelSuccessTests: XCTestCase {
         let collection: String = .getPath(for: .birds)
         
         defer {
-            XCTAssertEqual(spy.values, [petMock], "The published values should be equal to 1")
+            XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to 1")
             XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
             
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -159,7 +159,7 @@ class PetsViewModelSuccessTests: XCTestCase {
         let collection: String = .getPath(for: .allPets)
         
         defer {
-            XCTAssertEqual(spy.values, [petMock, petMock], "The published values should be equal to 2")
+            XCTAssertEqual(stateSpy.values, [petMock, petMock], "The published values should be equal to 2")
             XCTAssertEqual(vm.pets.count, 2, "The view model pets stete count shoudld be 1" )
             
             XCTAssertEqual(vm.pets[1], petMock, "The view model pet[0] state should be equal to petMock")
@@ -180,7 +180,7 @@ class PetsViewModelSuccessTests: XCTestCase {
         
         await vm.fetchPets(collection: collection, resetFilterQueries: true)
         
-        XCTAssertEqual(spy.values, [petMock], "The published values should be equal to 1")
+        XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to 1")
         
         XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
         XCTAssertEqual(vm.pets[0], petMock, "The view model pet[0] state should be equal to petMock")
@@ -197,7 +197,7 @@ class PetsViewModelSuccessTests: XCTestCase {
         let collection: String = .getPath(for: .birds)
         
         defer {
-            XCTAssertEqual(spy.values, [petMock, petMock], "The published values should be equal to 1")
+            XCTAssertEqual(stateSpy.values, [petMock, petMock], "The published values should be equal to 1")
             XCTAssertEqual(vm.pets.count, 2, "The view model pets stete count shoudld be 1" )
             
             XCTAssertEqual(vm.pets[1], petMock, "The view model pet[0] state should be equal to petMock")
@@ -220,7 +220,7 @@ class PetsViewModelSuccessTests: XCTestCase {
         
         await vm.fetchPets(collection: collection, resetFilterQueries: true)
         
-        XCTAssertEqual(spy.values, [petMock], "The published values should be equal to 1")
+        XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to 1")
         
         XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
         XCTAssertEqual(vm.pets[0], petMock, "The view model pet[0] state should be equal to petMock")
@@ -348,7 +348,7 @@ class PetsViewModelSuccessTests: XCTestCase {
 
 //MARK: - Combine publisher Spy
  
-private class ValueSpy {
+private class StateValueSpy {
     private(set) var values = [Pet]()
     private var cancellable: AnyCancellable?
     

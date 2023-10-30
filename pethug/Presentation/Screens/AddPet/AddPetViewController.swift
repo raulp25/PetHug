@@ -34,13 +34,17 @@ final class AddPetViewController: UIViewController {
         super.viewDidLoad()
         setup()
         bind()
-        viewModel.fetchUserPets()
+        Task {
+            await viewModel.fetchUserPets()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if viewModel.isNetworkOnline == false {
-            viewModel.fetchUserPets(resetPagination: true)
+            Task {
+                await viewModel.fetchUserPets(resetPagination: true)
+            }
         }
         
         navigationController?.setNavigationBarHidden(true, animated: false)
@@ -139,7 +143,9 @@ extension AddPetViewController: AddPetViewHeaderDelegate {
 extension AddPetViewController: AddPetContentViewControllerDelegate {
     // Fetch when pagination occurs
     func executeFetch() {
-        viewModel.fetchUserPets()
+        Task {
+            await viewModel.fetchUserPets()
+        }
     }
     
     func didTapEdit(pet: Pet) {

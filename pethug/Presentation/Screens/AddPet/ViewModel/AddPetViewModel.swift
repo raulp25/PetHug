@@ -27,10 +27,10 @@ final class AddPetViewModel {
     
     private var subscriptions = Set<AnyCancellable>()
     private let petsSubject = PassthroughSubject<([Pet], Bool), PetsError>()
-    private var pets: [Pet] = []
-    private var isFetching = false
-    private var isFirstLoad = true // Flag indicates if the pagination process has started
-    var isNetworkOnline = true
+    private(set) var pets: [Pet] = []
+    private(set) var isFetching = false
+    private(set) var isFirstLoad = true // Flag indicates if the pagination process has started
+    private(set) var isNetworkOnline = true
     
     //MARK: - Init
     init(
@@ -65,13 +65,13 @@ final class AddPetViewModel {
                 guard let self = self else { return }
                 let (pets, debounce) = data
                 self.pets.append(contentsOf: pets)
-                self.state.send(.loaded(self.pets, debounce))
+                self.state.send(.loaded(self.pets, debounce)) // debounce gives time to the child controller to scroll its collectionView to the top
             }.store(in: &subscriptions)
         
     }
     
     //MARK: - Internal Methods
-    func fetchUserPets(resetPagination: Bool = false) {
+    func fetchUserPets(resetPagination: Bool = false) async {
         guard !isFetching else { return }
         
         // Reset state variables when performing new fech after creating/updating pet
@@ -86,21 +86,20 @@ final class AddPetViewModel {
         
         state.send(.loading)
         
-        Task {
-            do {
-                guard NetworkMonitor.shared.isConnected == true else {
-                    state.send(.networkError)
-                    isNetworkOnline = false
-                    return
-                }
-                
-                isNetworkOnline = true  
-                let data = try await fetchUserPetsUC.execute(with: resetPagination) // Fetch user pets
-                handleFetchedPets(data, resetPagination: resetPagination) // Handle results
-            } catch {
-                handleFetchError(error)
+        do {
+            guard NetworkMonitor.shared.isConnected == true else {
+                state.send(.networkError)
+                isNetworkOnline = false
+                return
             }
+            
+            isNetworkOnline = true
+            let data = try await fetchUserPetsUC.execute(with: resetPagination) // Fetch user pets
+            handleFetchedPets(data, resetPagination: resetPagination) // Handle results
+        } catch {
+            handleFetchError(error)
         }
+        
     }
     
     func deletePet(collection path: String,  id: String) async -> Bool {
@@ -135,14 +134,14 @@ final class AddPetViewModel {
 
     private func handleFetchedPets(_ data: [Pet], resetPagination: Bool) {
         if !isFirstLoad && !data.isEmpty { // If we have started the pagination process and data is not empty
-            let debounce = resetPagination ? true : false
-            petsSubject.send((data, debounce))
+            petsSubject.send((data, false))
         } else if isFirstLoad && data.isEmpty { // If we haven't start the pagination process and data is empty
             state.send(.empty)
             isFirstLoad = false
         } else if isFirstLoad { // If we haven't start the pagination process and data isn't empty
             isFirstLoad = false
-            petsSubject.send((data, false))
+            let debounce = resetPagination ? true : false
+            petsSubject.send((data, debounce))
         }
     }
 

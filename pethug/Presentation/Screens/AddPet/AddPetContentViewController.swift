@@ -41,7 +41,9 @@ final class AddPetContentViewController: UIViewController {
     // This Flag is set after create/update pet to scroll cv to top
     var debounce = false {
         didSet {
-            scrollTopCollectionView()
+            if debounce == true {
+                scrollTopCollectionView()
+            }
         }
     }
     

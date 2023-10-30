@@ -116,6 +116,8 @@ final class NewPetViewController: UIViewController {
 
 extension NewPetViewController: NewPetContentDelegate {
     func didEndUploading() {
-        coordinator?.parentCoordinator?.viewModel.fetchUserPets(resetPagination: true)
+        Task {
+            await coordinator?.parentCoordinator?.viewModel.fetchUserPets(resetPagination: true)
+        }
     }
 }
