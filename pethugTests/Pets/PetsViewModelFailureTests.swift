@@ -437,6 +437,8 @@ class PetsViewModelFailureTests: XCTestCase {
         await vm.fetchPets(collection: collection, resetFilterQueries: false)
     }
     
+    //MARK: - Like pet
+    
     func test_with_failure_like_pet_request() async {
         
         let expectation = XCTestExpectation(description: "Failure likedPet async task")
