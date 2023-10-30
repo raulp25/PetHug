@@ -8,7 +8,7 @@
 import Network
 
 final class NetworkMonitor {
-    static let shared = NetworkMonitor()
+    public static let shared = NetworkMonitor()
     
     private let queue = DispatchQueue.global()
     private let monitor: NWPathMonitor
@@ -28,5 +28,13 @@ final class NetworkMonitor {
     
     public func stopMonitoring() {
         monitor.cancel()
+    }
+    
+    public func connect() {
+        isConnected = true
+    }
+    
+    public func disconnect() {
+        isConnected = false
     }
 }

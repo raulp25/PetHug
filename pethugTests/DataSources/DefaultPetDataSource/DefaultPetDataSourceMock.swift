@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 @testable import pethug
 
-final class DefaultPetDataSourceMock: PetDataSource {
+final class DefaultPetDataSourceSuccessMock: PetDataSource {
     internal var db = Firestore.firestore()
     internal var query: Query!
     internal var documents = [QueryDocumentSnapshot]()
@@ -123,6 +123,116 @@ final class DefaultPetDataSourceMock: PetDataSource {
     //MARK: - Dislike
     func dislikePet(data: Pet) async throws { }
 }
+
+
+final class DefaultPetDataSourceFailureMock: PetDataSource {
+    internal var db = Firestore.firestore()
+    internal var query: Query!
+    internal var documents = [QueryDocumentSnapshot]()
+    internal var order = "timestamp"
+    
+    internal var dogsQuery: Query!
+    internal var catsQuery: Query!
+    internal var birdsQuery: Query!
+    internal var rabbitsQuery: Query!
+    
+    internal var dogsdocuments  = [QueryDocumentSnapshot]()
+    internal var catsdocuments  = [QueryDocumentSnapshot]()
+    internal var birdsdocuments   = [QueryDocumentSnapshot]()
+    internal var rabbitsdocuments = [QueryDocumentSnapshot]()
+    
+    //MARK: - Get
+    func fetchAllPets(resetFilterQueries: Bool) async throws -> [Pet] {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    func applyFetchAllPets(
+        collection path: String,
+        resetFilterQueries: Bool,
+        query: inout Query?,
+        documents: inout [QueryDocumentSnapshot]
+    ) async throws -> [Pet] {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    //Fetch pets in general
+    func fetchPets(fetchCollection path: String, resetFilterQueries: Bool) async throws -> [Pet] {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    //Fetch user pets
+    func fetchUserPets(with resetPagination: Bool) async throws -> [Pet] {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    //Fetch with filter options
+    
+    //filter all collections at once
+    func fetchAllPets(withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    func applyFetchAllPets(
+        collection path: String,
+        withFilter options: FilterOptions,
+        resetFilterQueries: Bool,
+        query: inout Query?,
+        documents: inout [QueryDocumentSnapshot]
+    ) async throws -> [Pet] {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    
+    //filter only a one collection
+    func fetchPets(collection: String, withFilter options: FilterOptions, resetFilterQueries: Bool) async throws -> [Pet] {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    //Fetch Liked pets
+    func fetchFavoritePets() async throws -> [Pet] {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    //MARK: - Create
+    func createPet(collection path: String, data: Pet) async throws -> Bool {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    func createPetInSingle(collection path: String, data: Pet) async throws{
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    //MARK: - Update
+    func updatePet(data: Pet, oldCollection: String) async throws -> Bool {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    func handlePetChangedType(oldCollection: String, data: Pet) async throws {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    //MARK: - Delete
+    func deletePet(collection path: String, docId: String) async throws -> Bool {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    func deletePetFromRepeated(collection path: String, docId: String) async throws -> Bool {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    //MARK: - Like
+    func likePet(data: Pet) async throws {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    func updateOwnerPetLikes(data: Pet) async throws {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+    
+    //MARK: - Dislike
+    func dislikePet(data: Pet) async throws {
+        throw NSError(domain: "Error mock", code: 1, userInfo: [NSLocalizedDescriptionKey: "Network error occurred"])
+    }
+}
+
 
 
 

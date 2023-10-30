@@ -13,16 +13,16 @@ import Combine
 
 class PetsViewModelSuccessTests: XCTestCase {
     
-    private var defaultPetDataSource: DefaultPetDataSourceMock!
-    private var defaultPetRepositoryMock: DefaultPetRepositoryMock!
+    private var defaultPetDataSource: DefaultPetDataSourceSuccessMock!
+    private var defaultPetRepositoryMock: DefaultPetRepositorySuccessMock!
     private var authServiceMock: AuthServiceProtocol!
     private var vm: PetsViewModel!
     
     private var spy: ValueSpy!
     
     override func setUp() {
-        defaultPetDataSource = DefaultPetDataSourceMock()
-        defaultPetRepositoryMock = DefaultPetRepositoryMock(petDataSource: defaultPetDataSource)
+        defaultPetDataSource = DefaultPetDataSourceSuccessMock()
+        defaultPetRepositoryMock = DefaultPetRepositorySuccessMock(petDataSource: defaultPetDataSource)
         authServiceMock = AuthServiceMock()
         vm = PetsViewModel(fetchAllPetsUC: DefaultFetchAllPetsUC(petRepository: defaultPetRepositoryMock),
                            filterAllPetsUC: DefaultFilterAllPetsUC(petRepository: defaultPetRepositoryMock),
@@ -233,6 +233,8 @@ class PetsViewModelSuccessTests: XCTestCase {
         await vm.fetchPets(collection: collection, resetFilterQueries: false)
     }
     
+    //MARK: - Like pet
+    
     func test_with_successful_like_pet_request() async {
         
         let expectation = XCTestExpectation(description: "likedPet async task")
@@ -278,6 +280,8 @@ class PetsViewModelSuccessTests: XCTestCase {
         
         await fulfillment(of: [expectation], timeout: 2.0)
     }
+    
+    //MARK: - Dislike pet
     
     func test_with_successful_dislike_pet_request() async {
         
@@ -342,6 +346,8 @@ class PetsViewModelSuccessTests: XCTestCase {
     
 }
 
+//MARK: - Combine publisher Spy
+ 
 private class ValueSpy {
     private(set) var values = [Pet]()
     private var cancellable: AnyCancellable?
