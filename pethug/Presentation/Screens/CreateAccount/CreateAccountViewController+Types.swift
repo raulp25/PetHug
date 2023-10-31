@@ -8,7 +8,7 @@
 import Foundation
 
 extension CreateAccountViewModel {
-    enum State {
+    enum State: Equatable {
         case loading
         case success
         case error(PetsError)
