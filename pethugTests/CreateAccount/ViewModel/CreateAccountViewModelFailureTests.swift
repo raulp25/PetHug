@@ -37,7 +37,6 @@ class CreateAccountViewModelFailureTests: XCTestCase {
         stateSpy = nil
     }
     
-    //MARK: - From validation
     
     func test_with_failure_Create_Account_with_wrong_data() async {
         

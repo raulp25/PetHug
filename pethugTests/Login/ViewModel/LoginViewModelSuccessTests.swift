@@ -25,8 +25,6 @@ class LoginViewModelSuccessTests: XCTestCase {
         vm = nil
     }
     
-    //MARK: - From validation
-    
     func test_with_successfull_Login() async {
         await vm.login(email: "fakeEmail@gmail.com", password: "fakePassword")
     }

@@ -1,5 +1,5 @@
 //
-//  LoginViewModelFailureTests.swift
+//  ForgotPasswordViewModelFailureTests.swift
 //  pethugTests
 //
 //  Created by Raul Pena on 30/10/23.
@@ -12,40 +12,30 @@ import Combine
 @testable import pethug
 
 
-class LoginViewModelFailureTests: XCTestCase {
+class ForgotPasswordViewModelFailureTests: XCTestCase {
     private var authServiceMock: AuthServiceFailureMock!
-    private var vm: LoginViewModel!
+    private var vm: ForgotPasswordViewModel!
     private var stateSpy: StateValueSpy!
     
     override func setUp() {
         authServiceMock = AuthServiceFailureMock()
-        vm = LoginViewModel(authService: authServiceMock)
+        vm = ForgotPasswordViewModel(authService: authServiceMock)
         stateSpy = StateValueSpy(vm.state.eraseToAnyPublisher())
     }
     
     override func tearDown() {
-        NetworkMonitor.shared.connect()
         vm = nil
         stateSpy = nil
     }
     
     
-    func test_with_failure_Login_with_wrong_data() async {
+    func test_with_failure_Forgot_Password_flow() async {
         
         defer {
             XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong)], "The published value should be equal to [.error(.someThingWentWrong]")
         }
         
-        await vm.login(email: nil, password: "fakePassword")
-    }
-    
-    func test_with_failure_Login() async {
-        
-        defer {
-            XCTAssertEqual(stateSpy.values, [.error(.someThingWentWrong)], "The published value should be equal to [.error(.someThingWentWrong]")
-        }
-        
-        await vm.login(email: "fakeEmail@gmail.com", password: "fakePassword")
+        await vm.resetPasswordWith(email: "SubFocus@gmail.com")
     }
     
     func test_with_networkFailure_Login() async {
@@ -55,17 +45,17 @@ class LoginViewModelFailureTests: XCTestCase {
             XCTAssertEqual(stateSpy.values, [.networkError], "The published value should be equal to [.networkError]")
         }
         
-        await vm.login(email: "fakeEmail@gmail.com", password: "fakePassword")
+        await vm.resetPasswordWith(email: "SubFocus@gmail.com")
     }
 }
 
 //MARK: - Combine publisher Spy
 
 private class StateValueSpy {
-    private(set) var values = [LoginViewModel.State]()
+    private(set) var values = [ForgotPasswordViewModel.State]()
     private var cancellable: AnyCancellable?
     
-    init(_ publisher: AnyPublisher<LoginViewModel.State, Never>) {
+    init(_ publisher: AnyPublisher<ForgotPasswordViewModel.State, Never>) {
         cancellable = publisher
             .sink(receiveValue: { [weak self] state in
                 switch state {
@@ -79,3 +69,4 @@ private class StateValueSpy {
             })
     }
 }
+

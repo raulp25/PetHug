@@ -36,7 +36,6 @@ class CreateAccountViewModelSuccessTests: XCTestCase {
         stateSpy = nil
     }
     
-    //MARK: - From validation
     
     func test_with_successfull_Create_Account() async {
         

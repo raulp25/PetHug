@@ -30,6 +30,4 @@ struct ForgotPasswordViewModel {
             state.send(.error(.default(error)))
         }
     }
-    
-    
 }
