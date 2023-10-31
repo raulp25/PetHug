@@ -1605,3 +1605,41 @@ import Foundation
 //
 //    await fulfillment(of: [expectation2], timeout: 2.0)
 //}
+
+////~~~~~~~~~~~~~~
+///Strings
+///
+///Key difference between Dictionary and NSDictionary
+//The recent article Strings in Swift 4 by Ole Begemann talked about how Swift String equality is implemented as Unicode canonical equivalence. As a result, two String instances can be equal even if they contain different Unicode code units. This behavior made me worried about my Swift project Bonjeff, a Mac app that shows you a live display of the Bonjour services published on your network, because Bonjour service names are UTF-8 strings. When I audited the equality checks in the source code, I discovered that Bonjour does not compare service names by Unicode canonical equivalence, and thus it's possible to publish multiple NetService instances with canonically equivalent names. Unfortunately, this revealed a bug where Bonjeff did not properly save the individual outline view disclosure states of Bonjour services with canonically equivalent names. The problem was that UserDefaults.standard.dictionary(forKey:) returns [String:Any]?. Since the dictionary uses Swift String keys, it cannot contain more than one value for canonically equivalent Unicode strings. Thus, multiple NetService instances with canonically equivalent names would fail to be distinguished.
+//
+//Here's the fix for the bug. The call to dictionary(forKey:) is replaced by object(forKey:) to avoid a Dictionary with String keys. Instead, the return value Any? is cast to NSDictionary. An NSDictionary uses the Objective-C method -isEqual: to compare its keys, and it will automatically bridge Swift String keys to NSString. Two NSString instances are equal if they have the same sequence of UTF-16 code units. Thus, the NSDictionary can contain multiple values for canonically equivalent Unicode strings, and every Bonjour service name is properly distinguished.
+//
+//This difference in behavior between Swift and Objective-C is troubling. Suppose that you had some old Objective-C code that saved user defaults in dictionary format with string keys, and then you wrote new Swift code to access the user defaults, naively using dictionary(forKey:), because of course that's what you'd think to use. The following code sample illustrates the problem.
+//
+//let key = "Test"
+//let a = "\u{1ECD}\u{0300}"
+//let b = "\u{00F2}\u{0323}"
+//let c = "o\u{0323}\u{0300}"
+//let d = "o\u{0300}\u{0323}"
+//let test = NSMutableDictionary()
+//test[a] = "a"
+//test[b] = "b"
+//test[c] = "c"
+//test[d] = "d"
+//UserDefaults.standard.set(test, forKey:key)
+//if let obj = UserDefaults.standard.object(forKey:key) {
+//    print("object: \(obj)")
+//}
+//if let dict = UserDefaults.standard.dictionary(forKey:key) {
+//    print("dictionary: \(dict)")
+//}
+//This is the output from running the code:
+//
+//object: {
+//    "\U1ecd\U0300" = a;
+//    "o\U0323\U0300" = c;
+//    "\U00f2\U0323" = b;
+//    "o\U0300\U0323" = d;
+//}
+//dictionary: ["ọ̀": d]
+//On disk there's a dictionary with four key-value pairs. And that's what you get with object(forKey:). But dictionary(forKey:) causes data loss, because a Swift Dictionary with String keys treats canonically equivalent Unicode strings as equal. The moral of the story is that you have to be very careful when you use strings as dictionary keys in Swift.
