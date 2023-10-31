@@ -11,8 +11,7 @@ import Combine
 
 @testable import pethug
 
-
-class ValidatorsSuccessTests: XCTestCase {
+class ValidatorsTests: XCTestCase {
     var emailValidator: Validatable!
     var phoneValidator: Validatable!
     var passwordValidator: Validatable!

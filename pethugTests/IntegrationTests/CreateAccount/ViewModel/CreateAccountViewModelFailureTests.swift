@@ -56,7 +56,7 @@ class CreateAccountViewModelFailureTests: XCTestCase {
         await vm.crateAccount(username: "Inzo", email: "fakeEmail@gmail.com", password: "dub8")
     }
     
-    func test_with_networkFailure_Login() async {
+    func test_with_networkFailure_Create_Account() async {
         NetworkMonitor.shared.disconnect()
         
         defer {

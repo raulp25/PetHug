@@ -86,7 +86,6 @@
 		C448200C2AB5271B00E72BD2 /* ImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C448200B2AB5271B00E72BD2 /* ImageService.swift */; };
 		C44820112AB5376900E72BD2 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820102AB5376900E72BD2 /* UserModel.swift */; };
 		C44820142AB538DC00E72BD2 /* DomainMapperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820132AB538DC00E72BD2 /* DomainMapperProtocol.swift */; };
-		C44820162AB539B400E72BD2 /* UserModel+DomainMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820152AB539B400E72BD2 /* UserModel+DomainMapper.swift */; };
 		C44820182AB53B7000E72BD2 /* UserEntity+DomainMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820172AB53B7000E72BD2 /* UserEntity+DomainMapper.swift */; };
 		C448201A2AB53EF200E72BD2 /* RegisterUserUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44820192AB53EF200E72BD2 /* RegisterUserUC.swift */; };
 		C448201D2AB53FF300E72BD2 /* DefaultUserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = C448201C2AB53FF300E72BD2 /* DefaultUserRepository.swift */; };
@@ -104,7 +103,7 @@
 		C44B08572AF0808600C927B2 /* CreateAccountViewModelFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B08562AF0808600C927B2 /* CreateAccountViewModelFailureTests.swift */; };
 		C44B085B2AF0831200C927B2 /* ForgotPasswordViewModelSuccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B085A2AF0831200C927B2 /* ForgotPasswordViewModelSuccessTests.swift */; };
 		C44B085D2AF083D100C927B2 /* ForgotPasswordViewModelFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B085C2AF083D100C927B2 /* ForgotPasswordViewModelFailureTests.swift */; };
-		C44B08622AF0A89900C927B2 /* ValidatorsSuccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B08612AF0A89900C927B2 /* ValidatorsSuccessTests.swift */; };
+		C44B08622AF0A89900C927B2 /* ValidatorsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B08612AF0A89900C927B2 /* ValidatorsTests.swift */; };
 		C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */; };
 		C44DFD402AC639B20045DD7A /* NewPetUploadCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */; };
 		C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */; };
@@ -249,6 +248,10 @@
 		C4D44A1A2ADDDFF4004D2A53 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */; };
 		C4D44A1C2ADDE057004D2A53 /* ProfileContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */; };
 		C4D44A1F2ADDE5A3004D2A53 /* FetchUserUC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4D44A1E2ADDE5A3004D2A53 /* FetchUserUC.swift */; };
+		C4E57BE82AF17B09000E34D3 /* PetEntity+DomainMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E57BE72AF17B09000E34D3 /* PetEntity+DomainMapperTests.swift */; };
+		C4E57BEB2AF18894000E34D3 /* PetModel+DomainMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E57BEA2AF18894000E34D3 /* PetModel+DomainMapperTests.swift */; };
+		C4E57BEE2AF18BED000E34D3 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E57BED2AF18BED000E34D3 /* UserMock.swift */; };
+		C4E57BF12AF18D88000E34D3 /* UserEntity+DomainMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E57BF02AF18D88000E34D3 /* UserEntity+DomainMapperTests.swift */; };
 		C4E654432AC8E745009E027F /* BreedPopupSearchViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */; };
 		C4E654462AC8E834009E027F /* SearchBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654452AC8E834009E027F /* SearchBreedListCellConfiguration.swift */; };
 		C4E654482AC8E8BA009E027F /* SearchBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654472AC8E8BA009E027F /* SearchBreedCellContentView.swift */; };
@@ -368,7 +371,6 @@
 		C448200B2AB5271B00E72BD2 /* ImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageService.swift; sourceTree = "<group>"; };
 		C44820102AB5376900E72BD2 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		C44820132AB538DC00E72BD2 /* DomainMapperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DomainMapperProtocol.swift; sourceTree = "<group>"; };
-		C44820152AB539B400E72BD2 /* UserModel+DomainMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserModel+DomainMapper.swift"; sourceTree = "<group>"; };
 		C44820172AB53B7000E72BD2 /* UserEntity+DomainMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+DomainMapper.swift"; sourceTree = "<group>"; };
 		C44820192AB53EF200E72BD2 /* RegisterUserUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterUserUC.swift; sourceTree = "<group>"; };
 		C448201C2AB53FF300E72BD2 /* DefaultUserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultUserRepository.swift; sourceTree = "<group>"; };
@@ -386,7 +388,7 @@
 		C44B08562AF0808600C927B2 /* CreateAccountViewModelFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModelFailureTests.swift; sourceTree = "<group>"; };
 		C44B085A2AF0831200C927B2 /* ForgotPasswordViewModelSuccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelSuccessTests.swift; sourceTree = "<group>"; };
 		C44B085C2AF083D100C927B2 /* ForgotPasswordViewModelFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelFailureTests.swift; sourceTree = "<group>"; };
-		C44B08612AF0A89900C927B2 /* ValidatorsSuccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorsSuccessTests.swift; sourceTree = "<group>"; };
+		C44B08612AF0A89900C927B2 /* ValidatorsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorsTests.swift; sourceTree = "<group>"; };
 		C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadListCellConfiguration.swift; sourceTree = "<group>"; };
 		C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadCellContentView.swift; sourceTree = "<group>"; };
 		C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummySectionHeader.swift; sourceTree = "<group>"; };
@@ -532,6 +534,10 @@
 		C4D44A192ADDDFF4004D2A53 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		C4D44A1B2ADDE057004D2A53 /* ProfileContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileContentViewController.swift; sourceTree = "<group>"; };
 		C4D44A1E2ADDE5A3004D2A53 /* FetchUserUC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchUserUC.swift; sourceTree = "<group>"; };
+		C4E57BE72AF17B09000E34D3 /* PetEntity+DomainMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetEntity+DomainMapperTests.swift"; sourceTree = "<group>"; };
+		C4E57BEA2AF18894000E34D3 /* PetModel+DomainMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetModel+DomainMapperTests.swift"; sourceTree = "<group>"; };
+		C4E57BED2AF18BED000E34D3 /* UserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMock.swift; sourceTree = "<group>"; };
+		C4E57BF02AF18D88000E34D3 /* UserEntity+DomainMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+DomainMapperTests.swift"; sourceTree = "<group>"; };
 		C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BreedPopupSearchViewController+Types.swift"; sourceTree = "<group>"; };
 		C4E654452AC8E834009E027F /* SearchBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBreedListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4E654472AC8E8BA009E027F /* SearchBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBreedCellContentView.swift; sourceTree = "<group>"; };
@@ -961,7 +967,6 @@
 			isa = PBXGroup;
 			children = (
 				C44820262AB54AA200E72BD2 /* Protocols */,
-				C44820152AB539B400E72BD2 /* UserModel+DomainMapper.swift */,
 				C44820172AB53B7000E72BD2 /* UserEntity+DomainMapper.swift */,
 				C418BBA42AC0A50600C31967 /* PetEntity+DomainMapper.swift */,
 			);
@@ -1044,56 +1049,17 @@
 		C44B084A2AF07CDE00C927B2 /* DefaultUserRepository */ = {
 			isa = PBXGroup;
 			children = (
-				C44B084D2AF07D2800C927B2 /* Mocks */,
-				C44B084B2AF07CEB00C927B2 /* DefaultUserRepository */,
-			);
-			path = DefaultUserRepository;
-			sourceTree = "<group>";
-		};
-		C44B084B2AF07CEB00C927B2 /* DefaultUserRepository */ = {
-			isa = PBXGroup;
-			children = (
 				C44B084E2AF07D3400C927B2 /* DefaultUserRepositoryMock.swift */,
 			);
 			path = DefaultUserRepository;
 			sourceTree = "<group>";
 		};
-		C44B084D2AF07D2800C927B2 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Mocks;
-			sourceTree = "<group>";
-		};
-		C44B08502AF07D8000C927B2 /* DefaultPetDataSource */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DefaultPetDataSource;
-			sourceTree = "<group>";
-		};
 		C44B08512AF07D8E00C927B2 /* DefaultUserDataSource */ = {
-			isa = PBXGroup;
-			children = (
-				C44B08532AF07DA100C927B2 /* Mocks */,
-				C44B08522AF07D9C00C927B2 /* DefaultUserDataSource */,
-			);
-			path = DefaultUserDataSource;
-			sourceTree = "<group>";
-		};
-		C44B08522AF07D9C00C927B2 /* DefaultUserDataSource */ = {
 			isa = PBXGroup;
 			children = (
 				C44B08542AF07DE700C927B2 /* DefaultUserDataSourceMock.swift */,
 			);
 			path = DefaultUserDataSource;
-			sourceTree = "<group>";
-		};
-		C44B08532AF07DA100C927B2 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Mocks;
 			sourceTree = "<group>";
 		};
 		C44B08582AF082E400C927B2 /* ForgotPassword */ = {
@@ -1116,6 +1082,7 @@
 		C44B085E2AF0A83400C927B2 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				C4E57BE62AF179B9000E34D3 /* Mappers */,
 				C44B08602AF0A85D00C927B2 /* Validators */,
 			);
 			path = UnitTests;
@@ -1124,6 +1091,14 @@
 		C44B085F2AF0A83C00C927B2 /* IntegrationTests */ = {
 			isa = PBXGroup;
 			children = (
+				C4820C552AF00D0A00B5D4DE /* AddPet */,
+				C44B08462AF07B5000C927B2 /* CreateAccount */,
+				C48B0F682AF025B400CB14CF /* Favorites */,
+				C4F8B15F2AF0480C0008F2FC /* FilterPets */,
+				C44B08582AF082E400C927B2 /* ForgotPassword */,
+				C44B08402AF074A100C927B2 /* Login */,
+				C4D3EDB52AEF3F9C00AB4B28 /* NewPet */,
+				C4748FE42AED645600951FF5 /* Pets */,
 			);
 			path = IntegrationTests;
 			sourceTree = "<group>";
@@ -1131,7 +1106,7 @@
 		C44B08602AF0A85D00C927B2 /* Validators */ = {
 			isa = PBXGroup;
 			children = (
-				C44B08612AF0A89900C927B2 /* ValidatorsSuccessTests.swift */,
+				C44B08612AF0A89900C927B2 /* ValidatorsTests.swift */,
 			);
 			path = Validators;
 			sourceTree = "<group>";
@@ -1206,45 +1181,17 @@
 		C4748FE52AED647B00951FF5 /* DefaultPetsRepository */ = {
 			isa = PBXGroup;
 			children = (
-				C4748FE72AED64A000951FF5 /* Mocks */,
-				C4748FE62AED649500951FF5 /* DefaultPetsRepostiroy */,
-			);
-			path = DefaultPetsRepository;
-			sourceTree = "<group>";
-		};
-		C4748FE62AED649500951FF5 /* DefaultPetsRepostiroy */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DefaultPetsRepostiroy;
-			sourceTree = "<group>";
-		};
-		C4748FE72AED64A000951FF5 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
 				C4F1E96C2AED67D6001CCBE0 /* DefaultPetRepositoryMock.swift */,
 			);
-			path = Mocks;
+			path = DefaultPetsRepository;
 			sourceTree = "<group>";
 		};
 		C4748FF02AED661100951FF5 /* pethugTests */ = {
 			isa = PBXGroup;
 			children = (
-				C44B085F2AF0A83C00C927B2 /* IntegrationTests */,
+				C4E57BF22AF18FB4000E34D3 /* Mocks */,
 				C44B085E2AF0A83400C927B2 /* UnitTests */,
-				C44B08582AF082E400C927B2 /* ForgotPassword */,
-				C44B08462AF07B5000C927B2 /* CreateAccount */,
-				C44B08402AF074A100C927B2 /* Login */,
-				C4F8B15F2AF0480C0008F2FC /* FilterPets */,
-				C48B0F682AF025B400CB14CF /* Favorites */,
-				C4820C552AF00D0A00B5D4DE /* AddPet */,
-				C4D3EDBA2AEF430300AB4B28 /* ImageService */,
-				C4D3EDB52AEF3F9C00AB4B28 /* NewPet */,
-				C48E33C62AEDBD89001B6C92 /* Repositories */,
-				C48E33C82AEDBDB4001B6C92 /* DataSources */,
-				C48E33C12AEDA913001B6C92 /* AuthService */,
-				C48E33BC2AED838E001B6C92 /* EntityMocks */,
-				C4748FE42AED645600951FF5 /* Pets */,
+				C44B085F2AF0A83C00C927B2 /* IntegrationTests */,
 			);
 			path = pethugTests;
 			sourceTree = "<group>";
@@ -1510,27 +1457,10 @@
 			path = Gallery;
 			sourceTree = "<group>";
 		};
-		C48E33BC2AED838E001B6C92 /* EntityMocks */ = {
-			isa = PBXGroup;
-			children = (
-				C48E33BD2AED83AF001B6C92 /* PetMock.swift */,
-				C48E33BF2AED99CF001B6C92 /* FilterOptionsMock.swift */,
-			);
-			path = EntityMocks;
-			sourceTree = "<group>";
-		};
-		C48E33C12AEDA913001B6C92 /* AuthService */ = {
-			isa = PBXGroup;
-			children = (
-				C48E33C32AEDA92B001B6C92 /* AuthService */,
-			);
-			path = AuthService;
-			sourceTree = "<group>";
-		};
 		C48E33C32AEDA92B001B6C92 /* AuthService */ = {
 			isa = PBXGroup;
 			children = (
-				C4D3EDB42AEF3D2B00AB4B28 /* Mocks */,
+				C48E33C42AEDA94F001B6C92 /* AuthServiceMock.swift */,
 			);
 			path = AuthService;
 			sourceTree = "<group>";
@@ -1547,8 +1477,7 @@
 		C48E33C72AEDBD9C001B6C92 /* DefaultPetDataSource */ = {
 			isa = PBXGroup;
 			children = (
-				C4D3EDB32AEF3D1F00AB4B28 /* Mocks */,
-				C44B08502AF07D8000C927B2 /* DefaultPetDataSource */,
+				C48E33C92AEDBE85001B6C92 /* DefaultPetDataSourceMock.swift */,
 			);
 			path = DefaultPetDataSource;
 			sourceTree = "<group>";
@@ -1901,22 +1830,6 @@
 			path = Validation;
 			sourceTree = "<group>";
 		};
-		C4D3EDB32AEF3D1F00AB4B28 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				C48E33C92AEDBE85001B6C92 /* DefaultPetDataSourceMock.swift */,
-			);
-			path = Mocks;
-			sourceTree = "<group>";
-		};
-		C4D3EDB42AEF3D2B00AB4B28 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
-				C48E33C42AEDA94F001B6C92 /* AuthServiceMock.swift */,
-			);
-			path = Mocks;
-			sourceTree = "<group>";
-		};
 		C4D3EDB52AEF3F9C00AB4B28 /* NewPet */ = {
 			isa = PBXGroup;
 			children = (
@@ -1946,25 +1859,9 @@
 		C4D3EDBA2AEF430300AB4B28 /* ImageService */ = {
 			isa = PBXGroup;
 			children = (
-				C4D3EDBB2AEF431100AB4B28 /* ImageService */,
-			);
-			path = ImageService;
-			sourceTree = "<group>";
-		};
-		C4D3EDBB2AEF431100AB4B28 /* ImageService */ = {
-			isa = PBXGroup;
-			children = (
-				C4D3EDBD2AEF434600AB4B28 /* Mocks */,
-			);
-			path = ImageService;
-			sourceTree = "<group>";
-		};
-		C4D3EDBD2AEF434600AB4B28 /* Mocks */ = {
-			isa = PBXGroup;
-			children = (
 				C4D3EDBE2AEF437100AB4B28 /* ImageServiceMock.swift */,
 			);
-			path = Mocks;
+			path = ImageService;
 			sourceTree = "<group>";
 		};
 		C4D44A1D2ADDE05F004D2A53 /* Profile */ = {
@@ -1975,6 +1872,70 @@
 				C466B6A52AE67E91004D8D07 /* ProfileViewHeaderViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		C4E57BE62AF179B9000E34D3 /* Mappers */ = {
+			isa = PBXGroup;
+			children = (
+				C4E57BEF2AF18D72000E34D3 /* User */,
+				C4E57BE92AF1887E000E34D3 /* Pet */,
+			);
+			path = Mappers;
+			sourceTree = "<group>";
+		};
+		C4E57BE92AF1887E000E34D3 /* Pet */ = {
+			isa = PBXGroup;
+			children = (
+				C4E57BE72AF17B09000E34D3 /* PetEntity+DomainMapperTests.swift */,
+				C4E57BEA2AF18894000E34D3 /* PetModel+DomainMapperTests.swift */,
+			);
+			path = Pet;
+			sourceTree = "<group>";
+		};
+		C4E57BEF2AF18D72000E34D3 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				C4E57BF02AF18D88000E34D3 /* UserEntity+DomainMapperTests.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		C4E57BF22AF18FB4000E34D3 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C48E33C82AEDBDB4001B6C92 /* DataSources */,
+				C4D3EDBA2AEF430300AB4B28 /* ImageService */,
+				C48E33C62AEDBD89001B6C92 /* Repositories */,
+				C4E57BF52AF18FE7000E34D3 /* FilterOptions */,
+				C4E57BF42AF18FE2000E34D3 /* User */,
+				C4E57BF32AF18FDC000E34D3 /* Pet */,
+				C48E33C32AEDA92B001B6C92 /* AuthService */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		C4E57BF32AF18FDC000E34D3 /* Pet */ = {
+			isa = PBXGroup;
+			children = (
+				C48E33BD2AED83AF001B6C92 /* PetMock.swift */,
+			);
+			path = Pet;
+			sourceTree = "<group>";
+		};
+		C4E57BF42AF18FE2000E34D3 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				C4E57BED2AF18BED000E34D3 /* UserMock.swift */,
+			);
+			path = User;
+			sourceTree = "<group>";
+		};
+		C4E57BF52AF18FE7000E34D3 /* FilterOptions */ = {
+			isa = PBXGroup;
+			children = (
+				C48E33BF2AED99CF001B6C92 /* FilterOptionsMock.swift */,
+			);
+			path = FilterOptions;
 			sourceTree = "<group>";
 		};
 		C4E654442AC8E7EF009E027F /* SearchBreed */ = {
@@ -2449,7 +2410,6 @@
 				C4CF74D72AB226F100D69185 /* ApplicationCoordinator.swift in Sources */,
 				C45AC0662AE4F3640025E61D /* CreateAccountViewController+Types.swift in Sources */,
 				C49231902AE461EF003F29A6 /* Modal.swift in Sources */,
-				C44820162AB539B400E72BD2 /* UserModel+DomainMapper.swift in Sources */,
 				C42D3D9C2AB65FD200EBA1B7 /* InAppContainerRootViewController.swift in Sources */,
 				C4C872702ADC75C4007110E2 /* FavoritesContentViewController+Types.swift in Sources */,
 				C466B6A92AE68692004D8D07 /* SideMenuProfileContentViewController.swift in Sources */,
@@ -2467,6 +2427,7 @@
 				C48E33C52AEDA94F001B6C92 /* AuthServiceMock.swift in Sources */,
 				C443631A2AF0335D00DBFD68 /* FavoritesViewModelFailureTests.swift in Sources */,
 				C44B08492AF07B6B00C927B2 /* CreateAccountViewModelSuccessTests.swift in Sources */,
+				C4E57BF12AF18D88000E34D3 /* UserEntity+DomainMapperTests.swift in Sources */,
 				C4C9CAB02AEF261F00A927DB /* PetsViewModelFailureTests.swift in Sources */,
 				C44B085D2AF083D100C927B2 /* ForgotPasswordViewModelFailureTests.swift in Sources */,
 				C4820C542AF0036800B5D4DE /* NewPetViewModelFailureTests.swift in Sources */,
@@ -2474,14 +2435,17 @@
 				C44B084F2AF07D3400C927B2 /* DefaultUserRepositoryMock.swift in Sources */,
 				C44B08572AF0808600C927B2 /* CreateAccountViewModelFailureTests.swift in Sources */,
 				C48E33BE2AED83AF001B6C92 /* PetMock.swift in Sources */,
-				C44B08622AF0A89900C927B2 /* ValidatorsSuccessTests.swift in Sources */,
+				C44B08622AF0A89900C927B2 /* ValidatorsTests.swift in Sources */,
 				C48B0F6B2AF025E400CB14CF /* FavoritesViewModelSuccessTests.swift in Sources */,
 				C4820C582AF00E0800B5D4DE /* AddPetViewModelSuccessTests.swift in Sources */,
 				C44B08452AF077D300C927B2 /* LoginViewModelFailureTests.swift in Sources */,
 				C46CFB8A2AF04D8C00A56165 /* FilterPetsViewModelFailureTests.swift in Sources */,
+				C4E57BEE2AF18BED000E34D3 /* UserMock.swift in Sources */,
 				C48B0F672AF019BC00CB14CF /* AddPetViewModelFailureTests.swift in Sources */,
+				C4E57BEB2AF18894000E34D3 /* PetModel+DomainMapperTests.swift in Sources */,
 				C4F1E96D2AED67D6001CCBE0 /* DefaultPetRepositoryMock.swift in Sources */,
 				C4D3EDB92AEF3FF700AB4B28 /* NewPetViewModelSuccessTests.swift in Sources */,
+				C4E57BE82AF17B09000E34D3 /* PetEntity+DomainMapperTests.swift in Sources */,
 				C48E33C02AED99CF001B6C92 /* FilterOptionsMock.swift in Sources */,
 				C44B08552AF07DE700C927B2 /* DefaultUserDataSourceMock.swift in Sources */,
 				C4748FF92AED664C00951FF5 /* PetsViewModelSuccessTests.swift in Sources */,

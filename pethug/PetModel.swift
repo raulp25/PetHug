@@ -11,7 +11,7 @@ import Firebase
 import UIKit
 
 //type [[String: Any]] breaks conformance to codable/decodable
-struct PetModel: Codable {
+struct PetModel: Codable, Equatable {
     @DocumentID var id: String? = UUID().uuidString
     let name: String
     let age: Int

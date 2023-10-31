@@ -31,7 +31,7 @@ extension User: DictionaryLiteralMapper {
         ]
     }
 }
-    
+
 //   //MARK: - Maybe usefull in the future
 //    func dict() throws -> [String: Any] {
 //        let data = try JSONEncoder().encode(self)
