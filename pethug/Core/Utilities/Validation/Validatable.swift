@@ -121,6 +121,7 @@ struct NewAccountPasswordValidator: Validatable {
         .map { isEmpty, toShort, hasLetters, hasSpecialChars  in
             if isEmpty { return .error(.empty) }
             if toShort { return .error(.toShortPassword) }
+            if hasSpecialChars { return .error(.passwordCantHaveSpacesOrSpecialChars)}
             if !hasLetters { return .error(.passwordNeedsLetters) }
             return .valid
         }

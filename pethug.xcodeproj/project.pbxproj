@@ -104,6 +104,7 @@
 		C44B08572AF0808600C927B2 /* CreateAccountViewModelFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B08562AF0808600C927B2 /* CreateAccountViewModelFailureTests.swift */; };
 		C44B085B2AF0831200C927B2 /* ForgotPasswordViewModelSuccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B085A2AF0831200C927B2 /* ForgotPasswordViewModelSuccessTests.swift */; };
 		C44B085D2AF083D100C927B2 /* ForgotPasswordViewModelFailureTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B085C2AF083D100C927B2 /* ForgotPasswordViewModelFailureTests.swift */; };
+		C44B08622AF0A89900C927B2 /* ValidatorsSuccessTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44B08612AF0A89900C927B2 /* ValidatorsSuccessTests.swift */; };
 		C44DFD3E2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */; };
 		C44DFD402AC639B20045DD7A /* NewPetUploadCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */; };
 		C4514F4E2ABF6BE100F03C6F /* DummySectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */; };
@@ -385,6 +386,7 @@
 		C44B08562AF0808600C927B2 /* CreateAccountViewModelFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModelFailureTests.swift; sourceTree = "<group>"; };
 		C44B085A2AF0831200C927B2 /* ForgotPasswordViewModelSuccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelSuccessTests.swift; sourceTree = "<group>"; };
 		C44B085C2AF083D100C927B2 /* ForgotPasswordViewModelFailureTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModelFailureTests.swift; sourceTree = "<group>"; };
+		C44B08612AF0A89900C927B2 /* ValidatorsSuccessTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidatorsSuccessTests.swift; sourceTree = "<group>"; };
 		C44DFD3D2AC638DB0045DD7A /* NewPetUploadListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadListCellConfiguration.swift; sourceTree = "<group>"; };
 		C44DFD3F2AC639B20045DD7A /* NewPetUploadCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPetUploadCellContentView.swift; sourceTree = "<group>"; };
 		C4514F4D2ABF6BE100F03C6F /* DummySectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DummySectionHeader.swift; sourceTree = "<group>"; };
@@ -1111,6 +1113,29 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		C44B085E2AF0A83400C927B2 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				C44B08602AF0A85D00C927B2 /* Validators */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		C44B085F2AF0A83C00C927B2 /* IntegrationTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = IntegrationTests;
+			sourceTree = "<group>";
+		};
+		C44B08602AF0A85D00C927B2 /* Validators */ = {
+			isa = PBXGroup;
+			children = (
+				C44B08612AF0A89900C927B2 /* ValidatorsSuccessTests.swift */,
+			);
+			path = Validators;
+			sourceTree = "<group>";
+		};
 		C44DFD3C2AC638B60045DD7A /* Upload */ = {
 			isa = PBXGroup;
 			children = (
@@ -1205,6 +1230,8 @@
 		C4748FF02AED661100951FF5 /* pethugTests */ = {
 			isa = PBXGroup;
 			children = (
+				C44B085F2AF0A83C00C927B2 /* IntegrationTests */,
+				C44B085E2AF0A83400C927B2 /* UnitTests */,
 				C44B08582AF082E400C927B2 /* ForgotPassword */,
 				C44B08462AF07B5000C927B2 /* CreateAccount */,
 				C44B08402AF074A100C927B2 /* Login */,
@@ -2447,6 +2474,7 @@
 				C44B084F2AF07D3400C927B2 /* DefaultUserRepositoryMock.swift in Sources */,
 				C44B08572AF0808600C927B2 /* CreateAccountViewModelFailureTests.swift in Sources */,
 				C48E33BE2AED83AF001B6C92 /* PetMock.swift in Sources */,
+				C44B08622AF0A89900C927B2 /* ValidatorsSuccessTests.swift in Sources */,
 				C48B0F6B2AF025E400CB14CF /* FavoritesViewModelSuccessTests.swift in Sources */,
 				C4820C582AF00E0800B5D4DE /* AddPetViewModelSuccessTests.swift in Sources */,
 				C44B08452AF077D300C927B2 /* LoginViewModelFailureTests.swift in Sources */,

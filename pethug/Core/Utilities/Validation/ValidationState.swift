@@ -20,6 +20,7 @@ enum ValidationState: Equatable {
         case toShortPassword
         case passwordNeedsNum
         case passwordNeedsLetters
+        case passwordCantHaveSpacesOrSpecialChars
         case nameCantHaveNumOrSpecialChars
         case toShortName
         case toLongName
@@ -41,6 +42,8 @@ enum ValidationState: Equatable {
                 return "Contraseña debe incluir letras"
             case .nameCantHaveNumOrSpecialChars:
                 return "Sin espacios o carácteres espciales"
+            case .passwordCantHaveSpacesOrSpecialChars:
+                return "Sin espacios o carácteres especiales"
             case .toShortName:
                 return "Mínimo 2 letras"
             case .toLongName:
