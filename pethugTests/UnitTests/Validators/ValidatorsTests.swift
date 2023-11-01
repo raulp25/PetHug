@@ -35,8 +35,9 @@ class ValidatorsTests: XCTestCase {
         state = nil
         stateSpy = nil
     }
+    
     //MARK: - Note:
-    // This tests support at max to values published at once. Xcode can't handle it like combined async
+    // This tests support at max two values published at once. Xcode can't handle it like combined async
     
     //MARK: - Email validator
     func test_with_email_validator() {
@@ -52,7 +53,7 @@ class ValidatorsTests: XCTestCase {
         XCTAssertEqual(stateSpy.values, [.error(.custom("Not valid")), .valid], "Validator publisher value should be equal to [.error(.custom(Not valid)), .valid]")
     }
     
-    //MARK: - Email validator
+    //MARK: - Phone validator
     func test_with_phone_validator() {
         
         stateSpy = StateValueSpy(phoneValidator.validate(publisher: state.eraseToAnyPublisher()))

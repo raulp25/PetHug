@@ -47,7 +47,7 @@ class AddPetViewModelSuccessTests: XCTestCase {
         
         defer {
             XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to [petMock]")
-            XCTAssertEqual(stateSpy.booleans, [false, false, true], "The published values should be equal to [false, false, true]")
+            XCTAssertEqual(stateSpy.debounce, [false, false, true], "The published values should be equal to [false, false, true]")
             XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
             
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -61,7 +61,7 @@ class AddPetViewModelSuccessTests: XCTestCase {
         await vm.fetchUserPets()
         
         XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to [petMock]")
-        XCTAssertEqual(stateSpy.booleans, [false], "The published values should be equal to [false]")
+        XCTAssertEqual(stateSpy.debounce, [false], "The published values should be equal to [false]")
         XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
         
         XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -70,7 +70,7 @@ class AddPetViewModelSuccessTests: XCTestCase {
         await vm.fetchUserPets()
         
         XCTAssertEqual(stateSpy.values, [petMock, petMock], "The published values should be equal to [petMock, petMock]")
-        XCTAssertEqual(stateSpy.booleans, [false, false], "The published values should be equal to [true, false]")
+        XCTAssertEqual(stateSpy.debounce, [false, false], "The published values should be equal to [true, false]")
         XCTAssertEqual(vm.pets.count, 2, "The view model pets stete count shoudld be 2" )
         
         XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -87,7 +87,7 @@ class AddPetViewModelSuccessTests: XCTestCase {
         defer {
             XCTAssertTrue(result, "The view model result from deleting a pet should be true")
             XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
-            XCTAssertEqual(stateSpy.booleans, [false, false], "The published values should be equal to [false, false]")
+            XCTAssertEqual(stateSpy.debounce, [false, false], "The published values should be equal to [false, false]")
             
             XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
             XCTAssertFalse(vm.isFirstLoad, "The view model isFirstLoad state should be false")
@@ -100,7 +100,7 @@ class AddPetViewModelSuccessTests: XCTestCase {
         await vm.fetchUserPets(resetPagination: false)
         
         XCTAssertEqual(stateSpy.values, [petMock], "The published values should be equal to [petMock]")
-        XCTAssertEqual(stateSpy.booleans, [false], "The published values should be equal to [false]")
+        XCTAssertEqual(stateSpy.debounce, [false], "The published values should be equal to [false]")
         XCTAssertEqual(vm.pets.count, 1, "The view model pets stete count shoudld be 1" )
         
         XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -109,7 +109,7 @@ class AddPetViewModelSuccessTests: XCTestCase {
         await vm.fetchUserPets(resetPagination: false)
         
         XCTAssertEqual(stateSpy.values, [petMock, petMock], "The published values should be equal to [petMock, petMock]")
-        XCTAssertEqual(stateSpy.booleans, [false, false], "The published values should be equal to [true, false]")
+        XCTAssertEqual(stateSpy.debounce, [false, false], "The published values should be equal to [true, false]")
         XCTAssertEqual(vm.pets.count, 2, "The view model pets stete count shoudld be 2" )
         
         XCTAssertFalse(vm.isFetching, "The view model isFetching state should be false")
@@ -123,7 +123,7 @@ class AddPetViewModelSuccessTests: XCTestCase {
 
 private class StateValueSpy {
     private(set) var values = [Pet]()
-    private(set) var booleans = [Bool]()
+    private(set) var debounce = [Bool]()
     private var cancellable: AnyCancellable?
     
     init(_ publisher: AnyPublisher<AddPetViewModel.State, Never>) {
@@ -131,7 +131,7 @@ private class StateValueSpy {
             switch state {
             case let .loaded(pets, debounce):
                 self?.values = pets
-                self?.booleans.append(debounce)
+                self?.debounce.append(debounce)
             default:
                 print("")
             }
