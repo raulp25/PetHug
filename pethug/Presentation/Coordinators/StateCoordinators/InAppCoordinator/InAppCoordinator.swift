@@ -14,7 +14,9 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
     weak var parentCoordinator: ApplicationCoordinator?
 
     let rootViewController = InAppContainerRootViewController()
-
+    
+    var sideMenuVC: SideMenuViewController!
+    
     // MARK: - start
     func start() {
         rootViewController.coordinator = self
@@ -22,7 +24,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
         let tabBarVC = InAppTabBarController()
         setUpTabBarChildCoordinators(vc: tabBarVC)
 
-        let sideMenuVC = SideMenuViewController()
+        sideMenuVC = SideMenuViewController()
 
         let mainView = tabBarVC.view!
         let sideMenuView = sideMenuVC.view!
@@ -98,6 +100,7 @@ final class InAppCoordinator: StateCoordinator, ChildControllerManagable {
     // MARK: - Private actions
     @objc private func handlePan(gesture: UIPanGestureRecognizer) {
         if gesture.state == .changed {
+            sideMenuVC.reloadUser()
             rootViewController.handleGestureChanged(gesture: gesture)
 
         } else if gesture.state == .ended {

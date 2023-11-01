@@ -48,13 +48,14 @@ final class DefaultUserDataSource: UserDataSource {
     func deleteUser() async throws {
         guard let user = Auth.auth().currentUser else { throw PetsError.defaultCustom("") }
         
-        try await db.collection(.getPath(for: .users)).document(user.uid).delete()
+        try await user.delete()
         
         try await db.collection(.getPath(for: .deletedUsers))
                     .document(user.uid)
                     .setData(["userId": user.uid])
         
-        try await user.delete()
+        
+        try await db.collection(.getPath(for: .users)).document(user.uid).delete()
     }
     
 }

@@ -104,9 +104,14 @@ final class ProfileContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.setNavigationBarHidden(true, animated: true)
-        fetchUser()
         setup()
+        fetchUser()
         bind()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchUser()
     }
     
     //MARK: - Bind
@@ -124,7 +129,7 @@ final class ProfileContentViewController: UIViewController {
                 case .error(_):
                     self?.handleError(message: "Hubo un error, intenta de nuevo", title: "Error")
                 case .deleteUserError:
-                    self?.handleError(message: "Hubo un error eliminando tu cuenta, intenta de nuevo o cierra tu sesion e inicia sesión de nuevoe y luego elimina tu cuenta", title: "Error Cuenta")
+                    self?.handleError(message: "Por políticas de sguridad, para eliminar tu cuenta es necesario que vuelvas a iniciar sesión y elimines tu cuenta", title: "Inicia sesíon para continuar")
                 case .networkError:
                     self?.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }

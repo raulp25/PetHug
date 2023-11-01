@@ -365,7 +365,7 @@ let rabbit_breeds = [
     "American",
     "American chinchilla",
     "American sable",
-    "Amfuzzylop smallB",
+    "Amfuzzylop small",
     "Belgian hare",
     "Beveren",
     "Britannian petite",

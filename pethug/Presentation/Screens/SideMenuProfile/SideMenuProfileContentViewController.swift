@@ -115,31 +115,18 @@ final class SideMenuProfileContentViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setup()
+        bind()
         
-        viewModel.state
-            .handleThreadsOperator()
-            .sink { [weak self] state in
-                switch state {
-                case .loading:
-                    break
-                case .loaded:
-                    break
-                case .error(_):
-                    self?.handleError(message: "Hubo un error, intenta de nuevo", title: "Error")
-                case .deleteUserError:
-                    self?.handleError(message: "Hubo un error eliminando tu usuario, intenta de nuevo o cierra tu sesion e inicia sesión de nuevoe y luego elimina tu cuenta", title: "Error Usuario")
-                case .networkError:
-                    self?.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
-                }
-                
-            }.store(in: &cancellables)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: { [weak self] in
+            self?.fetchUser()
+        })
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
-        fetchUser()
     }
+    
     
     //MARK: - Setup
     private func setup() {
@@ -195,6 +182,32 @@ final class SideMenuProfileContentViewController: UIViewController {
         
     }
     
+     //MARK: - Bind
+    func bind() {
+        viewModel.state
+            .handleThreadsOperator()
+            .sink { [weak self] state in
+                switch state {
+                case .loading:
+                    break
+                case .loaded:
+                    break
+                case .error(_):
+                    self?.handleError(message: "Hubo un error, intenta de nuevo", title: "Error")
+                case .networkError:
+                    self?.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
+                default:
+                    print("")
+                }
+                
+            }.store(in: &cancellables)
+    }
+    
+    //MARK: - Public methods
+    func reloadUser() {
+        fetchUser()
+    }
+    
     //MARK: - Private actions
     @objc private func didTapSingOut() {
         guard NetworkMonitor.shared.isConnected == true else {
@@ -203,7 +216,6 @@ final class SideMenuProfileContentViewController: UIViewController {
         }
         try! AuthService().signOut()
     }
-    
     //MARK: - Private methods
     private func fetchUser() {
         Task {
@@ -211,7 +223,6 @@ final class SideMenuProfileContentViewController: UIViewController {
                 let user = try await fetchUserUC.execute()
                 viewModel.user = user
                 guard let image = user.profileImageUrl else { return }
-                
                 let url = URL(string: image)
                 DispatchQueue.main.async { [weak self] in
                     self?.profileImageView.sd_setImage(with: url)

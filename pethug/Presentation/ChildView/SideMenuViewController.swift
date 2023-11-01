@@ -10,8 +10,7 @@ import UIKit
 final class SideMenuViewController: UIViewController {
     // MARK: - Private Components
     private lazy var contentVC = SideMenuProfileContentViewController(authService: AuthService(),
-                                                              fetchUserUC: FetchUser.composeFetchUserUC()
-                                                             )
+                                                                      fetchUserUC: FetchUser.composeFetchUserUC())
 
     // MARK: - Private Properties
     private let customWidth = UIScreen.main.bounds.width * 0.85
@@ -43,13 +42,17 @@ final class SideMenuViewController: UIViewController {
 
         view.addSubview(contentVC.view)
 
-        let sidePadding: CGFloat = 15
         contentVC.view.translatesAutoresizingMaskIntoConstraints = false
         topAnchorConstraint = contentVC.view.topAnchor.constraint(equalTo: view.topAnchor)
         contentVC.view.pinSides(
             to: view
         )
         contentVC.view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+    }
+    
+    //MARK: - Public methods
+    func reloadUser() {
+        contentVC.reloadUser()
     }
 }
 

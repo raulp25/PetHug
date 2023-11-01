@@ -53,7 +53,8 @@ final class ProfileViewModel {
                 imageService.deleteImages(imagesUrl: [oldProfilePic]) // Delete image
             }
             
-            let imageUrl = try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users)) // Upload image
+            let path = "/user_Profile_Image:\(authService.uid)/"
+            let imageUrl = try await imageService.uploadImage(image: image, path: path) // Upload image
             
             try await updateUserUC.execute(imageUrl: imageUrl!)
             
@@ -72,7 +73,6 @@ final class ProfileViewModel {
                 state.send(.networkError)
                 return
             }
-            
             try await authService.reloadUser()
             try await deleteUserUC.execute()
         } catch {

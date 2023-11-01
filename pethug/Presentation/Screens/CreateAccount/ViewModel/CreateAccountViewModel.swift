@@ -27,7 +27,6 @@ struct CreateAccountViewModel {
         self.registerUserUC = registerUserUC
     }
     
-    
     func crateAccount(username: String?, email: String?, password: String?) async {
         guard let username, let email, let password else {
             state.send(.error(.someThingWentWrong))
@@ -43,7 +42,8 @@ struct CreateAccountViewModel {
             }
             var imageUrl: String? = nil
             if let image = profileImage {
-                imageUrl =  try await imageService.uploadImage(image: image, path: .getStoragePath(for: .users)) //Upload image
+                let path = "/user_Profile_Image:\(authService.uid)/"
+                imageUrl =  try await imageService.uploadImage(image: image, path: path) //Upload image
             }
             
             let uid = try await authService.createAccounWith(email: email, password: password) //Create account

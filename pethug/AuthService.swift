@@ -82,7 +82,7 @@ final class AuthService: AuthServiceProtocol {
     func reloadUser() async throws {
         try await Auth.auth().currentUser?.reload()
     }
-
+    
     // MARK: - Observe
     func observeAuthChanges() -> AnyPublisher<SessionState, Never> {
         return Publishers.AuthPublisher().eraseToAnyPublisher()

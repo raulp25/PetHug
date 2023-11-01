@@ -84,7 +84,6 @@ final class FavoritesViewModel {
             let data = try await fetchFavoritePetsUC.execute()
             
             if data.isEmpty {
-                print("data is empty : => \(data)")
                 state.send(.empty)
             } else {
                 petsSubject.send(data)

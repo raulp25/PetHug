@@ -32,7 +32,6 @@ final class PetsViewController: UIViewController {
         super.viewDidLoad()
         bind()
         setup()
-        print("view didload fetchpets ejecuta 788: => ")
         Task {
             await viewModel.fetchPets(collection: viewModel.collection, resetFilterQueries: true)
         }
