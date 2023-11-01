@@ -271,7 +271,7 @@ class NewPetViewModel {
     // Recursively upload images to preserve their order of selection
     func uploadNextImage(index: Int, imagesUrls: inout [String]) async throws {
         guard let _ = typeState else { return }
-        let path = "/userImages:\(authService.uid)/"
+        let path = "/user_Pets_Images:\(authService.uid)/"
         
         guard index < galleryState.count else { return }
         
