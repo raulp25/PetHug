@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class NewPetCoordinator: NSObject, NavCoordinator {
+final class NewPetCoordinator: NavCoordinator {
     // MARK: - Properties
     var childCoordinators = [Coordinator]()
     var rootViewController: UINavigationController = .init()
@@ -19,7 +19,6 @@ final class NewPetCoordinator: NSObject, NavCoordinator {
         let vc = NewPetViewController()
         vc.pet = pet
         vc.coordinator = self
-        
         vc.modalPresentationStyle = .fullScreen
         parentCoordinator?.rootViewController.present(vc, animated: true)
     }
@@ -28,6 +27,16 @@ final class NewPetCoordinator: NSObject, NavCoordinator {
         print("✅ Deinit NewPetCoordinator")
     }
 }
+
+extension NewPetCoordinator {
+    // This Coordinator is manually popped because the associated
+    // view controller was presented modally, not pushed onto the navigation stack.
+    // As a result, the UINavigationControllerDelegate won't detect the view controller we're moving from.
+    func coordinatorDidFinish() {
+        parentCoordinator?.childDidFinish(self)
+    }
+}
+
 
 
   

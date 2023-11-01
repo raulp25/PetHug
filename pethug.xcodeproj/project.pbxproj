@@ -251,6 +251,7 @@
 		C4E57BEB2AF18894000E34D3 /* PetModel+DomainMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E57BEA2AF18894000E34D3 /* PetModel+DomainMapperTests.swift */; };
 		C4E57BEE2AF18BED000E34D3 /* UserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E57BED2AF18BED000E34D3 /* UserMock.swift */; };
 		C4E57BF12AF18D88000E34D3 /* UserEntity+DomainMapperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E57BF02AF18D88000E34D3 /* UserEntity+DomainMapperTests.swift */; };
+		C4E57BF82AF1A2B9000E34D3 /* Commentaries.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E57BF72AF1A2B9000E34D3 /* Commentaries.swift */; };
 		C4E654432AC8E745009E027F /* BreedPopupSearchViewController+Types.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */; };
 		C4E654462AC8E834009E027F /* SearchBreedListCellConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654452AC8E834009E027F /* SearchBreedListCellConfiguration.swift */; };
 		C4E654482AC8E8BA009E027F /* SearchBreedCellContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4E654472AC8E8BA009E027F /* SearchBreedCellContentView.swift */; };
@@ -536,6 +537,7 @@
 		C4E57BEA2AF18894000E34D3 /* PetModel+DomainMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PetModel+DomainMapperTests.swift"; sourceTree = "<group>"; };
 		C4E57BED2AF18BED000E34D3 /* UserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMock.swift; sourceTree = "<group>"; };
 		C4E57BF02AF18D88000E34D3 /* UserEntity+DomainMapperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserEntity+DomainMapperTests.swift"; sourceTree = "<group>"; };
+		C4E57BF72AF1A2B9000E34D3 /* Commentaries.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Commentaries.swift; sourceTree = "<group>"; };
 		C4E654422AC8E745009E027F /* BreedPopupSearchViewController+Types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BreedPopupSearchViewController+Types.swift"; sourceTree = "<group>"; };
 		C4E654452AC8E834009E027F /* SearchBreedListCellConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBreedListCellConfiguration.swift; sourceTree = "<group>"; };
 		C4E654472AC8E8BA009E027F /* SearchBreedCellContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBreedCellContentView.swift; sourceTree = "<group>"; };
@@ -822,6 +824,7 @@
 		C445F1182AB1391A00053BE7 /* pethug */ = {
 			isa = PBXGroup;
 			children = (
+				C4E57BF62AF1A2AA000E34D3 /* Commentaries */,
 				C445F1492AB13B2C00053BE7 /* Core */,
 				C445F14A2AB13B3500053BE7 /* Data */,
 				C445F14B2AB13B3F00053BE7 /* Domain */,
@@ -1927,6 +1930,14 @@
 			path = FilterOptions;
 			sourceTree = "<group>";
 		};
+		C4E57BF62AF1A2AA000E34D3 /* Commentaries */ = {
+			isa = PBXGroup;
+			children = (
+				C4E57BF72AF1A2B9000E34D3 /* Commentaries.swift */,
+			);
+			path = Commentaries;
+			sourceTree = "<group>";
+		};
 		C4E654442AC8E7EF009E027F /* SearchBreed */ = {
 			isa = PBXGroup;
 			children = (
@@ -2263,6 +2274,7 @@
 				C483EBA42AC55C11005E8BE2 /* NewPetSizeCellContentView.swift in Sources */,
 				C418BBA52AC0A50600C31967 /* PetEntity+DomainMapper.swift in Sources */,
 				C4CF74FA2AB25ADD00D69185 /* AuthTextField+ViewModel.swift in Sources */,
+				C4E57BF82AF1A2B9000E34D3 /* Commentaries.swift in Sources */,
 				C48D9B462AC49BBB002EDA90 /* ListCollectionViewCell.swift in Sources */,
 				C48D9B4D2AC49DE9002EDA90 /* NameCellViewModel.swift in Sources */,
 				C448201D2AB53FF300E72BD2 /* DefaultUserRepository.swift in Sources */,

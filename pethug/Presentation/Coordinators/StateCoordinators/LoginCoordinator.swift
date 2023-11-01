@@ -17,7 +17,9 @@ final class LoginCoordinator: NSObject, StateCoordinator {
     let vc = LoginViewController()
     
     override init() {
+        super.init()
         rootViewController.navigationBar.tintColor = .white
+        rootViewController.delegate = self
     }
     
     func start() {
@@ -88,12 +90,14 @@ extension LoginCoordinator: UINavigationControllerDelegate {
             return
         }
 
-        // We’re still here – it means we’re popping the view controller, so we can check whether it’s a joinFacebookVc
-        if let createAccountVC = fromViewController as? CreateAccountViewController {
-            // We're popping a joinFacebookVc; end its coordinator
-            childDidFinish(createAccountVC.coordinator)
+        // We’re still here – it means we’re popping the view controller, so we can check whether it’s a createAccountVc or forgotPasswordVc
+        if let createAccountVc = fromViewController as? CreateAccountViewController {
+            // We're popping a createAccountVc; and its coordinator
+            childDidFinish(createAccountVc.coordinator)
+        } else if let forgotPasswordVc = fromViewController as? ForgotPasswordViewController {
+            // We're popping a forgotPasswordVc; and its coordinator
+            childDidFinish(forgotPasswordVc.coordinator)
         }
-
 
     }
 }

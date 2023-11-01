@@ -59,7 +59,6 @@ final class FavoritesViewModel {
             } receiveValue: { [weak self] pets in
                 guard let self = self else { return }
                 self.pets.append(contentsOf: pets)
-                print("pets en petsubject 222: => \(pets)")
                 self.state.send(.loaded(self.pets))
             }.store(in: &subscriptions)
         

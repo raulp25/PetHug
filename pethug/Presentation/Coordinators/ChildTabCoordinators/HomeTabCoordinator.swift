@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class HomeTabCoordinator: ChildTabCoordinator {
+final class HomeTabCoordinator: NSObject, ChildTabCoordinator {
     var childCoordinators: [NavCoordinator] = .init()
     
     var parentCoordinator: InAppCoordinator?
@@ -20,8 +20,7 @@ final class HomeTabCoordinator: ChildTabCoordinator {
                                          filterPetsUC:    FilterPets.composeFilterPetsUC(),
                                          likedPetUC:      LikePet.composeLikePetUC(),
                                          dislikePetUC:    DisLikePet.composeDisLikePetUC(),
-                                         authService:     AuthService()
-                                    )
+                                         authService:     AuthService())
     
     func start() {
         let vc = AnimalsStackContentViewController()

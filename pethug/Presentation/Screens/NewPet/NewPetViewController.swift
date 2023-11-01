@@ -58,6 +58,25 @@ final class NewPetViewController: UIViewController {
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
+        setup()
+        setupDelegates()
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+    }
+    
+    deinit {
+        coordinator?.coordinatorDidFinish()
+        print("✅ Deinit NewPetViewController")
+    }
+    
+    //MARK: - Setup
+
+    private func setup() {
         let paddingTop: CGFloat = 15
         let sidePadding: CGFloat = 20
         view.backgroundColor = customRGBColor(red: 244, green: 244, blue: 244)
@@ -91,17 +110,8 @@ final class NewPetViewController: UIViewController {
             right: view.rightAnchor,
             paddingTop: 20
         )
-        
-        setupDelegates()
-        
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: false)
-        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
-    }
-
     private func setupDelegates() {
         contentVC.delegate = self
     }
