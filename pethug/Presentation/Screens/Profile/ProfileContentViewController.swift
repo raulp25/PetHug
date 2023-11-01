@@ -80,7 +80,8 @@ final class ProfileContentViewController: UIViewController {
     //MARK: - Private properties
     private let viewModel = ProfileViewModel(updateUserUC: UpdateUser.composeUpdateUserUC(),
                                              deleteUserUC: DeleteUser.composeDeleteUserUC(),
-                                             imageService: ImageService())
+                                             imageService: ImageService(),
+                                             authService:  AuthService())
     private let authService: AuthServiceProtocol
     private let fetchUserUC: DefaultFetchUserUC
     private var cancellables = Set<AnyCancellable>()
@@ -123,39 +124,12 @@ final class ProfileContentViewController: UIViewController {
                 case .error(_):
                     self?.handleError(message: "Hubo un error, intenta de nuevo", title: "Error")
                 case .deleteUserError:
-                    self?.handleError(message: "Hubo un error eliminando tu usuario, intenta de nuevo o inicia sesión nuevamente y luego elimina tu cuenta", title: "Error Usuario")
+                    self?.handleError(message: "Hubo un error eliminando tu cuenta, intenta de nuevo o cierra tu sesion e inicia sesión de nuevoe y luego elimina tu cuenta", title: "Error Cuenta")
                 case .networkError:
                     self?.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }
                 
             }.store(in: &cancellables)
-    }
-    
-    //MARK: - Private actions
-    @objc private func didTapProfilePic() {
-        var config = PHPickerConfiguration()
-        config.selectionLimit = 1
-        
-        let phPicker = PHPickerViewController(configuration: config)
-        phPicker.delegate = self
-        coordinator?.rootViewController.present(phPicker, animated: true)
-        
-    }
-    
-    @objc private func didTapSingOut() {
-        guard NetworkMonitor.shared.isConnected == true else {
-            handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
-            return
-        }
-        try! AuthService().signOut()
-    }
-    
-    @objc private func didTapDeleteAccount() {
-        showModal()
-    }
-    
-        @objc private func didTapModalScreen() {
-        cancel()
     }
     
     //MARK: - Setup
@@ -220,6 +194,34 @@ final class ProfileContentViewController: UIViewController {
         )
         deleteAccBtn.setDimensions(height: 32, width: 200)
         
+    }
+    
+    
+    //MARK: - Private actions
+    @objc private func didTapProfilePic() {
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 1
+        
+        let phPicker = PHPickerViewController(configuration: config)
+        phPicker.delegate = self
+        coordinator?.rootViewController.present(phPicker, animated: true)
+        
+    }
+    
+    @objc private func didTapSingOut() {
+        guard NetworkMonitor.shared.isConnected == true else {
+            handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
+            return
+        }
+        try! AuthService().signOut()
+    }
+    
+    @objc private func didTapDeleteAccount() {
+        showModal()
+    }
+    
+        @objc private func didTapModalScreen() {
+        cancel()
     }
     
     //MARK: - Private methods

@@ -92,7 +92,8 @@ final class SideMenuProfileContentViewController: UIViewController {
     //MARK: - Private properties
     private let viewModel = ProfileViewModel(updateUserUC: UpdateUser.composeUpdateUserUC(),
                                              deleteUserUC: DeleteUser.composeDeleteUserUC(),
-                                             imageService: ImageService())
+                                             imageService: ImageService(),
+                                             authService:  AuthService())
     private let authService: AuthServiceProtocol
     private let fetchUserUC: DefaultFetchUserUC
     private var cancellables = Set<AnyCancellable>()
@@ -126,7 +127,7 @@ final class SideMenuProfileContentViewController: UIViewController {
                 case .error(_):
                     self?.handleError(message: "Hubo un error, intenta de nuevo", title: "Error")
                 case .deleteUserError:
-                    self?.handleError(message: "Hubo un error eliminando tu usuario, intenta de nuevo o inicia sesión nuevamente y luego elimina tu cuenta", title: "Error Usuario")
+                    self?.handleError(message: "Hubo un error eliminando tu usuario, intenta de nuevo o cierra tu sesion e inicia sesión de nuevoe y luego elimina tu cuenta", title: "Error Usuario")
                 case .networkError:
                     self?.handleError(message: "Sin conexion a internet, verifica tu conexion", title: "Sin conexión")
                 }

@@ -20,17 +20,20 @@ final class ProfileViewModel {
     private let updateUserUC: DefaultUpdateUserUC
     private let deleteUserUC: DefaultDeleteUserUC
     private let imageService: ImageServiceProtocol
+    private let authService: AuthServiceProtocol
     
     var user: User? = nil
     
     init(
         updateUserUC: DefaultUpdateUserUC,
         deleteUserUC: DefaultDeleteUserUC,
-        imageService: ImageServiceProtocol
+        imageService: ImageServiceProtocol,
+        authService: AuthServiceProtocol
     ) {
         self.updateUserUC = updateUserUC
         self.deleteUserUC = deleteUserUC
         self.imageService = imageService
+        self.authService  = authService
     }
     
     deinit {
@@ -69,6 +72,8 @@ final class ProfileViewModel {
                 state.send(.networkError)
                 return
             }
+            
+            try await authService.reloadUser()
             try await deleteUserUC.execute()
         } catch {
             state.send(.deleteUserError)
