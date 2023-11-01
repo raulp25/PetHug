@@ -37,9 +37,6 @@ final class FavoritesViewModel {
         self.dislikedPetUC = dislikePetUC
         self.authService = authService
         observeState()
-        Task {
-            await fetchFavoritePets()
-        }
     }
     
     deinit {

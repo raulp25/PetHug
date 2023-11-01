@@ -60,7 +60,7 @@ final class AnimalsStackContentViewController: UIViewController {
     }()
     
     private lazy var dogsBanner: Banner = {
-        let uv = Banner(title: "Adopta", caption: "perros", imageNamed: "dogs12", textAlign: .right)
+        let uv = Banner(title: "Adopta", caption: "perros", imageNamed: "dogb2", textAlign: .right)
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapBanner))
         uv.isUserInteractionEnabled = true
         uv.addGestureRecognizer(tapGesture)
