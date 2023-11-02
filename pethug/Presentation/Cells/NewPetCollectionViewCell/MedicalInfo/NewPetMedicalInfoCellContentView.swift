@@ -27,11 +27,56 @@ final class NewPetMedicalInfoCellContentView: UIView, UIContentView {
         return stack
     }()
     
-    private var internalDeworming: TextCheckbox? = nil
-    private var externalDeworming: TextCheckbox? = nil
-    private var microchip: TextCheckbox? = nil
-    private var sterilized: TextCheckbox? = nil
-    private var vaccinated: TextCheckbox? = nil
+    private lazy var internalDeworming: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Desparasitación Interna",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
+    
+    
+    private lazy var externalDeworming: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Desparasitación Externa",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
+    
+    
+    private lazy var microchip: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Microchip",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
+    
+    
+    private lazy var sterilized: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Esterilizado",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
+    
+    
+    private lazy var vaccinated: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Vacunas",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
+    
+    
     
     
     // MARK: - Properties
@@ -61,10 +106,6 @@ final class NewPetMedicalInfoCellContentView: UIView, UIContentView {
     @available(*, unavailable) required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    // MARK: - Private actions
-    
-    
     
     // MARK: - Functions
     private func apply(configuration: NewPetMedicalInfoListCellConfiguration) {
@@ -98,46 +139,6 @@ final class NewPetMedicalInfoCellContentView: UIView, UIContentView {
         )
         
         vStack.setHeight(175)
-    }
-    
-    
-    private func configureCellUI(with medicalInfo: MedicalInfo) {
-        internalDeworming = TextCheckbox(
-            titleText: "Desparasitación Interna",
-            isChecked: medicalInfo.internalDeworming,
-            font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true,
-            delegate: self
-        )
-        externalDeworming = TextCheckbox(
-            titleText: "Desparasitación Externa",
-            isChecked: medicalInfo.externalDeworming,
-            font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true,
-            delegate: self
-        )
-        microchip = TextCheckbox(
-            titleText: "Microchip",
-            isChecked: medicalInfo.microchip,
-            font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true,
-            delegate: self
-        )
-        sterilized = TextCheckbox(
-            titleText: "Esterilizado",
-            isChecked: medicalInfo.sterilized,
-            font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true,
-            delegate: self
-        )
-        vaccinated = TextCheckbox(
-            titleText: "Vacunas",
-            isChecked: medicalInfo.vaccinated,
-            font: UIFont.systemFont(ofSize: 12, weight: .regular),
-            isClickable: true,
-            delegate: self
-        )
-        
         
         let textCheckBoxes = [
             internalDeworming,
@@ -148,11 +149,18 @@ final class NewPetMedicalInfoCellContentView: UIView, UIContentView {
         ]
         
         for textCheckbox in textCheckBoxes {
-            if let textCheckbox = textCheckbox {
-                vStack.addArrangedSubview(textCheckbox)
-            }
-            
+            vStack.addArrangedSubview(textCheckbox)
         }
+    }
+    
+    
+    private func configureCellUI(with medicalInfo: MedicalInfo) {
+        internalDeworming.isChecked = medicalInfo.internalDeworming
+        externalDeworming.isChecked = medicalInfo.externalDeworming
+        microchip.isChecked         = medicalInfo.microchip
+        sterilized.isChecked        = medicalInfo.sterilized
+        vaccinated.isChecked        = medicalInfo.vaccinated
+        
     }
     
     
@@ -161,12 +169,12 @@ final class NewPetMedicalInfoCellContentView: UIView, UIContentView {
 extension NewPetMedicalInfoCellContentView: TextCheckBoxDelegate {
     func didTapCheckBox() {
         
-        let medicalInfo = MedicalInfo(internalDeworming: internalDeworming!.isChecked,
-                                      externalDeworming: externalDeworming!.isChecked,
-                                      microchip: microchip!.isChecked,
-                                      sterilized: sterilized!.isChecked,
-                                      vaccinated: vaccinated!.isChecked)
-        
+        let medicalInfo = MedicalInfo(internalDeworming: internalDeworming.isChecked,
+                                      externalDeworming: externalDeworming.isChecked,
+                                      microchip: microchip.isChecked,
+                                      sterilized: sterilized.isChecked,
+                                      vaccinated: vaccinated.isChecked)
+        print(":medicalInfo en delegate => \(medicalInfo)")
         currentConfiguration.viewModel?.delegate?.medicalInfoChanged(to: medicalInfo)
     }
 }

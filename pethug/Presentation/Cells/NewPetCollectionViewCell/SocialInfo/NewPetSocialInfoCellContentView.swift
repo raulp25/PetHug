@@ -26,11 +26,41 @@ final class NewPetSocialInfoCellContentView: UIView, UIContentView {
         return stack
     }()
     
-    private var maleDogFriendly: TextCheckbox? = nil
-    private var femaleDogFriendly: TextCheckbox? = nil
-    private var maleCatFriendly: TextCheckbox? = nil
-    private var femaleCatFriendly: TextCheckbox? = nil
-
+    private lazy var maleDogFriendly: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Perro macho",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
+    
+    private lazy var femaleDogFriendly: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Perro hembra",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
+    
+    private lazy var maleCatFriendly: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Gato macho",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
+    
+    private lazy var femaleCatFriendly: TextCheckbox = {
+        let tb = TextCheckbox(titleText: "Gato hembra",
+                              isChecked: false,
+                              font: UIFont.systemFont(ofSize: 12, weight: .regular),
+                              isClickable: true,
+                              delegate: self)
+        return tb
+    }()
     
     // MARK: - Properties
     private var currentConfiguration: NewPetSocialInfoListCellConfiguration!
@@ -94,38 +124,6 @@ final class NewPetSocialInfoCellContentView: UIView, UIContentView {
         )
         
         vStack.setHeight(140)
-    }
-    
-    
-    private func configureCellUI(with socialInfo: SocialInfo) {
-        maleDogFriendly = TextCheckbox(
-                                titleText: "Perro macho",
-                                isChecked: socialInfo.maleDogFriendly,
-                                font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                                isClickable: true,
-                                delegate: self
-                            )
-        femaleDogFriendly = TextCheckbox(
-                                titleText: "Perro hembra",
-                                isChecked: socialInfo.femaleDogFriendly,
-                                font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                                isClickable: true,
-                                delegate: self
-                            )
-        maleCatFriendly = TextCheckbox(
-                        titleText: "Gato macho",
-                        isChecked: socialInfo.maleCatFriendly,
-                        font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                        isClickable: true,
-                        delegate: self
-                    )
-        femaleCatFriendly = TextCheckbox(
-                        titleText: "Gato hembra",
-                        isChecked: socialInfo.femaleCatFriendly,
-                        font: UIFont.systemFont(ofSize: 12, weight: .regular),
-                        isClickable: true,
-                        delegate: self
-                    )
         
         let textCheckBoxes = [
             maleDogFriendly,
@@ -135,26 +133,31 @@ final class NewPetSocialInfoCellContentView: UIView, UIContentView {
         ]
         
         for textCheckbox in textCheckBoxes {
-            if let textCheckbox = textCheckbox {
-                vStack.addArrangedSubview(textCheckbox)
-            }
-            
+            vStack.addArrangedSubview(textCheckbox)
         }
     }
     
+    
+    private func configureCellUI(with socialInfo: SocialInfo) {
+        maleDogFriendly.isChecked   = socialInfo.maleDogFriendly
+        femaleDogFriendly.isChecked = socialInfo.femaleDogFriendly
+        maleCatFriendly.isChecked   = socialInfo.maleCatFriendly
+        femaleCatFriendly.isChecked = socialInfo.femaleCatFriendly
+    }
 }
 
 extension NewPetSocialInfoCellContentView: TextCheckBoxDelegate {
     func didTapCheckBox() {
         
-        let socialInfo = SocialInfo(maleDogFriendly: maleDogFriendly!.isChecked,
-                                    femaleDogFriendly: femaleDogFriendly!.isChecked,
-                                    maleCatFriendly: maleCatFriendly!.isChecked,
-                                    femaleCatFriendly: femaleCatFriendly!.isChecked)
+        let socialInfo = SocialInfo(maleDogFriendly: maleDogFriendly.isChecked,
+                                    femaleDogFriendly: femaleDogFriendly.isChecked,
+                                    maleCatFriendly: maleCatFriendly.isChecked,
+                                    femaleCatFriendly: femaleCatFriendly.isChecked)
         
         currentConfiguration.viewModel?.delegate?.socialInfoChanged(to: socialInfo)
     }
 }
+
 
 
 

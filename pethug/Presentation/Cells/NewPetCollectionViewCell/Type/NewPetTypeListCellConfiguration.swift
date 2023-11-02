@@ -43,9 +43,6 @@ struct NewPetTypeListCellConfiguration: ContentConfigurable {
 
         let updateConfiguration = self
 
-        if state.isSwiped {
-        }
-
         return updateConfiguration
     }
 }

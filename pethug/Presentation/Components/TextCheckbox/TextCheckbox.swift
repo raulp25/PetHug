@@ -49,7 +49,11 @@ final class TextCheckbox: UIView {
     private weak var delegate: TextCheckBoxDelegate?
     
     //MARK: - Internal properties
-    var isChecked = false
+    var isChecked = false {
+        didSet {
+            updateCheckmarkUI()
+        }
+    }
     
     //MARK: - LifeCycle
     convenience init(
@@ -63,7 +67,7 @@ final class TextCheckbox: UIView {
         self.isChecked = isChecked
         self.isClickable = isClickable
         self.delegate = delegate
-        configureUI(titleText: titleText, isChecked: isChecked, font: font)
+        configureUI(titleText: titleText, font: font)
         configureConstraints()
     }
     
@@ -72,24 +76,18 @@ final class TextCheckbox: UIView {
     }
     
     //MARK: - Setup
-    func configureUI(titleText: String, isChecked: Bool, font: UIFont?) {
+    private func configureUI(titleText: String, font: UIFont?) {
         textLabel.text = titleText
         
         if let font = font {
             textLabel.font = font
         }
         
-        if isChecked {
-            checkMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
-            checkMarkButton.tintColor = .systemOrange
-        }  else {
-            checkMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-            checkMarkButton.tintColor = .black
-        }
+        updateCheckmarkUI()
     }
     
     
-    func configureConstraints() {
+    private func configureConstraints() {
         addSubview(hStack)
         hStack.fillSuperview()
     }
@@ -97,7 +95,12 @@ final class TextCheckbox: UIView {
     //MARK: - Private actions
     @objc private func didTapCheckMark(_ sender: UIButton) {
         guard isClickable else { return }
-        
+        isChecked = !isChecked
+        delegate?.didTapCheckBox()
+    }
+    
+    //MARK: - Private methods
+    private func updateCheckmarkUI() {
         if isChecked {
             checkMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
             checkMarkButton.tintColor = .black
@@ -105,11 +108,6 @@ final class TextCheckbox: UIView {
             checkMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             checkMarkButton.tintColor = .systemOrange
         }
-        
-        isChecked = !isChecked
-        
-        delegate?.didTapCheckBox()
     }
-    
 }
 
