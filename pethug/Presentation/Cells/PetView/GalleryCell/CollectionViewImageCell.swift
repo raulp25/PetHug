@@ -53,15 +53,11 @@ final class PetViewImageCollectionViewCell: UICollectionViewCell {
     private var work: DispatchWorkItem?
     
     private func configureCellUI(with url: String) {
-         work = DispatchWorkItem(block: {
-             let imageDownloader = ImageService()
-             imageDownloader.downloadImage(url: url) { [weak self] image in
-                 if let image = image {
-                     self?.petImage.image = UIImage(data: image)
-                 }
+         work = DispatchWorkItem(block: { [weak self] in
+             let url = URL(string: url)
+             DispatchQueue.main.async {
+                 self?.petImage.sd_setImage(with: url)
              }
-//             let url = URL(string: url)
-//             self.petImage.sd_setImage(with: url)
         })
         
         DispatchQueue.main.async(execute: work!)

@@ -150,19 +150,11 @@ final class FavoriteControllerCollectionViewCell: UICollectionViewCell {
     private func configureCellUI(with viewModel: FavoriteCellViewModel) {
         
         // Download image
-         work = DispatchWorkItem(block: {
-             let imageDownloader = ImageService()
-             // Donwload pet image
-             imageDownloader.downloadImage(url: viewModel.petImage) { image in
-                 if let image = image {
-                     DispatchQueue.main.async { [weak self] in
-                         self?.petImage.image = UIImage(data: image)
-                     }
-                 }
+         work = DispatchWorkItem(block: { [weak self] in
+             let url = URL(string: viewModel.petImage)
+             DispatchQueue.main.async {
+                 self?.petImage.sd_setImage(with: url)
              }
-//             self.petImage.image = UIImage(named: viewModel.petImage)
-//             let url = URL(string: viewModel.petImage)
-//             self.petImage.sd_setImage(with: url)
         })
         
         DispatchQueue.main.async(execute: work!)

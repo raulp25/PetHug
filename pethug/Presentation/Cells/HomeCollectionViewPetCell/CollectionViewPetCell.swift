@@ -155,15 +155,6 @@ final class PetControllerCollectionViewCell: UICollectionViewCell {
         
         
          work = DispatchWorkItem(block: { [weak self] in
-//             let imageDownloader = ImageService()
-//             imageDownloader.downloadImage(url: viewModel.petImage) { image in
-//                 if let image = image {
-//                     DispatchQueue.main.async {
-//                         self.petImage.image = UIImage(data: image)
-//                     }
-//                 }
-//             }
-             self?.petImage.image = UIImage(named: viewModel.petImage)
              let url = URL(string: viewModel.petImage)
              DispatchQueue.main.async {
                  self?.petImage.sd_setImage(with: url)
