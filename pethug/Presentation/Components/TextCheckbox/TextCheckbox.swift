@@ -102,11 +102,11 @@ final class TextCheckbox: UIView {
     //MARK: - Private methods
     private func updateCheckmarkUI() {
         if isChecked {
-            checkMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
-            checkMarkButton.tintColor = .black
-        } else {
             checkMarkButton.setImage(UIImage(systemName: "checkmark.square"), for: .normal)
             checkMarkButton.tintColor = .systemOrange
+        } else {
+            checkMarkButton.setImage(UIImage(systemName: "square"), for: .normal)
+            checkMarkButton.tintColor = .black
         }
     }
 }

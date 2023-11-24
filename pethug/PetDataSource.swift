@@ -365,7 +365,7 @@ final class DefaultPetDataSource: PetDataSource {
         
     }
     
-    func createPetInSingle(collection path: String, data: Pet) async throws{
+    private func createPetInSingle(collection path: String, data: Pet) async throws{
         let petFirebaseEntinty = data.toFirebaseEntity()
         let dataModel = petFirebaseEntinty.toDictionaryLiteral()
         

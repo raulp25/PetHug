@@ -62,7 +62,7 @@ extension Pet: DictionaryLiteralMapper {
 }
 
 extension Pet: FirebaseMapper {
-    typealias FirebaseModel = PetModel
+//    typealias FirebaseModel = PetModel
     
     func toFirebaseEntity() -> PetModel {
         return PetModel(

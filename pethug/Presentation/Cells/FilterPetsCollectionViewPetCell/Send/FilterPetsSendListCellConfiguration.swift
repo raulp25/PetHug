@@ -25,7 +25,7 @@ class FilterPetsSend: Hashable {
     weak var delegate: FilterPetsSendDelegate?
     func hash(into hasher: inout Hasher) {
            hasher.combine(id)
-       }
+    }
     init() {
     }
 }
